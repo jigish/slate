@@ -1,0 +1,551 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4747E1E713877BB20005180C /* icon_16x16x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4747E1E613877BB20005180C /* icon_16x16x32.png */; };
+		4747E1EB13877BBC0005180C /* icon_32x32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4747E1E813877BBC0005180C /* icon_32x32x32.png */; };
+		4747E1EC13877BBC0005180C /* icon_48x48x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4747E1E913877BBC0005180C /* icon_48x48x32.png */; };
+		4747E1ED13877BBC0005180C /* icon_128x128x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4747E1EA13877BBC0005180C /* icon_128x128x32.png */; };
+		4747E1EF13877C160005180C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4747E1EE13877C150005180C /* icon.icns */; };
+		4786D53513882381004554B1 /* ASCIIToCode.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4786D53413882381004554B1 /* ASCIIToCode.plist */; };
+		47C4A2941384E8890066B6DE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C4A2931384E8890066B6DE /* Cocoa.framework */; };
+		47C4A29E1384E8890066B6DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 47C4A29C1384E8890066B6DE /* InfoPlist.strings */; };
+		47C4A2A11384E8890066B6DE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2A01384E8890066B6DE /* main.m */; };
+		47C4A2A41384E8890066B6DE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 47C4A2A21384E8890066B6DE /* Credits.rtf */; };
+		47C4A2A71384E8890066B6DE /* SlateAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2A61384E8890066B6DE /* SlateAppDelegate.m */; };
+		47C4A2AA1384E8890066B6DE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47C4A2A81384E8890066B6DE /* MainMenu.xib */; };
+		47C4A2B11384E8890066B6DE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C4A2931384E8890066B6DE /* Cocoa.framework */; };
+		47C4A2B91384E8890066B6DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 47C4A2B71384E8890066B6DE /* InfoPlist.strings */; };
+		47C4A2BC1384E8890066B6DE /* SlateTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 47C4A2BB1384E8890066B6DE /* SlateTests.h */; };
+		47C4A2BE1384E8890066B6DE /* SlateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2BD1384E8890066B6DE /* SlateTests.m */; };
+		47C4A2C81384E8B10066B6DE /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C4A2C71384E8B10066B6DE /* Carbon.framework */; };
+		47C4A2CB1384EA510066B6DE /* SlateConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2CA1384EA510066B6DE /* SlateConfig.m */; };
+		47C4A2CE1384F26A0066B6DE /* Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2CD1384F26A0066B6DE /* Binding.m */; };
+		47C4A2D11384F3E10066B6DE /* Operation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D01384F3E10066B6DE /* Operation.m */; };
+		47C4A2D41384F4A60066B6DE /* MoveOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D31384F4A60066B6DE /* MoveOperation.m */; };
+		47C4A2D71384F5DE0066B6DE /* ExpressionPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D61384F5DE0066B6DE /* ExpressionPoint.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		47C4A2B21384E8890066B6DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C4A2861384E8890066B6DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47C4A28E1384E8890066B6DE;
+			remoteInfo = Slate;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4747E1E613877BB20005180C /* icon_16x16x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_16x16x32.png; path = Slate/icon_16x16x32.png; sourceTree = "<group>"; };
+		4747E1E813877BBC0005180C /* icon_32x32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_32x32x32.png; path = Slate/icon_32x32x32.png; sourceTree = "<group>"; };
+		4747E1E913877BBC0005180C /* icon_48x48x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_48x48x32.png; path = Slate/icon_48x48x32.png; sourceTree = "<group>"; };
+		4747E1EA13877BBC0005180C /* icon_128x128x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_128x128x32.png; path = Slate/icon_128x128x32.png; sourceTree = "<group>"; };
+		4747E1EE13877C150005180C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Slate/icon.icns; sourceTree = "<group>"; };
+		4786D53413882381004554B1 /* ASCIIToCode.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode.plist; sourceTree = "<group>"; };
+		47C4A28F1384E8890066B6DE /* Slate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Slate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		47C4A2931384E8890066B6DE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		47C4A2961384E8890066B6DE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		47C4A2971384E8890066B6DE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		47C4A2981384E8890066B6DE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		47C4A29B1384E8890066B6DE /* Slate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Slate-Info.plist"; sourceTree = "<group>"; };
+		47C4A29D1384E8890066B6DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		47C4A29F1384E8890066B6DE /* Slate-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Slate-Prefix.pch"; sourceTree = "<group>"; };
+		47C4A2A01384E8890066B6DE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		47C4A2A31384E8890066B6DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		47C4A2A51384E8890066B6DE /* SlateAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlateAppDelegate.h; sourceTree = "<group>"; };
+		47C4A2A61384E8890066B6DE /* SlateAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SlateAppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		47C4A2A91384E8890066B6DE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		47C4A2B01384E8890066B6DE /* SlateTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SlateTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		47C4A2B61384E8890066B6DE /* SlateTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SlateTests-Info.plist"; sourceTree = "<group>"; };
+		47C4A2B81384E8890066B6DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		47C4A2BA1384E8890066B6DE /* SlateTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SlateTests-Prefix.pch"; sourceTree = "<group>"; };
+		47C4A2BB1384E8890066B6DE /* SlateTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlateTests.h; sourceTree = "<group>"; };
+		47C4A2BD1384E8890066B6DE /* SlateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlateTests.m; sourceTree = "<group>"; };
+		47C4A2C71384E8B10066B6DE /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		47C4A2C91384EA510066B6DE /* SlateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlateConfig.h; sourceTree = "<group>"; };
+		47C4A2CA1384EA510066B6DE /* SlateConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlateConfig.m; sourceTree = "<group>"; };
+		47C4A2CC1384F26A0066B6DE /* Binding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Binding.h; sourceTree = "<group>"; };
+		47C4A2CD1384F26A0066B6DE /* Binding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Binding.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		47C4A2CF1384F3E10066B6DE /* Operation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Operation.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		47C4A2D01384F3E10066B6DE /* Operation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Operation.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		47C4A2D21384F4A60066B6DE /* MoveOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MoveOperation.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		47C4A2D31384F4A60066B6DE /* MoveOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MoveOperation.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		47C4A2D51384F5DD0066B6DE /* ExpressionPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionPoint.h; sourceTree = "<group>"; };
+		47C4A2D61384F5DE0066B6DE /* ExpressionPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpressionPoint.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		47C4A28C1384E8890066B6DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C4A2C81384E8B10066B6DE /* Carbon.framework in Frameworks */,
+				47C4A2941384E8890066B6DE /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C4A2AC1384E8890066B6DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C4A2B11384E8890066B6DE /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4747E1F013877D260005180C /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				4747E1EE13877C150005180C /* icon.icns */,
+				4747E1E813877BBC0005180C /* icon_32x32x32.png */,
+				4747E1E913877BBC0005180C /* icon_48x48x32.png */,
+				4747E1EA13877BBC0005180C /* icon_128x128x32.png */,
+				4747E1E613877BB20005180C /* icon_16x16x32.png */,
+			);
+			name = icons;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		478293E513859BA000452C07 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				47C4A2C91384EA510066B6DE /* SlateConfig.h */,
+				47C4A2CA1384EA510066B6DE /* SlateConfig.m */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
+		478293E713859BED00452C07 /* Operation */ = {
+			isa = PBXGroup;
+			children = (
+				47C4A2CF1384F3E10066B6DE /* Operation.h */,
+				47C4A2D01384F3E10066B6DE /* Operation.m */,
+				47C4A2D21384F4A60066B6DE /* MoveOperation.h */,
+				47C4A2D31384F4A60066B6DE /* MoveOperation.m */,
+			);
+			name = Operation;
+			sourceTree = "<group>";
+		};
+		478293E813859C0B00452C07 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				47C4A2CC1384F26A0066B6DE /* Binding.h */,
+				47C4A2CD1384F26A0066B6DE /* Binding.m */,
+				47C4A2D51384F5DD0066B6DE /* ExpressionPoint.h */,
+				47C4A2D61384F5DE0066B6DE /* ExpressionPoint.m */,
+				4786D53413882381004554B1 /* ASCIIToCode.plist */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		47C4A2841384E8890066B6DE = {
+			isa = PBXGroup;
+			children = (
+				47C4A2C71384E8B10066B6DE /* Carbon.framework */,
+				47C4A2991384E8890066B6DE /* Slate */,
+				47C4A2B41384E8890066B6DE /* SlateTests */,
+				47C4A2921384E8890066B6DE /* Frameworks */,
+				47C4A2901384E8890066B6DE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		47C4A2901384E8890066B6DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				47C4A28F1384E8890066B6DE /* Slate.app */,
+				47C4A2B01384E8890066B6DE /* SlateTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		47C4A2921384E8890066B6DE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				47C4A2931384E8890066B6DE /* Cocoa.framework */,
+				47C4A2951384E8890066B6DE /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		47C4A2951384E8890066B6DE /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				47C4A2961384E8890066B6DE /* AppKit.framework */,
+				47C4A2971384E8890066B6DE /* CoreData.framework */,
+				47C4A2981384E8890066B6DE /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		47C4A2991384E8890066B6DE /* Slate */ = {
+			isa = PBXGroup;
+			children = (
+				4747E1F013877D260005180C /* icons */,
+				478293E813859C0B00452C07 /* Common */,
+				478293E713859BED00452C07 /* Operation */,
+				478293E513859BA000452C07 /* Config */,
+				47C4A2A81384E8890066B6DE /* MainMenu.xib */,
+				47C4A2A51384E8890066B6DE /* SlateAppDelegate.h */,
+				47C4A2A61384E8890066B6DE /* SlateAppDelegate.m */,
+				47C4A29A1384E8890066B6DE /* Supporting Files */,
+			);
+			path = Slate;
+			sourceTree = "<group>";
+		};
+		47C4A29A1384E8890066B6DE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				47C4A29B1384E8890066B6DE /* Slate-Info.plist */,
+				47C4A29C1384E8890066B6DE /* InfoPlist.strings */,
+				47C4A29F1384E8890066B6DE /* Slate-Prefix.pch */,
+				47C4A2A01384E8890066B6DE /* main.m */,
+				47C4A2A21384E8890066B6DE /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		47C4A2B41384E8890066B6DE /* SlateTests */ = {
+			isa = PBXGroup;
+			children = (
+				47C4A2BB1384E8890066B6DE /* SlateTests.h */,
+				47C4A2BD1384E8890066B6DE /* SlateTests.m */,
+				47C4A2B51384E8890066B6DE /* Supporting Files */,
+			);
+			path = SlateTests;
+			sourceTree = "<group>";
+		};
+		47C4A2B51384E8890066B6DE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				47C4A2B61384E8890066B6DE /* SlateTests-Info.plist */,
+				47C4A2B71384E8890066B6DE /* InfoPlist.strings */,
+				47C4A2BA1384E8890066B6DE /* SlateTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		47C4A28E1384E8890066B6DE /* Slate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47C4A2C11384E8890066B6DE /* Build configuration list for PBXNativeTarget "Slate" */;
+			buildPhases = (
+				47C4A28B1384E8890066B6DE /* Sources */,
+				47C4A28C1384E8890066B6DE /* Frameworks */,
+				47C4A28D1384E8890066B6DE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Slate;
+			productName = Slate;
+			productReference = 47C4A28F1384E8890066B6DE /* Slate.app */;
+			productType = "com.apple.product-type.application";
+		};
+		47C4A2AF1384E8890066B6DE /* SlateTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47C4A2C41384E8890066B6DE /* Build configuration list for PBXNativeTarget "SlateTests" */;
+			buildPhases = (
+				47C4A2AB1384E8890066B6DE /* Sources */,
+				47C4A2AC1384E8890066B6DE /* Frameworks */,
+				47C4A2AD1384E8890066B6DE /* Resources */,
+				47C4A2AE1384E8890066B6DE /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47C4A2B31384E8890066B6DE /* PBXTargetDependency */,
+			);
+			name = SlateTests;
+			productName = SlateTests;
+			productReference = 47C4A2B01384E8890066B6DE /* SlateTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		47C4A2861384E8890066B6DE /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 47C4A2891384E8890066B6DE /* Build configuration list for PBXProject "Slate" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 47C4A2841384E8890066B6DE;
+			productRefGroup = 47C4A2901384E8890066B6DE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				47C4A28E1384E8890066B6DE /* Slate */,
+				47C4A2AF1384E8890066B6DE /* SlateTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		47C4A28D1384E8890066B6DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C4A29E1384E8890066B6DE /* InfoPlist.strings in Resources */,
+				47C4A2A41384E8890066B6DE /* Credits.rtf in Resources */,
+				47C4A2AA1384E8890066B6DE /* MainMenu.xib in Resources */,
+				4747E1E713877BB20005180C /* icon_16x16x32.png in Resources */,
+				4747E1EB13877BBC0005180C /* icon_32x32x32.png in Resources */,
+				4747E1EC13877BBC0005180C /* icon_48x48x32.png in Resources */,
+				4747E1ED13877BBC0005180C /* icon_128x128x32.png in Resources */,
+				4747E1EF13877C160005180C /* icon.icns in Resources */,
+				4786D53513882381004554B1 /* ASCIIToCode.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C4A2AD1384E8890066B6DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C4A2B91384E8890066B6DE /* InfoPlist.strings in Resources */,
+				47C4A2BC1384E8890066B6DE /* SlateTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		47C4A2AE1384E8890066B6DE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		47C4A28B1384E8890066B6DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C4A2A11384E8890066B6DE /* main.m in Sources */,
+				47C4A2A71384E8890066B6DE /* SlateAppDelegate.m in Sources */,
+				47C4A2CB1384EA510066B6DE /* SlateConfig.m in Sources */,
+				47C4A2CE1384F26A0066B6DE /* Binding.m in Sources */,
+				47C4A2D11384F3E10066B6DE /* Operation.m in Sources */,
+				47C4A2D41384F4A60066B6DE /* MoveOperation.m in Sources */,
+				47C4A2D71384F5DE0066B6DE /* ExpressionPoint.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C4A2AB1384E8890066B6DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C4A2BE1384E8890066B6DE /* SlateTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		47C4A2B31384E8890066B6DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47C4A28E1384E8890066B6DE /* Slate */;
+			targetProxy = 47C4A2B21384E8890066B6DE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		47C4A29C1384E8890066B6DE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47C4A29D1384E8890066B6DE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		47C4A2A21384E8890066B6DE /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47C4A2A31384E8890066B6DE /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		47C4A2A81384E8890066B6DE /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47C4A2A91384E8890066B6DE /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		47C4A2B71384E8890066B6DE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47C4A2B81384E8890066B6DE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		47C4A2BF1384E8890066B6DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		47C4A2C01384E8890066B6DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		47C4A2C21384E8890066B6DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Slate/Slate-Prefix.pch";
+				INFOPLIST_FILE = "Slate/Slate-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		47C4A2C31384E8890066B6DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Slate/Slate-Prefix.pch";
+				INFOPLIST_FILE = "Slate/Slate-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		47C4A2C51384E8890066B6DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Slate.app/Contents/MacOS/Slate";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SlateTests/SlateTests-Prefix.pch";
+				INFOPLIST_FILE = "SlateTests/SlateTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		47C4A2C61384E8890066B6DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Slate.app/Contents/MacOS/Slate";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SlateTests/SlateTests-Prefix.pch";
+				INFOPLIST_FILE = "SlateTests/SlateTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		47C4A2891384E8890066B6DE /* Build configuration list for PBXProject "Slate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47C4A2BF1384E8890066B6DE /* Debug */,
+				47C4A2C01384E8890066B6DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47C4A2C11384E8890066B6DE /* Build configuration list for PBXNativeTarget "Slate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47C4A2C21384E8890066B6DE /* Debug */,
+				47C4A2C31384E8890066B6DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47C4A2C41384E8890066B6DE /* Build configuration list for PBXNativeTarget "SlateTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47C4A2C51384E8890066B6DE /* Debug */,
+				47C4A2C61384E8890066B6DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 47C4A2861384E8890066B6DE /* Project object */;
+}
