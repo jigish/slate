@@ -127,7 +127,7 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
 
   statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength: NSVariableStatusItemLength] retain];
   [statusItem setMenu:statusMenu];
-  [statusItem setImage:[NSImage imageNamed:@"icon_16x16x32"]];
+  [statusItem setImage:[NSImage imageNamed:@"status"]];
   [statusItem setHighlightMode:YES];
 
   // Read Config
