@@ -1,0 +1,723 @@
+TSlate
+v3
+r1
+cCheck dependencies
+cProcessInfoPlistFile /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Info.plist Slate/Slate-Info.plist
+cProcessPCH /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch.pth Slate/Slate-Prefix.pch normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cProcessPCH /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch.pth Slate/Slate-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/main.o /Users/jigishpatel/Documents/Code/Slate/Slate/main.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateAppDelegate.o /Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/ExpressionPoint.o /Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateConfig.o /Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Operation.o /Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/MoveOperation.o /Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Binding.o /Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/SlateAppDelegate.o /Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/SlateConfig.o /Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/Binding.o /Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/Operation.o /Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/MoveOperation.o /Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/main.o /Users/jigishpatel/Documents/Code/Slate/Slate/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/ExpressionPoint.o /Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cLd /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Slate normal x86_64
+cLd /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Slate normal i386
+cCreateUniversalBinary /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/MacOS/Slate normal "x86_64 i386"
+cGenerateDSYMFile /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app.dSYM /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/MacOS/Slate
+cCopyStringsFile /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/en.lproj/InfoPlist.strings Slate/en.lproj/InfoPlist.strings
+cCompileXIB /Users/jigishpatel/Documents/Code/Slate/Slate/en.lproj/MainMenu.xib
+cCpResource Slate/en.lproj/Credits.rtf build/Release/Slate.app/Contents/Resources/en.lproj/Credits.rtf
+cCpResource Slate/../Slate/icon_32x32x32.png build/Release/Slate.app/Contents/Resources/icon_32x32x32.png
+cCpResource Slate/../Slate/icon_16x16x32.png build/Release/Slate.app/Contents/Resources/icon_16x16x32.png
+cCpResource Slate/../Slate/icon_48x48x32.png build/Release/Slate.app/Contents/Resources/icon_48x48x32.png
+cCpResource Slate/../Slate/icon_128x128x32.png build/Release/Slate.app/Contents/Resources/icon_128x128x32.png
+cCpResource Slate/../Slate/icon.icns build/Release/Slate.app/Contents/Resources/icon.icns
+cCopyPlistFile /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/ASCIIToCode.plist Slate/ASCIIToCode.plist
+cTouch /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app
+
+N/Developer/SDKs/MacOSX10.6.sdk
+c000000004DA341F300000000000000EE
+t1302544883
+s238
+
+N/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Carbon.framework/Carbon
+c000000004DA341E70000000000003A54
+t1302544871
+s14932
+
+N/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Carbon.framework/Headers/Carbon.h
+c000000004B4834EA00000000000005FF
+t1263023338
+s1535
+
+N/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework/Cocoa
+c000000004DA341E70000000000003430
+t1302544871
+s13360
+
+N/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h
+c0000000040C4AA6800000000000001E5
+t1086630504
+s485
+
+N/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h
+c000000004CC401D100000000000013E6
+t1287913937
+s5094
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/../Slate/icon.icns
+c0000000041CB63880000000000009927
+t1103848328
+s39207
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/../Slate/icon_128x128x32.png
+c000000004DD743EE0000000000001323
+t1305953262
+s4899
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/../Slate/icon_16x16x32.png
+c000000004DD743EA000000000000023F
+t1305953258
+s575
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/../Slate/icon_32x32x32.png
+c000000004DD743EB00000000000004CA
+t1305953259
+s1226
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/../Slate/icon_48x48x32.png
+c000000004DD743EC0000000000000727
+t1305953260
+s1831
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/ASCIIToCode.plist
+c000000004DD7FD770000000000001027
+t1306000759
+s4135
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/Binding.h
+c000000004DD7F8F80000000000000244
+t1305999608
+s580
+i<Carbon/Carbon.h>
+i<Foundation/Foundation.h>
+i"Operation.h"
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m
+c000000004DDB74760000000000000B3E
+t1306227830
+s2878
+i<Carbon/Carbon.h>
+i"Binding.h"
+i"MoveOperation.h"
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.h
+c000000004DD7F915000000000000023A
+t1305999637
+s570
+i<Foundation/Foundation.h>
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m
+c000000004DD7E519000000000000053A
+t1305994521
+s1338
+i"ExpressionPoint.h"
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.h
+c000000004DDB4F230000000000000290
+t1306218275
+s656
+i<Foundation/Foundation.h>
+i"Operation.h"
+i"ExpressionPoint.h"
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m
+c000000004DDB73CD0000000000000EE4
+t1306227661
+s3812
+i"MoveOperation.h"
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/Operation.h
+c000000004DD7E4910000000000000192
+t1305994385
+s402
+i<Foundation/Foundation.h>
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m
+c000000004DD7E5420000000000000245
+t1305994562
+s581
+i"Operation.h"
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/Slate-Prefix.pch
+c000000004DD4B109000000000000008D
+t1305784585
+s141
+i<Cocoa/Cocoa.h>
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.h
+c000000004DD7E42000000000000001EF
+t1305994272
+s495
+i<Carbon/Carbon.h>
+i<Cocoa/Cocoa.h>
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m
+c000000004DD7E46D0000000000001453
+t1305994349
+s5203
+i"SlateAppDelegate.h"
+i"SlateConfig.h"
+i"Binding.h"
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.h
+c000000004DD7E3560000000000000179
+t1305994070
+s377
+i<Foundation/Foundation.h>
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m
+c000000004DD7E55D00000000000008DB
+t1305994589
+s2267
+i"SlateConfig.h"
+i"Binding.h"
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/en.lproj/Credits.rtf
+c000000004DD7E65D00000000000001F8
+t1305994845
+s504
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/en.lproj/InfoPlist.strings
+c000000004DD4B109000000000000002D
+t1305784585
+s45
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/en.lproj/MainMenu.xib
+c000000004DD7E6B00000000000026F09
+t1305994928
+s159497
+
+N/Users/jigishpatel/Documents/Code/Slate/Slate/main.m
+c000000004DD7E52600000000000000F7
+t1305994534
+s247
+i<Cocoa/Cocoa.h>
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app.dSYM
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Info.plist
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/MacOS/Slate
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/PkgInfo
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/ASCIIToCode.plist
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/en.lproj/Credits.rtf
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/en.lproj/InfoPlist.strings
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/en.lproj/MainMenu.nib
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/icon.icns
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/icon_128x128x32.png
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/icon_16x16x32.png
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/icon_32x32x32.png
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/icon_48x48x32.png
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Binding.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/ExpressionPoint.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/MoveOperation.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Operation.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Slate
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Slate.LinkFileList
+c000000004DDB76B2000000000000030E
+t1306228402
+s782
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/SlateAppDelegate.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/SlateConfig.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/main.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Binding.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/ExpressionPoint.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/MoveOperation.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Operation.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Slate
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Slate.LinkFileList
+c000000004DDB76B2000000000000031C
+t1306228402
+s796
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateAppDelegate.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateConfig.o
+t2
+s0
+
+N/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/main.o
+t2
+s0
+
+N/var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch.pth
+t2
+s0
+
+N/var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch.pth
+t2
+s0
+
+NSlate/Slate-Info.plist
+c000000004DD77133000000000000054E
+t1305964851
+s1358
+
+CBuild AST from /Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m
+r0
+
+CBuild AST from /Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m
+r0
+
+CBuild AST from /Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m
+r0
+
+CBuild AST from /Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m
+r0
+
+CBuild AST from /Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m
+r0
+
+CBuild AST from /Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m
+r0
+
+CBuild AST from /Users/jigishpatel/Documents/Code/Slate/Slate/main.m
+r0
+
+CCheck dependencies
+r0
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependenciesa1bb5432ae8bb341^207f6d32ae8bb341^---0#1#0#--18"Check dependencies
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/Binding.o /Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.988154
+e327921203.357597
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/i386/Binding.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection63"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m3013fd32ae8bb341^828d5b33ae8bb341^---0#0#0#-19%DVTDocumentLocation2@71"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m0000000000000000^1795"CompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/Binding.o Slate/Binding.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/i386 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Binding.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/ExpressionPoint.o /Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921203.014075
+e327921203.336072
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/i386/ExpressionPoint.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection71"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m0bb40333ae8bb341^f2085633ae8bb341^---0#0#0#-19%DVTDocumentLocation2@79"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m0000000000000000^1827"CompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/ExpressionPoint.o Slate/ExpressionPoint.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/i386 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/ExpressionPoint.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/MoveOperation.o /Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.988166
+e327921203.308764
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/i386/MoveOperation.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection69"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m0a14fd32ae8bb341^6c074f33ae8bb341^---0#0#0#-19%DVTDocumentLocation2@77"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m0000000000000000^1819"CompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/MoveOperation.o Slate/MoveOperation.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/i386 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/MoveOperation.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/Operation.o /Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.988162
+e327921203.308087
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/i386/Operation.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection65"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m9014fd32ae8bb341^93fe4e33ae8bb341^---0#0#0#-19%DVTDocumentLocation2@73"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m0000000000000000^1803"CompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/Operation.o Slate/Operation.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/i386 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Operation.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/SlateAppDelegate.o /Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.988131
+e327921203.370700
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/i386/SlateAppDelegate.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection72"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m1212fd32ae8bb341^efe55e33ae8bb341^---0#0#0#-19%DVTDocumentLocation2@80"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m0000000000000000^1831"CompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/SlateAppDelegate.o Slate/SlateAppDelegate.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/i386 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/SlateAppDelegate.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/SlateConfig.o /Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.988150
+e327921203.358389
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/i386/SlateConfig.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection67"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m7313fd32ae8bb341^40bf5b33ae8bb341^---0#0#0#-19%DVTDocumentLocation2@75"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m0000000000000000^1811"CompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/SlateConfig.o Slate/SlateConfig.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/i386 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/SlateConfig.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/main.o /Users/jigishpatel/Documents/Code/Slate/Slate/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921203.011954
+e327921203.332460
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/i386/main.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/main.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection60"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/main.m232f0333ae8bb341^501b5533ae8bb341^---0#0#0#-19%DVTDocumentLocation2@68"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/main.m0000000000000000^1783"CompileC build/Slate.build/Release/Slate.build/Objects-normal/i386/main.o Slate/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/i386 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/main.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/main.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Binding.o /Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.910586
+e327921203.013940
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/x86_64/Binding.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection63"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m6631e932ae8bb341^a6980333ae8bb341^---0#0#0#-19%DVTDocumentLocation2@71"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m0000000000000000^1805"CompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Binding.o Slate/Binding.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/x86_64 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/Binding.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Binding.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/ExpressionPoint.o /Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.910296
+e327921202.970130
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/x86_64/ExpressionPoint.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection71"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m191ce932ae8bb341^7559f832ae8bb341^---0#0#0#-19%DVTDocumentLocation2@79"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m0000000000000000^1837"CompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/ExpressionPoint.o Slate/ExpressionPoint.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/x86_64 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/ExpressionPoint.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/ExpressionPoint.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/MoveOperation.o /Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.910320
+e327921202.984750
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/x86_64/MoveOperation.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection69"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m4a28e932ae8bb341^261afc32ae8bb341^---0#0#0#-19%DVTDocumentLocation2@77"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m0000000000000000^1829"CompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/MoveOperation.o Slate/MoveOperation.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/x86_64 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/MoveOperation.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/MoveOperation.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Operation.o /Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.910310
+e327921202.955609
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/x86_64/Operation.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection65"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/Operation.md028e932ae8bb341^66a2f432ae8bb341^---0#0#0#-19%DVTDocumentLocation2@73"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m0000000000000000^1813"CompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Operation.o Slate/Operation.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/x86_64 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/Operation.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Operation.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateAppDelegate.o /Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.910285
+e327921203.310931
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateAppDelegate.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection72"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m6729e932ae8bb341^e9984f33ae8bb341^---0#0#0#-19%DVTDocumentLocation2@80"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m0000000000000000^1841"CompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateAppDelegate.o Slate/SlateAppDelegate.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/x86_64 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/SlateAppDelegate.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateAppDelegate.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateConfig.o /Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.910295
+e327921203.011766
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateConfig.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection67"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m1824e932ae8bb341^a7050333ae8bb341^---0#0#0#-19%DVTDocumentLocation2@75"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m0000000000000000^1821"CompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateConfig.o Slate/SlateConfig.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/x86_64 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/SlateConfig.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/SlateConfig.o
+
+CCompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/main.o /Users/jigishpatel/Documents/Code/Slate/Slate/main.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.910286
+e327921202.951476
+r1
+xCompileC
+xbuild/Slate.build/Release/Slate.build/Objects-normal/x86_64/main.o
+x/Users/jigishpatel/Documents/Code/Slate/Slate/main.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection60"Compile /Users/jigishpatel/Documents/Code/Slate/Slate/main.m5c1ce932ae8bb341^3693f332ae8bb341^---0#0#0#-19%DVTDocumentLocation2@68"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/main.m0000000000000000^1793"CompileC build/Slate.build/Release/Slate.build/Objects-normal/x86_64/main.o Slate/main.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/x86_64 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -include /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch -c /Users/jigishpatel/Documents/Code/Slate/Slate/main.m -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/main.o
+
+CCompileXIB /Users/jigishpatel/Documents/Code/Slate/Slate/en.lproj/MainMenu.xib
+s327921203.458377
+e327921203.536064
+r1
+xCompileXIB
+x/Users/jigishpatel/Documents/Code/Slate/Slate/en.lproj/MainMenu.xib
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection77"Compiling /Users/jigishpatel/Documents/Code/Slate/Slate/en.lproj/MainMenu.xib3b717533ae8bb341^b03b8933ae8bb341^---0#0#0#-19%DVTDocumentLocation2@83"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/en.lproj/MainMenu.xib0000000000000000^460"CompileXIB Slate/en.lproj/MainMenu.xib    cd /Users/jigishpatel/Documents/Code/Slate    setenv XCODE_DEVELOPER_USR_PATH /Developer/usr/bin/..    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/en.lproj/MainMenu.nib /Users/jigishpatel/Documents/Code/Slate/Slate/en.lproj/MainMenu.xib --sdk /Developer/SDKs/MacOSX10.6.sdk
+
+CCopyPlistFile /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/ASCIIToCode.plist Slate/ASCIIToCode.plist
+s327921203.460484
+e327921203.463411
+r1
+xCopyPlistFile
+x/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/ASCIIToCode.plist
+xSlate/ASCIIToCode.plist
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection28"Copy Slate/ASCIIToCode.plistbff17533ae8bb341^2ba27633ae8bb341^---0#0#0#-19%DVTDocumentLocation2@79"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/ASCIIToCode.plist0000000000000000^287"CopyPlistFile build/Release/Slate.app/Contents/Resources/ASCIIToCode.plist Slate/ASCIIToCode.plist    cd /Users/jigishpatel/Documents/Code/Slate    builtin-copyPlist --outdir /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources -- Slate/ASCIIToCode.plist
+
+CCopyStringsFile /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/en.lproj/InfoPlist.strings Slate/en.lproj/InfoPlist.strings
+s327921203.458169
+e327921203.460200
+r1
+xCopyStringsFile
+x/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/en.lproj/InfoPlist.strings
+xSlate/en.lproj/InfoPlist.strings
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection37"Copy Slate/en.lproj/InfoPlist.stringsd2567533ae8bb341^a6d07533ae8bb341^---0#0#0#-19%DVTDocumentLocation2@88"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/en.lproj/InfoPlist.strings0000000000000000^384"CopyStringsFile build/Release/Slate.app/Contents/Resources/en.lproj/InfoPlist.strings Slate/en.lproj/InfoPlist.strings    cd /Users/jigishpatel/Documents/Code/Slate    builtin-copyStrings --validate --inputencoding utf-8 --outputencoding UTF-16 --outdir /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/en.lproj -- Slate/en.lproj/InfoPlist.strings
+
+CCpResource Slate/../Slate/icon.icns build/Release/Slate.app/Contents/Resources/icon.icns
+s327921203.458428
+e327921203.460462
+r1
+xCpResource
+xSlate/../Slate/icon.icns
+xbuild/Release/Slate.app/Contents/Resources/icon.icns
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection57"Copy build/Release/Slate.app/Contents/Resources/icon.icns656f7533ae8bb341^76df7533ae8bb341^---0#0#0#-19%DVTDocumentLocation2@108"file://localhost/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/icon.icns0000204d2205f041^404"CpResource Slate/../Slate/icon.icns build/Release/Slate.app/Contents/Resources/icon.icns    cd /Users/jigishpatel/Documents/Code/Slate    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -strip-debug-symbols -resolve-src-symlinks /Users/jigishpatel/Documents/Code/Slate/Slate/../Slate/icon.icns /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources
+
+CCpResource Slate/../Slate/icon_128x128x32.png build/Release/Slate.app/Contents/Resources/icon_128x128x32.png
+s327921203.458421
+e327921203.460623
+r1
+xCpResource
+xSlate/../Slate/icon_128x128x32.png
+xbuild/Release/Slate.app/Contents/Resources/icon_128x128x32.png
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection67"Copy build/Release/Slate.app/Contents/Resources/icon_128x128x32.png8f717533ae8bb341^68ea7533ae8bb341^---0#0#0#-19%DVTDocumentLocation2@118"file://localhost/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/icon_128x128x32.png0000204d2205f041^434"CpResource Slate/../Slate/icon_128x128x32.png build/Release/Slate.app/Contents/Resources/icon_128x128x32.png    cd /Users/jigishpatel/Documents/Code/Slate    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -strip-debug-symbols -resolve-src-symlinks /Users/jigishpatel/Documents/Code/Slate/Slate/../Slate/icon_128x128x32.png /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources
+
+CCpResource Slate/../Slate/icon_16x16x32.png build/Release/Slate.app/Contents/Resources/icon_16x16x32.png
+s327921203.458402
+e327921203.460472
+r1
+xCpResource
+xSlate/../Slate/icon_16x16x32.png
+xbuild/Release/Slate.app/Contents/Resources/icon_16x16x32.png
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection65"Copy build/Release/Slate.app/Contents/Resources/icon_16x16x32.pngb0717533ae8bb341^efe27533ae8bb341^---0#0#0#-19%DVTDocumentLocation2@116"file://localhost/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/icon_16x16x32.png0000204d2205f041^428"CpResource Slate/../Slate/icon_16x16x32.png build/Release/Slate.app/Contents/Resources/icon_16x16x32.png    cd /Users/jigishpatel/Documents/Code/Slate    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -strip-debug-symbols -resolve-src-symlinks /Users/jigishpatel/Documents/Code/Slate/Slate/../Slate/icon_16x16x32.png /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources
+
+CCpResource Slate/../Slate/icon_32x32x32.png build/Release/Slate.app/Contents/Resources/icon_32x32x32.png
+s327921203.458398
+e327921203.460781
+r1
+xCpResource
+xSlate/../Slate/icon_32x32x32.png
+xbuild/Release/Slate.app/Contents/Resources/icon_32x32x32.png
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection65"Copy build/Release/Slate.app/Contents/Resources/icon_32x32x32.png9b767533ae8bb341^e4f47533ae8bb341^---0#0#0#-19%DVTDocumentLocation2@116"file://localhost/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/icon_32x32x32.png0000204d2205f041^428"CpResource Slate/../Slate/icon_32x32x32.png build/Release/Slate.app/Contents/Resources/icon_32x32x32.png    cd /Users/jigishpatel/Documents/Code/Slate    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -strip-debug-symbols -resolve-src-symlinks /Users/jigishpatel/Documents/Code/Slate/Slate/../Slate/icon_32x32x32.png /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources
+
+CCpResource Slate/../Slate/icon_48x48x32.png build/Release/Slate.app/Contents/Resources/icon_48x48x32.png
+s327921203.458407
+e327921203.460638
+r1
+xCpResource
+xSlate/../Slate/icon_48x48x32.png
+xbuild/Release/Slate.app/Contents/Resources/icon_48x48x32.png
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection65"Copy build/Release/Slate.app/Contents/Resources/icon_48x48x32.pngcd727533ae8bb341^eeee7533ae8bb341^---0#0#0#-19%DVTDocumentLocation2@116"file://localhost/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/icon_48x48x32.png0000204d2205f041^428"CpResource Slate/../Slate/icon_48x48x32.png build/Release/Slate.app/Contents/Resources/icon_48x48x32.png    cd /Users/jigishpatel/Documents/Code/Slate    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -strip-debug-symbols -resolve-src-symlinks /Users/jigishpatel/Documents/Code/Slate/Slate/../Slate/icon_48x48x32.png /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources
+
+CCpResource Slate/en.lproj/Credits.rtf build/Release/Slate.app/Contents/Resources/en.lproj/Credits.rtf
+s327921203.458382
+e327921203.460137
+r1
+xCpResource
+xSlate/en.lproj/Credits.rtf
+xbuild/Release/Slate.app/Contents/Resources/en.lproj/Credits.rtf
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection68"Copy build/Release/Slate.app/Contents/Resources/en.lproj/Credits.rtfad6e7533ae8bb341^bccb7533ae8bb341^---0#0#0#-19%DVTDocumentLocation2@119"file://localhost/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/en.lproj/Credits.rtf0000204d2205f041^428"CpResource Slate/en.lproj/Credits.rtf build/Release/Slate.app/Contents/Resources/en.lproj/Credits.rtf    cd /Users/jigishpatel/Documents/Code/Slate    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -strip-debug-symbols -resolve-src-symlinks /Users/jigishpatel/Documents/Code/Slate/Slate/en.lproj/Credits.rtf /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Resources/en.lproj
+
+CCreateUniversalBinary /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/MacOS/Slate normal "x86_64 i386"
+s327921203.426804
+e327921203.434045
+r1
+xCreateUniversalBinary
+x/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/MacOS/Slate
+xnormal
+xx86_64 i386
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection108"Create universal binary /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/MacOS/Slateb64d6d33ae8bb341^821d6f33ae8bb341^---0#0#0#-19%DVTDocumentLocation2@100"file://localhost/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/MacOS/Slate0000204d2205f041^464"CreateUniversalBinary build/Release/Slate.app/Contents/MacOS/Slate normal "x86_64 i386"    cd /Users/jigishpatel/Documents/Code/Slate    /usr/bin/lipo -create /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Slate /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Slate -output /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/MacOS/Slate
+
+CGenerateDSYMFile /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app.dSYM /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/MacOS/Slate
+s327921203.434157
+e327921203.456752
+r1
+xGenerateDSYMFile
+x/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app.dSYM
+x/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/MacOS/Slate
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection79"Generating /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app.dSYMbe2e6f33ae8bb341^1ced7433ae8bb341^---0#0#0#-19%DVTDocumentLocation2@84"file://localhost/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app.dSYM0000204d2205f041^327"GenerateDSYMFile build/Release/Slate.app.dSYM build/Release/Slate.app/Contents/MacOS/Slate    cd /Users/jigishpatel/Documents/Code/Slate    /Developer/usr/bin/dsymutil /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/MacOS/Slate -o /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app.dSYM
+
+CLd /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Slate normal i386
+s327921203.370874
+e327921203.425972
+r1
+xLd
+x/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Slate
+xnormal
+xi386
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection108"Link /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Slate37005f33ae8bb341^e90b6d33ae8bb341^---0#0#0#--655"Ld build/Slate.build/Release/Slate.build/Objects-normal/i386/Slate normal i386    cd /Users/jigishpatel/Documents/Code/Slate    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/clang -arch i386 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/jigishpatel/Documents/Code/Slate/build/Release -F/Users/jigishpatel/Documents/Code/Slate/build/Release -filelist /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Slate.LinkFileList -mmacosx-version-min=10.6 -framework Carbon -framework Cocoa -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/i386/Slate
+
+CLd /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Slate normal x86_64
+s327921203.311115
+e327921203.343186
+r1
+xLd
+x/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Slate
+xnormal
+xx86_64
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection110"Link /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Slatebfb94f33ae8bb341^a1db5733ae8bb341^---0#0#0#--665"Ld build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Slate normal x86_64    cd /Users/jigishpatel/Documents/Code/Slate    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/clang -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/jigishpatel/Documents/Code/Slate/build/Release -F/Users/jigishpatel/Documents/Code/Slate/build/Release -filelist /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Slate.LinkFileList -mmacosx-version-min=10.6 -framework Carbon -framework Cocoa -o /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Objects-normal/x86_64/Slate
+
+CProcessInfoPlistFile /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Info.plist Slate/Slate-Info.plist
+s327921202.440419
+e327921202.444131
+r1
+xProcessInfoPlistFile
+x/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Info.plist
+xSlate/Slate-Info.plist
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection30"Process Slate/Slate-Info.plist5ccb7032ae8bb341^c4b27132ae8bb341^---0#0#0#-19%DVTDocumentLocation2@78"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/Slate-Info.plist0000000000000000^405"ProcessInfoPlistFile build/Release/Slate.app/Contents/Info.plist Slate/Slate-Info.plist    cd /Users/jigishpatel/Documents/Code/Slate    builtin-infoPlistUtility Slate/Slate-Info.plist -genpkginfo /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/PkgInfo -expandbuildsettings -platform macosx -o /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app/Contents/Info.plist
+
+CProcessPCH /Users/jigishpatel/Library/Developer/Xcode/DerivedData/Slate-aahaobxhwwbdqiehqswpitndpzhg/Index/PrecompiledHeaders/Slate-Prefix-bagjvusqqykfgicngxqtfxsuubyh_ast/Slate-Prefix.pch.pth Slate/Slate-Prefix.pch normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CProcessPCH /Users/jigishpatel/Library/Developer/Xcode/DerivedData/Slate-aahaobxhwwbdqiehqswpitndpzhg/Index/PrecompiledHeaders/Slate-Prefix-hbcjvvysxxicqceinrtfuxckckmb_ast/Slate-Prefix.pch.pth Slate/Slate-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CProcessPCH /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch.pth Slate/Slate-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.445821
+e327921202.987926
+r1
+xProcessPCH
+x/var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch.pth
+xSlate/Slate-Prefix.pch
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection33"Precompile Slate/Slate-Prefix.pcha9307232ae8bb341^10e8fc32ae8bb341^---0#0#0#-19%DVTDocumentLocation2@78"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/Slate-Prefix.pch0000000000000000^1798"ProcessPCH /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch.pth Slate/Slate-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c-header -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/i386 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -c /Users/jigishpatel/Documents/Code/Slate/Slate/Slate-Prefix.pch -o /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-drsmssvpjiisekaognaixrzebuvo/Slate-Prefix.pch.pth
+
+CProcessPCH /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch.pth Slate/Slate-Prefix.pch normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s327921202.445565
+e327921202.909788
+r1
+xProcessPCH
+x/var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch.pth
+xSlate/Slate-Prefix.pch
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection33"Precompile Slate/Slate-Prefix.pche61e7232ae8bb341^bce7e832ae8bb341^---0#0#0#-19%DVTDocumentLocation2@78"file://localhost/Users/jigishpatel/Documents/Code/Slate/Slate/Slate-Prefix.pch0000000000000000^1804"ProcessPCH /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch.pth Slate/Slate-Prefix.pch normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jigishpatel/Documents/Code/Slate    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c-header -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -mdynamic-no-pic -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility=hidden -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-generated-files.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-own-target-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-all-target-headers.hmap -iquote /Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/Slate-project-headers.hmap -I/Users/jigishpatel/Documents/Code/Slate/build/Release/include -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources/x86_64 -I/Users/jigishpatel/Documents/Code/Slate/build/Slate.build/Release/Slate.build/DerivedSources -F/Users/jigishpatel/Documents/Code/Slate/build/Release -c /Users/jigishpatel/Documents/Code/Slate/Slate/Slate-Prefix.pch -o /var/folders/bH/bHrB2sH-HTu3DzEIBEuCLE+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/Slate-Prefix-hhluukcqiqplschfgnmbqrtlvxet/Slate-Prefix.pch.pth
+
+CTouch /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app
+s327921203.537673
+e327921203.541681
+r1
+xTouch
+x/Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection69"Touch /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.appf7ae8933ae8bb341^74d38a33ae8bb341^---0#0#0#--163"Touch build/Release/Slate.app    cd /Users/jigishpatel/Documents/Code/Slate    /usr/bin/touch -c /Users/jigishpatel/Documents/Code/Slate/build/Release/Slate.app
+
