@@ -70,25 +70,24 @@
   } else {
     NSArray *screens = [NSScreen screens];
     NSScreen *screen = [screens objectAtIndex:0];
-    int prevHeight = [screen visibleFrame].size.height;
-    int prevOriginY = [screen visibleFrame].origin.y;
-    for (NSUInteger i = 1; i <= monitor; i++) {
-      screen = [screens objectAtIndex:i];
-      originX = [screen visibleFrame].origin.x;
-      originY = originY + (prevOriginY - [screen visibleFrame].origin.y) + (prevHeight - [screen visibleFrame].size.height);
-    }
+    int mainHeight = [screen visibleFrame].size.height;
+    int mainOriginY = [screen visibleFrame].origin.y;
+    screen = [screens objectAtIndex:monitor];
+    originX = [screen visibleFrame].origin.x;
+    originY = mainOriginY - [screen visibleFrame].origin.y - ([screen visibleFrame].size.height - mainHeight);
     sizeX = [screen visibleFrame].size.width;
     sizeY = [screen visibleFrame].size.height;
   }
+  NSLog(@"screenOrigin:(%i,%i), screenSize:(%i,%i), windowSize:(%f,%f), windowTopLeft:(%f,%f)",originX,originY,sizeX,sizeY,cSize.width,cSize.height,cTopLeft.x,cTopLeft.y);
   return [NSDictionary dictionaryWithObjectsAndKeys:
            [NSNumber numberWithInteger:originX], @"screenOriginX", 
            [NSNumber numberWithInteger:originY], @"screenOriginY", 
            [NSNumber numberWithInteger:sizeX], @"screenSizeX", 
            [NSNumber numberWithInteger:sizeY], @"screenSizeY", 
-           [NSNumber numberWithInteger:cSize.width], @"windowSizeX", 
-           [NSNumber numberWithInteger:cSize.height], @"windowSizeY", 
-           [NSNumber numberWithInteger:cTopLeft.x], @"windowTopLeftX", 
-           [NSNumber numberWithInteger:cTopLeft.y], @"windowTopLeftY", nil];
+           [NSNumber numberWithFloat:cSize.width], @"windowSizeX", 
+           [NSNumber numberWithFloat:cSize.height], @"windowSizeY", 
+           [NSNumber numberWithFloat:cTopLeft.x], @"windowTopLeftX", 
+           [NSNumber numberWithFloat:cTopLeft.y], @"windowTopLeftY", nil];
 }
 
 - (NSPoint) getTopLeftWithCurrentTopLeft: (NSPoint)cTopLeft currentSize: (NSSize)cSize {
