@@ -56,27 +56,32 @@
   if (monitor == -1) {
     NSArray *screens = [NSScreen screens];
     NSScreen *screen = [screens objectAtIndex:0];
-    int mainHeight = [screen visibleFrame].size.height;
-    int mainOriginY = [screen visibleFrame].origin.y;
-    for (NSUInteger i = 1; i < [screens count]; i++) {
-      if (NSPointInRect(cTopLeft, [screen frame])) {
+    int mainHeight = [screen frame].size.height;
+    int mainOriginY = [screen frame].origin.y;
+    NSPoint topLeftZeroed = NSMakePoint(cTopLeft.x, 0);
+    if (!NSPointInRect(topLeftZeroed, [screen frame])) {
+      for (NSUInteger i = 1; i < [screens count]; i++) {
+        topLeftZeroed = NSMakePoint(cTopLeft.x, 0);
         screen = [screens objectAtIndex:i];
-        originX = [screen visibleFrame].origin.x;
-        originY = mainOriginY - [screen visibleFrame].origin.y - ([screen visibleFrame].size.height - mainHeight);
+        if (NSPointInRect(topLeftZeroed, [screen frame])) {
+          originX = [screen frame].origin.x;
+          originY = mainOriginY - [screen frame].origin.y - ([screen frame].size.height - mainHeight);
+          break;
+        }
       }
     }
-    sizeX = [screen visibleFrame].size.width;
-    sizeY = [screen visibleFrame].size.height;
+    sizeX = [screen frame].size.width;
+    sizeY = [screen frame].size.height;
   } else {
     NSArray *screens = [NSScreen screens];
     NSScreen *screen = [screens objectAtIndex:0];
-    int mainHeight = [screen visibleFrame].size.height;
-    int mainOriginY = [screen visibleFrame].origin.y;
+    int mainHeight = [screen frame].size.height;
+    int mainOriginY = [screen frame].origin.y;
     screen = [screens objectAtIndex:monitor];
-    originX = [screen visibleFrame].origin.x;
-    originY = mainOriginY - [screen visibleFrame].origin.y - ([screen visibleFrame].size.height - mainHeight);
-    sizeX = [screen visibleFrame].size.width;
-    sizeY = [screen visibleFrame].size.height;
+    originX = [screen frame].origin.x;
+    originY = mainOriginY - [screen frame].origin.y - ([screen frame].size.height - mainHeight);
+    sizeX = [screen frame].size.width;
+    sizeY = [screen frame].size.height;
   }
   NSLog(@"screenOrigin:(%i,%i), screenSize:(%i,%i), windowSize:(%f,%f), windowTopLeft:(%f,%f)",originX,originY,sizeX,sizeY,cSize.width,cSize.height,cTopLeft.x,cTopLeft.y);
   return [NSDictionary dictionaryWithObjectsAndKeys:
