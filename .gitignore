@@ -1,1 +1,3 @@
 build/Slate.build
+build/Debug/SlateTests.octest
+build/Release/Slate.app.dSYM
