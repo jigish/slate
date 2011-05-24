@@ -54,16 +54,16 @@
   int sizeX = 0;
   int sizeY = 0;
   if (monitor == -1) {
-    NSUInteger i = 0;
     NSArray *screens = [NSScreen screens];
     NSScreen *screen = [screens objectAtIndex:0];
-    int prevHeight = [screen visibleFrame].size.height;
-    int prevOriginY = [screen visibleFrame].origin.y;
-    while (i < [screens count] && !NSPointInRect(cTopLeft, [screen frame])) {
-      screen = [screens objectAtIndex:i];
-      originX = [screen visibleFrame].origin.x;
-      originY = originY + (prevOriginY - [screen visibleFrame].origin.y) + (prevHeight - [screen visibleFrame].size.height);
-      i++;
+    int mainHeight = [screen visibleFrame].size.height;
+    int mainOriginY = [screen visibleFrame].origin.y;
+    for (NSUInteger i = 1; i < [screens count]; i++) {
+      if (NSPointInRect(cTopLeft, [screen frame])) {
+        screen = [screens objectAtIndex:i];
+        originX = [screen visibleFrame].origin.x;
+        originY = mainOriginY - [screen visibleFrame].origin.y - ([screen visibleFrame].size.height - mainHeight);
+      }
     }
     sizeX = [screen visibleFrame].size.width;
     sizeY = [screen visibleFrame].size.height;
