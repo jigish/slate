@@ -62,7 +62,7 @@
     while (i < [screens count] && !NSPointInRect(cTopLeft, [screen frame])) {
       screen = [screens objectAtIndex:i];
       originX = [screen visibleFrame].origin.x;
-      originY = originY + (prevOriginY - [screen visibleFrame].origin.y) - (prevHeight - [screen visibleFrame].size.height);
+      originY = originY + (prevOriginY - [screen visibleFrame].origin.y) + (prevHeight - [screen visibleFrame].size.height);
       i++;
     }
     sizeX = [screen visibleFrame].size.width;
@@ -75,7 +75,7 @@
     for (NSUInteger i = 1; i <= monitor; i++) {
       screen = [screens objectAtIndex:i];
       originX = [screen visibleFrame].origin.x;
-      originY = originY + (prevOriginY - [screen visibleFrame].origin.y) - (prevHeight - [screen visibleFrame].size.height);
+      originY = originY + (prevOriginY - [screen visibleFrame].origin.y) + (prevHeight - [screen visibleFrame].size.height);
     }
     sizeX = [screen visibleFrame].size.width;
     sizeY = [screen visibleFrame].size.height;
