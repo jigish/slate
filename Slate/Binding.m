@@ -17,6 +17,8 @@
 @synthesize modifiers;
 @synthesize hotKeyRef;
 
+static NSDictionary *dictionary = nil;
+
 - (id)init {
   self = [super init];
   if (self) {
@@ -152,10 +154,9 @@
 
 // This returns a dictionary containing mappings from ASCII to keyCode
 + (NSDictionary *)asciiToCodeDict {
-  static NSDictionary *dictionary = nil;
-  
   if (dictionary == nil) {
     dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ASCIIToCode" ofType:@"plist"]];
+    [dictionary retain];
   }
   return dictionary;
 }

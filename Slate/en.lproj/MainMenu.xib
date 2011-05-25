@@ -12,8 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="543"/>
 			<integer value="57"/>
+			<integer value="543"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1314,14 +1314,6 @@
 				<string key="NSTitle"/>
 				<object class="NSMutableArray" key="NSMenuItems">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSMenuItem" id="482326483">
-						<reference key="NSMenu" ref="429482039"/>
-						<string key="NSTitle">About Slate</string>
-						<string key="NSKeyEquiv"/>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="35465992"/>
-						<reference key="NSMixedImage" ref="502551668"/>
-					</object>
 					<object class="NSMenuItem" id="632727374">
 						<reference key="NSMenu" ref="429482039"/>
 						<string key="NSTitle">Quit Slate</string>
@@ -2021,14 +2013,6 @@
 						<reference key="destination" ref="336480265"/>
 					</object>
 					<int key="connectionID">554</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">orderFrontStandardAboutPanel:</string>
-						<reference key="source" ref="1021"/>
-						<reference key="destination" ref="482326483"/>
-					</object>
-					<int key="connectionID">562</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -3068,7 +3052,6 @@
 						<reference key="object" ref="429482039"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="482326483"/>
 							<reference ref="632727374"/>
 						</object>
 						<reference key="parent" ref="0"/>
@@ -3077,11 +3060,6 @@
 						<int key="objectID">553</int>
 						<reference key="object" ref="336480265"/>
 						<reference key="parent" ref="110575045"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">561</int>
-						<reference key="object" ref="482326483"/>
-						<reference key="parent" ref="429482039"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">563</int>
@@ -3307,8 +3285,6 @@
 					<string>553.ImportedFromIB2</string>
 					<string>56.IBPluginDependency</string>
 					<string>56.ImportedFromIB2</string>
-					<string>561.IBPluginDependency</string>
-					<string>561.ImportedFromIB2</string>
 					<string>563.IBPluginDependency</string>
 					<string>563.ImportedFromIB2</string>
 					<string>57.IBEditorWindowLastContentRect</string>
@@ -3553,10 +3529,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{954, 365}, {130, 43}}</string>
+					<string>{{954, 385}, {118, 23}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
