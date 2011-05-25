@@ -111,7 +111,7 @@ You can check our my own config in the file "slate" in my [dotfiles](https://git
 
 ## Contact ##
 
-Please send all bug reports, suggestions, or general commentary to [Jigish Patel](slate.issues@gmail.com)
+Please send all bug reports, suggestions, or general commentary to [Jigish Patel](mailto:slate.issues@gmail.com)
 
 ## Allowed Keys ##
 
