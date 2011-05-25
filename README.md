@@ -48,7 +48,7 @@ modifiers is a comma separated list of standard modifier keys. Allowed modifiers
 
 Allowed operations are:
 
-* move topLeftX,topLeftY sizeX,sizeY screen
+* Move the window any which way: "move topLeftX,topLeftY sizeX,sizeY screen"
 
         topLeftX = top left x coordinate of the window's desired position
         topLeftY = top left y coordinate of the window's desired position
@@ -73,7 +73,7 @@ Allowed operations are:
         windowTopLeftX = window's current top left x coordinate
         windowTopLeftY = window's current top left y coordinate
 
-* resize x y
+* Resize the window (keeping top-left the same): "resize x y"
 
         x = amount to resize width either as a percent or a hard value (+10% or -100)
         y = amount to resize height either as a percent or a hard value (+10% or -100)
@@ -84,7 +84,7 @@ Allowed operations are:
 
     Will bind the keystroke ctrl-rightarrow to increase the width the current window by 10%
 
-* push direction
+* Push the window to the edge of the screen: "push direction"
 
         direction = top|up|bottom|down|left|right
 
@@ -94,7 +94,7 @@ Allowed operations are:
 
     Will bind the keystroke alt-ctrl-uparrow to push the window so that it is aligned with the top of the screen
 
-* nudge x y
+* Nudge the window in any direction: "nudge x y"
 
         x = amount to nudge x either as a percent or a hard value (+10% or -100)
         y = amount to nudge y either as a percent or a hard value (+10% or -100)
@@ -110,3 +110,106 @@ Allowed operations are:
 Please send all bug reports, suggestions, or general commentary to [slate.issues@gmail.com](slate.issues@gmail.com)
 
 ## Appendix A: Allowed Keys ##
+
+'
+,
+\-
+.
+/
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+;
+\=
+\`
+a
+b
+backslash
+c
+caps
+d
+delete
+down
+e
+end
+esc
+f
+f1
+f10
+f11
+f12
+f13
+f14
+f15
+f16
+f17
+f18
+f19
+f2
+f20
+f3
+f4
+f5
+f6
+f7
+f8
+f9
+fn
+g
+h
+help
+home
+i
+j
+k
+l
+left
+m
+mute
+n
+o
+p
+pad*
+pad+
+pad-
+pad.
+pad/
+pad0
+pad1
+pad2
+pad3
+pad4
+pad5
+pad6
+pad7
+pad8
+pad9
+pad=
+padClear
+padEnter
+pageDown
+pageUp
+q
+r
+return
+right
+s
+space
+t
+tab
+u
+up
+v
+w
+x
+y
+z
+{
+}
