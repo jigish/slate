@@ -115,7 +115,7 @@ You can check out my own config in the file [here](https://github.com/jigish/dot
 
 # Contact #
 
-Please send all bug reports, suggestions, or general commentary to [Jigish Patel](mailto:slate.issues@gmail.com)
+Please send all bug reports, suggestions, or general commentary to [Jigish Patel](mailto:slate.issues@gmail.com) or [create an issue](https://github.com/jigish/slate/issues/new) on github.
 
 # Allowed Keys #
 
