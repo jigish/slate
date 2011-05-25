@@ -1,18 +1,16 @@
-# Slate #
-
-## About Slate ##
+# About Slate #
 
 Slate is a window management application similar to Divvy and SizeUp (except better). Originally written to
 replace them due to some limitations in how each work, it attemps to overcome them by simply being extremely
 configurable.
 
-## Using Slate ##
+# Using Slate #
 
-### Installing Slate ###
+## Installing Slate ##
 
 build/Release/Slate.app is the packaged application. Throw it wherever you want and run it.
 
-### Configuring Slate ###
+## Configuring Slate ##
 
 Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon
 running Slate. You can also re-load the config using the "Load Config" menu option on the status menu (use
@@ -20,22 +18,22 @@ this at your own risk. It is better to simply restart Slate).
 
 Configuration is split into two directives: config (for global configurations) and bind (for key bindings).
 
-#### The "config" Directive ####
+### The "config" Directive ###
 
 TODO (unimplemented due to lack of need for global configs as of yet)
 
-#### The "bind" Directive ####
+### The "bind" Directive ###
 
 The bind directive follows the following format:
 
     bind key:modifiers operation parameter+
 
-##### Key #####
+#### Key ####
 
 key is a reference to a key on the keyboard. See Allowed Keys for a complete list. For example: the "s" key
 would simply be "s" while the "1" key on the number pad would be "pad1".
 
-##### Modifiers #####
+#### Modifiers ####
 
 modifiers is a comma separated list of standard modifier keys. Allowed modifiers are:
 
@@ -44,7 +42,7 @@ modifiers is a comma separated list of standard modifier keys. Allowed modifiers
 * Command: "cmd"
 * Shift: "shift"
 
-##### Operation #####
+#### Operation ####
 
 Allowed operations are:
 
@@ -105,15 +103,15 @@ Allowed operations are:
 
     Will bind the keystroke ctrl-shift-leftarrow to nudge the window 100 pixels to the left
 
-#### Example Config ####
+### Example Config ###
 
 You can check out my own config in the file "slate" in my [dotfiles](https://github.com/jigish/dotfiles)
 
-## Contact ##
+# Contact #
 
 Please send all bug reports, suggestions, or general commentary to [Jigish Patel](mailto:slate.issues@gmail.com)
 
-## Allowed Keys ##
+# Allowed Keys #
 
     '
     ,
