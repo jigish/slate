@@ -73,7 +73,7 @@ Operations define what to actually do to the focused window. Allowed operations 
 
     Example:
 
-        bind right:ctrl resize +10% 0
+        bind right:ctrl resize +10% +0
 
     Will bind the keystroke ctrl-rightarrow to increase the width the current window by 10%
 
