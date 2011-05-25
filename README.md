@@ -111,7 +111,7 @@ Operations define what to actually do to the focused window. Allowed operations 
 
 ### Example Config ###
 
-You can check out my own config in the file "slate" in my [dotfiles](https://github.com/jigish/dotfiles)
+You can check out my own config in the file [here](https://github.com/jigish/dotfiles/blob/master/slate)
 
 # Contact #
 
