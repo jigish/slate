@@ -16,7 +16,6 @@
 }
 
 + (SlateConfig *)getInstance;
-+ (id)alloc;
 - (BOOL)load;
 - (NSMutableArray *)getBindings;
 

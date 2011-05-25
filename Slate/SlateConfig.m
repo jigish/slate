@@ -15,15 +15,7 @@ static SlateConfig *_instance = nil;
 + (SlateConfig *)getInstance {
   @synchronized([SlateConfig class]) {
     if (!_instance)
-    [[self alloc] init];
-    return _instance;
-  }
-}
-
-+ (id)alloc {
-  @synchronized([SlateConfig class]) {
-    NSAssert(_instance == nil, @"Attempted to allocate a second instance of a singleton.");
-    _instance = [super alloc];
+      _instance = [[[SlateConfig class] alloc] init];
     return _instance;
   }
 }
@@ -65,6 +57,7 @@ static SlateConfig *_instance = nil;
         if (bind != nil) {
           NSLog(@"  LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
           [bindings addObject:bind];
+          [bind release];
         } else {
           NSLog(@"  ERROR LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
         }
