@@ -109,7 +109,7 @@ Allowed operations are:
 
 Please send all bug reports, suggestions, or general commentary to [slate.issues@gmail.com](slate.issues@gmail.com)
 
-## Appendix A: Allowed Keys ##
+## Allowed Keys ##
 
     '
     ,
