@@ -32,8 +32,9 @@
   if (self) {
     // bind <key:modifiers> <op> <parameters>
     NSArray *tokens = [binding componentsSeparatedByString:@" "];
-    if ([tokens count] <=2)
-      return self;
+    if ([tokens count] <=2) {
+      return nil;
+    }
     NSString *keystroke = [tokens objectAtIndex:1];
     NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:@":"];
     if ([keyAndModifiers count] >= 1) {
@@ -52,6 +53,8 @@
             modifiers += cmdKey;
           } else if ([mod isEqualToString:@"shift"]) {
             modifiers += shiftKey;
+          } else {
+            NSLog(@"ERROR: Unrecognized modifier '%s'", [mod cStringUsingEncoding:NSASCIIStringEncoding]);
           }
           mod = [modEnum nextObject];
         }
@@ -61,7 +64,7 @@
     if ([opString isEqualToString:@"move"] && [tokens count] >= 5) {
       // bind <key:modifiers> move <topLeft> <dimensions> <monitor>
       op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:3] dimensions:[tokens objectAtIndex:4] monitor:([tokens count] >=6 ? [[tokens objectAtIndex:5] intValue] : -1)];
-    } else if ([opString hasPrefix:@"resize"] && [tokens count] >= 5) {
+    } else if ([opString isEqualToString:@"resize"] && [tokens count] >= 5) {
       // bind <key:modifiers> resize <x> <y>
       NSString *dimX = @"windowSizeX";
       NSString *x = [tokens objectAtIndex:3];
@@ -83,6 +86,27 @@
         dimY = [dimY stringByAppendingString:y];
       }
       op = [[MoveOperation alloc] initWithTopLeft:@"windowTopLeftX,windowTopLeftY" dimensions:([[dimX stringByAppendingString:@","] stringByAppendingString:dimY]) monitor:-1];
+    } else if ([opString isEqualToString:@"push"] && [tokens count] >= 4) {
+      // bind <key:modifiers> push <top|bottom|up|down|left|right>
+      NSString *direction = [tokens objectAtIndex:3];
+      NSString *dimensions = @"windowSizeX,windowSizeY";
+      NSString *topLeft = nil;
+      if ([direction isEqualToString:@"top"] || [direction isEqualToString:@"up"]) {
+        topLeft = @"windowTopLeftX,screenOriginY";
+      } else if ([direction isEqualToString:@"bottom"] || [direction isEqualToString:@"down"]) {
+        topLeft = @"windowTopLeftX,screenOriginY+screenSizeY-windowSizeY";
+      } else if ([direction isEqualToString:@"left"]) {
+        topLeft = @"screenOriginX,windowTopLeftY";
+      } else if ([direction isEqualToString:@"right"]) {
+        topLeft = @"screenOriginX+screenSizeX-windowSizeX,windowTopLeftY";
+      } else {
+        NSLog(@"ERROR: Unrecognized direction '%s'", [direction cStringUsingEncoding:NSASCIIStringEncoding]);
+        return nil;
+      }
+      op = [[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:-1];
+    } else {
+      NSLog(@"ERROR: Unrecognized operation '%s'", [opString cStringUsingEncoding:NSASCIIStringEncoding]);
+      return nil;
     }
   }
 

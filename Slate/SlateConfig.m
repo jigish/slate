@@ -61,8 +61,13 @@ static SlateConfig *_instance = nil;
         [configs setObject:[tokens objectAtIndex:2] forKey:[tokens objectAtIndex:1]];
       } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:@"bind"]) {
         // bind <key:modifiers> <op> <parameters>
-        NSLog(@"  LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
-        [bindings addObject:[[Binding alloc] initWithString:line]];
+        Binding *bind = [[Binding alloc] initWithString:line];
+        if (bind != nil) {
+          NSLog(@"  LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
+          [bindings addObject:bind];
+        } else {
+          NSLog(@"  ERROR LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
+        }
       }
     line = [e nextObject];
   }
