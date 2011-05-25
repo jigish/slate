@@ -103,7 +103,7 @@ Operations define what to actually do to the focused window. Allowed operations 
 
     Will bind the keystroke ctrl-shift-leftarrow to nudge the window 100 pixels to the left
 
-* Throw the window to any screen: "throw screen style"
+* Throw the window to any screen's origin: "throw screen style"
 
         screen = the screen you want to throw the window to (0 indexed)
         style = (optional) resize if you want the window to be fullscreen on screen, noresize if you want it to stay the size it is (default is noresize)
