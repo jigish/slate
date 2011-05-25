@@ -1,8 +1,6 @@
 # About Slate #
 
-Slate is a window management application similar to Divvy and SizeUp (except better). Originally written to
-replace them due to some limitations in how each work, it attemps to overcome them by simply being extremely
-configurable.
+Slate is a window management application similar to Divvy and SizeUp (except better and free!). Originally written to replace them due to some limitations in how each work, it attemps to overcome them by simply being extremely configurable.
 
 # Using Slate #
 
@@ -12,9 +10,7 @@ build/Release/Slate.app is the packaged application. Throw it wherever you want 
 
 ## Configuring Slate ##
 
-Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon
-running Slate. You can also re-load the config using the "Load Config" menu option on the status menu (use
-this at your own risk. It is better to simply restart Slate).
+Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon running Slate. You can also re-load the config using the "Load Config" menu option on the status menu (use this at your own risk. It is better to simply restart Slate).
 
 Configuration is split into two directives: config (for global configurations) and bind (for key bindings).
 
@@ -30,8 +26,7 @@ The bind directive follows the following format:
 
 #### Key ####
 
-key is a reference to a key on the keyboard. See Allowed Keys for a complete list. For example: the "s" key
-would simply be "s" while the "1" key on the number pad would be "pad1".
+key is a reference to a key on the keyboard. See Allowed Keys for a complete list. For example: the "s" key would simply be "s" while the "1" key on the number pad would be "pad1".
 
 #### Modifiers ####
 
