@@ -50,13 +50,19 @@ Allowed operations are:
 
 * move topLeftX,topLeftY sizeX,sizeY screen
 
-    topLeftX = top left x coordinate of the window's desired position
-    topLeftY = top left y coordinate of the window's desired position
-    sizeX = width of the window's desired position
-    sizeY = height of the window's desired position
-    screen = (optional) the id of the screen of the window's desired position (0 indexed). If this is not specified, it will default to the screen the window is currently on
+    where:
 
-    Example: "bind pad1:ctrl move 0,0 100,100 1" will bind the keystroke ctrl-numpad1 to moving the window to the screen at index 1 with top-left coordinate 0,0 and size 100,100
+        topLeftX = top left x coordinate of the window's desired position
+        topLeftY = top left y coordinate of the window's desired position
+        sizeX = width of the window's desired position
+        sizeY = height of the window's desired position
+        screen = (optional) the id of the screen of the window's desired position (0 indexed). If this is not specified, it will default to the screen the window is currently on
+
+    Example:
+
+        bind pad1:ctrl move 0,0 100,100 1
+
+    will bind the keystroke ctrl-numpad1 to moving the window to the screen at index 1 with top-left coordinate 0,0 and size 100,100
 
     You can also use the following values in topLeftX, topLeftY, sizeX or sizeY and they will be replaced with the appropriate values:
 
