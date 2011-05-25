@@ -24,6 +24,14 @@ The bind directive follows the following format:
 
     bind key:modifiers operation parameter+
 
+NOTE: The tokens above can only be separated by a single space as of now. More intelligent config parsing to come in a future version. For example, this is allowed:
+
+    bind 1:ctrl push up
+
+is allowed but this is not:
+
+    bind     1:ctrl push            up
+
 #### Key ####
 
 key is a reference to a key on the keyboard. See Allowed Keys for a complete list. For example: the "s" key would simply be "s" while the "1" key on the number pad would be "pad1".
