@@ -107,11 +107,11 @@ Allowed operations are:
 
 #### Example Config ####
 
-You can check our my own config in the file "slate" in my [https://github.com/jigish/dotfiles](dotfiles)
+You can check our my own config in the file "slate" in my [dotfiles](https://github.com/jigish/dotfiles)
 
 ## Contact ##
 
-Please send all bug reports, suggestions, or general commentary to [slate.issues@gmail.com](slate.issues@gmail.com)
+Please send all bug reports, suggestions, or general commentary to [Jigish Patel](slate.issues@gmail.com)
 
 ## Allowed Keys ##
 
