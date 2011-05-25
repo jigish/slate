@@ -107,7 +107,7 @@ Allowed operations are:
 
 #### Example Config ####
 
-You can check our my own config in the file "slate" in my [dotfiles](https://github.com/jigish/dotfiles)
+You can check out my own config in the file "slate" in my [dotfiles](https://github.com/jigish/dotfiles)
 
 ## Contact ##
 
