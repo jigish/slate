@@ -105,6 +105,10 @@ Allowed operations are:
 
     Will bind the keystroke ctrl-shift-leftarrow to nudge the window 100 pixels to the left
 
+#### Example Config ####
+
+You can check our my own config in the file "slate" in my [https://github.com/jigish/dotfiles](dotfiles)
+
 ## Contact ##
 
 Please send all bug reports, suggestions, or general commentary to [slate.issues@gmail.com](slate.issues@gmail.com)
