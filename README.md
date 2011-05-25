@@ -108,6 +108,12 @@ Operations define what to actually do to the focused window. Allowed operations 
         screen = the screen you want to throw the window to (0 indexed)
         style = (optional) resize if you want the window to be fullscreen on screen, noresize if you want it to stay the size it is (default is noresize)
 
+    Example:
+
+        bind pad1:alt,ctrl throw 1 resize
+
+    Will bind the keystroke alt-ctrl-numpad1 to throw the window to the 2nd screen and resize it to fit that screen
+
 ### Example Config ###
 
 You can check out my own config in the file "slate" in my [dotfiles](https://github.com/jigish/dotfiles)
