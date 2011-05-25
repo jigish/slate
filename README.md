@@ -49,7 +49,8 @@ modifiers is a comma separated list of standard modifier keys. Allowed modifiers
 
 Operations define what to actually do to the focused window. Allowed operations are:
 
-* Move the window any which way: "move topLeftX,topLeftY sizeX,sizeY screen"
+* Move/Resize the window any which way: "move topLeftX,topLeftY sizeX,sizeY screen"
+    This is the granddaddy of all the operations. The rest of the operations are all wrapped versions of move.
 
         topLeftX = top left x coordinate of the window's desired position
         topLeftY = top left y coordinate of the window's desired position
