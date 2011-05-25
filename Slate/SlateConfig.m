@@ -60,6 +60,17 @@ static SlateConfig *_instance = nil;
           [bind release];
         } else {
           NSLog(@"  ERROR LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
+          NSAlert *alert = [[NSAlert alloc] init];
+          [alert addButtonWithTitle:@"Quit"];
+          [alert addButtonWithTitle:@"Skip"];
+          [alert setMessageText:@"Error Loading Binding:"];
+          [alert setInformativeText:line];
+          [alert setAlertStyle:NSWarningAlertStyle];
+          if ([alert runModal] == NSAlertFirstButtonReturn) {
+            NSLog(@"User selected exit");
+            [NSApp terminate:nil];
+          }
+          [alert release];
         }
       }
     line = [e nextObject];
