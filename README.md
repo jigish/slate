@@ -44,7 +44,7 @@ modifiers is a comma separated list of standard modifier keys. Allowed modifiers
 
 #### Operation ####
 
-Allowed operations are:
+Operations define what to actually do to the focused window. Allowed operations are:
 
 * Move the window any which way: "move topLeftX,topLeftY sizeX,sizeY screen"
 
