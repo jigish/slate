@@ -50,8 +50,6 @@ Allowed operations are:
 
 * move topLeftX,topLeftY sizeX,sizeY screen
 
-    where:
-
         topLeftX = top left x coordinate of the window's desired position
         topLeftY = top left y coordinate of the window's desired position
         sizeX = width of the window's desired position
@@ -62,7 +60,7 @@ Allowed operations are:
 
         bind pad1:ctrl move 0,0 100,100 1
 
-    will bind the keystroke ctrl-numpad1 to moving the window to the screen at index 1 with top-left coordinate 0,0 and size 100,100
+    Will bind the keystroke ctrl-numpad1 to moving the window to the screen at index 1 with top-left coordinate 0,0 and size 100,100
 
     You can also use the following values in topLeftX, topLeftY, sizeX or sizeY and they will be replaced with the appropriate values:
 
@@ -76,8 +74,36 @@ Allowed operations are:
         windowTopLeftY = window's current top left y coordinate
 
 * resize x y
+
+        x = amount to resize width either as a percent or a hard value (+10% or -100)
+        y = amount to resize height either as a percent or a hard value (+10% or -100)
+
+    Example:
+
+        bind right:ctrl resize +10% 0
+
+    Will bind the keystroke ctrl-rightarrow to increase the width the current window by 10%
+
 * push direction
+
+        direction = top|up|bottom|down|left|right
+
+    Example:
+
+        bind up:alt,ctrl push up
+
+    Will bind the keystroke alt-ctrl-uparrow to push the window so that it is aligned with the top of the screen
+
 * nudge x y
+
+        x = amount to nudge x either as a percent or a hard value (+10% or -100)
+        y = amount to nudge y either as a percent or a hard value (+10% or -100)
+
+    Example:
+
+        bind left:ctrl,shift nudge -100 +0
+
+    Will bind the keystroke ctrl-shift-leftarrow to nudge the window 100 pixels to the left
 
 ## Contact ##
 
