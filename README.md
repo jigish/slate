@@ -10,7 +10,7 @@ configurable.
 
 ### Installing Slate ###
 
-"Slate.app" in build/Release/ is the packaged application. Simply double-click and it will start running.
+build/Release/Slate.app is the packaged application. Simply double-click and it will start running.
 
 ### Configuring Slate ###
 
@@ -23,8 +23,13 @@ TODO (unimplemented due to lack of need for global configs as of yet)
 
 #### The "bind" Directive ####
 
-TODO (write me!)
+The bind directive follows the following format:
 
-### Bug Reports ###
+    bind key:modifiers operation parameter+
 
-Please send all bug reports to slate.issues@gmail.com
+where key is a reference to a key on the keyboard (see Allowed Keys for the complete list) and modifiers is
+a comma separated list of modifier keys. Acceptable modifiers are ctrl, alt, cmd, and shift.
+
+## Contact ##
+
+Please send all bug reports, suggestions, or general commentary to [slate.issues@gmail.com](slate.issues@gmail.com)
