@@ -104,6 +104,28 @@
         return nil;
       }
       op = [[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:-1];
+    } else if ([opString isEqualToString:@"nudge"] && [tokens count] >= 5) {
+      // bind <key:modifiers> nudge x y
+      NSString *tlX = @"windowTopLeftX";
+      NSString *x = [tokens objectAtIndex:3];
+      if ([x hasSuffix:@"%"]) {
+        // % Nudge
+        tlX = [tlX stringByAppendingString:[x stringByReplacingOccurrencesOfString:@"%" withString:@"*windowSizeX/100"]];
+      } else {
+        // Hard Nudge
+        tlX = [tlX stringByAppendingString:x];
+      }
+      
+      NSString *tlY = @"windowTopLeftY";
+      NSString *y = [tokens objectAtIndex:4];
+      if ([y hasSuffix:@"%"]) {
+        // % Nudge
+        tlY = [tlY stringByAppendingString:[y stringByReplacingOccurrencesOfString:@"%" withString:@"*windowSizeY/100"]];
+      } else {
+        // Hard Nudge
+        tlY = [tlY stringByAppendingString:y];
+      }
+      op = [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:@","] stringByAppendingString:tlY] dimensions:@"windowSizeX,windowSizeY" monitor:-1];
     } else {
       NSLog(@"ERROR: Unrecognized operation '%s'", [opString cStringUsingEncoding:NSASCIIStringEncoding]);
       return nil;
