@@ -61,9 +61,28 @@
     if ([opString isEqualToString:@"move"] && [tokens count] >= 5) {
       // bind <key:modifiers> move <topLeft> <dimensions> <monitor>
       op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:3] dimensions:[tokens objectAtIndex:4] monitor:([tokens count] >=6 ? [[tokens objectAtIndex:5] intValue] : -1)];
-    } else if ([opString isEqualToString:@"resize"] && [tokens count] >= 5) {
-      // bind <key:modifiers> resize <x%> <y%>
-      op = [[MoveOperation alloc] initWithTopLeft:@"windowTopLeftX,windowTopLeftY" dimensions:([[[[@"windowSizeX*" stringByAppendingString:[tokens objectAtIndex:3]] stringByAppendingString:@"/100,windowSizeY*"] stringByAppendingString:[tokens objectAtIndex:4]] stringByAppendingString:@"/100"]) monitor:-1];
+    } else if ([opString hasPrefix:@"resize"] && [tokens count] >= 5) {
+      // bind <key:modifiers> resize <x> <y>
+      NSString *dimX = @"windowSizeX";
+      NSString *x = [tokens objectAtIndex:3];
+      if ([x hasSuffix:@"%"]) {
+        // % Resize
+        dimX = [dimX stringByAppendingString:[x stringByReplacingOccurrencesOfString:@"%" withString:@"*windowSizeX/100"]];
+      } else {
+        // Hard Resize
+        dimX = [dimX stringByAppendingString:x];
+      }
+
+      NSString *dimY = @"windowSizeY";
+      NSString *y = [tokens objectAtIndex:4];
+      if ([y hasSuffix:@"%"]) {
+        // % Resize
+        dimY = [dimY stringByAppendingString:[y stringByReplacingOccurrencesOfString:@"%" withString:@"*windowSizeY/100"]];
+      } else {
+        // Hard Resize
+        dimY = [dimY stringByAppendingString:y];
+      }
+      op = [[MoveOperation alloc] initWithTopLeft:@"windowTopLeftX,windowTopLeftY" dimensions:([[dimX stringByAppendingString:@","] stringByAppendingString:dimY]) monitor:-1];
     }
   }
 
