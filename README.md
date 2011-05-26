@@ -76,6 +76,8 @@ Operations define what to actually do to the focused window. Allowed operations 
         windowTopLeftX = window's current top left x coordinate
         windowTopLeftY = window's current top left y coordinate
 
+    Remember to offset with screenOriginX in your topLeftX and screenOriginY in your topLeftY when using the "screen" option (or when using multiple monitors in general) or your move operation will offset from the default origin (0,0) which is the origin of screen 0.
+
 * Resize the window (keeping top-left the same): "resize x y anchor"
 
         x = amount to resize width either as a percent or a hard value (+10% or -100)
