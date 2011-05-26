@@ -202,9 +202,9 @@
 	<integer>16</integer>
 	<key>z</key>
 	<integer>6</integer>
-	<key>{</key>
+	<key>[</key>
 	<integer>33</integer>
-	<key>}</key>
+	<key>]</key>
 	<integer>30</integer>
 </dict>
 </plist>

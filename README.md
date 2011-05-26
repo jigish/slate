@@ -242,5 +242,5 @@ Please send all bug reports, suggestions, or general commentary to [Jigish Patel
     x
     y
     z
-    {
-    }
+    [
+    ]
