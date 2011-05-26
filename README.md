@@ -127,7 +127,7 @@ Operations define what to actually do to the focused window. Allowed operations 
 
     Example:
 
-        bind 1:ctrl direction top-left resize:screenSizeX/2,screenSizeY/2
+        bind 1:ctrl corner top-left resize:screenSizeX/2,screenSizeY/2
 
     Will bind the keystroke ctrl-1 to move the window to the top-left corner and resize it to 1/4 of the screen
 
