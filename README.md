@@ -47,16 +47,57 @@ modifiers is a comma separated list of standard modifier keys. Allowed modifiers
 
 #### Operation ####
 
-Operations define what to actually do to the focused window. Allowed operations are:
+Operations define what to actually do to the focused window.
+
+Some operations allow parameters that can be expressions. The following strings will be replaced with the appropriate values when using expressions:
+
+    screenOriginX = target screen's top left x coordinate
+    screenOriginY = target screen's top left y coordinate
+    screenSizeX = target screen's width
+    screenSizeY = target screen's height
+    windowSizeX = window's width
+    windowSizeY = window's height
+    windowTopLeftX = window's current top left x coordinate
+    windowTopLeftY = window's current top left y coordinate
+
+In addition to the variables above, expressions can be used with the following functions and operators:
+
+    +          e.g. 1+1 = 2
+    -          e.g. 1-1 = 0
+    *          e.g. 2*2 = 4
+    /          e.g. 4/2 = 2
+    **         e.g. 3**2 = 9
+    sum        e.g. sum({1,2,3}) = 6
+    count      e.g. count({4,5,6}) = 3
+    min        e.g. min({1,3,5}) = 1
+    max        e.g. max({1,3,5}) = 5
+    average    e.g. average({1,2,3,4}) = 2.5
+    median     e.g. median({1,2,3,10,15}) = 3
+    mode       e.g. mode({1,3,4,3,5}) = 3
+    stddev     e.g. stddev({1,2,3,4,5}) = 1.4142135623730951
+    sqrt       e.g. sqrt(9) = 3.0
+    log        e.g. log(100) = 2.0
+    ln         e.g. ln(8) = 2.0794415416798357
+    exp        e.g. exp(2) = 7.3890560989306504 (this is "e**parameter")
+    floor      e.g. floor(1.9) = 1.0
+    ceiling    e.g. ceiling(1.1) = 2.0
+    abs        e.g. abs(-1) = 1
+    trunc      e.g. trunc(1.1123123123) = 1.0
+    random     e.g. random() = 0.20607629744336009 (random float between 0 and 1)
+    randomn    e.g. randomn(10) = 4 (random integer between 0 and parameter-1)
+
+Note: When using expressions spaces are *not* allowed!
+
+Allowed operations are:
 
 * Move/Resize the window any which way: "move topLeftX,topLeftY sizeX,sizeY screen"
 
     This is the granddaddy of all the operations. The rest of the operations are all wrapped versions of move.
 
-        topLeftX = top left x coordinate of the window's desired position
-        topLeftY = top left y coordinate of the window's desired position
-        sizeX = width of the window's desired position
-        sizeY = height of the window's desired position
+        topLeftX = top left x coordinate of the window's desired position (can be an expression)
+        topLeftY = top left y coordinate of the window's desired position (can be an expression)
+        sizeX = width of the window's desired position (can be an expression)
+        sizeY = height of the window's desired position (can be an expression)
         screen = (optional) the id of the screen of the window's desired position (0 indexed). If this is not specified, it will default to the screen the window is currently on
 
     Example:
@@ -64,17 +105,6 @@ Operations define what to actually do to the focused window. Allowed operations 
         bind pad1:ctrl move 0,0 100,100 1
 
     Will bind the keystroke ctrl-numpad1 to moving the window to the screen at index 1 with top-left coordinate 0,0 and size 100,100
-
-    You can also use the following values in topLeftX, topLeftY, sizeX or sizeY and they will be replaced with the appropriate values:
-
-        screenOriginX = target screen's top left x coordinate
-        screenOriginY = target screen's top left y coordinate
-        screenSizeX = target screen's width
-        screenSizeY = target screen's height
-        windowSizeX = window's width
-        windowSizeY = window's height
-        windowTopLeftX = window's current top left x coordinate
-        windowTopLeftY = window's current top left y coordinate
 
     Remember to offset with screenOriginX in your topLeftX and screenOriginY in your topLeftY when using the "screen" option (or when using multiple monitors in general) or your move operation will offset from the default origin (0,0) which is the origin of screen 0.
 
@@ -136,7 +166,7 @@ Operations define what to actually do to the focused window. Allowed operations 
 
 ### Example Config ###
 
-You can check out my own config in the file [here](https://github.com/jigish/dotfiles/blob/master/slate)
+You can check out my own config in the file [here](https://github.com/jigish/dotfiles/blob/master/slate).
 
 # Contact #
 
