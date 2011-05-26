@@ -88,18 +88,66 @@ static NSDictionary *dictionary = nil;
       }
       op = [[MoveOperation alloc] initWithTopLeft:@"windowTopLeftX,windowTopLeftY" dimensions:([[dimX stringByAppendingString:@","] stringByAppendingString:dimY]) monitor:-1];
     } else if ([opString isEqualToString:@"push"] && [tokens count] >= 4) {
-      // bind <key:modifiers> push <top|bottom|up|down|left|right>
+      // bind <key:modifiers> push <top|bottom|up|down|left|right> <optional:none|center|bar|bar-resize:expression>
       NSString *direction = [tokens objectAtIndex:3];
       NSString *dimensions = @"windowSizeX,windowSizeY";
       NSString *topLeft = nil;
+      NSString *style = @"none";
+      if ([tokens count] >= 5) {
+        style = [tokens objectAtIndex:4];
+      }
       if ([direction isEqualToString:@"top"] || [direction isEqualToString:@"up"]) {
-        topLeft = @"windowTopLeftX,screenOriginY";
+        if ([style isEqualToString:@"center"]) {
+          topLeft = @"screenOriginX+(screenSizeX-windowSizeX)/2,screenOriginY";
+        } else if ([style isEqualToString:@"bar"]) {
+          topLeft = @"screenOriginX,screenOriginY";
+          dimensions = @"screenSizeX,windowSizeY";
+        } else if ([style hasPrefix:@"bar-resize:"]) {
+          NSString *resizeExpression = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
+          topLeft = @"screenOriginX,screenOriginY";
+          dimensions = [@"screenSizeX," stringByAppendingString:resizeExpression];
+        } else {
+          topLeft = @"windowTopLeftX,screenOriginY";
+        }
       } else if ([direction isEqualToString:@"bottom"] || [direction isEqualToString:@"down"]) {
-        topLeft = @"windowTopLeftX,screenOriginY+screenSizeY-windowSizeY";
+        if ([style isEqualToString:@"center"]) {
+          topLeft = @"screenOriginX+(screenSizeX-windowSizeX)/2,screenOriginY+screenSizeY-windowSizeY";
+        } else if ([style isEqualToString:@"bar"]) {
+          topLeft = @"screenOriginX,screenOriginY+screenSizeY-windowSizeY";
+          dimensions = @"screenSizeX,windowSizeY";
+        } else if ([style hasPrefix:@"bar-resize:"]) {
+          NSString *resizeExpression = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
+          topLeft = [@"screenOriginX,screenOriginY+screenSizeY-" stringByAppendingString:resizeExpression];
+          dimensions = [@"screenSizeX," stringByAppendingString:resizeExpression];
+        } else {
+          topLeft = @"windowTopLeftX,screenOriginY+screenSizeY-windowSizeY";
+        }
       } else if ([direction isEqualToString:@"left"]) {
-        topLeft = @"screenOriginX,windowTopLeftY";
+        if ([style isEqualToString:@"center"]) {
+          topLeft = @"screenOriginX,screenOriginY+(screenSizeY-windowSizeY)/2";
+        } else if ([style isEqualToString:@"bar"]) {
+          topLeft = @"screenOriginX,screenOriginY";
+          dimensions = @"windowSizeX,screenSizeY";
+        } else if ([style hasPrefix:@"bar-resize:"]) {
+          NSString *resizeExpression = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
+          topLeft = @"screenOriginX,screenOriginY";
+          dimensions = [resizeExpression stringByAppendingString:@",screenSizeY"];
+        } else {
+          topLeft = @"screenOriginX,windowTopLeftY";
+        }
       } else if ([direction isEqualToString:@"right"]) {
-        topLeft = @"screenOriginX+screenSizeX-windowSizeX,windowTopLeftY";
+        if ([style isEqualToString:@"center"]) {
+          topLeft = @"screenOriginX+screenSizeX-windowSizeX,screenOriginY+(screenSizeY-windowSizeY)/2";
+        } else if ([style isEqualToString:@"bar"]) {
+          topLeft = @"screenOriginX+screenSizeX-windowSizeX,screenOriginY";
+          dimensions = @"windowSizeX,screenSizeY";
+        } else if ([style hasPrefix:@"bar-resize:"]) {
+          NSString *resizeExpression = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
+          topLeft = [[@"screenOriginX+screenSizeX-" stringByAppendingString:resizeExpression] stringByAppendingString:@",screenOriginY"];
+          dimensions = [resizeExpression stringByAppendingString:@",screenSizeY"];
+        } else {
+          topLeft = @"screenOriginX+screenSizeX-windowSizeX,windowTopLeftY";
+        }
       } else {
         NSLog(@"ERROR: Unrecognized direction '%s'", [direction cStringUsingEncoding:NSASCIIStringEncoding]);
         return nil;

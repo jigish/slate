@@ -87,9 +87,10 @@ Operations define what to actually do to the focused window. Allowed operations 
 
     Will bind the keystroke ctrl-rightarrow to increase the width the current window by 10%
 
-* Push the window to the edge of the screen: "push direction"
+* Push the window to the edge of the screen: "push direction style"
 
         direction = top|up|bottom|down|left|right
+        style = (optional) none|center|bar|bar-resize:expression
 
     Example:
 
