@@ -67,27 +67,41 @@ static NSDictionary *dictionary = nil;
       // bind <key:modifiers> move <topLeft> <dimensions> <optional:monitor>
       op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:3] dimensions:[tokens objectAtIndex:4] monitor:([tokens count] >=6 ? [[tokens objectAtIndex:5] intValue] : -1)];
     } else if ([opString isEqualToString:@"resize"] && [tokens count] >= 5) {
-      // bind <key:modifiers> resize <x> <y>
+      // bind <key:modifiers> resize <x> <y> <optional:anchor>
       NSString *dimX = @"windowSizeX";
       NSString *x = [tokens objectAtIndex:3];
-      if ([x hasSuffix:@"%"]) {
-        // % Resize
-        dimX = [dimX stringByAppendingString:[x stringByReplacingOccurrencesOfString:@"%" withString:@"*windowSizeX/100"]];
-      } else {
-        // Hard Resize
-        dimX = [dimX stringByAppendingString:x];
-      }
+      NSString *xAugment = [x hasSuffix:@"%"] ? [x stringByReplacingOccurrencesOfString:@"%" withString:@"*windowSizeX/100"] : x;
+      dimX = [dimX stringByAppendingString:xAugment];
+      NSString *flippedXAugment = [x hasPrefix:@"+"] ? [xAugment stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:@"-"] : [xAugment stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:@"+"];
 
       NSString *dimY = @"windowSizeY";
       NSString *y = [tokens objectAtIndex:4];
-      if ([y hasSuffix:@"%"]) {
-        // % Resize
-        dimY = [dimY stringByAppendingString:[y stringByReplacingOccurrencesOfString:@"%" withString:@"*windowSizeY/100"]];
+      NSString *yAugment = [y hasSuffix:@"%"] ? [y stringByReplacingOccurrencesOfString:@"%" withString:@"*windowSizeY/100"] : y;
+      dimY = [dimY stringByAppendingString:yAugment];
+      NSString *flippedYAugment = [y hasPrefix:@"+"] ? [yAugment stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:@"-"] : [yAugment stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:@"+"];
+
+      NSString *tlX = [@"windowTopLeftX" stringByAppendingString:flippedXAugment];
+      NSString *tlY = [@"windowTopLeftY" stringByAppendingString:flippedYAugment];
+      NSString *anchor = [tokens count] >= 6 ? [tokens objectAtIndex:5] : @"top-left";
+
+      if ([anchor isEqualToString:@"top-left"]) {
+        tlX = @"windowTopLeftX";
+        tlY = @"windowTopLeftY";
+      } else if ([anchor isEqualToString:@"top-right"]) {
+        tlX = [@"windowTopLeftX" stringByAppendingString:flippedXAugment];
+        tlY = @"windowTopLeftY";
+      } else if ([anchor isEqualToString:@"bottom-left"]) {
+        tlX = @"windowTopLeftX";
+        tlY = [@"windowTopLeftY" stringByAppendingString:flippedYAugment];
+      } else if ([anchor isEqualToString:@"bottom-right"]) {
+        tlX = [@"windowTopLeftX" stringByAppendingString:flippedXAugment];
+        tlY = [@"windowTopLeftY" stringByAppendingString:flippedYAugment];
       } else {
-        // Hard Resize
-        dimY = [dimY stringByAppendingString:y];
+        NSLog(@"ERROR: Unrecognized anchor '%s'", [anchor cStringUsingEncoding:NSASCIIStringEncoding]);
+        return nil;
       }
-      op = [[MoveOperation alloc] initWithTopLeft:@"windowTopLeftX,windowTopLeftY" dimensions:([[dimX stringByAppendingString:@","] stringByAppendingString:dimY]) monitor:-1];
+
+      op = [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:@","] stringByAppendingString:tlY] dimensions:[[dimX stringByAppendingString:@","] stringByAppendingString:dimY] monitor:-1];
     } else if ([opString isEqualToString:@"push"] && [tokens count] >= 4) {
       // bind <key:modifiers> push <top|bottom|up|down|left|right> <optional:none|center|bar|bar-resize:expression>
       NSString *direction = [tokens objectAtIndex:3];
@@ -165,7 +179,7 @@ static NSDictionary *dictionary = nil;
         // Hard Nudge
         tlX = [tlX stringByAppendingString:x];
       }
-      
+
       NSString *tlY = @"windowTopLeftY";
       NSString *y = [tokens objectAtIndex:4];
       if ([y hasSuffix:@"%"]) {
@@ -193,14 +207,14 @@ static NSDictionary *dictionary = nil;
       NSString *tl = nil;
       NSString *dim = @"windowSizeX,windowSizeY";
       NSString *direction = [tokens objectAtIndex:3];
-      
+
       if ([tokens count] >= 5) {
         NSString *style = [tokens objectAtIndex:4];
         if ([style hasPrefix:@"resize:"]) {
           dim = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
         }
       }
-      
+
       if ([direction isEqualToString:@"top-left"]) {
         tl = @"screenOriginX,screenOriginY";
       } else if ([direction isEqualToString:@"top-right"]) {
@@ -213,7 +227,7 @@ static NSDictionary *dictionary = nil;
         NSLog(@"ERROR: Unrecognized corner '%s'", [direction cStringUsingEncoding:NSASCIIStringEncoding]);
         return nil;
       }
-      
+
       op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:-1];
     } else {
       NSLog(@"ERROR: Unrecognized operation '%s'", [opString cStringUsingEncoding:NSASCIIStringEncoding]);

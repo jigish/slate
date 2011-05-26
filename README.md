@@ -76,10 +76,11 @@ Operations define what to actually do to the focused window. Allowed operations 
         windowTopLeftX = window's current top left x coordinate
         windowTopLeftY = window's current top left y coordinate
 
-* Resize the window (keeping top-left the same): "resize x y"
+* Resize the window (keeping top-left the same): "resize x y anchor"
 
         x = amount to resize width either as a percent or a hard value (+10% or -100)
         y = amount to resize height either as a percent or a hard value (+10% or -100)
+        anchor = (optional) which corner to anchor on (top-left|top-right|bottom-left|bottom-right)
 
     Example:
 

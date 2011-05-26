@@ -85,14 +85,14 @@
   }
   NSLog(@"screenOrigin:(%i,%i), screenSize:(%i,%i), windowSize:(%f,%f), windowTopLeft:(%f,%f)",originX,originY,sizeX,sizeY,cSize.width,cSize.height,cTopLeft.x,cTopLeft.y);
   return [NSDictionary dictionaryWithObjectsAndKeys:
-           [NSNumber numberWithInteger:originX], @"screenOriginX", 
-           [NSNumber numberWithInteger:originY], @"screenOriginY", 
-           [NSNumber numberWithInteger:sizeX], @"screenSizeX", 
-           [NSNumber numberWithInteger:sizeY], @"screenSizeY", 
-           [NSNumber numberWithFloat:cSize.width], @"windowSizeX", 
-           [NSNumber numberWithFloat:cSize.height], @"windowSizeY", 
-           [NSNumber numberWithFloat:cTopLeft.x], @"windowTopLeftX", 
-           [NSNumber numberWithFloat:cTopLeft.y], @"windowTopLeftY", nil];
+           [NSNumber numberWithInteger:originX], @"screenOriginX",
+           [NSNumber numberWithInteger:originY], @"screenOriginY",
+           [NSNumber numberWithInteger:sizeX], @"screenSizeX",
+           [NSNumber numberWithInteger:sizeY], @"screenSizeY",
+           [NSNumber numberWithInteger:(int)cSize.width], @"windowSizeX",
+           [NSNumber numberWithInteger:(int)cSize.height], @"windowSizeY",
+           [NSNumber numberWithInteger:(int)cTopLeft.x], @"windowTopLeftX",
+           [NSNumber numberWithInteger:(int)cTopLeft.y], @"windowTopLeftY", nil];
 }
 
 - (NSPoint) getTopLeftWithCurrentTopLeft: (NSPoint)cTopLeft currentSize: (NSSize)cSize {
