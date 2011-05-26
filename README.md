@@ -82,7 +82,7 @@ Operations define what to actually do to the focused window. Allowed operations 
 
         x = amount to resize width either as a percent or a hard value (+10% or -100)
         y = amount to resize height either as a percent or a hard value (+10% or -100)
-        anchor = (optional) which corner to anchor on (top-left|top-right|bottom-left|bottom-right)
+        anchor = (optional) which corner to anchor on top-left|top-right|bottom-left|bottom-right (default is top-left)
 
     Example:
 
@@ -93,7 +93,7 @@ Operations define what to actually do to the focused window. Allowed operations 
 * Push the window to the edge of the screen: "push direction style"
 
         direction = top|up|bottom|down|left|right
-        style = (optional) none|center|bar|bar-resize:expression
+        style = (optional) none|center|bar|bar-resize:expression (default is none)
 
     Example:
 
@@ -115,7 +115,7 @@ Operations define what to actually do to the focused window. Allowed operations 
 * Throw the window to any screen's origin: "throw screen style"
 
         screen = the screen you want to throw the window to (0 indexed)
-        style = (optional) resize if you want the window to be fullscreen on screen, noresize if you want it to stay the size it is (default is noresize)
+        style = (optional) resize|resize:x-expression,y-expression (default will not resize)
 
     Example:
 
@@ -126,7 +126,7 @@ Operations define what to actually do to the focused window. Allowed operations 
 * Move/Resize the window into a corner: "corner direction style"
 
         direction = top-left|top-right|bottom-left|bottom-right
-        style = (optional) resize:x-expression,y-expression
+        style = (optional) resize:x-expression,y-expression (default will not resize)
 
     Example:
 
@@ -140,7 +140,7 @@ You can check out my own config in the file [here](https://github.com/jigish/dot
 
 # Contact #
 
-Please send all bug reports, suggestions, or general commentary to [Jigish Patel](mailto:slate.issues@gmail.com) or [create an issue](https://github.com/jigish/slate/issues/new) on github.
+Please send all questions, bug reports, suggestions, or general commentary to [Jigish Patel](mailto:slate.issues@gmail.com) or [create an issue](https://github.com/jigish/slate/issues/new) on github.
 
 # Allowed Keys #
 

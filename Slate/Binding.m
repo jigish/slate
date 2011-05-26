@@ -199,6 +199,9 @@ static NSDictionary *dictionary = nil;
         if ([style isEqualToString:@"resize"]) {
           tl = @"screenOriginX,screenOriginY";
           dim = @"screenSizeX,screenSizeY";
+        } else if ([style hasPrefix:@"resize:"]) {
+          tl = @"screenOriginX,screenOriginY";
+          dim = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
         }
       }
       op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[[tokens objectAtIndex:3] intValue]];
