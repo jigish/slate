@@ -28,6 +28,7 @@ static NSDictionary *dictionary = nil;
   return self;
 }
 
+// Yes, this method is huge. Deal with it.
 - (id)initWithString: (NSString *)binding {
   self = [super init];
   if (self) {
@@ -187,6 +188,33 @@ static NSDictionary *dictionary = nil;
         }
       }
       op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[[tokens objectAtIndex:3] intValue]];
+    } else if ([opString isEqualToString:@"corner"] && [tokens count] >= 4) {
+      // bind <key:modifiers> corner <top-left|top-right|bottom-left|bottom-right> <optional:resize:expression>
+      NSString *tl = nil;
+      NSString *dim = @"windowSizeX,windowSizeY";
+      NSString *direction = [tokens objectAtIndex:3];
+      
+      if ([tokens count] >= 5) {
+        NSString *style = [tokens objectAtIndex:4];
+        if ([style hasPrefix:@"resize:"]) {
+          dim = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
+        }
+      }
+      
+      if ([direction isEqualToString:@"top-left"]) {
+        tl = @"screenOriginX,screenOriginY";
+      } else if ([direction isEqualToString:@"top-right"]) {
+        tl = [[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:@","] objectAtIndex:0]] stringByAppendingString:@",screenOriginY"];
+      } else if ([direction isEqualToString:@"bottom-left"]) {
+        tl = [@"screenOriginX,screenOriginY+screenSizeY-" stringByAppendingString:[[dim componentsSeparatedByString:@","] objectAtIndex:1]];
+      } else if ([direction isEqualToString:@"bottom-right"]) {
+        tl = [[[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:@","] objectAtIndex:0]] stringByAppendingString:@",screenOriginY+screenSizeY-"] stringByAppendingString:[[dim componentsSeparatedByString:@","] objectAtIndex:1]];
+      } else {
+        NSLog(@"ERROR: Unrecognized corner '%s'", [direction cStringUsingEncoding:NSASCIIStringEncoding]);
+        return nil;
+      }
+      
+      op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:-1];
     } else {
       NSLog(@"ERROR: Unrecognized operation '%s'", [opString cStringUsingEncoding:NSASCIIStringEncoding]);
       return nil;

@@ -120,6 +120,17 @@ Operations define what to actually do to the focused window. Allowed operations 
 
     Will bind the keystroke alt-ctrl-numpad1 to throw the window to the 2nd screen and resize it to fit that screen
 
+* Move/Resize the window into a corner: "corner direction style"
+
+        direction = top-left|top-right|bottom-left|bottom-right
+        style = (optional) resize:x-expression,y-expression
+
+    Example:
+
+        bind 1:ctrl direction top-left resize:screenSizeX/2,screenSizeY/2
+
+    Will bind the keystroke ctrl-1 to move the window to the top-left corner and resize it to 1/4 of the screen
+
 ### Example Config ###
 
 You can check out my own config in the file [here](https://github.com/jigish/dotfiles/blob/master/slate)
