@@ -80,7 +80,7 @@
         topLeftZeroed = NSMakePoint(cTopLeft.x, 0);
         screen = [screens objectAtIndex:i];
         if (NSPointInRect(topLeftZeroed, [screen frame])) {
-          originX = [screen frame].origin.x;
+          originX = [screen visibleFrame].origin.x;
           originY = mainOriginY - [screen frame].origin.y - ([screen frame].size.height - mainHeight);
           break;
         }
@@ -101,7 +101,7 @@
       originX = [screen visibleFrame].origin.x;
       originY = [screen frame].size.height - ([screen visibleFrame].origin.y + [screen visibleFrame].size.height);
     } else {
-      originX = [screen frame].origin.x;
+      originX = [screen visibleFrame].origin.x;
       originY = mainOriginY - [screen frame].origin.y - ([screen frame].size.height - mainHeight);
     }
     sizeX = [screen visibleFrame].size.width;
