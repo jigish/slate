@@ -15,8 +15,10 @@
   NSMutableArray *bindings;
 }
 
+@property (retain) NSMutableDictionary *configs;
+@property (retain) NSMutableArray *bindings;
+
 + (SlateConfig *)getInstance;
 - (BOOL)load;
-- (NSMutableArray *)getBindings;
 
 @end

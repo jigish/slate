@@ -13,7 +13,7 @@
 @implementation SlateAppDelegate
 
 - (IBAction)reconfig {
-  NSArray *bindings = [[SlateConfig getInstance] getBindings];
+  NSArray *bindings = [[SlateConfig getInstance] bindings];
   for (int i = 0; i < [bindings count]; i++) {
     Binding *binding = [bindings objectAtIndex:i];
     UnregisterEventHotKey([binding hotKeyRef]);
@@ -35,7 +35,7 @@
 
   InstallApplicationEventHandler(&OnHotKeyEvent, 1, &eventType, (void *)self, NULL);
 
-  NSArray *bindings = [[SlateConfig getInstance] getBindings];
+  NSArray *bindings = [[SlateConfig getInstance] bindings];
   for (int i = 0; i < [bindings count]; i++) {
     Binding *binding = [bindings objectAtIndex:i];
     EventHotKeyID myHotKeyID;
@@ -53,8 +53,8 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
 
   GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
 
-  if ([[[SlateConfig getInstance] getBindings] objectAtIndex:hkCom.id]) {
-    Binding *binding = [[[SlateConfig getInstance] getBindings] objectAtIndex:hkCom.id];
+  if ([[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id]) {
+    Binding *binding = [[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id];
     if (!AXAPIEnabled()) {
       NSLog(@"ERROR: AXAPI must be enabled!");
       return 1;

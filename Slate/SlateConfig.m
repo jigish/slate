@@ -10,6 +10,10 @@
 #import "Binding.h"
 
 @implementation SlateConfig
+
+@synthesize bindings;
+@synthesize configs;
+
 static SlateConfig *_instance = nil;
 
 + (SlateConfig *)getInstance {
@@ -23,8 +27,8 @@ static SlateConfig *_instance = nil;
 - (id)init {
   self = [super init];
   if (self) {
-    configs = [[NSMutableDictionary alloc] init];
-    bindings = [[NSMutableArray alloc] initWithCapacity:10];
+    [self setConfigs:[[NSMutableDictionary alloc] init]];
+    [self setBindings:[[NSMutableArray alloc] initWithCapacity:10]];
   }
   return self;
 }
@@ -33,8 +37,8 @@ static SlateConfig *_instance = nil;
   NSLog(@"Loading config...");
 
   // Reset configs and bindings in case we are calling from menu
-  configs = [[NSMutableDictionary alloc] init];
-  bindings = [[NSMutableArray alloc] initWithCapacity:10];
+  [self setConfigs:[[NSMutableDictionary alloc] init]];
+  [self setBindings:[[NSMutableArray alloc] initWithCapacity:10]];
 
   NSString *homeDir = NSHomeDirectory();
   NSString *configFile = [homeDir stringByAppendingString:@"/.slate"];
@@ -80,11 +84,9 @@ static SlateConfig *_instance = nil;
   return YES;
 }
 
-- (NSMutableArray *)getBindings {
-  return bindings;
-}
-
 - (void)dealloc {
+  [self setConfigs:nil];
+  [self setBindings:nil];
   [super dealloc];
 }
 
