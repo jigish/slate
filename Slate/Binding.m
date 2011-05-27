@@ -37,7 +37,7 @@ static NSDictionary *dictionary = nil;
     // bind <key:modifiers> <op> <parameters>
     NSArray *tokens = [StringTokenizer tokenize:binding];
     if ([tokens count] <=2) {
-      return nil;
+      @throw([NSException exceptionWithName:@"Unrecognized Bind" reason:binding userInfo:nil]);
     }
     NSString *keystroke = [tokens objectAtIndex:1];
     NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:@":"];
@@ -59,6 +59,7 @@ static NSDictionary *dictionary = nil;
             modifiers += shiftKey;
           } else {
             NSLog(@"ERROR: Unrecognized modifier '%s'", [mod cStringUsingEncoding:NSASCIIStringEncoding]);
+            @throw([NSException exceptionWithName:@"Unrecognized Modifier" reason:[NSString stringWithFormat:@"Unrecognized modifier '%@' in '%@'", mod, binding] userInfo:nil]);
           }
           mod = [modEnum nextObject];
         }
@@ -94,8 +95,11 @@ static NSDictionary *dictionary = nil;
           NSString *resizeExpression = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
           topLeft = @"screenOriginX,screenOriginY";
           dimensions = [@"screenSizeX," stringByAppendingString:resizeExpression];
-        } else {
+        } else if ([style isEqualToString:@"none"]) {
           topLeft = @"windowTopLeftX,screenOriginY";
+        } else {
+          NSLog(@"ERROR: Unrecognized style '%s'", [style cStringUsingEncoding:NSASCIIStringEncoding]);
+          @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, binding] userInfo:nil]);
         }
       } else if ([direction isEqualToString:@"bottom"] || [direction isEqualToString:@"down"]) {
         if ([style isEqualToString:@"center"]) {
@@ -107,8 +111,11 @@ static NSDictionary *dictionary = nil;
           NSString *resizeExpression = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
           topLeft = [@"screenOriginX,screenOriginY+screenSizeY-" stringByAppendingString:resizeExpression];
           dimensions = [@"screenSizeX," stringByAppendingString:resizeExpression];
-        } else {
+        } else if ([style isEqualToString:@"none"]) {
           topLeft = @"windowTopLeftX,screenOriginY+screenSizeY-windowSizeY";
+        } else {
+          NSLog(@"ERROR: Unrecognized style '%s'", [style cStringUsingEncoding:NSASCIIStringEncoding]);
+          @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, binding] userInfo:nil]);
         }
       } else if ([direction isEqualToString:@"left"]) {
         if ([style isEqualToString:@"center"]) {
@@ -120,8 +127,11 @@ static NSDictionary *dictionary = nil;
           NSString *resizeExpression = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
           topLeft = @"screenOriginX,screenOriginY";
           dimensions = [resizeExpression stringByAppendingString:@",screenSizeY"];
-        } else {
+        } else if ([style isEqualToString:@"none"]) {
           topLeft = @"screenOriginX,windowTopLeftY";
+        } else {
+          NSLog(@"ERROR: Unrecognized style '%s'", [style cStringUsingEncoding:NSASCIIStringEncoding]);
+          @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, binding] userInfo:nil]);
         }
       } else if ([direction isEqualToString:@"right"]) {
         if ([style isEqualToString:@"center"]) {
@@ -133,12 +143,15 @@ static NSDictionary *dictionary = nil;
           NSString *resizeExpression = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
           topLeft = [[@"screenOriginX+screenSizeX-" stringByAppendingString:resizeExpression] stringByAppendingString:@",screenOriginY"];
           dimensions = [resizeExpression stringByAppendingString:@",screenSizeY"];
-        } else {
+        } else if ([style isEqualToString:@"none"]) {
           topLeft = @"screenOriginX+screenSizeX-windowSizeX,windowTopLeftY";
+        } else {
+          NSLog(@"ERROR: Unrecognized style '%s'", [style cStringUsingEncoding:NSASCIIStringEncoding]);
+          @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, binding] userInfo:nil]);
         }
       } else {
         NSLog(@"ERROR: Unrecognized direction '%s'", [direction cStringUsingEncoding:NSASCIIStringEncoding]);
-        return nil;
+        @throw([NSException exceptionWithName:@"Unrecognized Direction" reason:[NSString stringWithFormat:@"Unrecognized direction '%@' in '%@'", direction, binding] userInfo:nil]);
       }
       [self setOp:[[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:-1]];
     } else if ([opString isEqualToString:@"nudge"] && [tokens count] >= 5) {
@@ -175,6 +188,11 @@ static NSDictionary *dictionary = nil;
         } else if ([style hasPrefix:@"resize:"]) {
           tl = @"screenOriginX,screenOriginY";
           dim = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
+        } else if ([style isEqualToString:@"noresize"]) {
+          // do nothing
+        } else {
+          NSLog(@"ERROR: Unrecognized style '%s'", [style cStringUsingEncoding:NSASCIIStringEncoding]);
+          @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, binding] userInfo:nil]);
         }
       }
       [self setOp:[[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[[tokens objectAtIndex:3] integerValue]]];
@@ -201,15 +219,28 @@ static NSDictionary *dictionary = nil;
         tl = [[[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:@","] objectAtIndex:0]] stringByAppendingString:@",screenOriginY+screenSizeY-"] stringByAppendingString:[[dim componentsSeparatedByString:@","] objectAtIndex:1]];
       } else {
         NSLog(@"ERROR: Unrecognized corner '%s'", [direction cStringUsingEncoding:NSASCIIStringEncoding]);
-        return nil;
+        @throw([NSException exceptionWithName:@"Unrecognized Corner" reason:[NSString stringWithFormat:@"Unrecognized corner '%@' in '%@'", direction, binding] userInfo:nil]);
       }
 
       [self setOp:[[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:-1]];
     } else {
       NSLog(@"ERROR: Unrecognized operation '%s'", [opString cStringUsingEncoding:NSASCIIStringEncoding]);
-      return nil;
+      @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", opString, binding] userInfo:nil]);
     }
-    //[op getDimensionsWithCurrentTopLeft:NSMakePoint(0,0) currentSize:NSMakeSize(0,0)];
+    
+    if (op == nil) {
+      NSLog(@"ERROR: Unable to create binding");
+      @throw([NSException exceptionWithName:@"Unable To Create Binding" reason:[NSString stringWithFormat:@"Unable to create '%@'", binding] userInfo:nil]);
+    }
+    
+    @try {
+      [op getDimensionsWithCurrentTopLeft:NSMakePoint(1,1) currentSize:NSMakeSize(1,1)];
+      [op getTopLeftWithCurrentTopLeft:NSMakePoint(1,1) currentSize:NSMakeSize(1,1) newSize:NSMakeSize(1,1)];
+    } @catch (NSException *ex) {
+      NSLog(@"ERROR: Unable to test binding '%s'", [binding cStringUsingEncoding:NSASCIIStringEncoding]);
+      @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], binding] userInfo:nil]);
+    }
+    [tokens release];
   }
 
   return self;

@@ -31,8 +31,8 @@
   }
   if (![token isEqualToString:@""]) {
     [array addObject:[NSString stringWithString:token]];
-    [token release];
   }
+  [token release];
   return array;
 }
 

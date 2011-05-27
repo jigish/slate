@@ -53,6 +53,8 @@
     NSComparisonPredicate *pred = (NSComparisonPredicate *)[NSPredicate predicateWithFormat:[exp stringByAppendingString:@" == 42"]];
     NSExpression *lexp = [pred leftExpression];
     NSNumber *result = [lexp expressionValueWithObject:values context:nil];
+    if (result == nil)
+      @throw([NSException exceptionWithName:@"Unable to compute result" reason:exp userInfo:nil]);
     return [result integerValue];
   }
   return 0;

@@ -37,7 +37,7 @@
       if ([tlTokens count] == 2) {
         [self setTopLeft:[[ExpressionPoint alloc] initWithX:[tlTokens objectAtIndex:0] y:[tlTokens objectAtIndex:1]]];
       } else {
-        [self setTopLeft:[[ExpressionPoint alloc] init] ];
+        return nil;
       }
     }
     NSArray *dimTokens = [dim componentsSeparatedByString:@";"];
@@ -48,7 +48,7 @@
       if ([dimTokens count] == 2) {
         [self setDimensions:[[ExpressionPoint alloc] initWithX:[dimTokens objectAtIndex:0] y:[dimTokens objectAtIndex:1]] ];
       } else {
-        [self setDimensions:[[ExpressionPoint alloc] init]];
+        return nil;
       }
     }
     [self setMonitor:mon];

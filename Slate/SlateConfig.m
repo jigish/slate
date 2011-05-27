@@ -71,18 +71,18 @@ static SlateConfig *_instance = nil;
       [configs setObject:[tokens objectAtIndex:2] forKey:[tokens objectAtIndex:1]];
     } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:@"bind"]) {
       // bind <key:modifiers> <op> <parameters>
-      Binding *bind = [[Binding alloc] initWithString:line];
-      if (bind != nil) {
+      @try {
+        Binding *bind = [[Binding alloc] initWithString:line];
         NSLog(@"  LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
         [bindings addObject:bind];
         [bind release];
-      } else {
-        NSLog(@"  ERROR LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
+      } @catch (NSException *ex) {
+        NSLog(@"  ERROR %s",[[ex name] cStringUsingEncoding:NSASCIIStringEncoding]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
         [alert addButtonWithTitle:@"Skip"];
-        [alert setMessageText:@"Error Loading Binding:"];
-        [alert setInformativeText:line];
+        [alert setMessageText:[ex name]];
+        [alert setInformativeText:[ex reason]];
         [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal] == NSAlertFirstButtonReturn) {
           NSLog(@"User selected exit");
@@ -91,6 +91,7 @@ static SlateConfig *_instance = nil;
         [alert release];
       }
     }
+    [tokens release];
     line = [e nextObject];
   }
 
