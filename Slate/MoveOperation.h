@@ -15,14 +15,14 @@
 @private
   ExpressionPoint *topLeft;
   ExpressionPoint *dimensions;
-  int monitor;
+  NSInteger monitor;
 }
 
 @property (retain) ExpressionPoint *topLeft;
 @property (retain) ExpressionPoint *dimensions;
-@property (assign) int monitor;
+@property (assign) NSInteger monitor;
 
 - (NSDictionary *) getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize;
-- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(int)mon;
+- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon;
 
 @end

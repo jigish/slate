@@ -14,7 +14,7 @@
 
 - (IBAction)reconfig {
   NSArray *bindings = [[SlateConfig getInstance] bindings];
-  for (int i = 0; i < [bindings count]; i++) {
+  for (NSInteger i = 0; i < [bindings count]; i++) {
     Binding *binding = [bindings objectAtIndex:i];
     UnregisterEventHotKey([binding hotKeyRef]);
   }
@@ -36,7 +36,7 @@
   InstallApplicationEventHandler(&OnHotKeyEvent, 1, &eventType, (void *)self, NULL);
 
   NSArray *bindings = [[SlateConfig getInstance] bindings];
-  for (int i = 0; i < [bindings count]; i++) {
+  for (NSInteger i = 0; i < [bindings count]; i++) {
     Binding *binding = [bindings objectAtIndex:i];
     EventHotKeyID myHotKeyID;
     EventHotKeyRef myHotKeyRef;

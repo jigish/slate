@@ -33,6 +33,18 @@ static SlateConfig *_instance = nil;
   return self;
 }
 
+- (BOOL)getBoolConfig:(NSString *)key {
+  return [[configs objectForKey:key] boolValue];
+}
+
+- (NSInteger)getIntegerConfig:(NSString *)key {
+  return [[configs objectForKey:key] integerValue];
+}
+
+- (NSString *)getConfig:(NSString *)key {
+  return [configs objectForKey:key];
+}
+
 - (BOOL)load {
   NSLog(@"Loading config...");
 

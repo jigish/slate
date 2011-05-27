@@ -41,7 +41,7 @@ static NSDictionary *dictionary = nil;
     NSString *keystroke = [tokens objectAtIndex:1];
     NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:@":"];
     if ([keyAndModifiers count] >= 1) {
-      [self setKeyCode:[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] intValue]];
+      [self setKeyCode:[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] integerValue]];
       [self setModifiers:0];
       if ([keyAndModifiers count] >= 2) {
         NSArray *modifiersArray = [[keyAndModifiers objectAtIndex:1] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@",;"]];
@@ -66,7 +66,7 @@ static NSDictionary *dictionary = nil;
     NSString *opString = [tokens objectAtIndex:2];
     if ([opString isEqualToString:@"move"] && [tokens count] >= 5) {
       // bind <key:modifiers> move <topLeft> <dimensions> <optional:monitor>
-      [self setOp:[[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:3] dimensions:[tokens objectAtIndex:4] monitor:([tokens count] >=6 ? [[tokens objectAtIndex:5] intValue] : -1)]];
+      [self setOp:[[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:3] dimensions:[tokens objectAtIndex:4] monitor:([tokens count] >=6 ? [[tokens objectAtIndex:5] integerValue] : -1)]];
     } else if ([opString isEqualToString:@"resize"] && [tokens count] >= 5) {
       // bind <key:modifiers> resize <x> <y> <optional:anchor>
       NSString *anchor = @"top-left";
@@ -176,7 +176,7 @@ static NSDictionary *dictionary = nil;
           dim = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
         }
       }
-      [self setOp:[[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[[tokens objectAtIndex:3] intValue]]];
+      [self setOp:[[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[[tokens objectAtIndex:3] integerValue]]];
     } else if ([opString isEqualToString:@"corner"] && [tokens count] >= 4) {
       // bind <key:modifiers> corner <top-left|top-right|bottom-left|bottom-right> <optional:resize:expression>
       NSString *tl = nil;
@@ -208,6 +208,7 @@ static NSDictionary *dictionary = nil;
       NSLog(@"ERROR: Unrecognized operation '%s'", [opString cStringUsingEncoding:NSASCIIStringEncoding]);
       return nil;
     }
+    //[op getDimensionsWithCurrentTopLeft:NSMakePoint(0,0) currentSize:NSMakeSize(0,0)];
   }
 
   return self;

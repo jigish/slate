@@ -20,5 +20,8 @@
 
 + (SlateConfig *)getInstance;
 - (BOOL)load;
+- (BOOL)getBoolConfig:(NSString *)key;
+- (NSInteger)getIntegerConfig:(NSString *)key;
+- (NSString *)getConfig:(NSString *)key;
 
 @end

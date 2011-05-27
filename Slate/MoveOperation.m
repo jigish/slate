@@ -6,7 +6,9 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
+#import "Constants.h"
 #import "MoveOperation.h"
+#import "SlateConfig.h"
 
 
 @implementation MoveOperation
@@ -24,7 +26,7 @@
   return self;
 }
 
-- (id) initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(int)mon {
+- (id) initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon {
   self = [super init];
   if (self) {
     NSArray *tlTokens = [tl componentsSeparatedByString:@";"];
@@ -55,19 +57,23 @@
   return self;
 }
 
+- (BOOL) monitorExists {
+  return monitor < [[NSScreen screens] count];
+}
+
 // I understand that the following method is stupidly written. Apple apparently enjoys keeping
 // multiple types of coordinate spaces. NSScreen.origin returns bottom-left while we need
 // top-left for window moving. Go figure.
 - (NSDictionary *) getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
-  int originX = 0;
-  int originY = 0;
-  int sizeX = 0;
-  int sizeY = 0;
-  if (monitor == -1) {
+  NSInteger originX = 0;
+  NSInteger originY = 0;
+  NSInteger sizeX = 0;
+  NSInteger sizeY = 0;
+  if (monitor < 0 || (![self monitorExists] && [[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN])) {
     NSArray *screens = [NSScreen screens];
     NSScreen *screen = [screens objectAtIndex:0];
-    int mainHeight = [screen frame].size.height;
-    int mainOriginY = [screen frame].origin.y;
+    NSInteger mainHeight = [screen frame].size.height;
+    NSInteger mainOriginY = [screen frame].origin.y;
     NSPoint topLeftZeroed = NSMakePoint(cTopLeft.x, 0);
     if (!NSPointInRect(topLeftZeroed, [screen frame])) {
       for (NSUInteger i = 1; i < [screens count]; i++) {
@@ -85,34 +91,42 @@
   } else {
     NSArray *screens = [NSScreen screens];
     NSScreen *screen = [screens objectAtIndex:0];
-    int mainHeight = [screen frame].size.height;
-    int mainOriginY = [screen frame].origin.y;
+    NSInteger mainHeight = [screen frame].size.height;
+    NSInteger mainOriginY = [screen frame].origin.y;
     screen = [screens objectAtIndex:monitor];
     originX = [screen frame].origin.x;
     originY = mainOriginY - [screen frame].origin.y - ([screen frame].size.height - mainHeight);
     sizeX = [screen frame].size.width;
     sizeY = [screen frame].size.height;
   }
-  NSLog(@"screenOrigin:(%i,%i), screenSize:(%i,%i), windowSize:(%f,%f), windowTopLeft:(%f,%f)",originX,originY,sizeX,sizeY,cSize.width,cSize.height,cTopLeft.x,cTopLeft.y);
+  NSLog(@"screenOrigin:(%ld,%ld), screenSize:(%ld,%ld), windowSize:(%f,%f), windowTopLeft:(%f,%f)",(long)originX,(long)originY,(long)sizeX,(long)sizeY,cSize.width,cSize.height,cTopLeft.x,cTopLeft.y);
   return [NSDictionary dictionaryWithObjectsAndKeys:
            [NSNumber numberWithInteger:originX], @"screenOriginX",
            [NSNumber numberWithInteger:originY], @"screenOriginY",
            [NSNumber numberWithInteger:sizeX], @"screenSizeX",
            [NSNumber numberWithInteger:sizeY], @"screenSizeY",
-           [NSNumber numberWithInteger:(int)cSize.width], @"windowSizeX",
-           [NSNumber numberWithInteger:(int)cSize.height], @"windowSizeY",
-           [NSNumber numberWithInteger:(int)nSize.width], @"newWindowSizeX",
-           [NSNumber numberWithInteger:(int)nSize.height], @"newWindowSizeY",
-           [NSNumber numberWithInteger:(int)cTopLeft.x], @"windowTopLeftX",
-           [NSNumber numberWithInteger:(int)cTopLeft.y], @"windowTopLeftY", nil];
+           [NSNumber numberWithInteger:(NSInteger)cSize.width], @"windowSizeX",
+           [NSNumber numberWithInteger:(NSInteger)cSize.height], @"windowSizeY",
+           [NSNumber numberWithInteger:(NSInteger)nSize.width], @"newWindowSizeX",
+           [NSNumber numberWithInteger:(NSInteger)nSize.height], @"newWindowSizeY",
+           [NSNumber numberWithInteger:(NSInteger)cTopLeft.x], @"windowTopLeftX",
+           [NSNumber numberWithInteger:(NSInteger)cTopLeft.y], @"windowTopLeftY", nil];
 }
 
 - (NSPoint) getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
+  // If monitor does not exist and we arent going to default to current screen
+  if (![self monitorExists] && ![[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN]) {
+    return cTopLeft;
+  }
   NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize:cSize newSize:nSize];
   return [topLeft getPointWithDict:values];
 }
 
 - (NSSize) getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
+  // If monitor does not exist and we arent going to default to current screen
+  if (![self monitorExists] && ![[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN]) {
+    return cSize;
+  }
   NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize:cSize newSize:cSize];
   return [dimensions getSizeWithDict:values];
 }
