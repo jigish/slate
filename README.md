@@ -24,7 +24,7 @@ List of allowed configs:
 
 | Name | Type | Default | Behavior |
 |:-----|:-----|:--------|:---------|
-| defaultToCurrentScreen | Boolean | false | "true" causes all bindings to default to the current screen if the screen they reference does not exist. "false" causes only bindings that do not specify a monitor to default to the current screen while bindings that reference screens that do not exist simply do nothing. |
+| defaultToCurrentScreen | Boolean | false | "true" causes all bindings to default to the current screen if the screen they reference does not exist. "false" causes only bindings that do not specify a screen to default to the current screen while bindings that reference screens that do not exist simply do nothing. |
 
 Example:
 
@@ -112,7 +112,7 @@ Allowed operations are:
 
     Will bind the keystroke ctrl-numpad1 to moving the window to the screen at index 1 with top-left coordinate 0,0 and size 100,100
 
-    Remember to offset with screenOriginX in your topLeftX and screenOriginY in your topLeftY when using the "screen" option (or when using multiple monitors in general) or your move operation will offset from the default origin (0,0) which is the origin of screen 0.
+    Remember to offset with screenOriginX in your topLeftX and screenOriginY in your topLeftY when using the "screen" option (or when using multiple screens in general) or your move operation will offset from the default origin (0,0) which is the origin of screen 0.
 
 * Resize the window (keeping top-left the same): "resize x y anchor"
 
