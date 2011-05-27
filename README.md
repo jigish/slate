@@ -149,7 +149,7 @@ Allowed operations are:
 * Throw the window to any screen's origin: "throw screen style"
 
         screen = the screen you want to throw the window to (0 indexed)
-        style = (optional) resize|resize:x-expression,y-expression (default will not resize)
+        style = (optional) resize|resize:x-expression;y-expression (default will not resize)
 
     Example:
 
@@ -160,7 +160,7 @@ Allowed operations are:
 * Move/Resize the window into a corner: "corner direction style"
 
         direction = top-left|top-right|bottom-left|bottom-right
-        style = (optional) resize:x-expression,y-expression (default will not resize)
+        style = (optional) resize:x-expression;y-expression (default will not resize)
 
     Example:
 
