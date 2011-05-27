@@ -32,17 +32,9 @@ Example:
 
 ### The "bind" Directive ###
 
-The bind directive follows the following format:
+The bind directive follows the following format (tokens may be seperated by any number of spaces):
 
     bind key:modifiers operation parameter+
-
-NOTE: The tokens above can only be separated by a single space as of now. More intelligent config parsing to come in a future version. For example, this is allowed:
-
-    bind 1:ctrl push up
-
-is allowed but this is not:
-
-    bind     1:ctrl push            up
 
 #### Key ####
 
