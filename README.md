@@ -20,6 +20,8 @@ The bind directive follows the following format:
 
     config name value
 
+List of allowed configs:
+
 | Name | Type | Default | Behavior |
 |:-----|:-----|:--------|:---------|
 | defaultToCurrentScreen | Boolean | false | "true" causes all bindings to default to the current screen if the screen they reference does not exist. "false" causes only bindings that do not specify a monitor to default to the current screen while bindings that reference screens that do not exist simply do nothing. |
