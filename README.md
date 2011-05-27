@@ -59,10 +59,12 @@ Some operations allow parameters that can be expressions. The following strings 
     screenOriginY = target screen's top left y coordinate
     screenSizeX = target screen's width
     screenSizeY = target screen's height
-    windowSizeX = window's width
-    windowSizeY = window's height
     windowTopLeftX = window's current top left x coordinate
     windowTopLeftY = window's current top left y coordinate
+    windowSizeX = window's width
+    windowSizeY = window's height
+    newWindowSizeX = window's new width (after resize, only usable in topLeftX and topLeftY)
+    newWindowSizeY = window's new height (after resize, only usable in topLeftX and topLeftY)
 
 In addition to the variables above, expressions can be used with the following functions and operators:
 
