@@ -85,19 +85,27 @@
           break;
         }
       }
+    } else {
+      originX = [screen visibleFrame].origin.x;
+      originY = [screen frame].size.height - ([screen visibleFrame].origin.y + [screen visibleFrame].size.height);
     }
-    sizeX = [screen frame].size.width;
-    sizeY = [screen frame].size.height;
+    sizeX = [screen visibleFrame].size.width;
+    sizeY = [screen visibleFrame].size.height;
   } else {
     NSArray *screens = [NSScreen screens];
     NSScreen *screen = [screens objectAtIndex:0];
     NSInteger mainHeight = [screen frame].size.height;
     NSInteger mainOriginY = [screen frame].origin.y;
     screen = [screens objectAtIndex:monitor];
-    originX = [screen frame].origin.x;
-    originY = mainOriginY - [screen frame].origin.y - ([screen frame].size.height - mainHeight);
-    sizeX = [screen frame].size.width;
-    sizeY = [screen frame].size.height;
+    if (monitor == 0) { // special handling for menu bar and dock
+      originX = [screen visibleFrame].origin.x;
+      originY = [screen frame].size.height - ([screen visibleFrame].origin.y + [screen visibleFrame].size.height);
+    } else {
+      originX = [screen frame].origin.x;
+      originY = mainOriginY - [screen frame].origin.y - ([screen frame].size.height - mainHeight);
+    }
+    sizeX = [screen visibleFrame].size.width;
+    sizeY = [screen visibleFrame].size.height;
   }
   NSLog(@"screenOrigin:(%ld,%ld), screenSize:(%ld,%ld), windowSize:(%f,%f), windowTopLeft:(%f,%f)",(long)originX,(long)originY,(long)sizeX,(long)sizeY,cSize.width,cSize.height,cTopLeft.x,cTopLeft.y);
   return [NSDictionary dictionaryWithObjectsAndKeys:
