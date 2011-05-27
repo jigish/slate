@@ -24,10 +24,10 @@
   [super dealloc];
 }
 
-- (NSPoint) getTopLeftWithCurrentTopLeft: (NSPoint)cTopLeft currentSize: (NSSize)cSize {
+- (NSPoint) getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
   return NSMakePoint(0, 0);
 }
-- (NSSize) getDimensionsWithCurrentTopLeft: (NSPoint)cTopLeft currentSize: (NSSize)cSize {
+- (NSSize) getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
   return NSMakeSize(100, 100);
 }
 

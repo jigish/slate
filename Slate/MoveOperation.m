@@ -29,27 +29,27 @@
   if (self) {
     NSArray *tlTokens = [tl componentsSeparatedByString:@";"];
     if ([tlTokens count] == 2) {
-      topLeft = [[ExpressionPoint alloc] initWithX:[tlTokens objectAtIndex:0] y:[tlTokens objectAtIndex:1]];
+      [self setTopLeft:[[ExpressionPoint alloc] initWithX:[tlTokens objectAtIndex:0] y:[tlTokens objectAtIndex:1]]];
     } else {
       tlTokens = [tl componentsSeparatedByString:@","];
       if ([tlTokens count] == 2) {
-        topLeft = [[ExpressionPoint alloc] initWithX:[tlTokens objectAtIndex:0] y:[tlTokens objectAtIndex:1]];
+        [self setTopLeft:[[ExpressionPoint alloc] initWithX:[tlTokens objectAtIndex:0] y:[tlTokens objectAtIndex:1]]];
       } else {
-        topLeft = [[ExpressionPoint alloc] init];
+        [self setTopLeft:[[ExpressionPoint alloc] init] ];
       }
     }
     NSArray *dimTokens = [dim componentsSeparatedByString:@";"];
     if ([dimTokens count] == 2) {
-      dimensions = [[ExpressionPoint alloc] initWithX:[dimTokens objectAtIndex:0] y:[dimTokens objectAtIndex:1]];
+      [self setDimensions:[[ExpressionPoint alloc] initWithX:[dimTokens objectAtIndex:0] y:[dimTokens objectAtIndex:1]]];
     } else {
       dimTokens = [dim componentsSeparatedByString:@","];
       if ([dimTokens count] == 2) {
-        dimensions = [[ExpressionPoint alloc] initWithX:[dimTokens objectAtIndex:0] y:[dimTokens objectAtIndex:1]];
+        [self setDimensions:[[ExpressionPoint alloc] initWithX:[dimTokens objectAtIndex:0] y:[dimTokens objectAtIndex:1]] ];
       } else {
-        dimensions = [[ExpressionPoint alloc] init];
+        [self setDimensions:[[ExpressionPoint alloc] init]];
       }
     }
-    monitor = mon;
+    [self setMonitor:mon];
   }
 
   return self;
@@ -58,7 +58,7 @@
 // I understand that the following method is stupidly written. Apple apparently enjoys keeping
 // multiple types of coordinate spaces. NSScreen.origin returns bottom-left while we need
 // top-left for window moving. Go figure.
-- (NSDictionary *) getScreenAndWindowValues: (NSPoint)cTopLeft currentSize: (NSSize)cSize {
+- (NSDictionary *) getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
   int originX = 0;
   int originY = 0;
   int sizeX = 0;
@@ -105,17 +105,19 @@
            [NSNumber numberWithInteger:(int)cTopLeft.y], @"windowTopLeftY", nil];
 }
 
-- (NSPoint) getTopLeftWithCurrentTopLeft: (NSPoint)cTopLeft currentSize: (NSSize)cSize {
+- (NSPoint) getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
   NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize: cSize];
   return [topLeft getPointWithDict:values];
 }
 
-- (NSSize) getDimensionsWithCurrentTopLeft: (NSPoint)cTopLeft currentSize: (NSSize)cSize {
+- (NSSize) getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
   NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize: cSize];
   return [dimensions getSizeWithDict:values];
 }
 
 - (void)dealloc {
+  [self setTopLeft:nil];
+  [self setDimensions:nil];
   [super dealloc];
 }
 

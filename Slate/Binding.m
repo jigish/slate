@@ -40,8 +40,8 @@ static NSDictionary *dictionary = nil;
     NSString *keystroke = [tokens objectAtIndex:1];
     NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:@":"];
     if ([keyAndModifiers count] >= 1) {
-      keyCode = [[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] intValue];
-      modifiers = 0;
+      [self setKeyCode:[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] intValue]];
+      [self setModifiers:0];
       if ([keyAndModifiers count] >= 2) {
         NSArray *modifiersArray = [[keyAndModifiers objectAtIndex:1] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@",;"]];
         NSEnumerator *modEnum = [modifiersArray objectEnumerator];
@@ -80,8 +80,8 @@ static NSDictionary *dictionary = nil;
       dimY = [dimY stringByAppendingString:yAugment];
       NSString *flippedYAugment = [y hasPrefix:@"+"] ? [yAugment stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:@"-"] : [yAugment stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:@"+"];
 
-      NSString *tlX = [@"windowTopLeftX" stringByAppendingString:flippedXAugment];
-      NSString *tlY = [@"windowTopLeftY" stringByAppendingString:flippedYAugment];
+      NSString *tlX = nil;
+      NSString *tlY = nil;
       NSString *anchor = [tokens count] >= 6 ? [tokens objectAtIndex:5] : @"top-left";
 
       if ([anchor isEqualToString:@"top-left"]) {
@@ -101,7 +101,7 @@ static NSDictionary *dictionary = nil;
         return nil;
       }
 
-      op = [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:@","] stringByAppendingString:tlY] dimensions:[[dimX stringByAppendingString:@","] stringByAppendingString:dimY] monitor:-1];
+      [self setOp:[[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:@","] stringByAppendingString:tlY] dimensions:[[dimX stringByAppendingString:@","] stringByAppendingString:dimY] monitor:-1]];
     } else if ([opString isEqualToString:@"push"] && [tokens count] >= 4) {
       // bind <key:modifiers> push <top|bottom|up|down|left|right> <optional:none|center|bar|bar-resize:expression>
       NSString *direction = [tokens objectAtIndex:3];
@@ -167,7 +167,7 @@ static NSDictionary *dictionary = nil;
         NSLog(@"ERROR: Unrecognized direction '%s'", [direction cStringUsingEncoding:NSASCIIStringEncoding]);
         return nil;
       }
-      op = [[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:-1];
+      [self setOp:[[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:-1]];
     } else if ([opString isEqualToString:@"nudge"] && [tokens count] >= 5) {
       // bind <key:modifiers> nudge x y
       NSString *tlX = @"windowTopLeftX";
@@ -189,7 +189,7 @@ static NSDictionary *dictionary = nil;
         // Hard Nudge
         tlY = [tlY stringByAppendingString:y];
       }
-      op = [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:@","] stringByAppendingString:tlY] dimensions:@"windowSizeX,windowSizeY" monitor:-1];
+      [self setOp:[[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:@","] stringByAppendingString:tlY] dimensions:@"windowSizeX,windowSizeY" monitor:-1]];
     } else if ([opString isEqualToString:@"throw"] && [tokens count] >= 4) {
       // bind <key:modifiers> throw <monitor> <optional:style (default is noresize)>
       NSString *tl = @"screenOriginX,screenOriginY";
@@ -204,7 +204,7 @@ static NSDictionary *dictionary = nil;
           dim = [[style componentsSeparatedByString:@":"] objectAtIndex:1];
         }
       }
-      op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[[tokens objectAtIndex:3] intValue]];
+      [self setOp:[[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[[tokens objectAtIndex:3] intValue]]];
     } else if ([opString isEqualToString:@"corner"] && [tokens count] >= 4) {
       // bind <key:modifiers> corner <top-left|top-right|bottom-left|bottom-right> <optional:resize:expression>
       NSString *tl = nil;
@@ -231,7 +231,7 @@ static NSDictionary *dictionary = nil;
         return nil;
       }
 
-      op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:-1];
+      [self setOp:[[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:-1]];
     } else {
       NSLog(@"ERROR: Unrecognized operation '%s'", [opString cStringUsingEncoding:NSASCIIStringEncoding]);
       return nil;
@@ -242,6 +242,8 @@ static NSDictionary *dictionary = nil;
 }
 
 - (void)dealloc {
+  [self setOp:nil];
+  [self setHotKeyRef:nil];
   [super dealloc];
 }
 

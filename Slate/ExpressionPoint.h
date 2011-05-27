@@ -15,8 +15,8 @@
   NSString *y;
 }
 
-@property (assign) NSString *x;
-@property (assign) NSString *y;
+@property (copy) NSString *x;
+@property (copy) NSString *y;
 
 - (id)initWithX: (NSString *)xVal y: (NSString *)yVal;
 

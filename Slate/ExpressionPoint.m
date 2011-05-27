@@ -17,10 +17,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    x = @"0";
-    y = @"0";
-    [x retain];
-    [y retain];
+    [self setX:@"0"];
+    [self setY:@"0"];
   }
 
   return self;
@@ -29,18 +27,16 @@
 - (id)initWithX: (NSString *)xVal y:(NSString *)yVal {
   self = [super init];
   if (self) {
-    x = xVal;
-    y = yVal;
-    [x retain];
-    [y retain];
+    [self setX:xVal];
+    [self setY:yVal];
   }
 
   return self;
 }
 
 - (void)dealloc {
-  [x release];
-  [y release];
+  [self setX:nil];
+  [self setY:nil];
   [super dealloc];
 }
 
