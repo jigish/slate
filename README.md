@@ -16,9 +16,17 @@ Configuration is split into two directives: config (for global configurations) a
 
 ### The "config" Directive ###
 
+The bind directive follows the following format:
+
+    config name value
+
 | Name | Type | Default | Behavior |
 |:-----|:-----|:--------|:---------|
 | defaultToCurrentScreen | Boolean | false | "true" causes all bindings to default to the current screen if the screen they reference does not exist. "false" causes only bindings that do not specify a monitor to default to the current screen while bindings that reference screens that do not exist simply do nothing. |
+
+Example:
+
+    config defaultToCurrentScreen true
 
 ### The "bind" Directive ###
 
