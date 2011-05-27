@@ -41,7 +41,7 @@
     EventHotKeyID myHotKeyID;
     EventHotKeyRef myHotKeyRef;
     myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",i] cStringUsingEncoding:NSASCIIStringEncoding];
-    myHotKeyID.id = i;
+    myHotKeyID.id = (UInt32)i;
     RegisterEventHotKey([binding keyCode], [binding modifiers], myHotKeyID, GetApplicationEventTarget(), 0, &myHotKeyRef);
     [binding setHotKeyRef:myHotKeyRef];
   }
@@ -97,28 +97,45 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
         cSize = NSMakeSize(0, 0);
       }
       
-      // Update size
-      NSSize theSize = [[binding op] getDimensionsWithCurrentTopLeft:NSMakePoint(cTopLeft.x,cTopLeft.y) currentSize:NSMakeSize(cSize.width,cSize.height)];
-      _size = (CFTypeRef)(AXValueCreate(kAXValueCGSizeType, (const void *)&theSize));
-      if (AXUIElementSetAttributeValue((AXUIElementRef)_focusedWindow, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)_size) != kAXErrorSuccess) {
-        NSLog(@"ERROR: Could not change size");
-      }
-      
-      if (AXUIElementCopyAttributeValue((AXUIElementRef)_focusedWindow, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)&_nSize) == kAXErrorSuccess) {
-        if (!AXValueGetValue(_nSize, kAXValueCGSizeType, (void *)&nSize)) {
-          NSLog(@"ERROR: Could not decode size");
-          nSize = NSMakeSize(0, 0);
+      if ([binding moveFirst]) {
+        nSize = NSMakeSize(0, 0);
+        // Update position
+        NSPoint thePoint = [[binding op] getTopLeftWithCurrentTopLeft:NSMakePoint(cTopLeft.x,cTopLeft.y) currentSize:NSMakeSize(cSize.width,cSize.height) newSize:NSMakeSize(nSize.width,nSize.height)];
+        _position = (CFTypeRef)(AXValueCreate(kAXValueCGPointType, (const void *)&thePoint));
+        if (AXUIElementSetAttributeValue((AXUIElementRef)_focusedWindow, (CFStringRef)NSAccessibilityPositionAttribute, (CFTypeRef *)_position) != kAXErrorSuccess) {
+          NSLog(@"ERROR: Could not change position");
+        }
+        
+        // Update size
+        NSSize theSize = [[binding op] getDimensionsWithCurrentTopLeft:NSMakePoint(cTopLeft.x,cTopLeft.y) currentSize:NSMakeSize(cSize.width,cSize.height)];
+        _size = (CFTypeRef)(AXValueCreate(kAXValueCGSizeType, (const void *)&theSize));
+        if (AXUIElementSetAttributeValue((AXUIElementRef)_focusedWindow, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)_size) != kAXErrorSuccess) {
+          NSLog(@"ERROR: Could not change size");
         }
       } else {
-        NSLog(@"ERROR: Could not fetch size");
-        nSize = NSMakeSize(0, 0);
-      }
-
-      // Update position
-      NSPoint thePoint = [[binding op] getTopLeftWithCurrentTopLeft:NSMakePoint(cTopLeft.x,cTopLeft.y) currentSize:NSMakeSize(cSize.width,cSize.height) newSize:NSMakeSize(nSize.width,nSize.height)];
-      _position = (CFTypeRef)(AXValueCreate(kAXValueCGPointType, (const void *)&thePoint));
-      if (AXUIElementSetAttributeValue((AXUIElementRef)_focusedWindow, (CFStringRef)NSAccessibilityPositionAttribute, (CFTypeRef *)_position) != kAXErrorSuccess) {
-        NSLog(@"ERROR: Could not change position");
+        // Update size
+        NSSize theSize = [[binding op] getDimensionsWithCurrentTopLeft:NSMakePoint(cTopLeft.x,cTopLeft.y) currentSize:NSMakeSize(cSize.width,cSize.height)];
+        _size = (CFTypeRef)(AXValueCreate(kAXValueCGSizeType, (const void *)&theSize));
+        if (AXUIElementSetAttributeValue((AXUIElementRef)_focusedWindow, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)_size) != kAXErrorSuccess) {
+          NSLog(@"ERROR: Could not change size");
+        }
+        
+        if (AXUIElementCopyAttributeValue((AXUIElementRef)_focusedWindow, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)&_nSize) == kAXErrorSuccess) {
+          if (!AXValueGetValue(_nSize, kAXValueCGSizeType, (void *)&nSize)) {
+            NSLog(@"ERROR: Could not decode size");
+            nSize = NSMakeSize(0, 0);
+          }
+        } else {
+          NSLog(@"ERROR: Could not fetch size");
+          nSize = NSMakeSize(0, 0);
+        }
+        
+        // Update position
+        NSPoint thePoint = [[binding op] getTopLeftWithCurrentTopLeft:NSMakePoint(cTopLeft.x,cTopLeft.y) currentSize:NSMakeSize(cSize.width,cSize.height) newSize:NSMakeSize(nSize.width,nSize.height)];
+        _position = (CFTypeRef)(AXValueCreate(kAXValueCGPointType, (const void *)&thePoint));
+        if (AXUIElementSetAttributeValue((AXUIElementRef)_focusedWindow, (CFStringRef)NSAccessibilityPositionAttribute, (CFTypeRef *)_position) != kAXErrorSuccess) {
+          NSLog(@"ERROR: Could not change position");
+        }
       }
 
     } else {

@@ -29,22 +29,22 @@
 - (id) initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon {
   self = [super init];
   if (self) {
-    NSArray *tlTokens = [tl componentsSeparatedByString:@";"];
+    NSArray *tlTokens = [tl componentsSeparatedByString:SEMICOLON];
     if ([tlTokens count] == 2) {
       [self setTopLeft:[[ExpressionPoint alloc] initWithX:[tlTokens objectAtIndex:0] y:[tlTokens objectAtIndex:1]]];
     } else {
-      tlTokens = [tl componentsSeparatedByString:@","];
+      tlTokens = [tl componentsSeparatedByString:COMMA];
       if ([tlTokens count] == 2) {
         [self setTopLeft:[[ExpressionPoint alloc] initWithX:[tlTokens objectAtIndex:0] y:[tlTokens objectAtIndex:1]]];
       } else {
         return nil;
       }
     }
-    NSArray *dimTokens = [dim componentsSeparatedByString:@";"];
+    NSArray *dimTokens = [dim componentsSeparatedByString:SEMICOLON];
     if ([dimTokens count] == 2) {
       [self setDimensions:[[ExpressionPoint alloc] initWithX:[dimTokens objectAtIndex:0] y:[dimTokens objectAtIndex:1]]];
     } else {
-      dimTokens = [dim componentsSeparatedByString:@","];
+      dimTokens = [dim componentsSeparatedByString:COMMA];
       if ([dimTokens count] == 2) {
         [self setDimensions:[[ExpressionPoint alloc] initWithX:[dimTokens objectAtIndex:0] y:[dimTokens objectAtIndex:1]] ];
       } else {
@@ -109,16 +109,16 @@
   }
   NSLog(@"screenOrigin:(%ld,%ld), screenSize:(%ld,%ld), windowSize:(%f,%f), windowTopLeft:(%f,%f)",(long)originX,(long)originY,(long)sizeX,(long)sizeY,cSize.width,cSize.height,cTopLeft.x,cTopLeft.y);
   return [NSDictionary dictionaryWithObjectsAndKeys:
-           [NSNumber numberWithInteger:originX], @"screenOriginX",
-           [NSNumber numberWithInteger:originY], @"screenOriginY",
-           [NSNumber numberWithInteger:sizeX], @"screenSizeX",
-           [NSNumber numberWithInteger:sizeY], @"screenSizeY",
-           [NSNumber numberWithInteger:(NSInteger)cSize.width], @"windowSizeX",
-           [NSNumber numberWithInteger:(NSInteger)cSize.height], @"windowSizeY",
-           [NSNumber numberWithInteger:(NSInteger)nSize.width], @"newWindowSizeX",
-           [NSNumber numberWithInteger:(NSInteger)nSize.height], @"newWindowSizeY",
-           [NSNumber numberWithInteger:(NSInteger)cTopLeft.x], @"windowTopLeftX",
-           [NSNumber numberWithInteger:(NSInteger)cTopLeft.y], @"windowTopLeftY", nil];
+           [NSNumber numberWithInteger:originX], SCREEN_ORIGIN_X,
+           [NSNumber numberWithInteger:originY], SCREEN_ORIGIN_Y,
+           [NSNumber numberWithInteger:sizeX], SCREEN_SIZE_X,
+           [NSNumber numberWithInteger:sizeY], SCREEN_SIZE_Y,
+           [NSNumber numberWithInteger:(NSInteger)cSize.width], WINDOW_SIZE_X,
+           [NSNumber numberWithInteger:(NSInteger)cSize.height], WINDOW_SIZE_Y,
+           [NSNumber numberWithInteger:(NSInteger)nSize.width], NEW_WINDOW_SIZE_X,
+           [NSNumber numberWithInteger:(NSInteger)nSize.height], NEW_WINDOW_SIZE_Y,
+           [NSNumber numberWithInteger:(NSInteger)cTopLeft.x], WINDOW_TOP_LEFT_X,
+           [NSNumber numberWithInteger:(NSInteger)cTopLeft.y], WINDOW_TOP_LEFT_Y, nil];
 }
 
 - (NSPoint) getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {

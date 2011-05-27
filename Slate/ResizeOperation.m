@@ -6,6 +6,7 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
+#import "Constants.h"
 #import "ResizeOperation.h"
 
 
@@ -27,7 +28,7 @@
 - (id)initWithAnchor:(NSString *)a xResize:(NSString *)x yResize:(NSString *)y {
   self = [super init];
   if (self) {
-    if ([a isEqualToString:@"top-left"] || [a isEqualToString:@"top-right"] || [a isEqualToString:@"bottom-left"] || [a isEqualToString:@"bottom-right"]) {
+    if ([a isEqualToString:TOP_LEFT] || [a isEqualToString:TOP_RIGHT] || [a isEqualToString:BOTTOM_LEFT] || [a isEqualToString:BOTTOM_RIGHT]) {
       [self setAnchor:a];
     } else {
       NSLog(@"ERROR: Unrecognized anchor '%s'", [a cStringUsingEncoding:NSASCIIStringEncoding]);
@@ -40,17 +41,17 @@
 }
 
 - (NSPoint) getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
-  if ([anchor isEqualToString:@"top-left"]) {
+  if ([anchor isEqualToString:TOP_LEFT]) {
     return cTopLeft;
-  } else if ([anchor isEqualToString:@"top-right"]) {
+  } else if ([anchor isEqualToString:TOP_RIGHT]) {
     NSInteger x = cTopLeft.x + cSize.width - nSize.width;
     NSInteger y = cTopLeft.y;
     return NSMakePoint(x,y);
-  } else if ([anchor isEqualToString:@"bottom-left"]) {
+  } else if ([anchor isEqualToString:BOTTOM_LEFT]) {
     NSInteger x = cTopLeft.x;
     NSInteger y = cTopLeft.y + cSize.height - nSize.height;
     return NSMakePoint(x,y);
-  } else if ([anchor isEqualToString:@"bottom-right"]) {
+  } else if ([anchor isEqualToString:BOTTOM_RIGHT]) {
     NSInteger x = cTopLeft.x + cSize.width - nSize.width;
     NSInteger y = cTopLeft.y + cSize.height - nSize.height;
     return NSMakePoint(x,y);
@@ -60,11 +61,11 @@
 
 // Assumes well-formed resize +100 or -10%
 - (NSInteger) resizeStringToInt:(NSString *)resize withValue:(NSInteger) val {
-  NSInteger sign = [resize hasPrefix:@"-"] ? -1 : 1;
-  NSString *magnitude = [resize stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:@""];
+  NSInteger sign = [resize hasPrefix:MINUS] ? -1 : 1;
+  NSString *magnitude = [resize stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:EMPTY];
   
-  if ([magnitude hasSuffix:@"%"]) {
-    magnitude = [magnitude stringByReplacingOccurrencesOfString:@"%" withString:@""];
+  if ([magnitude hasSuffix:PERCENT]) {
+    magnitude = [magnitude stringByReplacingOccurrencesOfString:PERCENT withString:EMPTY];
     return (sign * val * [magnitude integerValue] / 100);
   } else {
     return (sign * [magnitude integerValue]);
