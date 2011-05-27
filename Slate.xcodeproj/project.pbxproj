@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3B7EB3A7138F3F6800EBEC2B /* ResizeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */; };
 		3B7EB475138F691800EBEC2B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB474138F691800EBEC2B /* Constants.m */; };
+		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
 		4747E1EF13877C160005180C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4747E1EE13877C150005180C /* icon.icns */; };
 		47850891138BB234005DFB62 /* status.png in Resources */ = {isa = PBXBuildFile; fileRef = 47850890138BB234005DFB62 /* status.png */; };
 		4786D53513882381004554B1 /* ASCIIToCode.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4786D53413882381004554B1 /* ASCIIToCode.plist */; };
@@ -45,6 +46,8 @@
 		3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizeOperation.m; sourceTree = "<group>"; };
 		3B7EB473138F691800EBEC2B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		3B7EB474138F691800EBEC2B /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		3B7EB4CA138F72D900EBEC2B /* StringTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringTokenizer.h; sourceTree = "<group>"; };
+		3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringTokenizer.m; sourceTree = "<group>"; };
 		4747E1EE13877C150005180C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Slate/icon.icns; sourceTree = "<group>"; };
 		47850890138BB234005DFB62 /* status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = status.png; path = Slate/status.png; sourceTree = "<group>"; };
 		4786D53413882381004554B1 /* ASCIIToCode.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode.plist; sourceTree = "<group>"; };
@@ -143,6 +146,8 @@
 				4786D53413882381004554B1 /* ASCIIToCode.plist */,
 				3B7EB473138F691800EBEC2B /* Constants.h */,
 				3B7EB474138F691800EBEC2B /* Constants.m */,
+				3B7EB4CA138F72D900EBEC2B /* StringTokenizer.h */,
+				3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -350,6 +355,7 @@
 				47C4A2D71384F5DE0066B6DE /* ExpressionPoint.m in Sources */,
 				3B7EB3A7138F3F6800EBEC2B /* ResizeOperation.m in Sources */,
 				3B7EB475138F691800EBEC2B /* Constants.m in Sources */,
+				3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import "Binding.h"
 #import "MoveOperation.h"
 #import "ResizeOperation.h"
+#import "StringTokenizer.h"
 
 
 @implementation Binding
@@ -34,14 +35,14 @@ static NSDictionary *dictionary = nil;
   self = [super init];
   if (self) {
     // bind <key:modifiers> <op> <parameters>
-    NSArray *tokens = [binding componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSArray *tokens = [StringTokenizer tokenize:binding];
     if ([tokens count] <=2) {
       return nil;
     }
     NSString *keystroke = [tokens objectAtIndex:1];
     NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:@":"];
     if ([keyAndModifiers count] >= 1) {
-      [self setKeyCode:[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] integerValue]];
+      [self setKeyCode:(UInt32)[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] integerValue]];
       [self setModifiers:0];
       if ([keyAndModifiers count] >= 2) {
         NSArray *modifiersArray = [[keyAndModifiers objectAtIndex:1] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@",;"]];

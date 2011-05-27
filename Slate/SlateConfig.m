@@ -6,8 +6,10 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "SlateConfig.h"
 #import "Binding.h"
+#import "SlateConfig.h"
+#import "StringTokenizer.h"
+
 
 @implementation SlateConfig
 
@@ -62,7 +64,7 @@ static SlateConfig *_instance = nil;
   NSEnumerator *e = [lines objectEnumerator];
   NSString *line = [e nextObject];
   while (line) {
-    NSArray *tokens = [line componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSArray *tokens = [StringTokenizer tokenize:line];
     if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:@"config"]) {
       // config <key> <value>
       NSLog(@"  LoadingC: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
