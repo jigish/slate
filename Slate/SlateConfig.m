@@ -46,33 +46,33 @@ static SlateConfig *_instance = nil;
   NSEnumerator *e = [lines objectEnumerator];
   NSString *line = [e nextObject];
   while (line) {
-    NSArray *tokens = [line componentsSeparatedByString:@" "];
-      if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:@"config"]) {
-        // config <key> <value>
-        NSLog(@"  LoadingC: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
-        [configs setObject:[tokens objectAtIndex:2] forKey:[tokens objectAtIndex:1]];
-      } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:@"bind"]) {
-        // bind <key:modifiers> <op> <parameters>
-        Binding *bind = [[Binding alloc] initWithString:line];
-        if (bind != nil) {
-          NSLog(@"  LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
-          [bindings addObject:bind];
-          [bind release];
-        } else {
-          NSLog(@"  ERROR LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
-          NSAlert *alert = [[NSAlert alloc] init];
-          [alert addButtonWithTitle:@"Quit"];
-          [alert addButtonWithTitle:@"Skip"];
-          [alert setMessageText:@"Error Loading Binding:"];
-          [alert setInformativeText:line];
-          [alert setAlertStyle:NSWarningAlertStyle];
-          if ([alert runModal] == NSAlertFirstButtonReturn) {
-            NSLog(@"User selected exit");
-            [NSApp terminate:nil];
-          }
-          [alert release];
+    NSArray *tokens = [line componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:@"config"]) {
+      // config <key> <value>
+      NSLog(@"  LoadingC: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
+      [configs setObject:[tokens objectAtIndex:2] forKey:[tokens objectAtIndex:1]];
+    } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:@"bind"]) {
+      // bind <key:modifiers> <op> <parameters>
+      Binding *bind = [[Binding alloc] initWithString:line];
+      if (bind != nil) {
+        NSLog(@"  LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
+        [bindings addObject:bind];
+        [bind release];
+      } else {
+        NSLog(@"  ERROR LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"Quit"];
+        [alert addButtonWithTitle:@"Skip"];
+        [alert setMessageText:@"Error Loading Binding:"];
+        [alert setInformativeText:line];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        if ([alert runModal] == NSAlertFirstButtonReturn) {
+          NSLog(@"User selected exit");
+          [NSApp terminate:nil];
         }
+        [alert release];
       }
+    }
     line = [e nextObject];
   }
 
