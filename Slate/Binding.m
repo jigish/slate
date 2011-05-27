@@ -33,7 +33,7 @@ static NSDictionary *dictionary = nil;
   self = [super init];
   if (self) {
     // bind <key:modifiers> <op> <parameters>
-    NSArray *tokens = [binding componentsSeparatedByString:@" "];
+    NSArray *tokens = [binding componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if ([tokens count] <=2) {
       return nil;
     }
@@ -43,7 +43,7 @@ static NSDictionary *dictionary = nil;
       keyCode = [[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] intValue];
       modifiers = 0;
       if ([keyAndModifiers count] >= 2) {
-        NSArray *modifiersArray = [[keyAndModifiers objectAtIndex:1] componentsSeparatedByString:@","];
+        NSArray *modifiersArray = [[keyAndModifiers objectAtIndex:1] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@",;"]];
         NSEnumerator *modEnum = [modifiersArray objectEnumerator];
         NSString *mod = [modEnum nextObject];
         while (mod) {

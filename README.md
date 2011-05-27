@@ -38,7 +38,7 @@ key is a reference to a key on the keyboard. See Allowed Keys for a complete lis
 
 #### Modifiers ####
 
-modifiers is a comma separated list of standard modifier keys. Allowed modifiers are:
+modifiers is a comma or semicolon separated list of standard modifier keys. Allowed modifiers are:
 
 * Control: "ctrl"
 * Option/Alt: "alt"
