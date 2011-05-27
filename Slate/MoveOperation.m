@@ -58,7 +58,7 @@
 // I understand that the following method is stupidly written. Apple apparently enjoys keeping
 // multiple types of coordinate spaces. NSScreen.origin returns bottom-left while we need
 // top-left for window moving. Go figure.
-- (NSDictionary *) getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
+- (NSDictionary *) getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
   int originX = 0;
   int originY = 0;
   int sizeX = 0;
@@ -101,17 +101,19 @@
            [NSNumber numberWithInteger:sizeY], @"screenSizeY",
            [NSNumber numberWithInteger:(int)cSize.width], @"windowSizeX",
            [NSNumber numberWithInteger:(int)cSize.height], @"windowSizeY",
+           [NSNumber numberWithInteger:(int)nSize.width], @"newWindowSizeX",
+           [NSNumber numberWithInteger:(int)nSize.height], @"newWindowSizeY",
            [NSNumber numberWithInteger:(int)cTopLeft.x], @"windowTopLeftX",
            [NSNumber numberWithInteger:(int)cTopLeft.y], @"windowTopLeftY", nil];
 }
 
-- (NSPoint) getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
-  NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize: cSize];
+- (NSPoint) getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
+  NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize:cSize newSize:nSize];
   return [topLeft getPointWithDict:values];
 }
 
 - (NSSize) getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
-  NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize: cSize];
+  NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize:cSize newSize:cSize];
   return [dimensions getSizeWithDict:values];
 }
 

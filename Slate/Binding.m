@@ -8,6 +8,7 @@
 
 #import "Binding.h"
 #import "MoveOperation.h"
+#import "ResizeOperation.h"
 
 
 @implementation Binding
@@ -65,43 +66,14 @@ static NSDictionary *dictionary = nil;
     NSString *opString = [tokens objectAtIndex:2];
     if ([opString isEqualToString:@"move"] && [tokens count] >= 5) {
       // bind <key:modifiers> move <topLeft> <dimensions> <optional:monitor>
-      op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:3] dimensions:[tokens objectAtIndex:4] monitor:([tokens count] >=6 ? [[tokens objectAtIndex:5] intValue] : -1)];
+      [self setOp:[[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:3] dimensions:[tokens objectAtIndex:4] monitor:([tokens count] >=6 ? [[tokens objectAtIndex:5] intValue] : -1)]];
     } else if ([opString isEqualToString:@"resize"] && [tokens count] >= 5) {
       // bind <key:modifiers> resize <x> <y> <optional:anchor>
-      NSString *dimX = @"windowSizeX";
-      NSString *x = [tokens objectAtIndex:3];
-      NSString *xAugment = [x hasSuffix:@"%"] ? [x stringByReplacingOccurrencesOfString:@"%" withString:@"*windowSizeX/100"] : x;
-      dimX = [dimX stringByAppendingString:xAugment];
-      NSString *flippedXAugment = [x hasPrefix:@"+"] ? [xAugment stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:@"-"] : [xAugment stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:@"+"];
-
-      NSString *dimY = @"windowSizeY";
-      NSString *y = [tokens objectAtIndex:4];
-      NSString *yAugment = [y hasSuffix:@"%"] ? [y stringByReplacingOccurrencesOfString:@"%" withString:@"*windowSizeY/100"] : y;
-      dimY = [dimY stringByAppendingString:yAugment];
-      NSString *flippedYAugment = [y hasPrefix:@"+"] ? [yAugment stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:@"-"] : [yAugment stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:@"+"];
-
-      NSString *tlX = nil;
-      NSString *tlY = nil;
-      NSString *anchor = [tokens count] >= 6 ? [tokens objectAtIndex:5] : @"top-left";
-
-      if ([anchor isEqualToString:@"top-left"]) {
-        tlX = @"windowTopLeftX";
-        tlY = @"windowTopLeftY";
-      } else if ([anchor isEqualToString:@"top-right"]) {
-        tlX = [@"windowTopLeftX" stringByAppendingString:flippedXAugment];
-        tlY = @"windowTopLeftY";
-      } else if ([anchor isEqualToString:@"bottom-left"]) {
-        tlX = @"windowTopLeftX";
-        tlY = [@"windowTopLeftY" stringByAppendingString:flippedYAugment];
-      } else if ([anchor isEqualToString:@"bottom-right"]) {
-        tlX = [@"windowTopLeftX" stringByAppendingString:flippedXAugment];
-        tlY = [@"windowTopLeftY" stringByAppendingString:flippedYAugment];
-      } else {
-        NSLog(@"ERROR: Unrecognized anchor '%s'", [anchor cStringUsingEncoding:NSASCIIStringEncoding]);
-        return nil;
+      NSString *anchor = @"top-left";
+      if ([tokens count] >= 6) {
+        anchor = [tokens objectAtIndex:5];
       }
-
-      [self setOp:[[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:@","] stringByAppendingString:tlY] dimensions:[[dimX stringByAppendingString:@","] stringByAppendingString:dimY] monitor:-1]];
+      [self setOp:[[ResizeOperation alloc] initWithAnchor:anchor xResize:[tokens objectAtIndex:3] yResize:[tokens objectAtIndex:4]]];
     } else if ([opString isEqualToString:@"push"] && [tokens count] >= 4) {
       // bind <key:modifiers> push <top|bottom|up|down|left|right> <optional:none|center|bar|bar-resize:expression>
       NSString *direction = [tokens objectAtIndex:3];

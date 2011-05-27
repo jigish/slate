@@ -22,7 +22,7 @@
 @property (retain) ExpressionPoint *dimensions;
 @property (assign) int monitor;
 
-- (NSDictionary *) getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize;
+- (NSDictionary *) getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize;
 - (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(int)mon;
 
 @end
