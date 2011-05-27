@@ -58,7 +58,7 @@
 }
 
 - (BOOL) monitorExists {
-  return monitor < [[NSScreen screens] count];
+  return (monitor < ((NSInteger)[[NSScreen screens] count]) ? YES : NO);
 }
 
 // I understand that the following method is stupidly written. Apple apparently enjoys keeping
