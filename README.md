@@ -90,7 +90,7 @@ Note: When using expressions spaces are *not* allowed!
 
 Allowed operations are:
 
-* Move/Resize the window any which way: "move topLeftX,topLeftY sizeX,sizeY screen"
+* Move/Resize the window any which way: "move topLeftX;topLeftY sizeX;sizeY screen"
 
     This is the granddaddy of all the operations. The rest of the operations are all wrapped versions of move.
 
@@ -102,7 +102,7 @@ Allowed operations are:
 
     Example:
 
-        bind pad1:ctrl move 0,0 100,100 1
+        bind pad1:ctrl move 0;0 100;100 1
 
     Will bind the keystroke ctrl-numpad1 to moving the window to the screen at index 1 with top-left coordinate 0,0 and size 100,100
 
@@ -160,7 +160,7 @@ Allowed operations are:
 
     Example:
 
-        bind 1:ctrl corner top-left resize:screenSizeX/2,screenSizeY/2
+        bind 1:ctrl corner top-left resize:screenSizeX/2;screenSizeY/2
 
     Will bind the keystroke ctrl-1 to move the window to the top-left corner and resize it to 1/4 of the screen
 

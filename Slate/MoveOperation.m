@@ -27,17 +27,27 @@
 - (id) initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(int)mon {
   self = [super init];
   if (self) {
-    NSArray *tlTokens = [tl componentsSeparatedByString:@","];
-    if ([tlTokens count] >=2) {
+    NSArray *tlTokens = [tl componentsSeparatedByString:@";"];
+    if ([tlTokens count] == 2) {
       topLeft = [[ExpressionPoint alloc] initWithX:[tlTokens objectAtIndex:0] y:[tlTokens objectAtIndex:1]];
     } else {
-      topLeft = [[ExpressionPoint alloc] init];
+      tlTokens = [tl componentsSeparatedByString:@","];
+      if ([tlTokens count] == 2) {
+        topLeft = [[ExpressionPoint alloc] initWithX:[tlTokens objectAtIndex:0] y:[tlTokens objectAtIndex:1]];
+      } else {
+        topLeft = [[ExpressionPoint alloc] init];
+      }
     }
-    NSArray *dimTokens = [dim componentsSeparatedByString:@","];
-    if ([dimTokens count] >=2) {
+    NSArray *dimTokens = [dim componentsSeparatedByString:@";"];
+    if ([dimTokens count] == 2) {
       dimensions = [[ExpressionPoint alloc] initWithX:[dimTokens objectAtIndex:0] y:[dimTokens objectAtIndex:1]];
     } else {
-      dimensions = [[ExpressionPoint alloc] init];
+      dimTokens = [dim componentsSeparatedByString:@","];
+      if ([dimTokens count] == 2) {
+        dimensions = [[ExpressionPoint alloc] initWithX:[dimTokens objectAtIndex:0] y:[dimTokens objectAtIndex:1]];
+      } else {
+        dimensions = [[ExpressionPoint alloc] init];
+      }
     }
     monitor = mon;
   }
