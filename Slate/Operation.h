@@ -11,8 +11,10 @@
 
 @interface Operation : NSObject {
 @private
-
+  BOOL moveFirst;
 }
+
+@property (assign) BOOL moveFirst;
 
 - (NSPoint) getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize;
 - (NSSize) getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize;

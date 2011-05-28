@@ -97,7 +97,7 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
         cSize = NSMakeSize(0, 0);
       }
       
-      if ([binding moveFirst]) {
+      if ([[binding op] moveFirst]) {
         nSize = NSMakeSize(0, 0);
         // Update position
         NSPoint thePoint = [[binding op] getTopLeftWithCurrentTopLeft:NSMakePoint(cTopLeft.x,cTopLeft.y) currentSize:NSMakeSize(cSize.width,cSize.height) newSize:NSMakeSize(nSize.width,nSize.height)];

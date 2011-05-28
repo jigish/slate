@@ -18,15 +18,16 @@
 
 - (id)init {
   self = [super init];
+  
   if (self) {
-    // Initialization code here.
+    [self setMoveFirst:NO];
   }
   
   return self;
 }
 
 - (id)initWithAnchor:(NSString *)a xResize:(NSString *)x yResize:(NSString *)y {
-  self = [super init];
+  self = [self init];
   if (self) {
     if ([a isEqualToString:TOP_LEFT] || [a isEqualToString:TOP_RIGHT] || [a isEqualToString:BOTTOM_LEFT] || [a isEqualToString:BOTTOM_RIGHT]) {
       [self setAnchor:a];

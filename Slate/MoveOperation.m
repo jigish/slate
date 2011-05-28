@@ -19,15 +19,12 @@
 
 - (id)init {
   self = [super init];
-  if (self) {
-    // Initialization code here.
-  }
 
   return self;
 }
 
 - (id) initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon {
-  self = [super init];
+  self = [self init];
   if (self) {
     NSArray *tlTokens = [tl componentsSeparatedByString:SEMICOLON];
     if ([tlTokens count] == 2) {
@@ -54,6 +51,15 @@
     [self setMonitor:mon];
   }
 
+  return self;
+}
+
+- (id) initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon moveFirst:(BOOL)mf {
+  self = [self initWithTopLeft:tl dimensions:dim monitor:mon];
+  if (self) {
+    [self setMoveFirst:mf];
+  }
+  
   return self;
 }
 

@@ -24,5 +24,6 @@
 
 - (NSDictionary *) getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize;
 - (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon;
+- (id) initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon moveFirst:(BOOL)mf;
 
 @end

@@ -36,4 +36,32 @@
   return array;
 }
 
++ (NSArray *)tokenize:(NSString *)s maxTokens:(NSInteger) maxTokens {
+  if (maxTokens <=1) {
+    return [NSArray arrayWithObject:s];
+  }
+  NSInteger numTokens = 0;
+  NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:10];
+  NSMutableString *token = [[NSMutableString alloc] initWithCapacity:10];
+  for (NSInteger i = 0; i < [s length]; i++) {
+    if ([self isSpaceChar:[s characterAtIndex:i]]) {
+      if (![token isEqualToString:@""] && numTokens < (maxTokens-1)) {
+        numTokens++;
+        [array addObject:[NSString stringWithString:token]];
+        [token release];
+        token = [[NSMutableString alloc] initWithCapacity:10];
+      } else if (numTokens >= (maxTokens-1)) {
+        [token appendFormat:@"%C", [s characterAtIndex:i]];
+      }
+    } else {
+      [token appendFormat:@"%C", [s characterAtIndex:i]];
+    }
+  }
+  if (![token isEqualToString:@""]) {
+    [array addObject:[NSString stringWithString:token]];
+  }
+  [token release];
+  return array;
+}
+
 @end
