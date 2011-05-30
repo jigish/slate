@@ -21,5 +21,6 @@
 + (Operation *)nudgeOperationFromString:(NSString *)moveOperation;
 + (Operation *)throwOperationFromString:(NSString *)moveOperation;
 + (Operation *)cornerOperationFromString:(NSString *)moveOperation;
++ (Operation *)chainOperationFromString:(NSString *)chainOperation;
 
 @end

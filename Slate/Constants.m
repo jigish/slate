@@ -37,6 +37,7 @@ NSString * const PUSH = @"push";
 NSString * const NUDGE = @"nudge";
 NSString * const THROW = @"throw";
 NSString * const CORNER = @"corner";
+NSString * const CHAIN = @"chain";
 
 // Parameters and Options
 NSString * const CENTER = @"center";

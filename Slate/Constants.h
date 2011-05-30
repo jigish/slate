@@ -35,6 +35,7 @@ extern NSString * const PUSH;
 extern NSString * const NUDGE;
 extern NSString * const THROW;
 extern NSString * const CORNER;
+extern NSString * const CHAIN;
 
 // Parameters and Options
 extern NSString * const CENTER;

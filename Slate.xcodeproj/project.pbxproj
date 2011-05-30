@@ -11,6 +11,7 @@
 		3B7EB475138F691800EBEC2B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB474138F691800EBEC2B /* Constants.m */; };
 		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
 		3BA4677D1391721F0081D75C /* OperationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4677C1391721F0081D75C /* OperationUtil.m */; };
+		3BDC2B5B1391C55400B0D151 /* ChainOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDC2B5A1391C55400B0D151 /* ChainOperation.m */; };
 		4747E1EF13877C160005180C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4747E1EE13877C150005180C /* icon.icns */; };
 		47850891138BB234005DFB62 /* status.png in Resources */ = {isa = PBXBuildFile; fileRef = 47850890138BB234005DFB62 /* status.png */; };
 		4786D53513882381004554B1 /* ASCIIToCode.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4786D53413882381004554B1 /* ASCIIToCode.plist */; };
@@ -51,6 +52,8 @@
 		3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringTokenizer.m; sourceTree = "<group>"; };
 		3BA4677B1391721F0081D75C /* OperationUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperationUtil.h; sourceTree = "<group>"; };
 		3BA4677C1391721F0081D75C /* OperationUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OperationUtil.m; sourceTree = "<group>"; };
+		3BDC2B591391C55400B0D151 /* ChainOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainOperation.h; sourceTree = "<group>"; };
+		3BDC2B5A1391C55400B0D151 /* ChainOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChainOperation.m; sourceTree = "<group>"; };
 		4747E1EE13877C150005180C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Slate/icon.icns; sourceTree = "<group>"; };
 		47850890138BB234005DFB62 /* status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = status.png; path = Slate/status.png; sourceTree = "<group>"; };
 		4786D53413882381004554B1 /* ASCIIToCode.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode.plist; sourceTree = "<group>"; };
@@ -137,6 +140,8 @@
 				3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */,
 				3BA4677B1391721F0081D75C /* OperationUtil.h */,
 				3BA4677C1391721F0081D75C /* OperationUtil.m */,
+				3BDC2B591391C55400B0D151 /* ChainOperation.h */,
+				3BDC2B5A1391C55400B0D151 /* ChainOperation.m */,
 			);
 			name = Operation;
 			sourceTree = "<group>";
@@ -362,6 +367,7 @@
 				3B7EB475138F691800EBEC2B /* Constants.m in Sources */,
 				3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */,
 				3BA4677D1391721F0081D75C /* OperationUtil.m in Sources */,
+				3BDC2B5B1391C55400B0D151 /* ChainOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

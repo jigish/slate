@@ -170,6 +170,16 @@ Allowed operations are:
 
     Will bind the keystroke ctrl-1 to move the window to the top-left corner and resize it to 1/4 of the screen
 
+* Chain multiple operations to one binding: "chain opAndParams1 | opAndParams2 ...
+
+        opAndParamsX any of the above operation strings
+
+    Example:
+
+        bind 1:ctrl chain push up | push right | push down | push left
+
+    Will bind the keystroke ctrl-1 to push up on the first press, then push right on the second press, then push down on the third pres, the push left on the fourth press and rotate back to pushing up on the fifth press (etc).
+
 ### Example Config ###
 
 You can check out my own config in the file [here](https://github.com/jigish/dotfiles/blob/master/slate).

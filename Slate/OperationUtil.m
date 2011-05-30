@@ -6,6 +6,7 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
+#import "ChainOperation.h"
 #import "Constants.h"
 #import "OperationUtil.h"
 #import "MoveOperation.h"
@@ -30,6 +31,8 @@
     return [self throwOperationFromString:opString];
   } else if ([op isEqualToString:CORNER]) {
     return [self cornerOperationFromString:opString];
+  } else if ([op isEqualToString:CHAIN]) {
+    return [self chainOperationFromString:opString];
   } else {
     NSLog(@"ERROR: Unrecognized operation '%s'", [opString cStringUsingEncoding:NSASCIIStringEncoding]);
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);
@@ -250,6 +253,31 @@
   }
   
   return [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:-1];
+}
+
++ (Operation *)chainOperationFromString:(NSString *)chainOperation {
+  // chain op[ | op]+
+  NSArray *tokens = [StringTokenizer tokenize:chainOperation maxTokens:2];
+  
+  if ([tokens count] < 2) {
+    NSLog(@"ERROR: Invalid Parameters '%@'", chainOperation);
+    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Chain operations require the following format: 'chain op[|op]+'", chainOperation] userInfo:nil]);
+  }
+  
+  NSString *opsString = [tokens objectAtIndex:1];
+  NSArray *ops = [opsString componentsSeparatedByString:@" | "];
+  NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
+  for (NSInteger i = 0; i < [ops count]; i++) {
+    Operation *op = [self operationFromString:[ops objectAtIndex:i]];
+    if (op != nil) {
+      [opArray addObject:op];
+    } else {
+      NSLog(@"ERROR: Invalid Operation in Chain: '%@'", [ops objectAtIndex:i]);
+      @throw([NSException exceptionWithName:@"Invalid Operation in Chain" reason:[NSString stringWithFormat:@"Invalid operation '%@' in chain.", [ops objectAtIndex:i]] userInfo:nil]);
+    }
+  }
+  
+  return [[ChainOperation alloc] initWithArray:opArray];
 }
 
 @end
