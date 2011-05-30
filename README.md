@@ -172,7 +172,7 @@ Allowed operations are:
 
 * Chain multiple operations to one binding: "chain opAndParams1 | opAndParams2 ...
 
-        opAndParamsX any of the above operation strings
+        opAndParamsX = any of the above operation strings
 
     Example:
 
