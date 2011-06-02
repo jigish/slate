@@ -20,6 +20,7 @@
 
 #import "Constants.h"
 #import "ResizeOperation.h"
+#import "SlateConfig.h"
 
 
 @implementation ResizeOperation
@@ -86,8 +87,29 @@
 }
 
 - (NSSize)getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
-  NSInteger dimX = cSize.width + [self resizeStringToInt:xResize withValue:cSize.width];
-  NSInteger dimY = cSize.height + [self resizeStringToInt:yResize withValue:cSize.height];
+  NSInteger sizeX = 0;
+  NSInteger sizeY = 0;
+  NSArray *screens = [NSScreen screens];
+  NSScreen *screen = [screens objectAtIndex:0];
+  NSPoint topLeftZeroed = NSMakePoint(cTopLeft.x, 0);
+  if (!NSPointInRect(topLeftZeroed, [screen frame])) {
+    for (NSUInteger i = 1; i < [screens count]; i++) {
+      topLeftZeroed = NSMakePoint(cTopLeft.x, 0);
+      screen = [screens objectAtIndex:i];
+      if (NSPointInRect(topLeftZeroed, [screen frame])) {
+        break;
+      }
+    }
+  }
+  sizeX = cSize.width;
+  sizeY = cSize.height;
+  NSString *resizePercentOf = [[SlateConfig getInstance] getConfig:RESIZE_PERCENT_OF] != nil ? [[SlateConfig getInstance] getConfig:RESIZE_PERCENT_OF] : @"windowSize";
+  if ([resizePercentOf isEqualToString:@"screenSize"]) {
+    sizeX = [screen visibleFrame].size.width;
+    sizeY = [screen visibleFrame].size.height;
+  }
+  NSInteger dimX = cSize.width + [self resizeStringToInt:xResize withValue:sizeX];
+  NSInteger dimY = cSize.height + [self resizeStringToInt:yResize withValue:sizeY];
   return NSMakeSize(dimX,dimY);
 }
 

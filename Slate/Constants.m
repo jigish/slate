@@ -22,6 +22,8 @@
 
 // Config Keys
 NSString * const DEFAULT_TO_CURRENT_SCREEN = @"defaultToCurrentScreen";
+NSString * const NUDGE_PERCENT_OF = @"nudgePercentOf";
+NSString * const RESIZE_PERCENT_OF = @"resizePercentOf";
 
 // Modifier Keys
 NSString * const CONTROL = @"ctrl";

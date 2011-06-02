@@ -20,6 +20,8 @@
 
 // Config Keys
 extern NSString * const DEFAULT_TO_CURRENT_SCREEN;
+extern NSString * const NUDGE_PERCENT_OF;
+extern NSString * const RESIZE_PERCENT_OF;
 
 // Modifier Keys
 extern NSString * const CONTROL;

@@ -25,6 +25,8 @@ List of allowed configs:
 | Name | Type | Default | Behavior |
 |:-----|:-----|:--------|:---------|
 | defaultToCurrentScreen | Boolean | false | "true" causes all bindings to default to the current screen if the screen they reference does not exist. "false" causes only bindings that do not specify a screen to default to the current screen while bindings that reference screens that do not exist simply do nothing. |
+| nudgePercentOf | String | windowSize | Will use this value for the nudge percent calculation. Possible values are "windowSize" and "screenSize". |
+| resizePercentOf | String | windowSize | Will use this value for the resize percent calculation. Possible values are "windowSize" and "screenSize". |
 
 Example:
 

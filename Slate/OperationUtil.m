@@ -23,6 +23,7 @@
 #import "OperationUtil.h"
 #import "MoveOperation.h"
 #import "ResizeOperation.h"
+#import "SlateConfig.h"
 #import "StringTokenizer.h"
 
 
@@ -181,9 +182,10 @@
   
   NSString *tlX = WINDOW_TOP_LEFT_X;
   NSString *x = [tokens objectAtIndex:1];
+  NSString *nudgePercentOf = [[SlateConfig getInstance] getConfig:NUDGE_PERCENT_OF] != nil ? [[SlateConfig getInstance] getConfig:NUDGE_PERCENT_OF] : @"windowSize";
   if ([x hasSuffix:PERCENT]) {
     // % Nudge
-    tlX = [tlX stringByAppendingString:[x stringByReplacingOccurrencesOfString:PERCENT withString:@"*windowSizeX/100"]];
+    tlX = [tlX stringByAppendingString:[x stringByReplacingOccurrencesOfString:PERCENT withString:[NSString stringWithFormat:@"*%@X/100",nudgePercentOf]]];
   } else {
     // Hard Nudge
     tlX = [tlX stringByAppendingString:x];
@@ -193,7 +195,7 @@
   NSString *y = [tokens objectAtIndex:2];
   if ([y hasSuffix:PERCENT]) {
     // % Nudge
-    tlY = [tlY stringByAppendingString:[y stringByReplacingOccurrencesOfString:PERCENT withString:@"*windowSizeY/100"]];
+    tlY = [tlY stringByAppendingString:[y stringByReplacingOccurrencesOfString:PERCENT withString:[NSString stringWithFormat:@"*%@Y/100",nudgePercentOf]]];
   } else {
     // Hard Nudge
     tlY = [tlY stringByAppendingString:y];

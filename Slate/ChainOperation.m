@@ -63,6 +63,8 @@
     [self setCurrentOp:0];
   else
     [self setCurrentOp:currentOp+1];
+  
+  // TODO: figure out a way to register for window resize/close events!
 }
 
 - (void)dealloc {
