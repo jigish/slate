@@ -34,6 +34,6 @@
 
 - (id)initWithAnchor:(NSString *)a xResize:(NSString *)x yResize:(NSString *)y;
 
-- (NSInteger) resizeStringToInt:(NSString *)resize withValue:(NSInteger) val;
+- (NSInteger)resizeStringToInt:(NSString *)resize withValue:(NSInteger) val;
 
 @end

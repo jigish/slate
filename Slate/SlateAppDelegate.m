@@ -149,6 +149,8 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
           NSLog(@"ERROR: Could not change position");
         }
       }
+      
+      [[binding op] afterComplete];
 
     } else {
       NSLog(@"ERROR: Could not fetch focused window");

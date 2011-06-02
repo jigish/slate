@@ -43,7 +43,7 @@ static NSDictionary *dictionary = nil;
 }
 
 // Yes, this method is huge. Deal with it.
-- (id)initWithString: (NSString *)binding {
+- (id)initWithString:(NSString *)binding {
   self = [self init];
   if (self) {
     // bind <key:modifiers> <op> <parameters>

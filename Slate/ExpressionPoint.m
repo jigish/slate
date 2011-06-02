@@ -36,7 +36,7 @@
   return self;
 }
 
-- (id)initWithX: (NSString *)xVal y:(NSString *)yVal {
+- (id)initWithX:(NSString *)xVal y:(NSString *)yVal {
   self = [super init];
   if (self) {
     [self setX:xVal];
@@ -52,15 +52,15 @@
   [super dealloc];
 }
 
-- (NSPoint) getPointWithDict: (NSDictionary *)values {
+- (NSPoint)getPointWithDict:(NSDictionary *)values {
   return NSMakePoint([self expToInteger:x withDict:values],[self expToInteger:y withDict:values]);
 }
 
-- (NSSize) getSizeWithDict: (NSDictionary *)values {
+- (NSSize)getSizeWithDict:(NSDictionary *)values {
   return NSMakeSize([self expToInteger:x withDict:values],[self expToInteger:y withDict:values]);
 }
 
-- (NSInteger) expToInteger: (NSString *)exp withDict:(NSDictionary *)values {
+- (NSInteger)expToInteger:(NSString *)exp withDict:(NSDictionary *)values {
   if (exp != nil) {
     NSComparisonPredicate *pred = (NSComparisonPredicate *)[NSPredicate predicateWithFormat:[exp stringByAppendingString:@" == 42"]];
     NSExpression *lexp = [pred leftExpression];

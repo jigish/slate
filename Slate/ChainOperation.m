@@ -40,30 +40,29 @@
   if (self) {
     [self setCurrentOp:0];
     [self setOperations:opArray];
-    [self setMoveFirst:[[operations objectAtIndex:(currentOp/2)] moveFirst]];
+    [self setMoveFirst:[[operations objectAtIndex:currentOp] moveFirst]];
   }
   
   return self;
 }
 
-- (NSPoint) getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
-  NSPoint topLeft = [[operations objectAtIndex:(currentOp/2)] getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:nSize];
-  if ((currentOp+1)/2 >= [operations count])
-    [self setCurrentOp:0];
-  else
-    [self setCurrentOp:currentOp+1];
-  [self setMoveFirst:[[operations objectAtIndex:(currentOp/2)] moveFirst]];
+- (NSPoint)getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
+  NSPoint topLeft = [[operations objectAtIndex:currentOp] getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:nSize];
+  [self setMoveFirst:[[operations objectAtIndex:currentOp] moveFirst]];
   return topLeft;
 }
 
-- (NSSize) getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
-  NSSize dimensions = [[operations objectAtIndex:(currentOp/2)] getDimensionsWithCurrentTopLeft:cTopLeft currentSize:cSize];
-  if ((currentOp+1)/2 >= [operations count])
+- (NSSize)getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
+  NSSize dimensions = [[operations objectAtIndex:currentOp] getDimensionsWithCurrentTopLeft:cTopLeft currentSize:cSize];
+  [self setMoveFirst:[[operations objectAtIndex:currentOp] moveFirst]];
+  return dimensions;
+}
+
+- (void)afterComplete {
+  if (currentOp+1 >= [operations count])
     [self setCurrentOp:0];
   else
     [self setCurrentOp:currentOp+1];
-  [self setMoveFirst:[[operations objectAtIndex:(currentOp/2)] moveFirst]];
-  return dimensions;
 }
 
 - (void)dealloc {

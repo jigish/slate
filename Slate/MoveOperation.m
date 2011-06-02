@@ -35,7 +35,7 @@
   return self;
 }
 
-- (id) initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon {
+- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon {
   self = [self init];
   if (self) {
     NSArray *tlTokens = [tl componentsSeparatedByString:SEMICOLON];
@@ -66,7 +66,7 @@
   return self;
 }
 
-- (id) initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon moveFirst:(BOOL)mf {
+- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon moveFirst:(BOOL)mf {
   self = [self initWithTopLeft:tl dimensions:dim monitor:mon];
   if (self) {
     [self setMoveFirst:mf];
@@ -75,14 +75,14 @@
   return self;
 }
 
-- (BOOL) monitorExists {
+- (BOOL)monitorExists {
   return (monitor < ((NSInteger)[[NSScreen screens] count]) ? YES : NO);
 }
 
 // I understand that the following method is stupidly written. Apple apparently enjoys keeping
 // multiple types of coordinate spaces. NSScreen.origin returns bottom-left while we need
 // top-left for window moving. Go figure.
-- (NSDictionary *) getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
+- (NSDictionary *)getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
   NSInteger originX = 0;
   NSInteger originY = 0;
   NSInteger sizeX = 0;
@@ -139,7 +139,7 @@
            [NSNumber numberWithInteger:(NSInteger)cTopLeft.y], WINDOW_TOP_LEFT_Y, nil];
 }
 
-- (NSPoint) getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
+- (NSPoint)getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
   // If monitor does not exist and we arent going to default to current screen
   if (![self monitorExists] && ![[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN]) {
     return cTopLeft;
@@ -148,7 +148,7 @@
   return [topLeft getPointWithDict:values];
 }
 
-- (NSSize) getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
+- (NSSize)getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
   // If monitor does not exist and we arent going to default to current screen
   if (![self monitorExists] && ![[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN]) {
     return cSize;

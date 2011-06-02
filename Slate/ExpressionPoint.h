@@ -30,11 +30,11 @@
 @property (copy) NSString *x;
 @property (copy) NSString *y;
 
-- (id)initWithX: (NSString *)xVal y: (NSString *)yVal;
+- (id)initWithX:(NSString *)xVal y:(NSString *)yVal;
 
-- (NSPoint) getPointWithDict: (NSDictionary *)values;
-- (NSSize) getSizeWithDict: (NSDictionary *)values;
+- (NSPoint)getPointWithDict:(NSDictionary *)values;
+- (NSSize)getSizeWithDict:(NSDictionary *)values;
 
-- (NSInteger) expToInteger: (NSString *)exp withDict:(NSDictionary *)values;
+- (NSInteger)expToInteger:(NSString *)exp withDict:(NSDictionary *)values;
 
 @end
