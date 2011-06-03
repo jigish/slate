@@ -20,7 +20,7 @@
 
 #import "Binding.h"
 #import "Constants.h"
-#import "OperationUtil.h"
+#import "OperationFactory.h"
 #import "StringTokenizer.h"
 
 
@@ -47,7 +47,8 @@ static NSDictionary *dictionary = nil;
   self = [self init];
   if (self) {
     // bind <key:modifiers> <op> <parameters>
-    NSArray *tokens = [StringTokenizer tokenize:binding maxTokens:3];
+    NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+    [StringTokenizer tokenize:binding into:tokens maxTokens:3];
     if ([tokens count] <=2) {
       @throw([NSException exceptionWithName:@"Unrecognized Bind" reason:binding userInfo:nil]);
     }
@@ -78,7 +79,7 @@ static NSDictionary *dictionary = nil;
       }
     }
     
-    [self setOp:[OperationUtil operationFromString:[tokens objectAtIndex:2]]];
+    [self setOp:[OperationFactory createOperationFromString:[tokens objectAtIndex:2]]];
     
     if (op == nil) {
       NSLog(@"ERROR: Unable to create binding");

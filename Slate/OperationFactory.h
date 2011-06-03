@@ -1,5 +1,5 @@
 //
-//  OperationUtil.h
+//  OperationFactory.h
 //  Slate
 //
 //  Created by Jigish Patel on 5/28/11.
@@ -21,18 +21,18 @@
 #import <Foundation/Foundation.h>
 #import "Operation.h"
 
-@interface OperationUtil : NSObject {
+@interface OperationFactory : NSObject {
 
 }
 
-+ (Operation *)operationFromString:(NSString *)opString;
++ (id)createOperationFromString:(NSString *)opString;
 
-+ (Operation *)moveOperationFromString:(NSString *)moveOperation;
-+ (Operation *)resizeOperationFromString:(NSString *)moveOperation;
-+ (Operation *)pushOperationFromString:(NSString *)moveOperation;
-+ (Operation *)nudgeOperationFromString:(NSString *)moveOperation;
-+ (Operation *)throwOperationFromString:(NSString *)moveOperation;
-+ (Operation *)cornerOperationFromString:(NSString *)moveOperation;
-+ (Operation *)chainOperationFromString:(NSString *)chainOperation;
++ (id)createMoveOperationFromString:(NSString *)moveOperation;
++ (id)createResizeOperationFromString:(NSString *)resizeOperation;
++ (id)createPushOperationFromString:(NSString *)pushOperation;
++ (id)createNudgeOperationFromString:(NSString *)nudgeOperation;
++ (id)createThrowOperationFromString:(NSString *)throwOperation;
++ (id)createCornerOperationFromString:(NSString *)cornerOperation;
++ (id)createChainOperationFromString:(NSString *)chainOperation;
 
 @end

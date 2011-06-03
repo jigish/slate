@@ -27,8 +27,7 @@
   return [[NSCharacterSet whitespaceCharacterSet] characterIsMember:c];
 }
 
-+ (NSArray *)tokenize:(NSString *)s {
-  NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:10];
++ (void)tokenize:(NSString *)s into:(NSMutableArray *)array {
   NSMutableString *token = [[NSMutableString alloc] initWithCapacity:10];
   for (NSInteger i = 0; i < [s length]; i++) {
     if ([self isSpaceChar:[s characterAtIndex:i]]) {
@@ -45,15 +44,13 @@
     [array addObject:[NSString stringWithString:token]];
   }
   [token release];
-  return array;
 }
 
-+ (NSArray *)tokenize:(NSString *)s maxTokens:(NSInteger) maxTokens {
++ (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger) maxTokens {
   if (maxTokens <=1) {
-    return [NSArray arrayWithObject:s];
+    [array addObject:s];
   }
   NSInteger numTokens = 0;
-  NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:10];
   NSMutableString *token = [[NSMutableString alloc] initWithCapacity:10];
   for (NSInteger i = 0; i < [s length]; i++) {
     if ([self isSpaceChar:[s characterAtIndex:i]]) {
@@ -73,7 +70,6 @@
     [array addObject:[NSString stringWithString:token]];
   }
   [token release];
-  return array;
 }
 
 @end

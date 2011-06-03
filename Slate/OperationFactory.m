@@ -1,5 +1,5 @@
 //
-//  OperationUtil.m
+//  OperationFactory.m
 //  Slate
 //
 //  Created by Jigish Patel on 5/28/11.
@@ -20,57 +20,67 @@
 
 #import "ChainOperation.h"
 #import "Constants.h"
-#import "OperationUtil.h"
+#import "OperationFactory.h"
 #import "MoveOperation.h"
 #import "ResizeOperation.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 
 
-@implementation OperationUtil
+@implementation OperationFactory
 
-+ (Operation *)operationFromString:(NSString *)opString {
-  NSArray *tokens = [StringTokenizer tokenize:opString maxTokens:2];
++ (id)createOperationFromString:(NSString *)opString {
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:opString into:tokens maxTokens:2];
   NSString *op = [tokens objectAtIndex:0];
+  Operation *operation = nil;
   if ([op isEqualToString:MOVE]) {
-    return [self moveOperationFromString:opString];
+    operation = [self createMoveOperationFromString:opString];
   } else if ([op isEqualToString:RESIZE]) {
-    return [self resizeOperationFromString:opString];
+    operation = [self createResizeOperationFromString:opString];
   } else if ([op isEqualToString:PUSH]) {
-    return [self pushOperationFromString:opString];
+    operation = [self createPushOperationFromString:opString];
   } else if ([op isEqualToString:NUDGE]) {
-    return [self nudgeOperationFromString:opString];
+    operation = [self createNudgeOperationFromString:opString];
   } else if ([op isEqualToString:THROW]) {
-    return [self throwOperationFromString:opString];
+    operation = [self createThrowOperationFromString:opString];
   } else if ([op isEqualToString:CORNER]) {
-    return [self cornerOperationFromString:opString];
+    operation = [self createCornerOperationFromString:opString];
   } else if ([op isEqualToString:CHAIN]) {
-    return [self chainOperationFromString:opString];
+    operation = [self createChainOperationFromString:opString];
   } else {
     NSLog(@"ERROR: Unrecognized operation '%s'", [opString cStringUsingEncoding:NSASCIIStringEncoding]);
+    [tokens release];
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);
   }
+  [tokens release];
+  return operation;
 }
 
-+ (Operation *)moveOperationFromString:(NSString *)moveOperation {
++ (id)createMoveOperationFromString:(NSString *)moveOperation {
   // move <topLeft> <dimensions> <optional:monitor>
-  NSArray *tokens = [StringTokenizer tokenize:moveOperation];
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:moveOperation into:tokens];
   
   if ([tokens count] < 3) {
     NSLog(@"ERROR: Invalid Parameters '%s'", [moveOperation cStringUsingEncoding:NSASCIIStringEncoding]);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Move operations require the following format: 'move topLeftX;topLeftY width;height [optional:screemNumber]'", moveOperation] userInfo:nil]);
   }
   
+  Operation *op = nil;
   if ([moveOperation rangeOfString:NEW_WINDOW_SIZE].location != NSNotFound) {
-    return [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [[tokens objectAtIndex:3] integerValue] : -1) moveFirst:NO];
+    op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [[tokens objectAtIndex:3] integerValue] : -1) moveFirst:NO];
+  } else {
+    op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [[tokens objectAtIndex:3] integerValue] : -1)];
   }
-  
-  return [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [[tokens objectAtIndex:3] integerValue] : -1)];
+  [tokens release];
+  return op;
 }
 
-+ (Operation *)resizeOperationFromString:(NSString *)resizeOperation {
++ (id)createResizeOperationFromString:(NSString *)resizeOperation {
   // resize <x> <y> <optional:anchor>
-  NSArray *tokens = [StringTokenizer tokenize:resizeOperation];
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:resizeOperation into:tokens];
   
   if ([tokens count] < 3) {
     NSLog(@"ERROR: Invalid Parameters '%s'", [resizeOperation cStringUsingEncoding:NSASCIIStringEncoding]);
@@ -81,12 +91,15 @@
   if ([tokens count] >= 4) {
     anchor = [tokens objectAtIndex:3];
   }
-  return [[ResizeOperation alloc] initWithAnchor:anchor xResize:[tokens objectAtIndex:1] yResize:[tokens objectAtIndex:2]];
+  Operation *op = [[ResizeOperation alloc] initWithAnchor:anchor xResize:[tokens objectAtIndex:1] yResize:[tokens objectAtIndex:2]];
+  [tokens release];
+  return op;
 }
 
-+ (Operation *)pushOperationFromString:(NSString *)pushOperation {
++ (id)createPushOperationFromString:(NSString *)pushOperation {
   // push <top|bottom|up|down|left|right> <optional:none|center|bar|bar-resize:expression>
-  NSArray *tokens = [StringTokenizer tokenize:pushOperation];
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:pushOperation into:tokens];
   
   if ([tokens count] < 2) {
     NSLog(@"ERROR: Invalid Parameters '%s'", [pushOperation cStringUsingEncoding:NSASCIIStringEncoding]);
@@ -168,12 +181,15 @@
     NSLog(@"ERROR: Unrecognized direction '%s'", [direction cStringUsingEncoding:NSASCIIStringEncoding]);
     @throw([NSException exceptionWithName:@"Unrecognized Direction" reason:[NSString stringWithFormat:@"Unrecognized direction '%@' in '%@'", direction, pushOperation] userInfo:nil]);
   }
-  return [[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:-1];  
+  Operation *op = [[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:-1];
+  [tokens release];
+  return op;
 }
 
-+ (Operation *)nudgeOperationFromString:(NSString *)nudgeOperation {
++ (id)createNudgeOperationFromString:(NSString *)nudgeOperation {
   // nudge x y
-  NSArray *tokens = [StringTokenizer tokenize:nudgeOperation];
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:nudgeOperation into:tokens];
   
   if ([tokens count] < 2) {
     NSLog(@"ERROR: Invalid Parameters '%s'", [nudgeOperation cStringUsingEncoding:NSASCIIStringEncoding]);
@@ -200,13 +216,15 @@
     // Hard Nudge
     tlY = [tlY stringByAppendingString:y];
   }
-  return [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:COMMA] stringByAppendingString:tlY] dimensions:@"windowSizeX,windowSizeY" monitor:-1];
-  
+  Operation *op = [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:COMMA] stringByAppendingString:tlY] dimensions:@"windowSizeX,windowSizeY" monitor:-1];
+  [tokens release];
+  return op;
 }
 
-+ (Operation *)throwOperationFromString:(NSString *)throwOperation {
++ (id)createThrowOperationFromString:(NSString *)throwOperation {
   // throw <monitor> <optional:style (default is noresize)>
-  NSArray *tokens = [StringTokenizer tokenize:throwOperation];
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:throwOperation into:tokens];
   
   if ([tokens count] < 2) {
     NSLog(@"ERROR: Invalid Parameters '%s'", [throwOperation cStringUsingEncoding:NSASCIIStringEncoding]);
@@ -230,12 +248,15 @@
       @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, throwOperation] userInfo:nil]);
     }
   }
-  return [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[[tokens objectAtIndex:1] integerValue]];  
+  Operation *op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[[tokens objectAtIndex:1] integerValue]];
+  [tokens release];
+  return op;
 }
 
-+ (Operation *)cornerOperationFromString:(NSString *)cornerOperation {
++ (id)createCornerOperationFromString:(NSString *)cornerOperation {
   // corner <top-left|top-right|bottom-left|bottom-right> <optional:resize:expression>
-  NSArray *tokens = [StringTokenizer tokenize:cornerOperation];
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:cornerOperation into:tokens];
   
   if ([tokens count] < 2) {
     NSLog(@"ERROR: Invalid Parameters '%s'", [cornerOperation cStringUsingEncoding:NSASCIIStringEncoding]);
@@ -266,12 +287,15 @@
     @throw([NSException exceptionWithName:@"Unrecognized Corner" reason:[NSString stringWithFormat:@"Unrecognized corner '%@' in '%@'", direction, cornerOperation] userInfo:nil]);
   }
   
-  return [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:-1];
+  Operation *op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:-1];
+  [tokens release];
+  return op;
 }
 
-+ (Operation *)chainOperationFromString:(NSString *)chainOperation {
++ (id)createChainOperationFromString:(NSString *)chainOperation {
   // chain op[ | op]+
-  NSArray *tokens = [StringTokenizer tokenize:chainOperation maxTokens:2];
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:chainOperation into:tokens maxTokens:2];
   
   if ([tokens count] < 2) {
     NSLog(@"ERROR: Invalid Parameters '%@'", chainOperation);
@@ -280,9 +304,9 @@
   
   NSString *opsString = [tokens objectAtIndex:1];
   NSArray *ops = [opsString componentsSeparatedByString:@" | "];
-  NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
+  NSMutableArray *opArray = [[[NSMutableArray alloc] initWithCapacity:10] initWithCapacity:10];
   for (NSInteger i = 0; i < [ops count]; i++) {
-    Operation *op = [self operationFromString:[ops objectAtIndex:i]];
+    Operation *op = [self createOperationFromString:[ops objectAtIndex:i]];
     if (op != nil) {
       [opArray addObject:op];
     } else {
@@ -291,7 +315,10 @@
     }
   }
   
-  return [[ChainOperation alloc] initWithArray:opArray];
+  Operation *op = [[ChainOperation alloc] initWithArray:opArray];
+  [opArray release];
+  [tokens release];
+  return op;
 }
 
 @end

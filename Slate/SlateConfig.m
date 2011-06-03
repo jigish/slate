@@ -76,7 +76,8 @@ static SlateConfig *_instance = nil;
   NSEnumerator *e = [lines objectEnumerator];
   NSString *line = [e nextObject];
   while (line) {
-    NSArray *tokens = [StringTokenizer tokenize:line];
+    NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+    [StringTokenizer tokenize:line into:tokens];
     if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:@"config"]) {
       // config <key> <value>
       NSLog(@"  LoadingC: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);

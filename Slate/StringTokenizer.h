@@ -26,7 +26,7 @@
 }
 
 + (BOOL)isSpaceChar:(unichar)c;
-+ (NSArray *)tokenize:(NSString *)s;
-+ (NSArray *)tokenize:(NSString *)s maxTokens:(NSInteger) maxTokens;
++ (void)tokenize:(NSString *)s into:(NSMutableArray *)array;
++ (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger) maxTokens;
 
 @end
