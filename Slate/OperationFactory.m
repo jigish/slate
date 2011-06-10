@@ -304,7 +304,7 @@
   
   NSString *opsString = [tokens objectAtIndex:1];
   NSArray *ops = [opsString componentsSeparatedByString:@" | "];
-  NSMutableArray *opArray = [[[NSMutableArray alloc] initWithCapacity:10] initWithCapacity:10];
+  NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
   for (NSInteger i = 0; i < [ops count]; i++) {
     Operation *op = [self createOperationFromString:[ops objectAtIndex:i]];
     if (op != nil) {
