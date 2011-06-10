@@ -29,6 +29,8 @@
 @property (retain) NSArray *operations;
 @property (assign) NSInteger currentOp;
 
+- (BOOL)testCurrentOperation;
+- (void)afterComplete;
 - (id)initWithArray:(NSArray *)opArray;
 
 @end

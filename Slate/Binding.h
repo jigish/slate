@@ -33,6 +33,7 @@
 
 + (NSDictionary *)asciiToCodeDict;
 - (id)initWithString:(NSString *)binding;
+- (BOOL)doOperation;
 
 @property (retain) Operation *op;
 @property (assign) UInt32 keyCode;

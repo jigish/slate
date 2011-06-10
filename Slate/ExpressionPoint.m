@@ -69,7 +69,7 @@
       @throw([NSException exceptionWithName:@"Unable to compute result" reason:exp userInfo:nil]);
     return [result integerValue];
   }
-  return 0;
+  @throw([NSException exceptionWithName:@"Expression is nil" reason:exp userInfo:nil]);
 }
 
 @end

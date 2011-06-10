@@ -28,14 +28,18 @@
   ExpressionPoint *topLeft;
   ExpressionPoint *dimensions;
   NSInteger monitor;
+  BOOL moveFirst;
 }
 
 @property (retain) ExpressionPoint *topLeft;
 @property (retain) ExpressionPoint *dimensions;
 @property (assign) NSInteger monitor;
+@property (assign) BOOL moveFirst;
 
 - (NSDictionary *)getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize;
 - (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon;
 - (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon moveFirst:(BOOL)mf;
+- (NSPoint)getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize;
+- (NSSize)getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize;
 
 @end

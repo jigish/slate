@@ -18,6 +18,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
+#import "AccessibilityWrapper.h"
 #import "Constants.h"
 #import "MoveOperation.h"
 #import "SlateConfig.h"
@@ -28,10 +29,11 @@
 @synthesize topLeft;
 @synthesize dimensions;
 @synthesize monitor;
+@synthesize moveFirst;
 
 - (id)init {
   self = [super init];
-
+  [self setMoveFirst:YES];
   return self;
 }
 
@@ -73,6 +75,35 @@
   }
   
   return self;
+}
+
+- (BOOL)doOperation {
+  AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
+  BOOL success = NO;
+  NSPoint cTopLeft = [aw getCurrentTopLeft];
+  NSSize cSize = [aw getCurrentSize];
+  NSSize nSize = [self getDimensionsWithCurrentTopLeft:cTopLeft currentSize:cSize];
+  if (moveFirst) {
+    NSPoint nTopLeft = [self getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:nSize];
+    success = [aw moveWindow:nTopLeft];
+    success = [aw resizeWindow:nSize] && success;
+  } else {
+    success = [aw resizeWindow:nSize];
+    NSSize realNewSize = [aw getCurrentSize];
+    NSPoint nTopLeft = [self getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:realNewSize];
+    success = [aw moveWindow:nTopLeft] && success;
+  }
+  [aw release];
+  return success;
+}
+
+- (BOOL)testOperation {
+  BOOL success = YES;
+  NSPoint cTopLeft = NSMakePoint(0, 0);
+  NSSize cSize = NSMakeSize(1000, 1000);
+  NSSize nSize = [self getDimensionsWithCurrentTopLeft:cTopLeft currentSize:cSize];
+  [self getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:nSize];
+  return success;
 }
 
 - (BOOL)monitorExists {

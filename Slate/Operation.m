@@ -23,12 +23,9 @@
 
 @implementation Operation
 
-@synthesize moveFirst;
-
 - (id)init {
   self = [super init];
   if (self) {
-    [self setMoveFirst:YES];
   }
 
   return self;
@@ -38,14 +35,12 @@
   [super dealloc];
 }
 
-- (NSPoint)getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
-  return NSMakePoint(0, 0);
-}
-- (NSSize)getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
-  return NSMakeSize(100, 100);
+- (BOOL)doOperation {
+  return YES;
 }
 
-- (void)afterComplete {
+- (BOOL)testOperation {
+  return YES;
 }
 
 @end

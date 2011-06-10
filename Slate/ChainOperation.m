@@ -40,22 +40,29 @@
   if (self) {
     [self setCurrentOp:0];
     [self setOperations:opArray];
-    [self setMoveFirst:[[operations objectAtIndex:currentOp] moveFirst]];
   }
   
   return self;
 }
 
-- (NSPoint)getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
-  NSPoint topLeft = [[operations objectAtIndex:currentOp] getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:nSize];
-  [self setMoveFirst:[[operations objectAtIndex:currentOp] moveFirst]];
-  return topLeft;
+- (BOOL)doOperation {
+  BOOL success = [[operations objectAtIndex:currentOp] doOperation];
+  [self afterComplete];
+  return success;
 }
 
-- (NSSize)getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
-  NSSize dimensions = [[operations objectAtIndex:currentOp] getDimensionsWithCurrentTopLeft:cTopLeft currentSize:cSize];
-  [self setMoveFirst:[[operations objectAtIndex:currentOp] moveFirst]];
-  return dimensions;
+- (BOOL)testCurrentOperation {
+  BOOL success = [[operations objectAtIndex:currentOp] testOperation];
+  [self afterComplete];
+  return success;
+}
+
+- (BOOL)testOperation {
+  BOOL success = YES;
+  do {
+    success = [self testCurrentOperation] && success;
+  } while (currentOp != 0);
+  return success;
 }
 
 - (void)afterComplete {

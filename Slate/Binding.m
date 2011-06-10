@@ -87,8 +87,7 @@ static NSDictionary *dictionary = nil;
     }
     
     @try {
-      [op getDimensionsWithCurrentTopLeft:NSMakePoint(1,1) currentSize:NSMakeSize(1,1)];
-      [op getTopLeftWithCurrentTopLeft:NSMakePoint(1,1) currentSize:NSMakeSize(1,1) newSize:NSMakeSize(1,1)];
+      [op testOperation];
     } @catch (NSException *ex) {
       NSLog(@"ERROR: Unable to test binding '%s'", [binding cStringUsingEncoding:NSASCIIStringEncoding]);
       @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], binding] userInfo:nil]);
@@ -97,6 +96,10 @@ static NSDictionary *dictionary = nil;
   }
 
   return self;
+}
+
+- (BOOL)doOperation {
+  return [op doOperation];
 }
 
 - (void)dealloc {

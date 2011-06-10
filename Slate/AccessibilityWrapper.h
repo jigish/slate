@@ -1,8 +1,8 @@
 //
-//  Operation.h
+//  AccessibilityWrapper.h
 //  Slate
 //
-//  Created by Jigish Patel on 5/18/11.
+//  Created by Jigish Patel on 6/10/11.
 //  Copyright 2011 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -21,11 +21,22 @@
 #import <Foundation/Foundation.h>
 
 
-@interface Operation : NSObject {
+@interface AccessibilityWrapper : NSObject {
 @private
+  AXUIElementRef systemWideElement;
+  AXUIElementRef app;
+  CFTypeRef window;
+  BOOL inited;
 }
 
-- (BOOL)doOperation;
-- (BOOL)testOperation;
+@property (assign) AXUIElementRef systemWideElement;
+@property (assign) AXUIElementRef app;
+@property (assign) CFTypeRef window;
+@property (assign) BOOL inited;
+
+- (NSPoint)getCurrentTopLeft;
+- (NSSize)getCurrentSize;
+- (BOOL)moveWindow:(NSPoint)thePoint;
+- (BOOL)resizeWindow:(NSSize)theSize;
 
 @end
