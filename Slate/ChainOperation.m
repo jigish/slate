@@ -19,6 +19,7 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 #import "ChainOperation.h"
+#import "WindowState.h"
 
 
 @implementation ChainOperation
@@ -38,7 +39,7 @@
   self = [self init];
   
   if (self) {
-    [self setCurrentOp:0];
+    [self setCurrentOp:[[NSMutableDictionary alloc] initWithCapacity:10]];
     [self setOperations:opArray];
   }
   
@@ -48,33 +49,52 @@
 - (BOOL)doOperation {
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
   BOOL success = NO;
+  NSInteger opRun = 0;
   if ([aw inited]) {
-    success = [[operations objectAtIndex:currentOp] doOperation:aw];
+    opRun = [self getNextOperation:aw];
+    success = [[operations objectAtIndex:opRun] doOperation:aw];
+    if (success)
+      [self afterComplete:aw opRun:opRun];
   }
-  [self afterComplete:aw];
   [aw release];
   return success;
 }
 
-- (BOOL)testCurrentOperation {
-  BOOL success = [[operations objectAtIndex:currentOp] testOperation];
-  [self afterComplete:nil];
+- (BOOL)testOperation:(NSInteger)op {
+  BOOL success = [[operations objectAtIndex:op] testOperation];
   return success;
 }
 
 - (BOOL)testOperation {
   BOOL success = YES;
-  do {
-    success = [self testCurrentOperation] && success;
-  } while (currentOp != 0);
+  for (NSInteger op = 0; op < [operations count]; op++) {
+    success = [self testOperation:op] && success;
+  }
   return success;
 }
 
-- (void)afterComplete:(AccessibilityWrapper *)aw {
-  if (currentOp+1 >= [operations count])
-    [self setCurrentOp:0];
-  else
-    [self setCurrentOp:currentOp+1];
+- (void)afterComplete:(AccessibilityWrapper *)aw opRun:(NSInteger)op {
+  NSInteger nextOpInt = 0;
+  if (op+1 < [operations count])
+    nextOpInt = op+1;
+  NSNumber *nextOp = [NSNumber numberWithInteger:nextOpInt];
+
+  if (aw != nil) {
+    [self setNextOperation:aw nextOp:nextOp];
+  }
+}
+
+- (NSInteger)getNextOperation:(AccessibilityWrapper *)aw {
+  WindowState *ws = [[WindowState alloc] init:aw];
+  NSNumber *nextOp = [currentOp objectForKey:ws];
+  if (nextOp != nil)
+    return [nextOp integerValue];
+  return 0;
+}
+
+- (void)setNextOperation:(AccessibilityWrapper *)aw nextOp:(NSNumber *)op {
+  WindowState *ws = [[WindowState alloc] init:aw];
+  [currentOp setObject:op forKey:ws];
 }
 
 - (void)dealloc {

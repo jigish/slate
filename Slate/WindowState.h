@@ -1,8 +1,8 @@
 //
-//  ChainOperation.h
+//  WindowState.h
 //  Slate
 //
-//  Created by Jigish Patel on 5/28/11.
+//  Created by Jigish Patel on 6/13/11.
 //  Copyright 2011 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -19,20 +19,18 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 #import <Foundation/Foundation.h>
-#import "Operation.h"
 
-@interface ChainOperation : Operation {
-  NSArray *operations;
-  NSMutableDictionary *currentOp;
+
+@interface WindowState : NSObject {
+  pid_t appPID;
+  NSSize size;
+  NSPoint topLeft;
 }
 
-@property (retain) NSArray *operations;
-@property (assign) NSMutableDictionary *currentOp;
+@property (assign) pid_t appPID;
+@property (assign) NSSize size;
+@property (assign) NSPoint topLeft;
 
-- (BOOL)testOperation:(NSInteger)op;
-- (void)afterComplete:(AccessibilityWrapper *)aw opRun:(NSInteger)op ;
-- (id)initWithArray:(NSArray *)opArray;
-- (NSInteger)getNextOperation:(AccessibilityWrapper *)aw;
-- (void)setNextOperation:(AccessibilityWrapper *)aw nextOp:(NSNumber *)op;
+- (id)init:(AccessibilityWrapper *)aw;
 
 @end

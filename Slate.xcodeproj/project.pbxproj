@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B3E241013A5F59E00B0D762 /* WindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E240F13A5F59E00B0D762 /* WindowState.m */; };
 		3B7EB3A7138F3F6800EBEC2B /* ResizeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */; };
 		3B7EB475138F691800EBEC2B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB474138F691800EBEC2B /* Constants.m */; };
 		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
@@ -45,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B3E240E13A5F59E00B0D762 /* WindowState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowState.h; sourceTree = "<group>"; };
+		3B3E240F13A5F59E00B0D762 /* WindowState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowState.m; sourceTree = "<group>"; };
 		3B7EB3A5138F3F6800EBEC2B /* ResizeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizeOperation.h; sourceTree = "<group>"; };
 		3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizeOperation.m; sourceTree = "<group>"; };
 		3B7EB473138F691800EBEC2B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -163,6 +166,8 @@
 				3B7EB474138F691800EBEC2B /* Constants.m */,
 				3B7EB4CA138F72D900EBEC2B /* StringTokenizer.h */,
 				3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */,
+				3B3E240E13A5F59E00B0D762 /* WindowState.h */,
+				3B3E240F13A5F59E00B0D762 /* WindowState.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -374,6 +379,7 @@
 				3BA4677D1391721F0081D75C /* OperationFactory.m in Sources */,
 				3BDC2B5B1391C55400B0D151 /* ChainOperation.m in Sources */,
 				3BADA37213A2C1ED009E21D8 /* AccessibilityWrapper.m in Sources */,
+				3B3E241013A5F59E00B0D762 /* WindowState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
