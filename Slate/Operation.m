@@ -39,6 +39,10 @@
   return YES;
 }
 
+- (BOOL)doOperation:(AccessibilityWrapper *)aw {
+  return YES;
+}
+
 - (BOOL)testOperation {
   return YES;
 }

@@ -46,14 +46,19 @@
 }
 
 - (BOOL)doOperation {
-  BOOL success = [[operations objectAtIndex:currentOp] doOperation];
-  [self afterComplete];
+  AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
+  BOOL success = NO;
+  if ([aw inited]) {
+    success = [[operations objectAtIndex:currentOp] doOperation:aw];
+  }
+  [self afterComplete:aw];
+  [aw release];
   return success;
 }
 
 - (BOOL)testCurrentOperation {
   BOOL success = [[operations objectAtIndex:currentOp] testOperation];
-  [self afterComplete];
+  [self afterComplete:nil];
   return success;
 }
 
@@ -65,13 +70,11 @@
   return success;
 }
 
-- (void)afterComplete {
+- (void)afterComplete:(AccessibilityWrapper *)aw {
   if (currentOp+1 >= [operations count])
     [self setCurrentOp:0];
   else
     [self setCurrentOp:currentOp+1];
-  
-  // TODO: figure out a way to register for window resize/close events!
 }
 
 - (void)dealloc {

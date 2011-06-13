@@ -54,8 +54,7 @@
   return self;
 }
 
-- (BOOL)doOperation {
-  AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
+- (BOOL)doOperation:(AccessibilityWrapper *)aw {
   BOOL success = NO;
   NSPoint cTopLeft = [aw getCurrentTopLeft];
   NSSize cSize = [aw getCurrentSize];
@@ -65,6 +64,15 @@
     NSSize realNewSize = [aw getCurrentSize];
     NSPoint nTopLeft = [self getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:realNewSize];
     success = [aw moveWindow:nTopLeft] && success;
+  }
+  return success;
+}
+
+- (BOOL)doOperation {
+  AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
+  BOOL success = NO;
+  if ([aw inited]) {
+    success = [self doOperation:aw];
   }
   [aw release];
   return success;

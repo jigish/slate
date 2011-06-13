@@ -39,10 +39,14 @@
     [self setSystemWideElement:AXUIElementCreateSystemWide()];
     
     // Get App that has focus
-    AXUIElementCopyAttributeValue(systemWideElement, (CFStringRef)kAXFocusedApplicationAttribute, (CFTypeRef *)&app);
+    CFTypeRef _app;
+    AXUIElementCopyAttributeValue(systemWideElement, (CFStringRef)kAXFocusedApplicationAttribute, (CFTypeRef *)&_app);
+    [self setApp:(AXUIElementRef)_app];
     
     // Get Window that has focus
-    if (AXUIElementCopyAttributeValue((AXUIElementRef)app, (CFStringRef)NSAccessibilityFocusedWindowAttribute, (CFTypeRef *)&window) == kAXErrorSuccess) {
+    CFTypeRef _window;
+    if (AXUIElementCopyAttributeValue(app, (CFStringRef)NSAccessibilityFocusedWindowAttribute, (CFTypeRef *)&_window) == kAXErrorSuccess) {
+      [self setWindow:(AXUIElementRef)_window];
       [self setInited:YES];
     } else {
       [self setInited:NO];
@@ -57,7 +61,7 @@
   CFTypeRef _cPosition;
   NSPoint cTopLeft;
   
-  if (AXUIElementCopyAttributeValue((AXUIElementRef)window, (CFStringRef)NSAccessibilityPositionAttribute, (CFTypeRef *)&_cPosition) == kAXErrorSuccess) {
+  if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityPositionAttribute, (CFTypeRef *)&_cPosition) == kAXErrorSuccess) {
     if (!AXValueGetValue(_cPosition, kAXValueCGPointType, (void *)&cTopLeft)) {
       NSLog(@"ERROR: Could not decode position");
       cTopLeft = NSMakePoint(0, 0);
@@ -74,7 +78,7 @@
   CFTypeRef _cSize;
   NSSize cSize;
   
-  if (AXUIElementCopyAttributeValue((AXUIElementRef)window, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)&_cSize) == kAXErrorSuccess) {
+  if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)&_cSize) == kAXErrorSuccess) {
     if (!AXValueGetValue(_cSize, kAXValueCGSizeType, (void *)&cSize)) {
       NSLog(@"ERROR: Could not decode size");
       cSize = NSMakeSize(0, 0);
@@ -90,7 +94,7 @@
 - (BOOL)moveWindow:(NSPoint)thePoint {
   CFTypeRef _position;
   _position = (CFTypeRef)(AXValueCreate(kAXValueCGPointType, (const void *)&thePoint));
-  if (AXUIElementSetAttributeValue((AXUIElementRef)window, (CFStringRef)NSAccessibilityPositionAttribute, (CFTypeRef *)_position) != kAXErrorSuccess) {
+  if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilityPositionAttribute, (CFTypeRef *)_position) != kAXErrorSuccess) {
     NSLog(@"ERROR: Could not change position");
     return NO;
   }
@@ -100,11 +104,20 @@
 - (BOOL)resizeWindow:(NSSize)theSize {
   CFTypeRef _size;
   _size = (CFTypeRef)(AXValueCreate(kAXValueCGSizeType, (const void *)&theSize));
-  if (AXUIElementSetAttributeValue((AXUIElementRef)window, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)_size) != kAXErrorSuccess) {
+  if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)_size) != kAXErrorSuccess) {
     NSLog(@"ERROR: Could not change size");
     return NO;
   }
   return YES;
+}
+
++ (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element {
+  pid_t pid = 0;
+  if (AXUIElementGetPid (element, &pid) == kAXErrorSuccess) {
+    return pid;
+  } else {
+    return 0;
+  }
 }
 
 @end

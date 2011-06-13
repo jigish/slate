@@ -19,6 +19,7 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 #import <Foundation/Foundation.h>
+#import "AccessibilityWrapper.h"
 
 
 @interface Operation : NSObject {
@@ -26,6 +27,7 @@
 }
 
 - (BOOL)doOperation;
+- (BOOL)doOperation:(AccessibilityWrapper *)aw;
 - (BOOL)testOperation;
 
 @end

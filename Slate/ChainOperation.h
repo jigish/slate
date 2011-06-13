@@ -30,7 +30,7 @@
 @property (assign) NSInteger currentOp;
 
 - (BOOL)testCurrentOperation;
-- (void)afterComplete;
+- (void)afterComplete:(AccessibilityWrapper *)aw;
 - (id)initWithArray:(NSArray *)opArray;
 
 @end

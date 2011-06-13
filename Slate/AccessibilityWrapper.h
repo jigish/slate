@@ -25,18 +25,19 @@
 @private
   AXUIElementRef systemWideElement;
   AXUIElementRef app;
-  CFTypeRef window;
+  AXUIElementRef window;
   BOOL inited;
 }
 
 @property (assign) AXUIElementRef systemWideElement;
 @property (assign) AXUIElementRef app;
-@property (assign) CFTypeRef window;
+@property (assign) AXUIElementRef window;
 @property (assign) BOOL inited;
 
 - (NSPoint)getCurrentTopLeft;
 - (NSSize)getCurrentSize;
 - (BOOL)moveWindow:(NSPoint)thePoint;
 - (BOOL)resizeWindow:(NSSize)theSize;
++ (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element;
 
 @end
