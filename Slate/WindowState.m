@@ -62,8 +62,7 @@
 
 - (NSUInteger)hash {
   NSUInteger prime = 31;
-  NSUInteger result = 1;
-  result = prime * result + [self appPID];
+  NSUInteger result = prime * 1 + [self appPID];
   result = prime * result + [self size].width;
   result = prime * result + [self size].height;
   result = prime * result + [self topLeft].x;

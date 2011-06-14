@@ -21,9 +21,7 @@
 #import <Foundation/Foundation.h>
 #import "Operation.h"
 
-@interface OperationFactory : NSObject {
-
-}
+@interface OperationFactory : NSObject {}
 
 + (id)createOperationFromString:(NSString *)opString;
 
@@ -34,5 +32,6 @@
 + (id)createThrowOperationFromString:(NSString *)throwOperation;
 + (id)createCornerOperationFromString:(NSString *)cornerOperation;
 + (id)createChainOperationFromString:(NSString *)chainOperation;
++ (id)createLayoutOperationFromString:(NSString *)layoutOperation;
 
 @end

@@ -18,6 +18,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
+// Directive Keys
+extern NSString * const BIND;
+extern NSString * const CONFIG;
+extern NSString * const LAYOUT;
+
 // Config Keys
 extern NSString * const DEFAULT_TO_CURRENT_SCREEN;
 extern NSString * const NUDGE_PERCENT_OF;

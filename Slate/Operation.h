@@ -22,9 +22,7 @@
 #import "AccessibilityWrapper.h"
 
 
-@interface Operation : NSObject {
-@private
-}
+@interface Operation : NSObject {}
 
 - (BOOL)doOperation;
 - (BOOL)doOperation:(AccessibilityWrapper *)aw;

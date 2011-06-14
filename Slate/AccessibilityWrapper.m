@@ -37,12 +37,12 @@
       return self;
     }
     [self setSystemWideElement:AXUIElementCreateSystemWide()];
-    
+
     // Get App that has focus
     CFTypeRef _app;
     AXUIElementCopyAttributeValue(systemWideElement, (CFStringRef)kAXFocusedApplicationAttribute, (CFTypeRef *)&_app);
     [self setApp:(AXUIElementRef)_app];
-    
+
     // Get Window that has focus
     CFTypeRef _window;
     if (AXUIElementCopyAttributeValue(app, (CFStringRef)NSAccessibilityFocusedWindowAttribute, (CFTypeRef *)&_window) == kAXErrorSuccess) {
@@ -53,14 +53,31 @@
       NSLog(@"ERROR: Could not fetch focused window");
     }
   }
-  
+
+  return self;
+}
+
+- (id)initWithApp:(AXUIElementRef)appRef window:(AXUIElementRef)windowRef {
+  self = [super init];
+  if (self) {
+    if (!AXAPIEnabled()) {
+      NSLog(@"ERROR: AXAPI must be enabled!");
+      [self setInited:NO];
+      return self;
+    }
+    [self setSystemWideElement:AXUIElementCreateSystemWide()];
+    [self setApp:appRef];
+    [self setWindow:windowRef];
+    [self setInited:YES];
+  }
+
   return self;
 }
 
 - (NSPoint)getCurrentTopLeft {
   CFTypeRef _cPosition;
   NSPoint cTopLeft;
-  
+
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityPositionAttribute, (CFTypeRef *)&_cPosition) == kAXErrorSuccess) {
     if (!AXValueGetValue(_cPosition, kAXValueCGPointType, (void *)&cTopLeft)) {
       NSLog(@"ERROR: Could not decode position");
@@ -70,14 +87,14 @@
     NSLog(@"ERROR: Could not fetch position");
     cTopLeft = NSMakePoint(0, 0);
   }
-  
+
   return cTopLeft;
 }
 
 - (NSSize)getCurrentSize {
   CFTypeRef _cSize;
   NSSize cSize;
-  
+
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)&_cSize) == kAXErrorSuccess) {
     if (!AXValueGetValue(_cSize, kAXValueCGSizeType, (void *)&cSize)) {
       NSLog(@"ERROR: Could not decode size");
@@ -87,7 +104,7 @@
     NSLog(@"ERROR: Could not fetch size");
     cSize = NSMakeSize(0, 0);
   }
-  
+
   return cSize;
 }
 
@@ -118,6 +135,14 @@
   } else {
     return 0;
   }
+}
+
++ (CFArrayRef)windowsInApp:(AXUIElementRef)app {
+  CFArrayRef _windows;
+  if (AXUIElementCopyAttributeValues(app, kAXWindowsAttribute, 0, 100, &_windows) == kAXErrorSuccess) {
+    return _windows;
+  }
+  return nil;
 }
 
 @end

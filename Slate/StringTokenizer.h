@@ -21,12 +21,11 @@
 #import <Foundation/Foundation.h>
 
 
-@interface StringTokenizer : NSObject {
-
-}
+@interface StringTokenizer : NSObject {}
 
 + (BOOL)isSpaceChar:(unichar)c;
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array;
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger) maxTokens;
++ (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens quoteChar:(unichar)quote;
 
 @end

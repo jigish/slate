@@ -25,10 +25,12 @@
 @private
   NSMutableDictionary *configs;
   NSMutableArray *bindings;
+  NSMutableDictionary *layouts;
 }
 
 @property (retain) NSMutableDictionary *configs;
 @property (retain) NSMutableArray *bindings;
+@property (retain) NSMutableDictionary *layouts;
 
 + (SlateConfig *)getInstance;
 - (BOOL)load;

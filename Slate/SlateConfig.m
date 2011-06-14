@@ -19,14 +19,17 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 #import "Binding.h"
+#import "Constants.h"
+#import "Layout.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 
 
 @implementation SlateConfig
 
-@synthesize bindings;
 @synthesize configs;
+@synthesize bindings;
+@synthesize layouts;
 
 static SlateConfig *_instance = nil;
 
@@ -65,6 +68,7 @@ static SlateConfig *_instance = nil;
   // Reset configs and bindings in case we are calling from menu
   [self setConfigs:[[NSMutableDictionary alloc] init]];
   [self setBindings:[[NSMutableArray alloc] initWithCapacity:10]];
+  [self setLayouts:[[NSMutableDictionary alloc] init]];
 
   NSString *homeDir = NSHomeDirectory();
   NSString *configFile = [homeDir stringByAppendingString:@"/.slate"];
@@ -78,19 +82,45 @@ static SlateConfig *_instance = nil;
   while (line) {
     NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
     [StringTokenizer tokenize:line into:tokens];
-    if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:@"config"]) {
+    if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:CONFIG]) {
       // config <key> <value>
-      NSLog(@"  LoadingC: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
+      NSLog(@"  LoadingC: %@",line);
       [configs setObject:[tokens objectAtIndex:2] forKey:[tokens objectAtIndex:1]];
-    } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:@"bind"]) {
+    } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:BIND]) {
       // bind <key:modifiers> <op> <parameters>
       @try {
         Binding *bind = [[Binding alloc] initWithString:line];
-        NSLog(@"  LoadingB: %s",[line cStringUsingEncoding:NSASCIIStringEncoding]);
+        NSLog(@"  LoadingB: %@",line);
         [bindings addObject:bind];
         [bind release];
       } @catch (NSException *ex) {
-        NSLog(@"  ERROR %s",[[ex name] cStringUsingEncoding:NSASCIIStringEncoding]);
+        NSLog(@"  ERROR %@",[ex name]);
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"Quit"];
+        [alert addButtonWithTitle:@"Skip"];
+        [alert setMessageText:[ex name]];
+        [alert setInformativeText:[ex reason]];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        if ([alert runModal] == NSAlertFirstButtonReturn) {
+          NSLog(@"User selected exit");
+          [NSApp terminate:nil];
+        }
+        [alert release];
+      }
+    } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:LAYOUT]) {
+      // layout <name> <app name> <op+params> (| <op+params>)*
+      @try {
+        if ([layouts objectForKey:[tokens objectAtIndex:1]] == nil) {
+          Layout *layout = [[Layout alloc] initWithString:line];
+          NSLog(@"  LoadingL: %@",line);
+          [layouts setObject:layout forKey:[layout name]];
+        } else {
+          Layout *layout = [layouts objectForKey:[tokens objectAtIndex:1]];
+          [layout addWithString:line];
+          NSLog(@"  LoadingL: %@",line);
+        }
+      } @catch (NSException *ex) {
+        NSLog(@"  ERROR %@",[ex name]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
         [alert addButtonWithTitle:@"Skip"];

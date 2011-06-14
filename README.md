@@ -8,11 +8,13 @@ Slate is a window management application similar to Divvy and SizeUp (except bet
 
 build/Release/Slate.app is the packaged application. Throw it wherever you want and run it.
 
+Note: You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices
+
 ## Configuring Slate ##
 
 Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon running Slate. You can also re-load the config using the "Load Config" menu option on the status menu (use this at your own risk. It is better to simply restart Slate).
 
-Configuration is split into two directives: config (for global configurations) and bind (for key bindings).
+Configuration is split into three directives: config (for global configurations), layout (to configure layouts) and bind (for key bindings).
 
 ### The "config" Directive ###
 
@@ -31,6 +33,25 @@ List of allowed configs:
 Example:
 
     config defaultToCurrentScreen true
+
+### The "layout" Directive ###
+
+The layout directive follows the following format:
+
+    layout name 'app name' operations
+
+Where:
+
+    name = the name you want to use to reference the layout
+    'app name' = single-quoted name of the application to add to the layout
+    operations = a pipe separated list of operations (any operation in the bind directive is allowed except chain and layout)
+
+You can have multiple layout directives that point to the same name in order to link any number of applications to the same layout. For example:
+
+    layout myLayout 'iTerm' push up bar-resize:screenSizeY/2 | push down bar-resize:screenSizeY/2
+    layout myLayout 'Google Chrome' push left bar-resize:screenSizeX/2 | push right bar-resize:screenSizeX/2
+
+Will create a layout called "myLayout" with two operations for iTerm and two operations for Google Chrome. When activated, the first window of iTerm will be moved using the first operation in the first list and the second window of iTerm will be moved using the second operation in the first list. In addition, the first window of Google Chrome will be moved using the first operation in the second list and the second window of Google Chrome will be moved using the second operation in the second list.More information on how to actually use these layouts can be found under the "layout" operation in the "bind" directive section
 
 ### The "bind" Directive ###
 
@@ -181,6 +202,16 @@ Allowed operations are:
         bind 1:ctrl chain push up | push right | push down | push left
 
     Will bind the keystroke ctrl-1 to push up on the first press, then push right on the second press, then push down on the third pres, the push left on the fourth press and rotate back to pushing up on the fifth press (etc).
+
+* Activate a layout: "layout name"
+
+        name = the name of the layout to activate (set using the layout directive)
+
+    Example:
+
+        bind 1:ctrl layout myLayout
+
+    Will bind the keystroke ctrl-l to activate the layout called "myLayout"
 
 ### Example Config ###
 

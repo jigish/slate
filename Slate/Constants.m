@@ -20,6 +20,11 @@
 
 #import "Constants.h"
 
+// Directive Keys
+NSString * const BIND = @"bind";
+NSString * const CONFIG = @"config";
+NSString * const LAYOUT = @"layout";
+
 // Config Keys
 NSString * const DEFAULT_TO_CURRENT_SCREEN = @"defaultToCurrentScreen";
 NSString * const NUDGE_PERCENT_OF = @"nudgePercentOf";

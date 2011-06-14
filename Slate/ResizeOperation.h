@@ -23,6 +23,7 @@
 
 
 @interface ResizeOperation : Operation {
+@private
   NSString *anchor;
   NSString *xResize;
   NSString *yResize;

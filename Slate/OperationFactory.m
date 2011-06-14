@@ -21,6 +21,7 @@
 #import "ChainOperation.h"
 #import "Constants.h"
 #import "OperationFactory.h"
+#import "LayoutOperation.h"
 #import "MoveOperation.h"
 #import "ResizeOperation.h"
 #import "SlateConfig.h"
@@ -48,8 +49,10 @@
     operation = [self createCornerOperationFromString:opString];
   } else if ([op isEqualToString:CHAIN]) {
     operation = [self createChainOperationFromString:opString];
+  } else if ([op isEqualToString:LAYOUT]) {
+    operation = [self createLayoutOperationFromString:opString];
   } else {
-    NSLog(@"ERROR: Unrecognized operation '%s'", [opString cStringUsingEncoding:NSASCIIStringEncoding]);
+    NSLog(@"ERROR: Unrecognized operation '%@'", opString);
     [tokens release];
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);
   }
@@ -63,7 +66,7 @@
   [StringTokenizer tokenize:moveOperation into:tokens];
   
   if ([tokens count] < 3) {
-    NSLog(@"ERROR: Invalid Parameters '%s'", [moveOperation cStringUsingEncoding:NSASCIIStringEncoding]);
+    NSLog(@"ERROR: Invalid Parameters '%@'", moveOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Move operations require the following format: 'move topLeftX;topLeftY width;height [optional:screemNumber]'", moveOperation] userInfo:nil]);
   }
   
@@ -83,7 +86,7 @@
   [StringTokenizer tokenize:resizeOperation into:tokens];
   
   if ([tokens count] < 3) {
-    NSLog(@"ERROR: Invalid Parameters '%s'", [resizeOperation cStringUsingEncoding:NSASCIIStringEncoding]);
+    NSLog(@"ERROR: Invalid Parameters '%@'", resizeOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Resize operations require the following format: 'resize resizeX resizeY [optional:anchor]'", resizeOperation] userInfo:nil]);
   }
   
@@ -102,7 +105,7 @@
   [StringTokenizer tokenize:pushOperation into:tokens];
   
   if ([tokens count] < 2) {
-    NSLog(@"ERROR: Invalid Parameters '%s'", [pushOperation cStringUsingEncoding:NSASCIIStringEncoding]);
+    NSLog(@"ERROR: Invalid Parameters '%@'", pushOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Push operations require the following format: 'push direction [optional:style]'", pushOperation] userInfo:nil]);
   }
   
@@ -126,7 +129,7 @@
     } else if ([style isEqualToString:NONE]) {
       topLeft = @"windowTopLeftX,screenOriginY";
     } else {
-      NSLog(@"ERROR: Unrecognized style '%s'", [style cStringUsingEncoding:NSASCIIStringEncoding]);
+      NSLog(@"ERROR: Unrecognized style '%@'", style);
       @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
     }
   } else if ([direction isEqualToString:BOTTOM] || [direction isEqualToString:DOWN]) {
@@ -142,7 +145,7 @@
     } else if ([style isEqualToString:NONE]) {
       topLeft = @"windowTopLeftX,screenOriginY+screenSizeY-windowSizeY";
     } else {
-      NSLog(@"ERROR: Unrecognized style '%s'", [style cStringUsingEncoding:NSASCIIStringEncoding]);
+      NSLog(@"ERROR: Unrecognized style '%@'", style);
       @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
     }
   } else if ([direction isEqualToString:LEFT]) {
@@ -158,7 +161,7 @@
     } else if ([style isEqualToString:NONE]) {
       topLeft = @"screenOriginX,windowTopLeftY";
     } else {
-      NSLog(@"ERROR: Unrecognized style '%s'", [style cStringUsingEncoding:NSASCIIStringEncoding]);
+      NSLog(@"ERROR: Unrecognized style '%@'", style);
       @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
     }
   } else if ([direction isEqualToString:RIGHT]) {
@@ -174,11 +177,11 @@
     } else if ([style isEqualToString:NONE]) {
       topLeft = @"screenOriginX+screenSizeX-windowSizeX,windowTopLeftY";
     } else {
-      NSLog(@"ERROR: Unrecognized style '%s'", [style cStringUsingEncoding:NSASCIIStringEncoding]);
+      NSLog(@"ERROR: Unrecognized style '%@'", style);
       @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
     }
   } else {
-    NSLog(@"ERROR: Unrecognized direction '%s'", [direction cStringUsingEncoding:NSASCIIStringEncoding]);
+    NSLog(@"ERROR: Unrecognized direction '%@'", direction);
     @throw([NSException exceptionWithName:@"Unrecognized Direction" reason:[NSString stringWithFormat:@"Unrecognized direction '%@' in '%@'", direction, pushOperation] userInfo:nil]);
   }
   Operation *op = [[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:-1];
@@ -192,7 +195,7 @@
   [StringTokenizer tokenize:nudgeOperation into:tokens];
   
   if ([tokens count] < 2) {
-    NSLog(@"ERROR: Invalid Parameters '%s'", [nudgeOperation cStringUsingEncoding:NSASCIIStringEncoding]);
+    NSLog(@"ERROR: Invalid Parameters '%@'", nudgeOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Nudge operations require the following format: 'nudge x y'", nudgeOperation] userInfo:nil]);
   }
   
@@ -227,7 +230,7 @@
   [StringTokenizer tokenize:throwOperation into:tokens];
   
   if ([tokens count] < 2) {
-    NSLog(@"ERROR: Invalid Parameters '%s'", [throwOperation cStringUsingEncoding:NSASCIIStringEncoding]);
+    NSLog(@"ERROR: Invalid Parameters '%@'", throwOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Throw operations require the following format: 'throw screen [optional:style]'", throwOperation] userInfo:nil]);
   }
   
@@ -244,7 +247,7 @@
     } else if ([style isEqualToString:NORESIZE]) {
       // do nothing
     } else {
-      NSLog(@"ERROR: Unrecognized style '%s'", [style cStringUsingEncoding:NSASCIIStringEncoding]);
+      NSLog(@"ERROR: Unrecognized style '%@'", style);
       @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, throwOperation] userInfo:nil]);
     }
   }
@@ -259,7 +262,7 @@
   [StringTokenizer tokenize:cornerOperation into:tokens];
   
   if ([tokens count] < 2) {
-    NSLog(@"ERROR: Invalid Parameters '%s'", [cornerOperation cStringUsingEncoding:NSASCIIStringEncoding]);
+    NSLog(@"ERROR: Invalid Parameters '%@'", cornerOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Corner operations require the following format: 'corner direction [optional:style]'", cornerOperation] userInfo:nil]);
   }
   
@@ -283,7 +286,7 @@
   } else if ([direction isEqualToString:BOTTOM_RIGHT]) {
     tl = [[[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:COMMA] objectAtIndex:0]] stringByAppendingString:@",screenOriginY+screenSizeY-"] stringByAppendingString:[[dim componentsSeparatedByString:COMMA] objectAtIndex:1]];
   } else {
-    NSLog(@"ERROR: Unrecognized corner '%s'", [direction cStringUsingEncoding:NSASCIIStringEncoding]);
+    NSLog(@"ERROR: Unrecognized corner '%@'", direction);
     @throw([NSException exceptionWithName:@"Unrecognized Corner" reason:[NSString stringWithFormat:@"Unrecognized corner '%@' in '%@'", direction, cornerOperation] userInfo:nil]);
   }
   
@@ -317,6 +320,21 @@
   
   Operation *op = [[ChainOperation alloc] initWithArray:opArray];
   [opArray release];
+  [tokens release];
+  return op;
+}
+
++ (id)createLayoutOperationFromString:(NSString *)layoutOperation {
+  // layout <name>
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:layoutOperation into:tokens maxTokens:2];
+
+  if ([tokens count] < 2) {
+    NSLog(@"ERROR: Invalid Parameters '%@'", layoutOperation);
+    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Layout operations require the following format: 'layout <name>'", layoutOperation] userInfo:nil]);
+  }
+
+  Operation *op = [[LayoutOperation alloc] initWithName:[tokens objectAtIndex:1]];
   [tokens release];
   return op;
 }

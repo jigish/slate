@@ -22,6 +22,7 @@
 #import "Operation.h"
 
 @interface ChainOperation : Operation {
+@private
   NSArray *operations;
   NSMutableDictionary *currentOp;
 }

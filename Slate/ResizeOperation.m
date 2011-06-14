@@ -45,7 +45,7 @@
     if ([a isEqualToString:TOP_LEFT] || [a isEqualToString:TOP_RIGHT] || [a isEqualToString:BOTTOM_LEFT] || [a isEqualToString:BOTTOM_RIGHT]) {
       [self setAnchor:a];
     } else {
-      NSLog(@"ERROR: Unrecognized anchor '%s'", [a cStringUsingEncoding:NSASCIIStringEncoding]);
+      NSLog(@"ERROR: Unrecognized anchor '%@'", a);
       return nil;
     }
     [self setXResize:x];

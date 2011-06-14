@@ -1,5 +1,5 @@
 //
-//  WindowState.h
+//  Layout.h
 //  Slate
 //
 //  Created by Jigish Patel on 6/13/11.
@@ -21,17 +21,16 @@
 #import <Foundation/Foundation.h>
 
 
-@interface WindowState : NSObject {
+@interface Layout : NSObject {
 @private
-  pid_t appPID;
-  NSSize size;
-  NSPoint topLeft;
+  NSString *name;
+  NSMutableDictionary *appStates;
 }
 
-@property (assign) pid_t appPID;
-@property (assign) NSSize size;
-@property (assign) NSPoint topLeft;
+@property (copy) NSString *name;
+@property (retain) NSMutableDictionary *appStates;
 
-- (id)init:(AccessibilityWrapper *)aw;
+- (id)initWithString:(NSString *)layout;
+- (void)addWithString:(NSString *)layout;
 
 @end

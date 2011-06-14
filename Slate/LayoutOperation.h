@@ -1,8 +1,8 @@
 //
-//  WindowState.h
+//  LayoutOperation.h
 //  Slate
 //
-//  Created by Jigish Patel on 6/13/11.
+//  Created by Jigish Patel on 6/14/11.
 //  Copyright 2011 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -19,19 +19,17 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 #import <Foundation/Foundation.h>
+#import "Operation.h"
 
 
-@interface WindowState : NSObject {
+@interface LayoutOperation : Operation {
 @private
-  pid_t appPID;
-  NSSize size;
-  NSPoint topLeft;
+  NSString *name;
 }
 
-@property (assign) pid_t appPID;
-@property (assign) NSSize size;
-@property (assign) NSPoint topLeft;
+@property (copy) NSString *name;
 
-- (id)init:(AccessibilityWrapper *)aw;
+- (id)initWithName:(NSString *)theName;
+- (BOOL)testOperation:(Operation *)op;
 
 @end

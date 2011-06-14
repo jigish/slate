@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3B3E241013A5F59E00B0D762 /* WindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E240F13A5F59E00B0D762 /* WindowState.m */; };
+		3B40AC2113A73530006C9A5C /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40AC2013A73530006C9A5C /* Layout.m */; };
+		3B40AC2413A743B0006C9A5C /* LayoutOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40AC2313A743AF006C9A5C /* LayoutOperation.m */; };
 		3B7EB3A7138F3F6800EBEC2B /* ResizeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */; };
 		3B7EB475138F691800EBEC2B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB474138F691800EBEC2B /* Constants.m */; };
 		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
@@ -48,6 +50,10 @@
 /* Begin PBXFileReference section */
 		3B3E240E13A5F59E00B0D762 /* WindowState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowState.h; sourceTree = "<group>"; };
 		3B3E240F13A5F59E00B0D762 /* WindowState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowState.m; sourceTree = "<group>"; };
+		3B40AC1F13A73530006C9A5C /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
+		3B40AC2013A73530006C9A5C /* Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Layout.m; sourceTree = "<group>"; };
+		3B40AC2213A743AE006C9A5C /* LayoutOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutOperation.h; sourceTree = "<group>"; };
+		3B40AC2313A743AF006C9A5C /* LayoutOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutOperation.m; sourceTree = "<group>"; };
 		3B7EB3A5138F3F6800EBEC2B /* ResizeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizeOperation.h; sourceTree = "<group>"; };
 		3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizeOperation.m; sourceTree = "<group>"; };
 		3B7EB473138F691800EBEC2B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -129,6 +135,10 @@
 		478293E513859BA000452C07 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				47C4A2CC1384F26A0066B6DE /* Binding.h */,
+				47C4A2CD1384F26A0066B6DE /* Binding.m */,
+				3B40AC1F13A73530006C9A5C /* Layout.h */,
+				3B40AC2013A73530006C9A5C /* Layout.m */,
 				47C4A2C91384EA510066B6DE /* SlateConfig.h */,
 				47C4A2CA1384EA510066B6DE /* SlateConfig.m */,
 			);
@@ -138,16 +148,18 @@
 		478293E713859BED00452C07 /* Operation */ = {
 			isa = PBXGroup;
 			children = (
-				47C4A2CF1384F3E10066B6DE /* Operation.h */,
-				47C4A2D01384F3E10066B6DE /* Operation.m */,
-				47C4A2D21384F4A60066B6DE /* MoveOperation.h */,
-				47C4A2D31384F4A60066B6DE /* MoveOperation.m */,
-				3B7EB3A5138F3F6800EBEC2B /* ResizeOperation.h */,
-				3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */,
-				3BA4677B1391721F0081D75C /* OperationFactory.h */,
-				3BA4677C1391721F0081D75C /* OperationFactory.m */,
 				3BDC2B591391C55400B0D151 /* ChainOperation.h */,
 				3BDC2B5A1391C55400B0D151 /* ChainOperation.m */,
+				3B40AC2213A743AE006C9A5C /* LayoutOperation.h */,
+				3B40AC2313A743AF006C9A5C /* LayoutOperation.m */,
+				47C4A2D21384F4A60066B6DE /* MoveOperation.h */,
+				47C4A2D31384F4A60066B6DE /* MoveOperation.m */,
+				47C4A2CF1384F3E10066B6DE /* Operation.h */,
+				47C4A2D01384F3E10066B6DE /* Operation.m */,
+				3BA4677B1391721F0081D75C /* OperationFactory.h */,
+				3BA4677C1391721F0081D75C /* OperationFactory.m */,
+				3B7EB3A5138F3F6800EBEC2B /* ResizeOperation.h */,
+				3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */,
 			);
 			name = Operation;
 			sourceTree = "<group>";
@@ -155,15 +167,13 @@
 		478293E813859C0B00452C07 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				4786D53413882381004554B1 /* ASCIIToCode.plist */,
 				3BADA37013A2C1ED009E21D8 /* AccessibilityWrapper.h */,
 				3BADA37113A2C1ED009E21D8 /* AccessibilityWrapper.m */,
-				47C4A2CC1384F26A0066B6DE /* Binding.h */,
-				47C4A2CD1384F26A0066B6DE /* Binding.m */,
-				47C4A2D51384F5DD0066B6DE /* ExpressionPoint.h */,
-				47C4A2D61384F5DE0066B6DE /* ExpressionPoint.m */,
-				4786D53413882381004554B1 /* ASCIIToCode.plist */,
 				3B7EB473138F691800EBEC2B /* Constants.h */,
 				3B7EB474138F691800EBEC2B /* Constants.m */,
+				47C4A2D51384F5DD0066B6DE /* ExpressionPoint.h */,
+				47C4A2D61384F5DE0066B6DE /* ExpressionPoint.m */,
 				3B7EB4CA138F72D900EBEC2B /* StringTokenizer.h */,
 				3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */,
 				3B3E240E13A5F59E00B0D762 /* WindowState.h */,
@@ -216,12 +226,12 @@
 			children = (
 				4747E1F013877D260005180C /* icons */,
 				478293E813859C0B00452C07 /* Common */,
-				478293E713859BED00452C07 /* Operation */,
 				478293E513859BA000452C07 /* Config */,
+				478293E713859BED00452C07 /* Operation */,
+				47C4A29A1384E8890066B6DE /* Supporting Files */,
 				47C4A2A81384E8890066B6DE /* MainMenu.xib */,
 				47C4A2A51384E8890066B6DE /* SlateAppDelegate.h */,
 				47C4A2A61384E8890066B6DE /* SlateAppDelegate.m */,
-				47C4A29A1384E8890066B6DE /* Supporting Files */,
 			);
 			path = Slate;
 			sourceTree = "<group>";
@@ -380,6 +390,8 @@
 				3BDC2B5B1391C55400B0D151 /* ChainOperation.m in Sources */,
 				3BADA37213A2C1ED009E21D8 /* AccessibilityWrapper.m in Sources */,
 				3B3E241013A5F59E00B0D762 /* WindowState.m in Sources */,
+				3B40AC2113A73530006C9A5C /* Layout.m in Sources */,
+				3B40AC2413A743B0006C9A5C /* LayoutOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

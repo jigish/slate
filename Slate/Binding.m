@@ -35,10 +35,6 @@ static NSDictionary *dictionary = nil;
 
 - (id)init {
   self = [super init];
-  if (self) {
-    // Initialization code here.
-  }
-
   return self;
 }
 
@@ -71,7 +67,7 @@ static NSDictionary *dictionary = nil;
           } else if ([mod isEqualToString:SHIFT]) {
             modifiers += shiftKey;
           } else {
-            NSLog(@"ERROR: Unrecognized modifier '%s'", [mod cStringUsingEncoding:NSASCIIStringEncoding]);
+            NSLog(@"ERROR: Unrecognized modifier '%@'", mod);
             @throw([NSException exceptionWithName:@"Unrecognized Modifier" reason:[NSString stringWithFormat:@"Unrecognized modifier '%@' in '%@'", mod, binding] userInfo:nil]);
           }
           mod = [modEnum nextObject];
@@ -89,7 +85,7 @@ static NSDictionary *dictionary = nil;
     @try {
       [op testOperation];
     } @catch (NSException *ex) {
-      NSLog(@"ERROR: Unable to test binding '%s'", [binding cStringUsingEncoding:NSASCIIStringEncoding]);
+      NSLog(@"ERROR: Unable to test binding '%@'", binding);
       @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], binding] userInfo:nil]);
     }
     [tokens release];

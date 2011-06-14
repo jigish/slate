@@ -34,10 +34,13 @@
 @property (assign) AXUIElementRef window;
 @property (assign) BOOL inited;
 
+- (id)initWithApp:(AXUIElementRef)appRef window:(AXUIElementRef)windowRef;
+
 - (NSPoint)getCurrentTopLeft;
 - (NSSize)getCurrentSize;
 - (BOOL)moveWindow:(NSPoint)thePoint;
 - (BOOL)resizeWindow:(NSSize)theSize;
 + (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element;
++ (CFArrayRef)windowsInApp:(AXUIElementRef)app;
 
 @end
