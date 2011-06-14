@@ -51,7 +51,7 @@ You can have multiple layout directives that point to the same name in order to 
     layout myLayout 'iTerm' push up bar-resize:screenSizeY/2 | push down bar-resize:screenSizeY/2
     layout myLayout 'Google Chrome' push left bar-resize:screenSizeX/2 | push right bar-resize:screenSizeX/2
 
-Will create a layout called "myLayout" with two operations for iTerm and two operations for Google Chrome. When activated, the first window of iTerm will be moved using the first operation in the first list and the second window of iTerm will be moved using the second operation in the first list. In addition, the first window of Google Chrome will be moved using the first operation in the second list and the second window of Google Chrome will be moved using the second operation in the second list.More information on how to actually use these layouts can be found under the "layout" operation in the "bind" directive section
+Will create a layout called "myLayout" with two operations for iTerm and two operations for Google Chrome. When activated, the first window of iTerm will be moved using the first operation in the first list and the second window of iTerm will be moved using the second operation in the first list. In addition, the first window of Google Chrome will be moved using the first operation in the second list and the second window of Google Chrome will be moved using the second operation in the second list. More information on how to actually use these layouts can be found under the "layout" operation in the "bind" directive section
 
 ### The "bind" Directive ###
 
