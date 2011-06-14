@@ -31,13 +31,13 @@
   EventHotKeyRef hotKeyRef;
 }
 
-+ (NSDictionary *)asciiToCodeDict;
-- (id)initWithString:(NSString *)binding;
-- (BOOL)doOperation;
-
 @property (retain) Operation *op;
 @property (assign) UInt32 keyCode;
 @property (assign) UInt32 modifiers;
 @property (assign) EventHotKeyRef hotKeyRef;
+
++ (NSDictionary *)asciiToCodeDict;
+- (id)initWithString:(NSString *)binding;
+- (BOOL)doOperation;
 
 @end

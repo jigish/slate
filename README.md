@@ -14,7 +14,7 @@ Note: You must turn on the Accessibility API by checking System Preferences > Un
 
 Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon running Slate. You can also re-load the config using the "Load Config" menu option on the status menu (use this at your own risk. It is better to simply restart Slate).
 
-Configuration is split into three directives: config (for global configurations), layout (to configure layouts) and bind (for key bindings).
+Configuration is split into four directives: config (for global configurations), alias (to create alias variables), layout (to configure layouts) and bind (for key bindings).
 
 ### The "config" Directive ###
 
@@ -34,6 +34,20 @@ Example:
 
     config defaultToCurrentScreen true
 
+### The "alias" Directive ###
+
+The alias directive follows the following format:
+
+    alias name value
+
+When you set an alias, you can refer to it in any directive (sequentially after that alias directive) by referencing like ${name}.
+
+Example:
+
+    alias bottom-right-2nd-monitor move screenOriginX+2*screenSizeX/3;screenOriginY+screenSizeY/2 screenSizeX/3;screenSizeY/2 1
+
+Will allow you to use "${bottom-right-2nd-monitor}" as a reference to "move screenOriginX+2*screenSizeX/3;screenOriginY+screenSizeY/2 screenSizeX/3;screenSizeY/2 1" in any directive following the alias (including other alias directives)
+
 ### The "layout" Directive ###
 
 The layout directive follows the following format:
@@ -46,7 +60,9 @@ Where:
     'app name' = single-quoted name of the application to add to the layout
     operations = a pipe separated list of operations (any operation in the bind directive is allowed except chain and layout)
 
-You can have multiple layout directives that point to the same name in order to link any number of applications to the same layout. For example:
+You can have multiple layout directives that point to the same name in order to link any number of applications to the same layout.
+
+Example:
 
     layout myLayout 'iTerm' push up bar-resize:screenSizeY/2 | push down bar-resize:screenSizeY/2
     layout myLayout 'Google Chrome' push left bar-resize:screenSizeX/2 | push right bar-resize:screenSizeX/2

@@ -30,6 +30,7 @@
 @synthesize configs;
 @synthesize bindings;
 @synthesize layouts;
+@synthesize aliases;
 
 static SlateConfig *_instance = nil;
 
@@ -46,6 +47,8 @@ static SlateConfig *_instance = nil;
   if (self) {
     [self setConfigs:[[NSMutableDictionary alloc] init]];
     [self setBindings:[[NSMutableArray alloc] initWithCapacity:10]];
+    [self setLayouts:[[NSMutableDictionary alloc] init]];
+    [self setAliases:[[NSMutableDictionary alloc] init]];
   }
   return self;
 }
@@ -69,6 +72,7 @@ static SlateConfig *_instance = nil;
   [self setConfigs:[[NSMutableDictionary alloc] init]];
   [self setBindings:[[NSMutableArray alloc] initWithCapacity:10]];
   [self setLayouts:[[NSMutableDictionary alloc] init]];
+  [self setAliases:[[NSMutableDictionary alloc] init]];
 
   NSString *homeDir = NSHomeDirectory();
   NSString *configFile = [homeDir stringByAppendingString:@"/.slate"];
@@ -80,6 +84,22 @@ static SlateConfig *_instance = nil;
   NSEnumerator *e = [lines objectEnumerator];
   NSString *line = [e nextObject];
   while (line) {
+    @try {
+      line = [self replaceAliases:line];
+    } @catch (NSException *ex) {
+      NSLog(@"  ERROR %@",[ex name]);
+      NSAlert *alert = [[NSAlert alloc] init];
+      [alert addButtonWithTitle:@"Quit"];
+      [alert addButtonWithTitle:@"Skip"];
+      [alert setMessageText:[ex name]];
+      [alert setInformativeText:[ex reason]];
+      [alert setAlertStyle:NSWarningAlertStyle];
+      if ([alert runModal] == NSAlertFirstButtonReturn) {
+        NSLog(@"User selected exit");
+        [NSApp terminate:nil];
+      }
+      [alert release];
+    }
     NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
     [StringTokenizer tokenize:line into:tokens];
     if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:CONFIG]) {
@@ -107,7 +127,7 @@ static SlateConfig *_instance = nil;
         }
         [alert release];
       }
-    } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:LAYOUT]) {
+    } else if ([tokens count] >= 4 && [[tokens objectAtIndex:0] isEqualToString:LAYOUT]) {
       // layout <name> <app name> <op+params> (| <op+params>)*
       @try {
         if ([layouts objectForKey:[tokens objectAtIndex:1]] == nil) {
@@ -133,6 +153,25 @@ static SlateConfig *_instance = nil;
         }
         [alert release];
       }
+    } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:ALIAS]) {
+      // alias <name> <value>
+      @try {
+        [self addAlias:line];
+        NSLog(@"  LoadingL: %@",line);
+      } @catch (NSException *ex) {
+        NSLog(@"  ERROR %@",[ex name]);
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"Quit"];
+        [alert addButtonWithTitle:@"Skip"];
+        [alert setMessageText:[ex name]];
+        [alert setInformativeText:[ex reason]];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        if ([alert runModal] == NSAlertFirstButtonReturn) {
+          NSLog(@"User selected exit");
+          [NSApp terminate:nil];
+        }
+        [alert release];
+      }
     }
     [tokens release];
     line = [e nextObject];
@@ -142,10 +181,28 @@ static SlateConfig *_instance = nil;
   return YES;
 }
 
+- (void)addAlias:(NSString *)line {
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:line into:tokens maxTokens:3];
+  [aliases setObject:[tokens objectAtIndex:2] forKey:[NSString stringWithFormat:@"${%@}",[tokens objectAtIndex:1]]];
+  [tokens release];
+}
+
 - (void)dealloc {
   [self setConfigs:nil];
   [self setBindings:nil];
   [super dealloc];
+}
+
+- (NSString *)replaceAliases:(NSString *)line {
+  NSArray *aliasNames = [aliases allKeys];
+  for (NSInteger i = 0; i < [aliasNames count]; i++) {
+    line = [line stringByReplacingOccurrencesOfString:[aliasNames objectAtIndex:i] withString:[aliases objectForKey:[aliasNames objectAtIndex:i]]];
+  }
+  if (!NSEqualRanges([line rangeOfString:@"${"], NSMakeRange(NSNotFound, 0))) {
+    @throw([NSException exceptionWithName:@"Unrecognized Alias" reason:[NSString stringWithFormat:@"Unrecognized alias in '%@'", line] userInfo:nil]);
+  }
+  return line;
 }
 
 @end

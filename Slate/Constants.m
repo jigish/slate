@@ -24,6 +24,7 @@
 NSString * const BIND = @"bind";
 NSString * const CONFIG = @"config";
 NSString * const LAYOUT = @"layout";
+NSString * const ALIAS = @"alias";
 
 // Config Keys
 NSString * const DEFAULT_TO_CURRENT_SCREEN = @"defaultToCurrentScreen";

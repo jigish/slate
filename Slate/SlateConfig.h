@@ -26,16 +26,20 @@
   NSMutableDictionary *configs;
   NSMutableArray *bindings;
   NSMutableDictionary *layouts;
+  NSMutableDictionary *aliases;
 }
 
 @property (retain) NSMutableDictionary *configs;
 @property (retain) NSMutableArray *bindings;
 @property (retain) NSMutableDictionary *layouts;
+@property (retain) NSMutableDictionary *aliases;
 
 + (SlateConfig *)getInstance;
 - (BOOL)load;
 - (BOOL)getBoolConfig:(NSString *)key;
 - (NSInteger)getIntegerConfig:(NSString *)key;
 - (NSString *)getConfig:(NSString *)key;
+- (void)addAlias:(NSString *)line;
+- (NSString *)replaceAliases:(NSString *)line;
 
 @end

@@ -22,6 +22,7 @@
 extern NSString * const BIND;
 extern NSString * const CONFIG;
 extern NSString * const LAYOUT;
+extern NSString * const ALIAS;
 
 // Config Keys
 extern NSString * const DEFAULT_TO_CURRENT_SCREEN;
