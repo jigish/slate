@@ -52,7 +52,7 @@
 - (void)addWithString:(NSString *)layout {
   // layout <name> <app name> <op+params> (| <op+params>)*
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
-  [StringTokenizer tokenize:layout into:tokens maxTokens:4 quoteChar:'\''];
+  [StringTokenizer tokenize:layout into:tokens maxTokens:4 quoteChars:[NSCharacterSet characterSetWithCharactersInString:QUOTES]];
   if ([tokens count] <=3) {
     @throw([NSException exceptionWithName:@"Unrecognized Layout" reason:layout userInfo:nil]);
   }

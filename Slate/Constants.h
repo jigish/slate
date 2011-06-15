@@ -90,3 +90,4 @@ extern NSString * const PLUS;
 extern NSString * const PERCENT;
 extern NSString * const EMPTY;
 extern NSString * const PIPE;
+extern NSString * const QUOTES;

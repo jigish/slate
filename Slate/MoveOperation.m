@@ -118,6 +118,10 @@
   return (monitor < ((NSInteger)[[NSScreen screens] count]) ? YES : NO);
 }
 
+- (BOOL)isRect:(NSRect)rect1 biggerThan:(NSRect)rect2 {
+  return rect1.size.width*rect1.size.height > rect2.size.width*rect2.size.height;
+}
+
 // I understand that the following method is stupidly written. Apple apparently enjoys keeping
 // multiple types of coordinate spaces. NSScreen.origin returns bottom-left while we need
 // top-left for window moving. Go figure.
@@ -128,23 +132,26 @@
   NSInteger sizeY = 0;
   if (monitor < 0 || (![self monitorExists] && [[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN])) {
     NSArray *screens = [NSScreen screens];
-    NSScreen *screen = [screens objectAtIndex:0];
-    NSInteger mainHeight = [screen frame].size.height;
-    NSInteger mainOriginY = [screen frame].origin.y;
-    NSPoint topLeftZeroed = NSMakePoint(cTopLeft.x, 0);
-    if (!NSPointInRect(topLeftZeroed, [screen frame])) {
-      for (NSUInteger i = 1; i < [screens count]; i++) {
-        topLeftZeroed = NSMakePoint(cTopLeft.x, 0);
-        screen = [screens objectAtIndex:i];
-        if (NSPointInRect(topLeftZeroed, [screen frame])) {
-          originX = [screen visibleFrame].origin.x;
-          originY = mainOriginY - [screen frame].origin.y - ([screen frame].size.height - mainHeight);
-          break;
-        }
+    NSScreen *screen = nil;
+    NSUInteger screenIndex = 0;
+    NSInteger mainHeight = [[screens objectAtIndex:0] frame].size.height;
+    NSInteger mainOriginY = [[screens objectAtIndex:0] frame].origin.y;
+    NSRect largestIntersection = NSZeroRect;
+    NSRect windowRect = NSMakeRect(cTopLeft.x, cTopLeft.y, cSize.width, cSize.height);
+    for (NSUInteger i = 0; i < [screens count]; i++) {
+      NSRect currentIntersection = NSIntersectionRect([[screens objectAtIndex:i] frame], windowRect);
+      if ([self isRect:currentIntersection biggerThan:largestIntersection]) {
+        largestIntersection = currentIntersection;
+        screenIndex = i;
       }
-    } else {
+    }
+    screen = [screens objectAtIndex:screenIndex];
+    if (screenIndex == 0) { // special handling for menu bar and dock
       originX = [screen visibleFrame].origin.x;
       originY = [screen frame].size.height - ([screen visibleFrame].origin.y + [screen visibleFrame].size.height);
+    } else {
+      originX = [screen visibleFrame].origin.x;
+      originY = mainOriginY - [screen frame].origin.y - ([screen frame].size.height - mainHeight);
     }
     sizeX = [screen visibleFrame].size.width;
     sizeY = [screen visibleFrame].size.height;

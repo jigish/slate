@@ -92,3 +92,4 @@ NSString * const PLUS = @"+";
 NSString * const PERCENT = @"%";
 NSString * const EMPTY = @"";
 NSString * const PIPE = @" | ";
+NSString * const QUOTES = @"'\"";

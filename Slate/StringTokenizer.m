@@ -27,6 +27,10 @@
   return [[NSCharacterSet whitespaceCharacterSet] characterIsMember:c];
 }
 
++ (BOOL)isQuoteChar:(unichar)c quoteChars:(NSCharacterSet *)quotes {
+  return [quotes characterIsMember:c];
+}
+
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array {
   NSMutableString *token = [[NSMutableString alloc] initWithCapacity:10];
   for (NSInteger i = 0; i < [s length]; i++) {
@@ -72,7 +76,7 @@
   [token release];
 }
 
-+ (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens quoteChar:(unichar)quote {
++ (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens quoteChars:(NSCharacterSet *)quotes {
   if (maxTokens <=1) {
     [array addObject:s];
   }
@@ -91,7 +95,7 @@
       }
     } else if (numTokens >= (maxTokens-1)) {
       [token appendFormat:@"%C", [s characterAtIndex:i]];
-    } else if ([s characterAtIndex:i] == quote) {
+    } else if ([self isQuoteChar:[s characterAtIndex:i] quoteChars:quotes]) {
       quoteSeen = !quoteSeen;
     } else {
       [token appendFormat:@"%C", [s characterAtIndex:i]];

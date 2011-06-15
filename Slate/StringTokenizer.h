@@ -24,8 +24,9 @@
 @interface StringTokenizer : NSObject {}
 
 + (BOOL)isSpaceChar:(unichar)c;
++ (BOOL)isQuoteChar:(unichar)c quoteChars:(NSCharacterSet *)quoteChars;
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array;
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger) maxTokens;
-+ (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens quoteChar:(unichar)quote;
++ (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens quoteChars:(NSCharacterSet *)quotes;
 
 @end
