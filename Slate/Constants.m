@@ -20,10 +20,6 @@
 
 #import "Constants.h"
 
-// Boolean Keys
-NSString * const YES_STR = @"YES";
-NSString * const NO_STR = @"NO";
-
 // Directive Keys
 NSString * const BIND = @"bind";
 NSString * const CONFIG = @"config";
@@ -37,6 +33,7 @@ NSString * const RESIZE_PERCENT_OF = @"resizePercentOf";
 
 // Application Option Keys
 NSString * const IGNORE_FAIL = @"IGNORE_FAIL";
+NSString * const REPEAT = @"REPEAT";
 
 // Modifier Keys
 NSString * const CONTROL = @"ctrl";

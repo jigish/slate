@@ -25,12 +25,12 @@
 @private
   NSString *name;
   NSMutableDictionary *appStates;
-  NSMutableDictionary *appIgnoreFail;
+  NSMutableDictionary *appOptions;
 }
 
 @property (copy) NSString *name;
 @property (retain) NSMutableDictionary *appStates;
-@property (retain) NSMutableDictionary *appIgnoreFail;
+@property (retain) NSMutableDictionary *appOptions;
 
 - (id)initWithString:(NSString *)layout;
 - (void)addWithString:(NSString *)layout;

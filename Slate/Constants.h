@@ -18,10 +18,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
-// Boolean Keys
-extern NSString * const YES_STR;
-extern NSString * const NO_STR;
-
 // Directive Keys
 extern NSString * const BIND;
 extern NSString * const CONFIG;
@@ -35,6 +31,7 @@ extern NSString * const RESIZE_PERCENT_OF;
 
 // Application Option Keys
 extern NSString * const IGNORE_FAIL;
+extern NSString * const REPEAT;
 
 // Modifier Keys
 extern NSString * const CONTROL;

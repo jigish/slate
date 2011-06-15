@@ -18,6 +18,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
+#import "ApplicationOptions.h"
 #import "Constants.h"
 #import "Layout.h"
 #import "Operation.h"
@@ -29,13 +30,13 @@
 
 @synthesize name;
 @synthesize appStates;
-@synthesize appIgnoreFail;
+@synthesize appOptions;
 
 - (id)init {
   self = [super init];
   if (self) {
     appStates = [[NSMutableDictionary alloc] init];
-    appIgnoreFail = [[NSMutableDictionary alloc] init];
+    appOptions = [[NSMutableDictionary alloc] init];
   }
   return self;
 }
@@ -61,14 +62,21 @@
   NSArray *appNameAndOptions = [[tokens objectAtIndex:2] componentsSeparatedByString:COLON];
   NSString *appName = [appNameAndOptions objectAtIndex:0];
   if ([appNameAndOptions count] > 1) {
-    NSString *option = [appNameAndOptions objectAtIndex:1];
-    if ([option isEqualToString:IGNORE_FAIL]) {
-      [appIgnoreFail setObject:YES_STR forKey:appName];
-    } else {
-      [appIgnoreFail setObject:NO_STR forKey:appName];
+    NSString *options = [appNameAndOptions objectAtIndex:1];
+    ApplicationOptions *appOpts = [[ApplicationOptions alloc] init];
+    NSArray *optArr = [options componentsSeparatedByString:COMMA];
+    for (NSInteger i = 0; i < [optArr count]; i++) {
+      NSString *option = [optArr objectAtIndex:i];
+      if ([option isEqualToString:IGNORE_FAIL]) {
+        [appOpts setIgnoreFail:YES];
+      } else if ([option isEqualToString:REPEAT]) {
+        [appOpts setRepeat:YES];
+      }
     }
+    [appOptions setObject:appOpts forKey:appName];
+    [appOpts release];
   } else {
-    [appIgnoreFail setObject:NO_STR forKey:appName];
+    [appOptions setObject:[[[ApplicationOptions alloc] init] autorelease] forKey:appName];
   }
   NSString *opsString = [tokens objectAtIndex:3];
   NSArray *ops = [opsString componentsSeparatedByString:PIPE];

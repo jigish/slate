@@ -18,6 +18,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
+#import "ApplicationOptions.h"
 #import "Constants.h"
 #import "Layout.h"
 #import "LayoutOperation.h"
@@ -60,12 +61,22 @@
     AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
     CFArrayRef windows = [AccessibilityWrapper windowsInApp:appRef];
     NSInteger failedWindows = 0;
-    for (NSInteger i = 0; i < CFArrayGetCount(windows) && i-failedWindows < [operations count]; i++) {
-      AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
-      success = [[operations objectAtIndex:(i-failedWindows)] doOperation:aw] && success;
-      if (![[[layout appIgnoreFail] objectForKey:appName] isEqualToString:YES_STR] && !success)
-        failedWindows++;
-      [aw release];
+    if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] repeat]) {
+      for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
+        AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
+        success = [[operations objectAtIndex:((i-failedWindows) % [operations count])] doOperation:aw] && success;
+        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !success)
+          failedWindows++;
+        [aw release];
+      }
+    } else {
+      for (NSInteger i = 0; i < CFArrayGetCount(windows) && i-failedWindows < [operations count]; i++) {
+        AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
+        success = [[operations objectAtIndex:(i-failedWindows)] doOperation:aw] && success;
+        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !success)
+          failedWindows++;
+        [aw release];
+      }
     }
   }
   return success;
