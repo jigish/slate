@@ -57,7 +57,7 @@ The layout directive follows the following format:
 Where:
 
     name = the name you want to use to reference the layout
-    'app name' = single-quoted name of the application to add to the layout
+    'app name' = single-quoted name of the application to add to the layout. You may also append ":IGNORE_FAIL" after the last quote to prevent Slate from staying on the same binding if moving/resizing fails on the current window.
     operations = a pipe separated list of operations (any operation in the bind directive is allowed except chain and layout)
 
 You can have multiple layout directives that point to the same name in order to link any number of applications to the same layout.

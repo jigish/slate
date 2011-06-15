@@ -20,6 +20,10 @@
 
 #import "Constants.h"
 
+// Boolean Keys
+NSString * const YES_STR = @"YES";
+NSString * const NO_STR = @"NO";
+
 // Directive Keys
 NSString * const BIND = @"bind";
 NSString * const CONFIG = @"config";
@@ -30,6 +34,9 @@ NSString * const ALIAS = @"alias";
 NSString * const DEFAULT_TO_CURRENT_SCREEN = @"defaultToCurrentScreen";
 NSString * const NUDGE_PERCENT_OF = @"nudgePercentOf";
 NSString * const RESIZE_PERCENT_OF = @"resizePercentOf";
+
+// Application Option Keys
+NSString * const IGNORE_FAIL = @"IGNORE_FAIL";
 
 // Modifier Keys
 NSString * const CONTROL = @"ctrl";
@@ -87,3 +94,4 @@ NSString * const MINUS = @"-";
 NSString * const PLUS = @"+";
 NSString * const PERCENT = @"%";
 NSString * const EMPTY = @"";
+NSString * const PIPE = @" | ";

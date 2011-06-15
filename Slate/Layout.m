@@ -18,6 +18,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
+#import "Constants.h"
 #import "Layout.h"
 #import "Operation.h"
 #import "OperationFactory.h"
@@ -28,11 +29,13 @@
 
 @synthesize name;
 @synthesize appStates;
+@synthesize appIgnoreFail;
 
 - (id)init {
   self = [super init];
   if (self) {
     appStates = [[NSMutableDictionary alloc] init];
+    appIgnoreFail = [[NSMutableDictionary alloc] init];
   }
   return self;
 }
@@ -55,9 +58,20 @@
 
   [self setName:[tokens objectAtIndex:1]];
 
-  NSString *appName = [tokens objectAtIndex:2];
+  NSArray *appNameAndOptions = [[tokens objectAtIndex:2] componentsSeparatedByString:COLON];
+  NSString *appName = [appNameAndOptions objectAtIndex:0];
+  if ([appNameAndOptions count] > 1) {
+    NSString *option = [appNameAndOptions objectAtIndex:1];
+    if ([option isEqualToString:IGNORE_FAIL]) {
+      [appIgnoreFail setObject:YES_STR forKey:appName];
+    } else {
+      [appIgnoreFail setObject:NO_STR forKey:appName];
+    }
+  } else {
+    [appIgnoreFail setObject:NO_STR forKey:appName];
+  }
   NSString *opsString = [tokens objectAtIndex:3];
-  NSArray *ops = [opsString componentsSeparatedByString:@" | "];
+  NSArray *ops = [opsString componentsSeparatedByString:PIPE];
   NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
   for (NSInteger i = 0; i < [ops count]; i++) {
     Operation *op = [OperationFactory createOperationFromString:[ops objectAtIndex:i]];

@@ -18,6 +18,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
+#import "Constants.h"
 #import "Layout.h"
 #import "LayoutOperation.h"
 #import "SlateConfig.h"
@@ -62,7 +63,7 @@
     for (NSInteger i = 0; i < CFArrayGetCount(windows) && i-failedWindows < [operations count]; i++) {
       AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
       success = [[operations objectAtIndex:(i-failedWindows)] doOperation:aw] && success;
-      if (!success)
+      if (![[[layout appIgnoreFail] objectForKey:appName] isEqualToString:YES_STR] && !success)
         failedWindows++;
       [aw release];
     }
