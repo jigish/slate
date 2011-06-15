@@ -61,23 +61,25 @@
     AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
     CFArrayRef windows = [AccessibilityWrapper windowsInApp:appRef];
     NSInteger failedWindows = 0;
+    BOOL appSuccess = YES;
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] repeat]) {
       for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
-        success = [[operations objectAtIndex:((i-failedWindows) % [operations count])] doOperation:aw] && success;
-        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !success)
+        appSuccess = [[operations objectAtIndex:((i-failedWindows) % [operations count])] doOperation:aw] && appSuccess;
+        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
           failedWindows++;
         [aw release];
       }
     } else {
       for (NSInteger i = 0; i < CFArrayGetCount(windows) && i-failedWindows < [operations count]; i++) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
-        success = [[operations objectAtIndex:(i-failedWindows)] doOperation:aw] && success;
-        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !success)
+        appSuccess = [[operations objectAtIndex:(i-failedWindows)] doOperation:aw] && appSuccess;
+        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
           failedWindows++;
         [aw release];
       }
     }
+    success = appSuccess && success;
   }
   return success;
 }
