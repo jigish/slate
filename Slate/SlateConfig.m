@@ -73,6 +73,16 @@ static SlateConfig *_instance = nil;
   return defaultValue;
 }
 
+- (double)getDoubleConfig:(NSString *)key {
+  return [[configs objectForKey:key] doubleValue];
+}
+
+- (double)getDoubleConfig:(NSString *)key defaultValue:(double)defaultValue {
+  if ([configs objectForKey:key] != nil)
+    return [[configs objectForKey:key] doubleValue];
+  return defaultValue;
+}
+
 - (NSString *)getConfig:(NSString *)key {
   return [configs objectForKey:key];
 }

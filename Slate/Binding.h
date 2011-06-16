@@ -29,12 +29,14 @@
   UInt32 keyCode;
   UInt32 modifiers;
   EventHotKeyRef hotKeyRef;
+  BOOL repeat;
 }
 
 @property (retain) Operation *op;
 @property (assign) UInt32 keyCode;
 @property (assign) UInt32 modifiers;
 @property (assign) EventHotKeyRef hotKeyRef;
+@property (assign) BOOL repeat;
 
 + (NSDictionary *)asciiToCodeDict;
 - (id)initWithString:(NSString *)binding;

@@ -107,5 +107,16 @@
   [token release];
 }
 
++ (void)firstToken:(NSString *)s into:(NSMutableString *)token {
+  for (NSInteger i = 0; i < [s length]; i++) {
+    if ([self isSpaceChar:[s characterAtIndex:i]]) {
+      if (![token isEqualToString:@""]) {
+        return;
+      }
+    } else {
+      [token appendFormat:@"%C", [s characterAtIndex:i]];
+    }
+  }
+}
 
 @end

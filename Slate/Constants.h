@@ -31,6 +31,10 @@ extern NSString * const NUDGE_PERCENT_OF;
 extern NSString * const NUDGE_PERCENT_OF_DEFAULT;
 extern NSString * const RESIZE_PERCENT_OF;
 extern NSString * const RESIZE_PERCENT_OF_DEFAULT;
+extern NSString * const REPEAT_ON_HOLD_OPS;
+extern NSString * const REPEAT_ON_HOLD_OPS_DEFAULT;
+extern NSString * const SECONDS_BETWEEN_REPEAT;
+extern double     const SECONDS_BETWEEN_REPEAT_DEFAULT;
 
 // Application Option Keys
 extern NSString * const IGNORE_FAIL;

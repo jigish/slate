@@ -18,11 +18,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
+#import "Constants.h"
 #import "SlateAppDelegate.h"
 #import "SlateConfig.h"
 #import "Binding.h"
 
 @implementation SlateAppDelegate
+
+static NSObject *timerLock = nil;
+static NSTimer *currentTimer = nil;
+static EventHotKeyID currentHotKey;
+static SlateAppDelegate *selfRef = nil;
 
 - (IBAction)reconfig {
   NSArray *bindings = [[SlateConfig getInstance] bindings];
@@ -42,10 +48,14 @@
 - (void)registerHotKeys {
   NSLog(@"Registering HotKeys...");
   EventTypeSpec eventType;
+  EventTypeSpec eventReleasedType;
   eventType.eventClass = kEventClassKeyboard;
   eventType.eventKind = kEventHotKeyPressed;
+  eventReleasedType.eventClass = kEventClassKeyboard;
+  eventReleasedType.eventKind = kEventHotKeyReleased;
 
   InstallApplicationEventHandler(&OnHotKeyEvent, 1, &eventType, (void *)self, NULL);
+  InstallApplicationEventHandler(&OnHotKeyReleasedEvent, 1, &eventReleasedType, (void *)self, NULL);
 
   NSArray *bindings = [[SlateConfig getInstance] bindings];
   for (NSInteger i = 0; i < [bindings count]; i++) {
@@ -60,15 +70,49 @@
   NSLog(@"HotKeys registered.");
 }
 
+- (void) runBinding:(NSTimer *)timer {
+  if ([[[SlateConfig getInstance] bindings] objectAtIndex:currentHotKey.id]) {
+    [[[[SlateConfig getInstance] bindings] objectAtIndex:currentHotKey.id] doOperation];
+  }
+}
+
 OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
   EventHotKeyID hkCom;
-
   GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
 
   if ([[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id]) {
     [[[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id] doOperation];
+    if ([[[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id] repeat]) {
+      @synchronized(timerLock) {
+        if (currentTimer != nil) {
+          [currentTimer invalidate];
+          currentTimer = nil;
+        }
+        // Setup timer to repeat operation
+        currentHotKey = hkCom;
+        currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:SECONDS_BETWEEN_REPEAT
+                                                                                          defaultValue:SECONDS_BETWEEN_REPEAT_DEFAULT]
+                                target:selfRef
+                                selector:@selector(runBinding:)
+                                userInfo:nil
+                                repeats:YES];
+      }
+    }
   }
 
+  return noErr;
+}
+
+OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
+  EventHotKeyID hkCom;
+  GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
+
+  @synchronized(timerLock) {
+    if (currentTimer != nil && hkCom.id == currentHotKey.id) {
+      [currentTimer invalidate];
+      currentTimer = nil;
+    }
+  }
   return noErr;
 }
 
@@ -85,11 +129,19 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
   [statusItem setImage:[NSImage imageNamed:@"status"]];
   [statusItem setHighlightMode:YES];
 
+  // Ensure no timer exists
+  @synchronized(timerLock) {
+    currentTimer = nil;
+    timerLock = [[NSObject alloc] init];
+  }
+
   // Read Config
   [self loadConfig];
 
   // Register Hot Keys
   [self registerHotKeys];
+
+  selfRef = self;
 }
 
 @end

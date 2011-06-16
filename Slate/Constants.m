@@ -33,6 +33,10 @@ NSString * const NUDGE_PERCENT_OF = @"nudgePercentOf";
 NSString * const NUDGE_PERCENT_OF_DEFAULT = @"windowSize";
 NSString * const RESIZE_PERCENT_OF = @"resizePercentOf";
 NSString * const RESIZE_PERCENT_OF_DEFAULT = @"windowSize";
+NSString * const REPEAT_ON_HOLD_OPS = @"repeatOnHoldOps";
+NSString * const REPEAT_ON_HOLD_OPS_DEFAULT = @"resize,nudge";
+NSString * const SECONDS_BETWEEN_REPEAT = @"secondsBetweenRepeat";
+double     const SECONDS_BETWEEN_REPEAT_DEFAULT = 0.2;
 
 // Application Option Keys
 NSString * const IGNORE_FAIL = @"IGNORE_FAIL";

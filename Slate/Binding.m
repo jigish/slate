@@ -21,6 +21,7 @@
 #import "Binding.h"
 #import "Constants.h"
 #import "OperationFactory.h"
+#import "SlateConfig.h"
 #import "StringTokenizer.h"
 
 
@@ -30,11 +31,15 @@
 @synthesize keyCode;
 @synthesize modifiers;
 @synthesize hotKeyRef;
+@synthesize repeat;
 
 static NSDictionary *dictionary = nil;
 
 - (id)init {
   self = [super init];
+  if (self) {
+    [self setRepeat:NO];
+  }
   return self;
 }
 
@@ -74,14 +79,24 @@ static NSDictionary *dictionary = nil;
         }
       }
     }
-    
+
+    NSArray *repeatOps = [[[SlateConfig getInstance] getConfig:REPEAT_ON_HOLD_OPS defaultValue:REPEAT_ON_HOLD_OPS_DEFAULT] componentsSeparatedByString:COMMA];
+    for (NSInteger i = 0; i < [repeatOps count]; i++) {
+      NSMutableString *opStr = [[NSMutableString alloc] initWithCapacity:10];
+      [StringTokenizer firstToken:[tokens objectAtIndex:2] into:opStr];
+      if ([opStr isEqualToString:[repeatOps objectAtIndex:i]]) {
+        [self setRepeat:YES];
+        break;
+      }
+    }
+
     [self setOp:[OperationFactory createOperationFromString:[tokens objectAtIndex:2]]];
-    
+
     if (op == nil) {
       NSLog(@"ERROR: Unable to create binding");
       @throw([NSException exceptionWithName:@"Unable To Create Binding" reason:[NSString stringWithFormat:@"Unable to create '%@'", binding] userInfo:nil]);
     }
-    
+
     @try {
       [op testOperation];
     } @catch (NSException *ex) {
