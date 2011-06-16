@@ -42,6 +42,7 @@ extern NSString * const REPEAT;
 extern NSString * const SORT_TITLE;
 extern NSString * const MAIN_FIRST;
 extern NSString * const MAIN_LAST;
+extern NSString * const TITLE_ORDER;
 
 // Modifier Keys
 extern NSString * const CONTROL;
@@ -101,3 +102,4 @@ extern NSString * const PERCENT;
 extern NSString * const EMPTY;
 extern NSString * const PIPE;
 extern NSString * const QUOTES;
+extern NSString * const EQUALS;

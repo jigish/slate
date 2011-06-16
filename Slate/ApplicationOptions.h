@@ -16,6 +16,7 @@
   BOOL mainFirst;
   BOOL mainLast;
   BOOL sortTitle;
+  NSArray *titleOrder;
 }
 
 @property (assign) BOOL ignoreFail;
@@ -23,5 +24,6 @@
 @property (assign) BOOL mainFirst;
 @property (assign) BOOL mainLast;
 @property (assign) BOOL sortTitle;
+@property (retain) NSArray *titleOrder;
 
 @end

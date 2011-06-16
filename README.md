@@ -72,6 +72,7 @@ Possible Options:
 | MAIN_FIRST | This will cause the main window to always use the first operation |
 | MAIN_LAST | This will cause the main window to always use the last operation (mutally exclusive with MAIN_FIRST) |
 | SORT_TITLE | This will cause the window operations to be triggered on the windows in sorted order by the window title (can be used with MAIN_FIRST or MAIN_LAST) |
+| TITLE_ORDER=order | This will cause the operations to be triggered on the windows starting with order which is a semi-colon separated list of window titles |
 
 
 You can have multiple layout directives that point to the same name in order to link any number of applications to the same layout.

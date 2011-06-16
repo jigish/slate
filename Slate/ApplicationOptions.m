@@ -16,6 +16,7 @@
 @synthesize mainFirst;
 @synthesize mainLast;
 @synthesize sortTitle;
+@synthesize titleOrder;
 
 - (id)init {
   self = [super init];
@@ -25,6 +26,7 @@
     [self setMainFirst:NO];
     [self setMainLast:NO];
     [self setSortTitle:NO];
+    [self setTitleOrder:nil];
   }
   return self;
 }

@@ -71,7 +71,7 @@
   }
   
   Operation *op = nil;
-  if ([moveOperation rangeOfString:NEW_WINDOW_SIZE].location != NSNotFound) {
+  if ([moveOperation rangeOfString:NEW_WINDOW_SIZE].length > 0) {
     op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [[tokens objectAtIndex:3] integerValue] : -1) moveFirst:NO];
   } else {
     op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [[tokens objectAtIndex:3] integerValue] : -1)];

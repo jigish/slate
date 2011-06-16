@@ -44,6 +44,7 @@ NSString * const REPEAT = @"REPEAT";
 NSString * const SORT_TITLE = @"SORT_TITLE";
 NSString * const MAIN_FIRST = @"MAIN_FIRST";
 NSString * const MAIN_LAST = @"MAIN_LAST";
+NSString * const TITLE_ORDER = @"TITLE_ORDER=";
 
 // Modifier Keys
 NSString * const CONTROL = @"ctrl";
@@ -103,3 +104,4 @@ NSString * const PERCENT = @"%";
 NSString * const EMPTY = @"";
 NSString * const PIPE = @" | ";
 NSString * const QUOTES = @"'\"";
+NSString * const EQUALS = @"=";

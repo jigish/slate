@@ -59,33 +59,54 @@
       continue;
     }
 
-    // Yes, I am aware that the following block is inefficient. Deal with it.
+    // Yes, I am aware that the following blocks are inefficient. Deal with it.
     AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
     CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, [AccessibilityWrapper windowsInApp:appRef]);
     CFMutableArrayRef windows = CFArrayCreateMutable(kCFAllocatorDefault, CFArrayGetCount(windowsArr), &kCFTypeArrayCallBacks);
     CFMutableArrayRef windowsAppend = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
     // First Pass for main window if needed
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] mainFirst]) {
+      NSLog(@"Main First");
       for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
         if([AccessibilityWrapper isMainWindow:CFArrayGetValueAtIndex(windowsArr, i)]) {
+          NSLog(@" Found Main");
           CFArrayAppendValue(windows, CFArrayGetValueAtIndex(windowsArr, i));
           CFArrayRemoveValueAtIndex(windowsArr, i);
           break;
         }
       }
     } else if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] mainLast]) {
+      NSLog(@"Main Last");
       CFRelease(windowsAppend);
       windowsAppend = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
       for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
         if([AccessibilityWrapper isMainWindow:CFArrayGetValueAtIndex(windowsArr, i)]) {
+          NSLog(@" Found Main");
           CFArrayAppendValue(windowsAppend, CFArrayGetValueAtIndex(windowsArr, i));
           CFArrayRemoveValueAtIndex(windowsArr, i);
           break;
         }
       }
     }
-    // Second Pass for sort
+    // Second Pass for title order if needed
+    if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] titleOrder] != nil) {
+      NSMutableArray *titleOrder = [NSMutableArray arrayWithArray:[(ApplicationOptions *)[[layout appOptions] objectForKey:appName] titleOrder]];
+      NSLog(@"Title Order: %@", titleOrder);
+      for (NSInteger j = 0; j < [titleOrder count]; j++) {
+        for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+          NSLog(@" Checking Title: %@", [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)]);
+          if([[AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)] isEqualToString:[titleOrder objectAtIndex:j]]) {
+            NSLog(@" Found Title: %@", [titleOrder objectAtIndex:j]);
+            CFArrayAppendValue(windows, CFArrayGetValueAtIndex(windowsArr, i));
+            CFArrayRemoveValueAtIndex(windowsArr, i);
+            break;
+          }
+        }
+      }
+    }
+    // Third Pass for sort
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] sortTitle]) {
+      NSLog(@"Sort By Title");
       while (CFArrayGetCount(windowsArr) > 0) {
         NSString *title = nil;
         NSInteger index = 0;
@@ -105,6 +126,7 @@
         CFArrayRemoveValueAtIndex(windowsArr, index);
       }
     } else {
+      NSLog(@"No Sort");
       CFArrayAppendArray(windows, windowsArr, CFRangeMake(0, CFArrayGetCount(windowsArr)));
     }
     CFArrayAppendArray(windows, windowsAppend, CFRangeMake(0, CFArrayGetCount(windowsAppend)));

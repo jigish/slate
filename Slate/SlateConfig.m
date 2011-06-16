@@ -227,7 +227,7 @@ static SlateConfig *_instance = nil;
   for (NSInteger i = 0; i < [aliasNames count]; i++) {
     line = [line stringByReplacingOccurrencesOfString:[aliasNames objectAtIndex:i] withString:[aliases objectForKey:[aliasNames objectAtIndex:i]]];
   }
-  if (!NSEqualRanges([line rangeOfString:@"${"], NSMakeRange(NSNotFound, 0))) {
+  if ([line rangeOfString:@"${"].length > 0) {
     @throw([NSException exceptionWithName:@"Unrecognized Alias" reason:[NSString stringWithFormat:@"Unrecognized alias in '%@'", line] userInfo:nil]);
   }
   return line;

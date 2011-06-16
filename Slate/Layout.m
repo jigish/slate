@@ -77,6 +77,8 @@
         [appOpts setMainLast:YES];
       } else if ([option isEqualToString:SORT_TITLE]) {
         [appOpts setSortTitle:YES];
+      } else if ([option rangeOfString:TITLE_ORDER].length > 0) {
+        [appOpts setTitleOrder:[[[option componentsSeparatedByString:EQUALS] objectAtIndex:1] componentsSeparatedByString:SEMICOLON]];
       }
     }
     [appOptions setObject:appOpts forKey:appName];
