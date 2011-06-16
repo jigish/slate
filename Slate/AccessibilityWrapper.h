@@ -42,5 +42,7 @@
 - (BOOL)resizeWindow:(NSSize)theSize;
 + (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element;
 + (CFArrayRef)windowsInApp:(AXUIElementRef)app;
++ (BOOL)isMainWindow:(AXUIElementRef)window;
++ (NSString *)getTitle:(AXUIElementRef)window;
 
 @end

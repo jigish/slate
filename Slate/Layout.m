@@ -71,6 +71,12 @@
         [appOpts setIgnoreFail:YES];
       } else if ([option isEqualToString:REPEAT]) {
         [appOpts setRepeat:YES];
+      } else if ([option isEqualToString:MAIN_FIRST]) {
+        [appOpts setMainFirst:YES];
+      } else if ([option isEqualToString:MAIN_LAST]) {
+        [appOpts setMainLast:YES];
+      } else if ([option isEqualToString:SORT_ALPHA]) {
+        [appOpts setAlphabetical:YES];
       }
     }
     [appOptions setObject:appOpts forKey:appName];

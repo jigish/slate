@@ -145,4 +145,22 @@
   return nil;
 }
 
++ (BOOL)isMainWindow:(AXUIElementRef)window {
+  CFTypeRef _isMain;
+  if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityMainAttribute, (CFTypeRef *)&_isMain) == kAXErrorSuccess) {
+    NSNumber *isMain = _isMain;
+    return [isMain boolValue];
+  }
+  return NO;
+}
+
++ (NSString *)getTitle:(AXUIElementRef)window {
+  CFTypeRef _title;
+  if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityTitleAttribute, (CFTypeRef *)&_title) == kAXErrorSuccess) {
+    NSString *title = _title;
+    return title;
+  }
+  return @"";
+}
+
 @end

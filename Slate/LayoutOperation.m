@@ -58,8 +58,57 @@
     if (operations == nil) {
       continue;
     }
+
+    // Yes, I am aware that the following block is inefficient. Deal with it.
     AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
-    CFArrayRef windows = [AccessibilityWrapper windowsInApp:appRef];
+    CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, [AccessibilityWrapper windowsInApp:appRef]);
+    CFMutableArrayRef windows = CFArrayCreateMutable(kCFAllocatorDefault, CFArrayGetCount(windowsArr), &kCFTypeArrayCallBacks);
+    CFMutableArrayRef windowsAppend = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+    // First Pass for main window if needed
+    if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] mainFirst]) {
+      for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+        if([AccessibilityWrapper isMainWindow:CFArrayGetValueAtIndex(windowsArr, i)]) {
+          CFArrayAppendValue(windows, CFArrayGetValueAtIndex(windowsArr, i));
+          CFArrayRemoveValueAtIndex(windowsArr, i);
+          break;
+        }
+      }
+    } else if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] mainLast]) {
+      CFRelease(windowsAppend);
+      windowsAppend = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
+      for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+        if([AccessibilityWrapper isMainWindow:CFArrayGetValueAtIndex(windowsArr, i)]) {
+          CFArrayAppendValue(windowsAppend, CFArrayGetValueAtIndex(windowsArr, i));
+          CFArrayRemoveValueAtIndex(windowsArr, i);
+          break;
+        }
+      }
+    }
+    // Second Pass for sort
+    if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] alphabetical]) {
+      while (CFArrayGetCount(windowsArr) > 0) {
+        NSString *title = nil;
+        NSInteger index = 0;
+        for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+          NSString *currTitle = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
+          if (title == nil) {
+            title = currTitle;
+            index = i;
+            continue;
+          }
+          if ([title compare:currTitle] == NSOrderedDescending) {
+            title = currTitle;
+            index = i;
+          }
+        }
+        CFArrayAppendValue(windows, CFArrayGetValueAtIndex(windowsArr, index));
+        CFArrayRemoveValueAtIndex(windowsArr, index);
+      }
+    } else {
+      CFArrayAppendArray(windows, windowsArr, CFRangeMake(0, CFArrayGetCount(windowsArr)));
+    }
+    CFArrayAppendArray(windows, windowsAppend, CFRangeMake(0, CFArrayGetCount(windowsAppend)));
+
     NSInteger failedWindows = 0;
     BOOL appSuccess = YES;
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] repeat]) {
@@ -80,6 +129,9 @@
       }
     }
     success = appSuccess && success;
+    CFRelease(windows);
+    CFRelease(windowsArr);
+    CFRelease(windowsAppend);
   }
   return success;
 }

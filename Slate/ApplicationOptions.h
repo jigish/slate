@@ -13,9 +13,15 @@
 @private
   BOOL ignoreFail;
   BOOL repeat;
+  BOOL mainFirst;
+  BOOL mainLast;
+  BOOL alphabetical;
 }
 
 @property (assign) BOOL ignoreFail;
 @property (assign) BOOL repeat;
+@property (assign) BOOL mainFirst;
+@property (assign) BOOL mainLast;
+@property (assign) BOOL alphabetical;
 
 @end

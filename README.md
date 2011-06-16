@@ -54,13 +54,25 @@ Will allow you to use "${bottom-right-2nd-monitor}" as a reference to "move scre
 
 The layout directive follows the following format:
 
-    layout name 'app name' operations
+    layout name 'app name':OPTIONS operations
 
 Where:
 
     name = the name you want to use to reference the layout
-    'app name' = single-quoted name of the application to add to the layout. You may also append ":IGNORE_FAIL" after the last quote to prevent Slate from staying on the same binding if moving/resizing fails on the current window.
+    'app name' = single-quoted name of the application to add to the layout.
+    OPTIONS = a comma separated list of options for this application
     operations = a pipe separated list of operations (any operation in the bind directive is allowed except chain and layout)
+
+Possible Options:
+
+| Name | Function |
+|:-----|:---------|
+| IGNORE_FAIL | This will let slate move to the next operation if the current operation fails to resize/move on the current window |
+| REPEAT | This will repeat the list of operations if the number of windows is larger than the number of operations |
+| MAIN_FIRST | This will cause the main window to always use the first operation |
+| MAIN_LAST | This will cause the main window to always use the last operation (mutally exclusive with MAIN_FIRST) |
+| SORT_ALPHA | This will cause the window operations to be triggered on the windows in sorted order by the window title (can be used with MAIN_FIRST or MAIN_LAST) |
+
 
 You can have multiple layout directives that point to the same name in order to link any number of applications to the same layout.
 
