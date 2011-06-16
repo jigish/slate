@@ -15,13 +15,13 @@
   BOOL repeat;
   BOOL mainFirst;
   BOOL mainLast;
-  BOOL alphabetical;
+  BOOL sortTitle;
 }
 
 @property (assign) BOOL ignoreFail;
 @property (assign) BOOL repeat;
 @property (assign) BOOL mainFirst;
 @property (assign) BOOL mainLast;
-@property (assign) BOOL alphabetical;
+@property (assign) BOOL sortTitle;
 
 @end

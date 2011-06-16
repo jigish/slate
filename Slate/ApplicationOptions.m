@@ -15,7 +15,7 @@
 @synthesize repeat;
 @synthesize mainFirst;
 @synthesize mainLast;
-@synthesize alphabetical;
+@synthesize sortTitle;
 
 - (id)init {
   self = [super init];
@@ -24,7 +24,7 @@
     [self setRepeat:NO];
     [self setMainFirst:NO];
     [self setMainLast:NO];
-    [self setAlphabetical:NO];
+    [self setSortTitle:NO];
   }
   return self;
 }

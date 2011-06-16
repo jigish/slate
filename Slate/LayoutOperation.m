@@ -85,7 +85,7 @@
       }
     }
     // Second Pass for sort
-    if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] alphabetical]) {
+    if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] sortTitle]) {
       while (CFArrayGetCount(windowsArr) > 0) {
         NSString *title = nil;
         NSInteger index = 0;

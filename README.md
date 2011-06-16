@@ -71,7 +71,7 @@ Possible Options:
 | REPEAT | This will repeat the list of operations if the number of windows is larger than the number of operations |
 | MAIN_FIRST | This will cause the main window to always use the first operation |
 | MAIN_LAST | This will cause the main window to always use the last operation (mutally exclusive with MAIN_FIRST) |
-| SORT_ALPHA | This will cause the window operations to be triggered on the windows in sorted order by the window title (can be used with MAIN_FIRST or MAIN_LAST) |
+| SORT_TITLE | This will cause the window operations to be triggered on the windows in sorted order by the window title (can be used with MAIN_FIRST or MAIN_LAST) |
 
 
 You can have multiple layout directives that point to the same name in order to link any number of applications to the same layout.

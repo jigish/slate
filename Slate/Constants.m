@@ -41,7 +41,7 @@ double     const SECONDS_BETWEEN_REPEAT_DEFAULT = 0.2;
 // Application Option Keys
 NSString * const IGNORE_FAIL = @"IGNORE_FAIL";
 NSString * const REPEAT = @"REPEAT";
-NSString * const SORT_ALPHA = @"SORT_ALPHA";
+NSString * const SORT_TITLE = @"SORT_TITLE";
 NSString * const MAIN_FIRST = @"MAIN_FIRST";
 NSString * const MAIN_LAST = @"MAIN_LAST";
 

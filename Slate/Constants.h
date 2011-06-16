@@ -39,7 +39,7 @@ extern double     const SECONDS_BETWEEN_REPEAT_DEFAULT;
 // Application Option Keys
 extern NSString * const IGNORE_FAIL;
 extern NSString * const REPEAT;
-extern NSString * const SORT_ALPHA;
+extern NSString * const SORT_TITLE;
 extern NSString * const MAIN_FIRST;
 extern NSString * const MAIN_LAST;
 
