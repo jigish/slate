@@ -57,12 +57,30 @@ static SlateConfig *_instance = nil;
   return [[configs objectForKey:key] boolValue];
 }
 
+- (BOOL)getBoolConfig:(NSString *)key defaultValue:(BOOL)defaultValue {
+  if ([configs objectForKey:key] != nil)
+    return [[configs objectForKey:key] boolValue];
+  return defaultValue;
+}
+
 - (NSInteger)getIntegerConfig:(NSString *)key {
   return [[configs objectForKey:key] integerValue];
 }
 
+- (NSInteger)getIntegerConfig:(NSString *)key defaultValue:(NSInteger)defaultValue {
+  if ([configs objectForKey:key] != nil)
+    return [[configs objectForKey:key] integerValue];
+  return defaultValue;
+}
+
 - (NSString *)getConfig:(NSString *)key {
   return [configs objectForKey:key];
+}
+
+- (NSString *)getConfig:(NSString *)key defaultValue:(NSString *)defaultValue{
+  if ([configs objectForKey:key] != nil)
+    return [configs objectForKey:key];
+  return defaultValue;
 }
 
 - (BOOL)load {

@@ -26,8 +26,11 @@ extern NSString * const ALIAS;
 
 // Config Keys
 extern NSString * const DEFAULT_TO_CURRENT_SCREEN;
+extern BOOL       const DEFAULT_TO_CURRENT_SCREEN_DEFAULT;
 extern NSString * const NUDGE_PERCENT_OF;
+extern NSString * const NUDGE_PERCENT_OF_DEFAULT;
 extern NSString * const RESIZE_PERCENT_OF;
+extern NSString * const RESIZE_PERCENT_OF_DEFAULT;
 
 // Application Option Keys
 extern NSString * const IGNORE_FAIL;

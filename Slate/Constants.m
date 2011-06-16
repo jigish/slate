@@ -28,8 +28,11 @@ NSString * const ALIAS = @"alias";
 
 // Config Keys
 NSString * const DEFAULT_TO_CURRENT_SCREEN = @"defaultToCurrentScreen";
+BOOL       const DEFAULT_TO_CURRENT_SCREEN_DEFAULT = NO;
 NSString * const NUDGE_PERCENT_OF = @"nudgePercentOf";
+NSString * const NUDGE_PERCENT_OF_DEFAULT = @"windowSize";
 NSString * const RESIZE_PERCENT_OF = @"resizePercentOf";
+NSString * const RESIZE_PERCENT_OF_DEFAULT = @"windowSize";
 
 // Application Option Keys
 NSString * const IGNORE_FAIL = @"IGNORE_FAIL";

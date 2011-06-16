@@ -130,7 +130,7 @@
   NSInteger originY = 0;
   NSInteger sizeX = 0;
   NSInteger sizeY = 0;
-  if (monitor < 0 || (![self monitorExists] && [[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN])) {
+  if (monitor < 0 || (![self monitorExists] && [[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN defaultValue:DEFAULT_TO_CURRENT_SCREEN_DEFAULT])) {
     NSArray *screens = [NSScreen screens];
     NSScreen *screen = nil;
     NSUInteger screenIndex = 0;
@@ -187,7 +187,7 @@
 
 - (NSPoint)getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
   // If monitor does not exist and we arent going to default to current screen
-  if (![self monitorExists] && ![[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN]) {
+  if (![self monitorExists] && ![[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN defaultValue:DEFAULT_TO_CURRENT_SCREEN_DEFAULT]) {
     return cTopLeft;
   }
   NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize:cSize newSize:nSize];
@@ -196,7 +196,7 @@
 
 - (NSSize)getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
   // If monitor does not exist and we arent going to default to current screen
-  if (![self monitorExists] && ![[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN]) {
+  if (![self monitorExists] && ![[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN defaultValue:DEFAULT_TO_CURRENT_SCREEN_DEFAULT]) {
     return cSize;
   }
   NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize:cSize newSize:cSize];

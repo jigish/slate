@@ -136,7 +136,7 @@
   }
   sizeX = cSize.width;
   sizeY = cSize.height;
-  NSString *resizePercentOf = [[SlateConfig getInstance] getConfig:RESIZE_PERCENT_OF] != nil ? [[SlateConfig getInstance] getConfig:RESIZE_PERCENT_OF] : @"windowSize";
+  NSString *resizePercentOf = [[SlateConfig getInstance] getConfig:RESIZE_PERCENT_OF defaultValue:RESIZE_PERCENT_OF_DEFAULT];
   if ([resizePercentOf isEqualToString:@"screenSize"]) {
     sizeX = [screen visibleFrame].size.width;
     sizeY = [screen visibleFrame].size.height;

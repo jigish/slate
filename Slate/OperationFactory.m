@@ -201,7 +201,7 @@
   
   NSString *tlX = WINDOW_TOP_LEFT_X;
   NSString *x = [tokens objectAtIndex:1];
-  NSString *nudgePercentOf = [[SlateConfig getInstance] getConfig:NUDGE_PERCENT_OF] != nil ? [[SlateConfig getInstance] getConfig:NUDGE_PERCENT_OF] : @"windowSize";
+  NSString *nudgePercentOf = [[SlateConfig getInstance] getConfig:NUDGE_PERCENT_OF defaultValue:NUDGE_PERCENT_OF_DEFAULT];
   if ([x hasSuffix:PERCENT]) {
     // % Nudge
     tlX = [tlX stringByAppendingString:[x stringByReplacingOccurrencesOfString:PERCENT withString:[NSString stringWithFormat:@"*%@X/100",nudgePercentOf]]];
