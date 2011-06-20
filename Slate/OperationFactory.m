@@ -72,9 +72,9 @@
   
   Operation *op = nil;
   if ([moveOperation rangeOfString:NEW_WINDOW_SIZE].length > 0) {
-    op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [[tokens objectAtIndex:3] integerValue] : -1) moveFirst:NO];
+    op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN) moveFirst:NO];
   } else {
-    op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [[tokens objectAtIndex:3] integerValue] : -1)];
+    op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
   }
   [tokens release];
   return op;
@@ -100,7 +100,7 @@
 }
 
 + (id)createPushOperationFromString:(NSString *)pushOperation {
-  // push <top|bottom|up|down|left|right> <optional:none|center|bar|bar-resize:expression>
+  // push <top|bottom|up|down|left|right> <optional:none|center|bar|bar-resize:expression> <optional:monitor (must specify previous option to specify monitor)>
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:pushOperation into:tokens];
   
@@ -184,7 +184,7 @@
     NSLog(@"ERROR: Unrecognized direction '%@'", direction);
     @throw([NSException exceptionWithName:@"Unrecognized Direction" reason:[NSString stringWithFormat:@"Unrecognized direction '%@' in '%@'", direction, pushOperation] userInfo:nil]);
   }
-  Operation *op = [[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:-1];
+  Operation *op = [[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
   [tokens release];
   return op;
 }
@@ -219,7 +219,7 @@
     // Hard Nudge
     tlY = [tlY stringByAppendingString:y];
   }
-  Operation *op = [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:COMMA] stringByAppendingString:tlY] dimensions:@"windowSizeX,windowSizeY" monitor:-1];
+  Operation *op = [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:COMMA] stringByAppendingString:tlY] dimensions:@"windowSizeX,windowSizeY" monitor:REF_CURRENT_SCREEN];
   [tokens release];
   return op;
 }
@@ -251,13 +251,13 @@
       @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, throwOperation] userInfo:nil]);
     }
   }
-  Operation *op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[[tokens objectAtIndex:1] integerValue]];
+  Operation *op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[tokens objectAtIndex:1]];
   [tokens release];
   return op;
 }
 
 + (id)createCornerOperationFromString:(NSString *)cornerOperation {
-  // corner <top-left|top-right|bottom-left|bottom-right> <optional:resize:expression>
+  // corner <top-left|top-right|bottom-left|bottom-right> <optional:resize:expression> <optional:monitor>
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:cornerOperation into:tokens];
   
@@ -290,7 +290,7 @@
     @throw([NSException exceptionWithName:@"Unrecognized Corner" reason:[NSString stringWithFormat:@"Unrecognized corner '%@' in '%@'", direction, cornerOperation] userInfo:nil]);
   }
   
-  Operation *op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:-1];
+  Operation *op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
   [tokens release];
   return op;
 }

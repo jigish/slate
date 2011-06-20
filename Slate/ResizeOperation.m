@@ -21,6 +21,7 @@
 #import "AccessibilityWrapper.h"
 #import "Constants.h"
 #import "ResizeOperation.h"
+#import "ScreenWrapper.h"
 #import "SlateConfig.h"
 
 
@@ -54,15 +55,16 @@
   return self;
 }
 
-- (BOOL)doOperation:(AccessibilityWrapper *)aw {
+- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = NO;
   NSPoint cTopLeft = [aw getCurrentTopLeft];
   NSSize cSize = [aw getCurrentSize];
-  NSSize nSize = [self getDimensionsWithCurrentTopLeft:cTopLeft currentSize:cSize];
+  NSRect cWindowRect = NSMakeRect(cTopLeft.x, cTopLeft.y, cSize.width, cSize.height);
+  NSSize nSize = [self getDimensionsWithCurrentWindow:cWindowRect screenWrapper:sw];
   if (!NSEqualSizes(cSize, nSize)) {
     success = [aw resizeWindow:nSize];
     NSSize realNewSize = [aw getCurrentSize];
-    NSPoint nTopLeft = [self getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:realNewSize];
+    NSPoint nTopLeft = [self getTopLeftWithCurrentWindow:cWindowRect newSize:realNewSize];
     success = [aw moveWindow:nTopLeft] && success;
   }
   return success;
@@ -70,24 +72,26 @@
 
 - (BOOL)doOperation {
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
+  ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   BOOL success = NO;
-  if ([aw inited]) {
-    success = [self doOperation:aw];
-  }
+  if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
+  [sw release];
   [aw release];
   return success;
 }
 
 - (BOOL)testOperation {
-  BOOL success = YES;
-  NSPoint cTopLeft = NSMakePoint(0, 0);
-  NSSize cSize = NSMakeSize(1000, 1000);
-  NSSize nSize = [self getDimensionsWithCurrentTopLeft:cTopLeft currentSize:cSize];
-  [self getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:nSize];
-  return success;
+  ScreenWrapper *sw = [[ScreenWrapper alloc] init];
+  NSRect cWindowRect = NSMakeRect(0, 0, 1000, 1000);
+  NSSize nSize = [self getDimensionsWithCurrentWindow:cWindowRect screenWrapper:sw];
+  [self getTopLeftWithCurrentWindow:cWindowRect newSize:nSize];
+  [sw release];
+  return YES;
 }
 
-- (NSPoint)getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
+- (NSPoint)getTopLeftWithCurrentWindow:(NSRect)cWindowRect newSize:(NSSize)nSize {
+  NSPoint cTopLeft = cWindowRect.origin;
+  NSSize cSize = cWindowRect.size;
   if ([anchor isEqualToString:TOP_LEFT]) {
     return cTopLeft;
   } else if ([anchor isEqualToString:TOP_RIGHT]) {
@@ -119,27 +123,19 @@
   }
 }
 
-- (NSSize)getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
-  NSInteger sizeX = 0;
-  NSInteger sizeY = 0;
-  NSArray *screens = [NSScreen screens];
-  NSScreen *screen = [screens objectAtIndex:0];
-  NSPoint topLeftZeroed = NSMakePoint(cTopLeft.x, 0);
-  if (!NSPointInRect(topLeftZeroed, [screen frame])) {
-    for (NSUInteger i = 1; i < [screens count]; i++) {
-      topLeftZeroed = NSMakePoint(cTopLeft.x, 0);
-      screen = [screens objectAtIndex:i];
-      if (NSPointInRect(topLeftZeroed, [screen frame])) {
-        break;
-      }
-    }
-  }
-  sizeX = cSize.width;
-  sizeY = cSize.height;
+- (NSSize)getDimensionsWithCurrentWindow:(NSRect)cWindowRect screenWrapper:(ScreenWrapper *)sw {
+  NSSize cSize = cWindowRect.size;
+  NSInteger sizeX = cSize.width;
+  NSInteger sizeY = cSize.height;
   NSString *resizePercentOf = [[SlateConfig getInstance] getConfig:RESIZE_PERCENT_OF defaultValue:RESIZE_PERCENT_OF_DEFAULT];
-  if ([resizePercentOf isEqualToString:@"screenSize"]) {
-    sizeX = [screen visibleFrame].size.width;
-    sizeY = [screen visibleFrame].size.height;
+  if ([resizePercentOf isEqualToString:SCREEN_SIZE]) {
+    NSInteger screenId = [sw getScreenId:REF_CURRENT_SCREEN windowRect:cWindowRect];
+    if (![sw screenExists:screenId]) {
+      return cSize;
+    }
+    NSSize screenSize = [sw convertScreenVisibleRectToWindowCoords:screenId].size;
+    sizeX = screenSize.width;
+    sizeY = screenSize.height;
   }
   NSInteger dimX = cSize.width + [self resizeStringToInt:xResize withValue:sizeX];
   NSInteger dimY = cSize.height + [self resizeStringToInt:yResize withValue:sizeY];

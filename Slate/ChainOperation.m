@@ -19,6 +19,7 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 #import "ChainOperation.h"
+#import "ScreenWrapper.h"
 #import "WindowState.h"
 
 
@@ -48,15 +49,23 @@
 
 - (BOOL)doOperation {
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
+  ScreenWrapper *sw = [[ScreenWrapper alloc] init];
+  BOOL success = NO;
+  if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
+  [sw release];
+  [aw release];
+  return success;
+}
+
+- (BOOL) doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = NO;
   NSInteger opRun = 0;
   if ([aw inited]) {
     opRun = [self getNextOperation:aw];
-    success = [[operations objectAtIndex:opRun] doOperation:aw];
+    success = [[operations objectAtIndex:opRun] doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
     if (success)
       [self afterComplete:aw opRun:opRun];
   }
-  [aw release];
   return success;
 }
 

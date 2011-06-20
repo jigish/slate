@@ -43,6 +43,15 @@
 }
 
 - (BOOL)doOperation {
+  ScreenWrapper *sw = [[ScreenWrapper alloc] init];
+  // We don't use the passed in AccessibilityWrapper so it is nil. No need to waste time creating one here
+  BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:sw];
+  [sw release];
+  return success;
+}
+
+// Note that the AccessibilityWrapper is never used because layouts use multiple applications
+- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)unused screenWrapper:(ScreenWrapper *)sw {
   BOOL success = YES;
   NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
   for (NSInteger i = 0; i < [apps count]; i++) {
@@ -136,7 +145,7 @@
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] repeat]) {
       for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
-        appSuccess = [[operations objectAtIndex:((i-failedWindows) % [operations count])] doOperation:aw] && appSuccess;
+        appSuccess = [[operations objectAtIndex:((i-failedWindows) % [operations count])] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
         if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
           failedWindows++;
         [aw release];
@@ -144,7 +153,7 @@
     } else {
       for (NSInteger i = 0; i < CFArrayGetCount(windows) && i-failedWindows < [operations count]; i++) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
-        appSuccess = [[operations objectAtIndex:(i-failedWindows)] doOperation:aw] && appSuccess;
+        appSuccess = [[operations objectAtIndex:(i-failedWindows)] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
         if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
           failedWindows++;
         [aw release];
@@ -173,7 +182,7 @@
   for (NSInteger i = 0; i < [apps count]; i++) {
     NSArray *ops = [[layout appStates] objectForKey:[apps objectAtIndex:i]];
     for (NSInteger op = 0; op < [ops count]; op++) {
-      [self testOperation:[ops objectAtIndex:op]];
+      success = [self testOperation:[ops objectAtIndex:op]] && success;
     }
   }
   return success;

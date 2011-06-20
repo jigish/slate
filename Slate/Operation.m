@@ -39,7 +39,7 @@
   return YES;
 }
 
-- (BOOL)doOperation:(AccessibilityWrapper *)aw {
+- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   return YES;
 }
 

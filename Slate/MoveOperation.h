@@ -27,19 +27,18 @@
 @private
   ExpressionPoint *topLeft;
   ExpressionPoint *dimensions;
-  NSInteger monitor;
+  NSString *monitor;
   BOOL moveFirst;
 }
 
 @property (retain) ExpressionPoint *topLeft;
 @property (retain) ExpressionPoint *dimensions;
-@property (assign) NSInteger monitor;
+@property (retain) NSString *monitor;
 @property (assign) BOOL moveFirst;
 
-- (NSDictionary *)getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize;
-- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon;
-- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon moveFirst:(BOOL)mf;
-- (NSPoint)getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize;
-- (NSSize)getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize;
+- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSString *)mon;
+- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSString *)mon moveFirst:(BOOL)mf;
+- (NSPoint)getTopLeftWithCurrentWindowRect:(NSRect)cWindowRect newSize:(NSSize)nSize screenWrapper:(ScreenWrapper *)sw;
+- (NSSize)getDimensionsWithCurrentWindowRect:(NSRect)cWindowRect screenWrapper:(ScreenWrapper *)sw;
 
 @end

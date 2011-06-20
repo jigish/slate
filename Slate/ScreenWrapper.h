@@ -1,8 +1,8 @@
 //
-//  Operation.h
+//  ScreenWrapper.h
 //  Slate
 //
-//  Created by Jigish Patel on 5/18/11.
+//  Created by Jigish Patel on 6/17/11.
 //  Copyright 2011 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -19,14 +19,22 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 #import <Foundation/Foundation.h>
-#import "AccessibilityWrapper.h"
-#import "ScreenWrapper.h"
 
 
-@interface Operation : NSObject {}
+@interface ScreenWrapper : NSObject {
+  NSArray *screens;
+}
 
-- (BOOL)doOperation;
-- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;
-- (BOOL)testOperation;
+@property (retain) NSArray *screens;
+
+- (id)initWithScreens:(NSArray *)theScreens; // Used for testing
+- (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window;
+- (NSInteger)getScreenIdForRect:(NSRect)rect;
+- (BOOL)screenExists:(NSInteger)screenId;
+- (BOOL)isRect:(NSRect)rect1 biggerThan:(NSRect)rect2;
+- (NSDictionary *)getScreenAndWindowValues:(NSInteger)screenId window:(NSRect)cWindowRect newSize:(NSSize)nSize;
+- (NSRect)convertScreenRectToWindowCoords:(NSInteger)screenId;
+- (NSRect)convertScreenVisibleRectToWindowCoords:(NSInteger)screenId;
+- (NSRect)flipYCoordinateOfRect:(NSRect)original withReference:(NSRect)reference;
 
 @end

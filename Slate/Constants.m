@@ -55,6 +55,7 @@ NSString * const SHIFT = @"shift";
 // Expression Keys
 NSString * const SCREEN_ORIGIN_X = @"screenOriginX";
 NSString * const SCREEN_ORIGIN_Y = @"screenOriginY";
+NSString * const SCREEN_SIZE = @"screenSize";
 NSString * const SCREEN_SIZE_X = @"screenSizeX";
 NSString * const SCREEN_SIZE_Y = @"screenSizeY";
 NSString * const WINDOW_TOP_LEFT_X = @"windowTopLeftX";
@@ -105,3 +106,9 @@ NSString * const EMPTY = @"";
 NSString * const PIPE = @" | ";
 NSString * const QUOTES = @"'\"";
 NSString * const EQUALS = @"=";
+
+// Screen constants
+NSString * const REF_CURRENT_SCREEN = @"-1";
+NSInteger const ID_MAIN_SCREEN = 0;
+NSInteger const ID_CURRENT_SCREEN = -1;
+NSInteger const ID_IGNORE_SCREEN = -2;

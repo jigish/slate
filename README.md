@@ -107,6 +107,8 @@ modifiers is a comma or semicolon separated list of standard modifier keys. Allo
 
 Operations define what to actually do to the focused window.
 
+**Expressions**
+
 Some operations allow parameters that can be expressions. The following strings will be replaced with the appropriate values when using expressions:
 
     screenOriginX = target screen's top left x coordinate
@@ -146,9 +148,18 @@ In addition to the variables above, expressions can be used with the following f
     random     e.g. random() = 0.20607629744336009 (random float between 0 and 1)
     randomn    e.g. randomn(10) = 4 (random integer between 0 and parameter-1)
 
-Note: When using expressions spaces are *not* allowed!
+**Note:** When using expressions spaces are *not* allowed!
 
-Allowed operations are:
+**Screens**
+
+Some operations allow you to specify a screen. Here are the list of possible values for screen:
+
+    Integer representing the screen ID (indexed at 0)
+    Screen resolution in the format WIDTHxHEIGHT (e.g. 1440x900)
+    Screen direction relative to the current screen (left|right|up|above|down|below)
+    next|previous (represents the currentID+1 or currentID-1 screen)
+
+**Allowed operations are:**
 
 * Move/Resize the window any which way: "move topLeftX;topLeftY sizeX;sizeY screen"
 
@@ -158,7 +169,7 @@ Allowed operations are:
         topLeftY = top left y coordinate of the window's desired position (can be an expression)
         sizeX = width of the window's desired position (can be an expression)
         sizeY = height of the window's desired position (can be an expression)
-        screen = (optional) the id of the screen of the window's desired position (0 indexed). If this is not specified, it will default to the screen the window is currently on
+        screen = (optional) the reference to the screen of the window's desired position. If this is not specified, it will default to the screen the window is currently on. See the table at the beginning of the Operation section for more information.
 
     Example:
 
@@ -184,6 +195,7 @@ Allowed operations are:
 
         direction = top|up|bottom|down|left|right
         style = (optional) none|center|bar|bar-resize:expression (default is none)
+        screen = (optional) the reference to the screen of the window's desired position. If this is not specified, it will default to the screen the window is currently on. See the table at the beginning of the Operation section for more information.
 
     Example:
 
@@ -217,6 +229,7 @@ Allowed operations are:
 
         direction = top-left|top-right|bottom-left|bottom-right
         style = (optional) resize:x-expression;y-expression (default will not resize)
+        screen = (optional) the reference to the screen of the window's desired position. If this is not specified, it will default to the screen the window is currently on. See the table at the beginning of the Operation section for more information.
 
     Example:
 

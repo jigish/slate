@@ -53,6 +53,7 @@ extern NSString * const SHIFT;
 // Expression Keys
 extern NSString * const SCREEN_ORIGIN_X;
 extern NSString * const SCREEN_ORIGIN_Y;
+extern NSString * const SCREEN_SIZE;
 extern NSString * const SCREEN_SIZE_X;
 extern NSString * const SCREEN_SIZE_Y;
 extern NSString * const WINDOW_TOP_LEFT_X;
@@ -103,3 +104,9 @@ extern NSString * const EMPTY;
 extern NSString * const PIPE;
 extern NSString * const QUOTES;
 extern NSString * const EQUALS;
+
+// Screen constants
+extern NSString * const REF_CURRENT_SCREEN;
+extern NSInteger const ID_MAIN_SCREEN;
+extern NSInteger const ID_CURRENT_SCREEN;
+extern NSInteger const ID_IGNORE_SCREEN;

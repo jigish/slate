@@ -21,6 +21,7 @@
 #import "AccessibilityWrapper.h"
 #import "Constants.h"
 #import "MoveOperation.h"
+#import "ScreenWrapper.h"
 #import "SlateConfig.h"
 
 
@@ -37,7 +38,7 @@
   return self;
 }
 
-- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon {
+- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSString *)mon {
   self = [self init];
   if (self) {
     NSArray *tlTokens = [tl componentsSeparatedByString:SEMICOLON];
@@ -68,7 +69,7 @@
   return self;
 }
 
-- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSInteger)mon moveFirst:(BOOL)mf {
+- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSString *)mon moveFirst:(BOOL)mf {
   self = [self initWithTopLeft:tl dimensions:dim monitor:mon];
   if (self) {
     [self setMoveFirst:mf];
@@ -77,19 +78,20 @@
   return self;
 }
 
-- (BOOL)doOperation:(AccessibilityWrapper *)aw {
+- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = NO;
   NSPoint cTopLeft = [aw getCurrentTopLeft];
   NSSize cSize = [aw getCurrentSize];
-  NSSize nSize = [self getDimensionsWithCurrentTopLeft:cTopLeft currentSize:cSize];
+  NSRect cWindowRect = NSMakeRect(cTopLeft.x, cTopLeft.y, cSize.width, cSize.height);
+  NSSize nSize = [self getDimensionsWithCurrentWindowRect:cWindowRect screenWrapper:sw];
   if (moveFirst) {
-    NSPoint nTopLeft = [self getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:nSize];
+    NSPoint nTopLeft = [self getTopLeftWithCurrentWindowRect:cWindowRect newSize:nSize screenWrapper:sw];
     success = [aw moveWindow:nTopLeft];
     success = [aw resizeWindow:nSize] && success;
   } else {
     success = [aw resizeWindow:nSize];
     NSSize realNewSize = [aw getCurrentSize];
-    NSPoint nTopLeft = [self getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:realNewSize];
+    NSPoint nTopLeft = [self getTopLeftWithCurrentWindowRect:cWindowRect newSize:realNewSize screenWrapper:sw];
     success = [aw moveWindow:nTopLeft] && success;
   }
   return success;
@@ -97,109 +99,37 @@
 
 - (BOOL)doOperation {
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
+  ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   BOOL success = NO;
-  if ([aw inited]) {
-    success = [self doOperation:aw];
-  }
+  if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
+  [sw release];
   [aw release];
   return success;
 }
 
 - (BOOL)testOperation {
-  BOOL success = YES;
+  ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   NSPoint cTopLeft = NSMakePoint(0, 0);
   NSSize cSize = NSMakeSize(1000, 1000);
-  NSSize nSize = [self getDimensionsWithCurrentTopLeft:cTopLeft currentSize:cSize];
-  [self getTopLeftWithCurrentTopLeft:cTopLeft currentSize:cSize newSize:nSize];
-  return success;
+  NSRect cWindowRect = NSMakeRect(cTopLeft.x, cTopLeft.y, cSize.width, cSize.height);
+  NSSize nSize = [self getDimensionsWithCurrentWindowRect:cWindowRect screenWrapper:sw];
+  [self getTopLeftWithCurrentWindowRect:cWindowRect newSize:nSize screenWrapper:sw];
+  return YES;
 }
 
-- (BOOL)monitorExists {
-  return (monitor < ((NSInteger)[[NSScreen screens] count]) ? YES : NO);
-}
-
-- (BOOL)isRect:(NSRect)rect1 biggerThan:(NSRect)rect2 {
-  return rect1.size.width*rect1.size.height > rect2.size.width*rect2.size.height;
-}
-
-// I understand that the following method is stupidly written. Apple apparently enjoys keeping
-// multiple types of coordinate spaces. NSScreen.origin returns bottom-left while we need
-// top-left for window moving. Go figure.
-- (NSDictionary *)getScreenAndWindowValues:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
-  NSInteger originX = 0;
-  NSInteger originY = 0;
-  NSInteger sizeX = 0;
-  NSInteger sizeY = 0;
-  if (monitor < 0 || (![self monitorExists] && [[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN defaultValue:DEFAULT_TO_CURRENT_SCREEN_DEFAULT])) {
-    NSArray *screens = [NSScreen screens];
-    NSScreen *screen = nil;
-    NSUInteger screenIndex = 0;
-    NSInteger mainHeight = [[screens objectAtIndex:0] frame].size.height;
-    NSInteger mainOriginY = [[screens objectAtIndex:0] frame].origin.y;
-    NSRect largestIntersection = NSZeroRect;
-    NSRect windowRect = NSMakeRect(cTopLeft.x, cTopLeft.y, cSize.width, cSize.height);
-    for (NSUInteger i = 0; i < [screens count]; i++) {
-      NSRect currentIntersection = NSIntersectionRect([[screens objectAtIndex:i] frame], windowRect);
-      if ([self isRect:currentIntersection biggerThan:largestIntersection]) {
-        largestIntersection = currentIntersection;
-        screenIndex = i;
-      }
-    }
-    screen = [screens objectAtIndex:screenIndex];
-    if (screenIndex == 0) { // special handling for menu bar and dock
-      originX = [screen visibleFrame].origin.x;
-      originY = [screen frame].size.height - ([screen visibleFrame].origin.y + [screen visibleFrame].size.height);
-    } else {
-      originX = [screen visibleFrame].origin.x;
-      originY = mainOriginY - [screen frame].origin.y - ([screen frame].size.height - mainHeight);
-    }
-    sizeX = [screen visibleFrame].size.width;
-    sizeY = [screen visibleFrame].size.height;
-  } else {
-    NSArray *screens = [NSScreen screens];
-    NSScreen *screen = [screens objectAtIndex:0];
-    NSInteger mainHeight = [screen frame].size.height;
-    NSInteger mainOriginY = [screen frame].origin.y;
-    screen = [screens objectAtIndex:monitor];
-    if (monitor == 0) { // special handling for menu bar and dock
-      originX = [screen visibleFrame].origin.x;
-      originY = [screen frame].size.height - ([screen visibleFrame].origin.y + [screen visibleFrame].size.height);
-    } else {
-      originX = [screen visibleFrame].origin.x;
-      originY = mainOriginY - [screen frame].origin.y - ([screen frame].size.height - mainHeight);
-    }
-    sizeX = [screen visibleFrame].size.width;
-    sizeY = [screen visibleFrame].size.height;
-  }
-  NSLog(@"screenOrigin:(%ld,%ld), screenSize:(%ld,%ld), windowSize:(%f,%f), windowTopLeft:(%f,%f)",(long)originX,(long)originY,(long)sizeX,(long)sizeY,cSize.width,cSize.height,cTopLeft.x,cTopLeft.y);
-  return [NSDictionary dictionaryWithObjectsAndKeys:
-           [NSNumber numberWithInteger:originX], SCREEN_ORIGIN_X,
-           [NSNumber numberWithInteger:originY], SCREEN_ORIGIN_Y,
-           [NSNumber numberWithInteger:sizeX], SCREEN_SIZE_X,
-           [NSNumber numberWithInteger:sizeY], SCREEN_SIZE_Y,
-           [NSNumber numberWithInteger:(NSInteger)cSize.width], WINDOW_SIZE_X,
-           [NSNumber numberWithInteger:(NSInteger)cSize.height], WINDOW_SIZE_Y,
-           [NSNumber numberWithInteger:(NSInteger)nSize.width], NEW_WINDOW_SIZE_X,
-           [NSNumber numberWithInteger:(NSInteger)nSize.height], NEW_WINDOW_SIZE_Y,
-           [NSNumber numberWithInteger:(NSInteger)cTopLeft.x], WINDOW_TOP_LEFT_X,
-           [NSNumber numberWithInteger:(NSInteger)cTopLeft.y], WINDOW_TOP_LEFT_Y, nil];
-}
-
-- (NSPoint)getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize {
-  // If monitor does not exist and we arent going to default to current screen
-  if (![self monitorExists] && ![[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN defaultValue:DEFAULT_TO_CURRENT_SCREEN_DEFAULT]) {
-    return cTopLeft;
-  }
-  NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize:cSize newSize:nSize];
+- (NSPoint)getTopLeftWithCurrentWindowRect:(NSRect)cWindowRect newSize:(NSSize)nSize screenWrapper:(ScreenWrapper *)sw {
+  // If monitor does not exist send back the same origin
+  NSInteger screenId = [sw getScreenId:monitor windowRect:cWindowRect];
+  if (![sw screenExists:screenId]) return cWindowRect.origin;
+  NSDictionary *values = [sw getScreenAndWindowValues:screenId window:cWindowRect newSize:nSize];
   return [topLeft getPointWithDict:values];
 }
 
-- (NSSize)getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize {
-  // If monitor does not exist and we arent going to default to current screen
-  if (![self monitorExists] && ![[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN defaultValue:DEFAULT_TO_CURRENT_SCREEN_DEFAULT]) {
-    return cSize;
-  }
-  NSDictionary *values = [self getScreenAndWindowValues:cTopLeft currentSize:cSize newSize:cSize];
+- (NSSize)getDimensionsWithCurrentWindowRect:(NSRect)cWindowRect screenWrapper:(ScreenWrapper *)sw {
+  // If monitor does not exist send back the same size
+  NSInteger screenId = [sw getScreenId:monitor windowRect:cWindowRect];
+  if (![sw screenExists:screenId]) return cWindowRect.size;
+  NSDictionary *values = [sw getScreenAndWindowValues:screenId window:cWindowRect newSize:cWindowRect.size];
   return [dimensions getSizeWithDict:values];
 }
 

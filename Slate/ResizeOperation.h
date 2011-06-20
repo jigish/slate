@@ -34,8 +34,8 @@
 @property (copy) NSString *yResize;
 
 - (id)initWithAnchor:(NSString *)a xResize:(NSString *)x yResize:(NSString *)y;
-- (NSPoint)getTopLeftWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize newSize:(NSSize)nSize;
-- (NSSize)getDimensionsWithCurrentTopLeft:(NSPoint)cTopLeft currentSize:(NSSize)cSize;
+- (NSPoint)getTopLeftWithCurrentWindow:(NSRect)cWindowRect newSize:(NSSize)nSize;
+- (NSSize)getDimensionsWithCurrentWindow:(NSRect)cWindowRect screenWrapper:(ScreenWrapper *)sw;
 - (NSInteger)resizeStringToInt:(NSString *)resize withValue:(NSInteger) val;
 
 @end
