@@ -30,6 +30,7 @@
 - (IBAction)reconfig;
 - (void)loadConfig;
 - (void)registerHotKeys;
+- (void)processNotification:(id)notification;
 
 OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
 OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);

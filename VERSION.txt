@@ -1,0 +1,15 @@
+Current Version: 0.4
+
+-----------------  0.4  -----------------
+
+Added the "default" directive
+Added the "checkDefaultsOnLoad" config
+
+----------------- 0.3.4 -----------------
+
+Added the ability to specify resolutions for screens
+Added the ability to specify relative locations for screens
+Added the ability to specify screen for push and corner
+Revamped screen geometry to be more accurate
+
+-----------------------------------------

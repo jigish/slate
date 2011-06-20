@@ -14,7 +14,7 @@ Note: You must turn on the Accessibility API by checking System Preferences > Un
 
 Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon running Slate. You can also re-load the config using the "Load Config" menu option on the status menu (use this at your own risk. It is better to simply restart Slate).
 
-Configuration is split into four directives: config (for global configurations), alias (to create alias variables), layout (to configure layouts) and bind (for key bindings).
+Configuration is split into five directives: config (for global configurations), alias (to create alias variables), layout (to configure layouts), default (to default certain screen configurations to layouts) and bind (for key bindings).
 
 ### The "config" Directive ###
 
@@ -31,6 +31,8 @@ List of allowed configs:
 | resizePercentOf | String | windowSize | Will use this value for the resize percent calculation. Possible values are "windowSize" and "screenSize". |
 | repeatOnHoldOps | String | resize,nudge | Comma separated list of operations that should repeat when the hotkey is held. |
 | secondsBetweenRepeat | Number | 0.2 | The number of seconds between repeats (for ops in repeatOnHoldOps) |
+| checkDefaultsOnLoad | Boolean | false | "true" causes the default directives to be checked/triggered after any
+configuration load |
 
 Example:
 
@@ -83,6 +85,31 @@ Example:
     layout myLayout 'Google Chrome' push left bar-resize:screenSizeX/2 | push right bar-resize:screenSizeX/2
 
 Will create a layout called "myLayout" with two operations for iTerm and two operations for Google Chrome. When activated, the first window of iTerm will be moved using the first operation in the first list and the second window of iTerm will be moved using the second operation in the first list. In addition, the first window of Google Chrome will be moved using the first operation in the second list and the second window of Google Chrome will be moved using the second operation in the second list. More information on how to actually use these layouts can be found under the "layout" operation in the "bind" directive section
+
+### The "default" Directive ###
+
+The default directive follows the following format (tokens may be seperated by any number of spaces):
+
+    default layout-name screen-configuration
+
+Where:
+
+    layout-name = the name of the layout you want to default to
+    screen-configuration = either "count:NUMBER_OF_SCREENS" or
+    "resolutions:SEMICOLON_SEPARATED_LIST_OF_RESOLUTIONS"
+
+This directive will cause any screen configuration change (add monitor, remove monitor, screen resolution
+change) to trigger a search for a default layout. If the screen configuration matches one of the defaults set,
+the layout matching "layout-name" will be triggered. For example:
+
+    default myLayout count:2
+
+Will trigger myLayout anytime the screen configuration changes to have 2 monitors. Also:
+
+    default myLayout2 resolutions:1440x900;1024x768;1680x1050
+
+Will trigger myLayout2 anytime the screen configuration changes to have exactly 3 monitos with resolutions
+1440x900, 1024x768, and 1680x1050.
 
 ### The "bind" Directive ###
 

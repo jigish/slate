@@ -21,6 +21,7 @@
 // Directive Keys
 extern NSString * const BIND;
 extern NSString * const CONFIG;
+extern NSString * const DEFAULT;
 extern NSString * const LAYOUT;
 extern NSString * const ALIAS;
 
@@ -35,6 +36,8 @@ extern NSString * const REPEAT_ON_HOLD_OPS;
 extern NSString * const REPEAT_ON_HOLD_OPS_DEFAULT;
 extern NSString * const SECONDS_BETWEEN_REPEAT;
 extern double     const SECONDS_BETWEEN_REPEAT_DEFAULT;
+extern NSString * const CHECK_DEFAULTS_ON_LOAD;
+extern BOOL       const CHECK_DEFAULTS_ON_LOAD_DEFAULT;
 
 // Application Option Keys
 extern NSString * const IGNORE_FAIL;
@@ -110,3 +113,11 @@ extern NSString * const REF_CURRENT_SCREEN;
 extern NSInteger const ID_MAIN_SCREEN;
 extern NSInteger const ID_CURRENT_SCREEN;
 extern NSInteger const ID_IGNORE_SCREEN;
+extern NSInteger const TYPE_UNKNOWN;
+extern NSInteger const TYPE_COUNT;
+extern NSInteger const TYPE_RESOLUTIONS;
+extern NSString * const COUNT;
+extern NSString * const RESOLUTIONS;
+
+// Notifications
+NSString * const NOTIFICATION_SCREEN_CHANGE;

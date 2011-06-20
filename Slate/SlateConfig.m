@@ -21,6 +21,9 @@
 #import "Binding.h"
 #import "Constants.h"
 #import "Layout.h"
+#import "LayoutOperation.h"
+#import "ScreenState.h"
+#import "ScreenWrapper.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 
@@ -30,6 +33,7 @@
 @synthesize configs;
 @synthesize bindings;
 @synthesize layouts;
+@synthesize defaultLayouts;
 @synthesize aliases;
 
 static SlateConfig *_instance = nil;
@@ -48,7 +52,12 @@ static SlateConfig *_instance = nil;
     [self setConfigs:[[NSMutableDictionary alloc] init]];
     [self setBindings:[[NSMutableArray alloc] initWithCapacity:10]];
     [self setLayouts:[[NSMutableDictionary alloc] init]];
+    [self setDefaultLayouts:[[NSMutableArray alloc] init]];
     [self setAliases:[[NSMutableDictionary alloc] init]];
+
+    // Listen for screen change notifications
+    NSNotificationCenter *nc = [NSDistributedNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(onScreenChange:) name:NOTIFICATION_SCREEN_CHANGE object:nil];
   }
   return self;
 }
@@ -181,6 +190,42 @@ static SlateConfig *_instance = nil;
         }
         [alert release];
       }
+    } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:DEFAULT]) {
+      // default <name> <screen-setup>
+      @try {
+        ScreenState *state = [[ScreenState alloc] initWithString:line];
+        if (state == nil) {
+          NSLog(@"  ERROR Loading default layout");
+          NSAlert *alert = [[NSAlert alloc] init];
+          [alert addButtonWithTitle:@"Quit"];
+          [alert addButtonWithTitle:@"Skip"];
+          [alert setMessageText:@"Error loading default layout"];
+          [alert setInformativeText:line];
+          [alert setAlertStyle:NSWarningAlertStyle];
+          if ([alert runModal] == NSAlertFirstButtonReturn) {
+            NSLog(@"User selected exit");
+            [NSApp terminate:nil];
+          }
+          [alert release];
+        } else {
+          [defaultLayouts addObject:state];
+          NSLog(@"  LoadingDL: %@",line);
+        }
+        [state release];
+      } @catch (NSException *ex) {
+        NSLog(@"  ERROR %@",[ex name]);
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"Quit"];
+        [alert addButtonWithTitle:@"Skip"];
+        [alert setMessageText:[ex name]];
+        [alert setInformativeText:[ex reason]];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        if ([alert runModal] == NSAlertFirstButtonReturn) {
+          NSLog(@"User selected exit");
+          [NSApp terminate:nil];
+        }
+        [alert release];
+      }
     } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:ALIAS]) {
       // alias <name> <value>
       @try {
@@ -205,7 +250,13 @@ static SlateConfig *_instance = nil;
     line = [e nextObject];
   }
 
-  NSLog(@"Config loaded.");
+  if ([[SlateConfig getInstance] getBoolConfig:CHECK_DEFAULTS_ON_LOAD defaultValue:CHECK_DEFAULTS_ON_LOAD_DEFAULT]) {
+    NSLog(@"Config loaded. Checking defaults...");
+    [self onScreenChange:nil];
+    NSLog(@"Defaults loaded.");
+  } else {
+    NSLog(@"Config loaded.");
+  }
   return YES;
 }
 
@@ -231,6 +282,45 @@ static SlateConfig *_instance = nil;
     @throw([NSException exceptionWithName:@"Unrecognized Alias" reason:[NSString stringWithFormat:@"Unrecognized alias in '%@'", line] userInfo:nil]);
   }
   return line;
+}
+
+- (void)onScreenChange:(id)notification {
+  NSLog(@"onScreenChange");
+  ScreenWrapper *sw = [[ScreenWrapper alloc] init];
+  NSInteger screenCount = [sw getScreenCount];
+  NSMutableArray *resolutions = [[NSMutableArray alloc] initWithCapacity:10];
+  [sw getScreenResolutionStrings:resolutions];
+  [resolutions sortUsingSelector:@selector(compare:)];
+  for (NSInteger i = 0; i < [defaultLayouts count]; i++) {
+    ScreenState *state = [defaultLayouts objectAtIndex:i];
+    // Check count
+    if ([state type] == TYPE_COUNT && [state count] == screenCount) {
+      NSLog(@"onScreenChange count found");
+      LayoutOperation *op = [[LayoutOperation alloc] initWithName:[state layout]];
+      [op doOperation];
+      [op release];
+      break;
+    }
+    // Check resolutions
+    if ([resolutions count] == [[state resolutions] count]) {
+      NSLog(@"onScreenChange resolution counts equal. Check %@ vs %@",resolutions,[state resolutions]);
+      BOOL isEqual = YES;
+      for (NSInteger j = 0; j < [resolutions count]; j++) {
+        if (![[resolutions objectAtIndex:j] isEqualToString:[[state resolutions] objectAtIndex:j]]) {
+          isEqual = NO;
+          break;
+        }
+      }
+      if (isEqual) {
+        LayoutOperation *op = [[LayoutOperation alloc] initWithName:[state layout]];
+        [op doOperation];
+        [op release];
+        break;
+      }
+    }
+  }
+  [resolutions release];
+  [sw release];
 }
 
 @end

@@ -118,6 +118,12 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   // Insert code here to initialize your application
+  
+}
+
+- (void)processNotification:(id)notification {
+  NSLog(@"Notification: %@", notification);
+  NSLog(@"Notification Name: %@", [notification name]);
 }
 
 - (void)awakeFromNib {

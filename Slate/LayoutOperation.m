@@ -70,7 +70,9 @@
 
     // Yes, I am aware that the following blocks are inefficient. Deal with it.
     AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
-    CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, [AccessibilityWrapper windowsInApp:appRef]);
+    CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInApp:appRef];
+    if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) continue;
+    CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, windowsArrRef);
     CFMutableArrayRef windows = CFArrayCreateMutable(kCFAllocatorDefault, CFArrayGetCount(windowsArr), &kCFTypeArrayCallBacks);
     CFMutableArrayRef windowsAppend = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
     // First Pass for main window if needed

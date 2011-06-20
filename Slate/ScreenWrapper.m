@@ -43,6 +43,19 @@
   return self;
 }
 
+- (NSInteger)getScreenCount {
+  return [screens count];
+}
+
+- (void)getScreenResolutionStrings:(NSMutableArray *)strings {
+  for (NSInteger i = 0; i < [screens count]; i++) {
+    NSRect screenRect = [self convertScreenRectToWindowCoords:i];
+    NSString *resolution = [NSString stringWithFormat:@"%ix%i",(int)screenRect.size.width,(int)screenRect.size.height];
+    NSLog(@"Adding resolution: %@",resolution);
+    [strings addObject:resolution];
+  }
+}
+
 - (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window {
   NSInteger screenId = ID_IGNORE_SCREEN;
   NSInteger currentScreenId = [self getScreenIdForRect:window];

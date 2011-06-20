@@ -28,6 +28,8 @@
 @property (retain) NSArray *screens;
 
 - (id)initWithScreens:(NSArray *)theScreens; // Used for testing
+- (NSInteger)getScreenCount;
+- (void)getScreenResolutionStrings:(NSMutableArray *)strings;
 - (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window;
 - (NSInteger)getScreenIdForRect:(NSRect)rect;
 - (BOOL)screenExists:(NSInteger)screenId;

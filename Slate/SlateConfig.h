@@ -26,12 +26,14 @@
   NSMutableDictionary *configs;
   NSMutableArray *bindings;
   NSMutableDictionary *layouts;
+  NSMutableArray *defaultLayouts;
   NSMutableDictionary *aliases;
 }
 
 @property (retain) NSMutableDictionary *configs;
 @property (retain) NSMutableArray *bindings;
 @property (retain) NSMutableDictionary *layouts;
+@property (retain) NSMutableArray *defaultLayouts;
 @property (retain) NSMutableDictionary *aliases;
 
 + (SlateConfig *)getInstance;
@@ -46,5 +48,6 @@
 - (NSString *)getConfig:(NSString *)key defaultValue:(NSString *)defaultValue;
 - (void)addAlias:(NSString *)line;
 - (NSString *)replaceAliases:(NSString *)line;
+- (void)onScreenChange:(id)notification;
 
 @end

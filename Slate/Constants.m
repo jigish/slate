@@ -24,6 +24,7 @@
 NSString * const BIND = @"bind";
 NSString * const CONFIG = @"config";
 NSString * const LAYOUT = @"layout";
+NSString * const DEFAULT = @"default";
 NSString * const ALIAS = @"alias";
 
 // Config Keys
@@ -37,6 +38,8 @@ NSString * const REPEAT_ON_HOLD_OPS = @"repeatOnHoldOps";
 NSString * const REPEAT_ON_HOLD_OPS_DEFAULT = @"resize,nudge";
 NSString * const SECONDS_BETWEEN_REPEAT = @"secondsBetweenRepeat";
 double     const SECONDS_BETWEEN_REPEAT_DEFAULT = 0.2;
+NSString * const CHECK_DEFAULTS_ON_LOAD = @"checkDefaultsOnLoad";
+BOOL       const CHECK_DEFAULTS_ON_LOAD_DEFAULT = NO;
 
 // Application Option Keys
 NSString * const IGNORE_FAIL = @"IGNORE_FAIL";
@@ -112,3 +115,11 @@ NSString * const REF_CURRENT_SCREEN = @"-1";
 NSInteger const ID_MAIN_SCREEN = 0;
 NSInteger const ID_CURRENT_SCREEN = -1;
 NSInteger const ID_IGNORE_SCREEN = -2;
+NSInteger const TYPE_UNKNOWN = -1;
+NSInteger const TYPE_COUNT = 0;
+NSInteger const TYPE_RESOLUTIONS = 1;
+NSString * const COUNT = @"count";
+NSString * const RESOLUTIONS = @"resolutions";
+
+// Notifications
+NSString * const NOTIFICATION_SCREEN_CHANGE = @"O3DeviceTimingChanged";
