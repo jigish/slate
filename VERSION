@@ -1,4 +1,8 @@
-Current Version: 0.4.2
+Current Version: 0.4.3
+
+----------------- 0.4.3 -----------------
+
+Fix bug in StringTokenizer that caused leading spaces in aliases
 
 ----------------- 0.4.2 -----------------
 
