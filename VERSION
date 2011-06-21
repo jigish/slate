@@ -1,4 +1,8 @@
-Current Version: 0.4.1
+Current Version: 0.4.2
+
+----------------- 0.4.2 -----------------
+
+Added the "if_exists" option for the source directive
 
 ----------------- 0.4.1 -----------------
 
