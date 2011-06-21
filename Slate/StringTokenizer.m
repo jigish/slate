@@ -64,6 +64,7 @@
         [token release];
         token = [[NSMutableString alloc] initWithCapacity:10];
       } else if (numTokens >= (maxTokens-1)) {
+        if ([token isEqualToString:@""] && [self isSpaceChar:[s characterAtIndex:i]]) continue;
         [token appendFormat:@"%C", [s characterAtIndex:i]];
       }
     } else {
