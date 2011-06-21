@@ -14,7 +14,14 @@ Note: You must turn on the Accessibility API by checking System Preferences > Un
 
 Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon running Slate. You can also re-load the config using the "Load Config" menu option on the status menu (use this at your own risk. It is better to simply restart Slate).
 
-Configuration is split into five directives: config (for global configurations), alias (to create alias variables), layout (to configure layouts), default (to default certain screen configurations to layouts) and bind (for key bindings).
+Configuration is split into the following directives:
+
+    config (for global configurations)
+    alias (to create alias variables)
+    layout (to configure layouts)
+    default (to default certain screen configurations to layouts)
+    bind (for key bindings)
+    source (to load configs from another file)
 
 ### The "config" Directive ###
 
@@ -283,6 +290,22 @@ Some operations allow you to specify a screen. Here are the list of possible val
         bind 1:ctrl layout myLayout
 
     Will bind the keystroke ctrl-l to activate the layout called "myLayout"
+
+### The "source" Directive ###
+
+The bind directive follows the following format (tokens may be seperated by any number of spaces):
+
+    source filename
+
+Where "filename" is the name of a file containing any of the directives above (including source). If no absolute path is specified, the user's home directory will be prepended to "filename".
+
+For Example:
+
+    source ~/.slate.test
+
+Will append all of the configurations from the file "~/.slate.test" to the current configuration.
+
+*NOTE:* You may use any aliases, layouts, etc that you specify before the source directive in the file you source. Any aliases, layouts, etc specified after cannot be used. Additionally, any aliases, layouts, etc that you specify in the file you source can be used after the source directive.
 
 ### Example Config ###
 

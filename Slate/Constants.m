@@ -26,6 +26,7 @@ NSString * const CONFIG = @"config";
 NSString * const LAYOUT = @"layout";
 NSString * const DEFAULT = @"default";
 NSString * const ALIAS = @"alias";
+NSString * const SOURCE = @"source";
 
 // Config Keys
 NSString * const DEFAULT_TO_CURRENT_SCREEN = @"defaultToCurrentScreen";
@@ -109,6 +110,8 @@ NSString * const EMPTY = @"";
 NSString * const PIPE = @" | ";
 NSString * const QUOTES = @"'\"";
 NSString * const EQUALS = @"=";
+NSString * const TILDA = @"~";
+NSString * const SLASH = @"/";
 
 // Screen constants
 NSString * const REF_CURRENT_SCREEN = @"-1";

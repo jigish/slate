@@ -111,13 +111,46 @@ static SlateConfig *_instance = nil;
   [self setLayouts:[[NSMutableDictionary alloc] init]];
   [self setAliases:[[NSMutableDictionary alloc] init]];
 
+  if (![self append:@"~/.slate"]) {
+    NSLog(@"  ERROR Could not load ~/.slate");
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"Quit"];
+    [alert addButtonWithTitle:@"Skip"];
+    [alert setMessageText:@"ERROR Could not load ~/.slate"];
+    [alert setInformativeText:@"I dunno. Figure it out."];
+    [alert setAlertStyle:NSWarningAlertStyle];
+    if ([alert runModal] == NSAlertFirstButtonReturn) {
+      NSLog(@"User selected exit");
+      [NSApp terminate:nil];
+    }
+    [alert release];
+    return NO;
+  }
+
+  if ([[SlateConfig getInstance] getBoolConfig:CHECK_DEFAULTS_ON_LOAD defaultValue:CHECK_DEFAULTS_ON_LOAD_DEFAULT]) {
+    NSLog(@"Config loaded. Checking defaults...");
+    [self onScreenChange:nil];
+    NSLog(@"Defaults loaded.");
+  } else {
+    NSLog(@"Config loaded.");
+  }
+
+  return YES;
+}
+
+- (BOOL)append:(NSString *)file {
+  if (file == nil) return NO;
   NSString *homeDir = NSHomeDirectory();
-  NSString *configFile = [homeDir stringByAppendingString:@"/.slate"];
+  NSString *configFile = file;
+  if ([file rangeOfString:TILDA].location != NSNotFound)
+    configFile = [file stringByReplacingOccurrencesOfString:TILDA withString:homeDir];
+  else if ([file rangeOfString:SLASH].location != 0)
+    configFile = [homeDir stringByAppendingFormat:@"/%@",file];
   NSString *fileString = [NSString stringWithContentsOfFile:configFile encoding:NSUTF8StringEncoding error:nil];
   if (fileString == nil)
     return NO;
   NSArray *lines = [fileString componentsSeparatedByString:@"\n"];
-
+  
   NSEnumerator *e = [lines objectEnumerator];
   NSString *line = [e nextObject];
   while (line) {
@@ -245,17 +278,26 @@ static SlateConfig *_instance = nil;
         }
         [alert release];
       }
+    } else if ([tokens count] >= 2 && [[tokens objectAtIndex:0] isEqualToString:SOURCE]) {
+      // source filename
+      NSLog(@"  LoadingS: %@",line);
+      if (![self append:[tokens objectAtIndex:1]]) {
+        NSLog(@"  ERROR Sourcing file '%@'",[tokens objectAtIndex:1]);
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"Quit"];
+        [alert addButtonWithTitle:@"Skip"];
+        [alert setMessageText:[NSString stringWithFormat:@"ERROR Sourcing file '%@'",[tokens objectAtIndex:1]]];
+        [alert setInformativeText:@"I dunno. Figure it out."];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        if ([alert runModal] == NSAlertFirstButtonReturn) {
+          NSLog(@"User selected exit");
+          [NSApp terminate:nil];
+        }
+        [alert release];
+      }
     }
     [tokens release];
     line = [e nextObject];
-  }
-
-  if ([[SlateConfig getInstance] getBoolConfig:CHECK_DEFAULTS_ON_LOAD defaultValue:CHECK_DEFAULTS_ON_LOAD_DEFAULT]) {
-    NSLog(@"Config loaded. Checking defaults...");
-    [self onScreenChange:nil];
-    NSLog(@"Defaults loaded.");
-  } else {
-    NSLog(@"Config loaded.");
   }
   return YES;
 }

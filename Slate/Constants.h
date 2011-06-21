@@ -24,6 +24,7 @@ extern NSString * const CONFIG;
 extern NSString * const DEFAULT;
 extern NSString * const LAYOUT;
 extern NSString * const ALIAS;
+extern NSString * const SOURCE;
 
 // Config Keys
 extern NSString * const DEFAULT_TO_CURRENT_SCREEN;
@@ -107,6 +108,8 @@ extern NSString * const EMPTY;
 extern NSString * const PIPE;
 extern NSString * const QUOTES;
 extern NSString * const EQUALS;
+extern NSString * const TILDA;
+extern NSString * const SLASH;
 
 // Screen constants
 extern NSString * const REF_CURRENT_SCREEN;
