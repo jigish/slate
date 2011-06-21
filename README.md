@@ -16,12 +16,12 @@ Slate is configured using a ".slate" file in the current user's home directory. 
 
 Configuration is split into the following directives:
 
-    config (for global configurations)
-    alias (to create alias variables)
-    layout (to configure layouts)
-    default (to default certain screen configurations to layouts)
-    bind (for key bindings)
-    source (to load configs from another file)
+* config (for global configurations)
+* alias (to create alias variables)
+* layout (to configure layouts)
+* default (to default certain screen configurations to layouts)
+* bind (for key bindings)
+* source (to load configs from another file)
 
 ### The "config" Directive ###
 
@@ -188,10 +188,10 @@ In addition to the variables above, expressions can be used with the following f
 
 Some operations allow you to specify a screen. Here are the list of possible values for screen:
 
-    Integer representing the screen ID (indexed at 0)
-    Screen resolution in the format WIDTHxHEIGHT (e.g. 1440x900)
-    Screen direction relative to the current screen (left|right|up|above|down|below)
-    next|previous (represents the currentID+1 or currentID-1 screen)
+* Integer representing the screen ID (indexed at 0)
+* Screen resolution in the format WIDTHxHEIGHT (e.g. 1440x900)
+* Screen direction relative to the current screen (left|right|up|above|down|below)
+* "next" or "previous" (represents the currentID+1 or currentID-1 screen)
 
 **Allowed operations are:**
 
