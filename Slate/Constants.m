@@ -28,6 +28,9 @@ NSString * const DEFAULT = @"default";
 NSString * const ALIAS = @"alias";
 NSString * const SOURCE = @"source";
 
+// Source Option Keys
+NSString * const IF_EXISTS = @"if_exists";
+
 // Config Keys
 NSString * const DEFAULT_TO_CURRENT_SCREEN = @"defaultToCurrentScreen";
 BOOL       const DEFAULT_TO_CURRENT_SCREEN_DEFAULT = NO;

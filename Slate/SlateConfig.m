@@ -157,7 +157,7 @@ static SlateConfig *_instance = nil;
     @try {
       line = [self replaceAliases:line];
     } @catch (NSException *ex) {
-      NSLog(@"  ERROR %@",[ex name]);
+      NSLog(@"   ERROR %@",[ex name]);
       NSAlert *alert = [[NSAlert alloc] init];
       [alert addButtonWithTitle:@"Quit"];
       [alert addButtonWithTitle:@"Skip"];
@@ -184,7 +184,7 @@ static SlateConfig *_instance = nil;
         [bindings addObject:bind];
         [bind release];
       } @catch (NSException *ex) {
-        NSLog(@"  ERROR %@",[ex name]);
+        NSLog(@"   ERROR %@",[ex name]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
         [alert addButtonWithTitle:@"Skip"];
@@ -210,7 +210,7 @@ static SlateConfig *_instance = nil;
           NSLog(@"  LoadingL: %@",line);
         }
       } @catch (NSException *ex) {
-        NSLog(@"  ERROR %@",[ex name]);
+        NSLog(@"   ERROR %@",[ex name]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
         [alert addButtonWithTitle:@"Skip"];
@@ -228,7 +228,7 @@ static SlateConfig *_instance = nil;
       @try {
         ScreenState *state = [[ScreenState alloc] initWithString:line];
         if (state == nil) {
-          NSLog(@"  ERROR Loading default layout");
+          NSLog(@"   ERROR Loading default layout");
           NSAlert *alert = [[NSAlert alloc] init];
           [alert addButtonWithTitle:@"Quit"];
           [alert addButtonWithTitle:@"Skip"];
@@ -246,7 +246,7 @@ static SlateConfig *_instance = nil;
         }
         [state release];
       } @catch (NSException *ex) {
-        NSLog(@"  ERROR %@",[ex name]);
+        NSLog(@"   ERROR %@",[ex name]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
         [alert addButtonWithTitle:@"Skip"];
@@ -265,7 +265,7 @@ static SlateConfig *_instance = nil;
         [self addAlias:line];
         NSLog(@"  LoadingL: %@",line);
       } @catch (NSException *ex) {
-        NSLog(@"  ERROR %@",[ex name]);
+        NSLog(@"   ERROR %@",[ex name]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
         [alert addButtonWithTitle:@"Skip"];
@@ -279,21 +279,25 @@ static SlateConfig *_instance = nil;
         [alert release];
       }
     } else if ([tokens count] >= 2 && [[tokens objectAtIndex:0] isEqualToString:SOURCE]) {
-      // source filename
+      // source filename optional:if_exists
       NSLog(@"  LoadingS: %@",line);
       if (![self append:[tokens objectAtIndex:1]]) {
-        NSLog(@"  ERROR Sourcing file '%@'",[tokens objectAtIndex:1]);
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"Quit"];
-        [alert addButtonWithTitle:@"Skip"];
-        [alert setMessageText:[NSString stringWithFormat:@"ERROR Sourcing file '%@'",[tokens objectAtIndex:1]]];
-        [alert setInformativeText:@"I dunno. Figure it out."];
-        [alert setAlertStyle:NSWarningAlertStyle];
-        if ([alert runModal] == NSAlertFirstButtonReturn) {
-          NSLog(@"User selected exit");
-          [NSApp terminate:nil];
-        }
+        if ([tokens count] >= 3 && [[tokens objectAtIndex:2] isEqualToString:IF_EXISTS]) {
+          NSLog(@"   Could not find file '%@' but that's ok. User specified if_exists.",[tokens objectAtIndex:1]);
+        } else {
+          NSLog(@"   ERROR Sourcing file '%@'",[tokens objectAtIndex:1]);
+          NSAlert *alert = [[NSAlert alloc] init];
+          [alert addButtonWithTitle:@"Quit"];
+          [alert addButtonWithTitle:@"Skip"];
+          [alert setMessageText:[NSString stringWithFormat:@"ERROR Sourcing file '%@'",[tokens objectAtIndex:1]]];
+          [alert setInformativeText:@"I dunno. Figure it out."];
+          [alert setAlertStyle:NSWarningAlertStyle];
+          if ([alert runModal] == NSAlertFirstButtonReturn) {
+            NSLog(@"User selected exit");
+            [NSApp terminate:nil];
+          }
         [alert release];
+        }
       }
     }
     [tokens release];

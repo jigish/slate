@@ -26,6 +26,9 @@ extern NSString * const LAYOUT;
 extern NSString * const ALIAS;
 extern NSString * const SOURCE;
 
+// Source Option Keys
+extern NSString * const IF_EXISTS;
+
 // Config Keys
 extern NSString * const DEFAULT_TO_CURRENT_SCREEN;
 extern BOOL       const DEFAULT_TO_CURRENT_SCREEN_DEFAULT;
