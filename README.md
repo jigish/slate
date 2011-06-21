@@ -105,9 +105,7 @@ Where:
     screen-configuration = either "count:NUMBER_OF_SCREENS" or
     "resolutions:SEMICOLON_SEPARATED_LIST_OF_RESOLUTIONS"
 
-This directive will cause any screen configuration change (add monitor, remove monitor, screen resolution
-change) to trigger a search for a default layout. If the screen configuration matches one of the defaults set,
-the layout matching "layout-name" will be triggered. For example:
+This directive will cause any screen configuration change (add monitor, remove monitor, screen resolution change) to trigger a search for a default layout. If the screen configuration matches one of the defaults set, the layout matching "layout-name" will be triggered. For example:
 
     default myLayout count:2
 
@@ -115,8 +113,7 @@ Will trigger myLayout anytime the screen configuration changes to have 2 monitor
 
     default myLayout2 resolutions:1440x900;1024x768;1680x1050
 
-Will trigger myLayout2 anytime the screen configuration changes to have exactly 3 monitos with resolutions
-1440x900, 1024x768, and 1680x1050.
+Will trigger myLayout2 anytime the screen configuration changes to have exactly 3 monitors with resolutions 1440x900, 1024x768, and 1680x1050.
 
 ### The "bind" Directive ###
 
@@ -188,7 +185,7 @@ In addition to the variables above, expressions can be used with the following f
 
 Some operations allow you to specify a screen. Here are the list of possible values for screen:
 
-* Integer representing the screen ID (indexed at 0)
+* Integer representing the screen ID (indexed at 0. Note that this will change if you unplug/replug your monitors in different orders)
 * Screen resolution in the format WIDTHxHEIGHT (e.g. 1440x900)
 * Screen direction relative to the current screen (left|right|up|above|down|below)
 * "next" or "previous" (represents the currentID+1 or currentID-1 screen)
