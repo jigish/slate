@@ -95,7 +95,7 @@ Will create a layout called "myLayout" with two operations for iTerm and two ope
 
 ### The "default" Directive ###
 
-The default directive follows the following format (tokens may be seperated by any number of spaces):
+The default directive follows the following format (tokens may be separated by any number of spaces):
 
     default layout-name screen-configuration
 
@@ -120,7 +120,7 @@ Will trigger myLayout2 anytime the screen configuration changes to have exactly 
 
 ### The "bind" Directive ###
 
-The bind directive follows the following format (tokens may be seperated by any number of spaces):
+The bind directive follows the following format (tokens may be separated by any number of spaces):
 
     bind key:modifiers operation parameter+
 
@@ -293,7 +293,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
 ### The "source" Directive ###
 
-The bind directive follows the following format (tokens may be seperated by any number of spaces):
+The source directive follows the following format (tokens may be separated by any number of spaces):
 
     source filename
 
