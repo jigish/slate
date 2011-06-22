@@ -25,4 +25,14 @@
                     original.size.height);
 }
 
++ (NSRect)scaleRect:(NSRect)rect factor:(double)factor {
+  return NSMakeRect(rect.origin.x, rect.origin.y, rect.size.width*factor, rect.size.height*factor);
+}
+
++ (NSRect)weightedIntersectionOf:(NSRect)rect1 and:(NSRect)rect2 weight:(double)weight {
+  NSRect intersection = NSIntersectionRect(rect1, rect2);
+  if (NSEqualRects(intersection, NSZeroRect)) return NSZeroRect;
+  return [MathUtils scaleRect:intersection factor:weight];
+}
+
 @end
