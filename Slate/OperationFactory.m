@@ -110,7 +110,7 @@
   }
   
   NSString *direction = [tokens objectAtIndex:1];
-  NSString *dimensions = @"windowSizeX,windowSizeY";
+  NSString *dimensions = @"windowSizeX;windowSizeY";
   NSString *topLeft = nil;
   NSString *style = NONE;
   if ([tokens count] >= 3) {
@@ -118,64 +118,64 @@
   }
   if ([direction isEqualToString:TOP] || [direction isEqualToString:UP]) {
     if ([style isEqualToString:CENTER]) {
-      topLeft = @"screenOriginX+(screenSizeX-windowSizeX)/2,screenOriginY";
+      topLeft = @"screenOriginX+(screenSizeX-windowSizeX)/2;screenOriginY";
     } else if ([style isEqualToString:BAR]) {
-      topLeft = @"screenOriginX,screenOriginY";
-      dimensions = @"screenSizeX,windowSizeY";
+      topLeft = @"screenOriginX;screenOriginY";
+      dimensions = @"screenSizeX;windowSizeY";
     } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
       NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      topLeft = @"screenOriginX,screenOriginY";
-      dimensions = [@"screenSizeX," stringByAppendingString:resizeExpression];
+      topLeft = @"screenOriginX;screenOriginY";
+      dimensions = [@"screenSizeX;" stringByAppendingString:resizeExpression];
     } else if ([style isEqualToString:NONE]) {
-      topLeft = @"windowTopLeftX,screenOriginY";
+      topLeft = @"windowTopLeftX;screenOriginY";
     } else {
       NSLog(@"ERROR: Unrecognized style '%@'", style);
       @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
     }
   } else if ([direction isEqualToString:BOTTOM] || [direction isEqualToString:DOWN]) {
     if ([style isEqualToString:CENTER]) {
-      topLeft = @"screenOriginX+(screenSizeX-windowSizeX)/2,screenOriginY+screenSizeY-windowSizeY";
+      topLeft = @"screenOriginX+(screenSizeX-windowSizeX)/2;screenOriginY+screenSizeY-windowSizeY";
     } else if ([style isEqualToString:BAR]) {
-      topLeft = @"screenOriginX,screenOriginY+screenSizeY-windowSizeY";
-      dimensions = @"screenSizeX,windowSizeY";
+      topLeft = @"screenOriginX;screenOriginY+screenSizeY-windowSizeY";
+      dimensions = @"screenSizeX;windowSizeY";
     } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
       NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      topLeft = [@"screenOriginX,screenOriginY+screenSizeY-" stringByAppendingString:resizeExpression];
-      dimensions = [@"screenSizeX," stringByAppendingString:resizeExpression];
+      topLeft = [@"screenOriginX;screenOriginY+screenSizeY-" stringByAppendingString:resizeExpression];
+      dimensions = [@"screenSizeX;" stringByAppendingString:resizeExpression];
     } else if ([style isEqualToString:NONE]) {
-      topLeft = @"windowTopLeftX,screenOriginY+screenSizeY-windowSizeY";
+      topLeft = @"windowTopLeftX;screenOriginY+screenSizeY-windowSizeY";
     } else {
       NSLog(@"ERROR: Unrecognized style '%@'", style);
       @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
     }
   } else if ([direction isEqualToString:LEFT]) {
     if ([style isEqualToString:CENTER]) {
-      topLeft = @"screenOriginX,screenOriginY+(screenSizeY-windowSizeY)/2";
+      topLeft = @"screenOriginX;screenOriginY+(screenSizeY-windowSizeY)/2";
     } else if ([style isEqualToString:BAR]) {
-      topLeft = @"screenOriginX,screenOriginY";
-      dimensions = @"windowSizeX,screenSizeY";
+      topLeft = @"screenOriginX;screenOriginY";
+      dimensions = @"windowSizeX;screenSizeY";
     } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
       NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      topLeft = @"screenOriginX,screenOriginY";
+      topLeft = @"screenOriginX;screenOriginY";
       dimensions = [resizeExpression stringByAppendingString:@",screenSizeY"];
     } else if ([style isEqualToString:NONE]) {
-      topLeft = @"screenOriginX,windowTopLeftY";
+      topLeft = @"screenOriginX;windowTopLeftY";
     } else {
       NSLog(@"ERROR: Unrecognized style '%@'", style);
       @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
     }
   } else if ([direction isEqualToString:RIGHT]) {
     if ([style isEqualToString:CENTER]) {
-      topLeft = @"screenOriginX+screenSizeX-windowSizeX,screenOriginY+(screenSizeY-windowSizeY)/2";
+      topLeft = @"screenOriginX+screenSizeX-windowSizeX;screenOriginY+(screenSizeY-windowSizeY)/2";
     } else if ([style isEqualToString:BAR]) {
-      topLeft = @"screenOriginX+screenSizeX-windowSizeX,screenOriginY";
-      dimensions = @"windowSizeX,screenSizeY";
+      topLeft = @"screenOriginX+screenSizeX-windowSizeX;screenOriginY";
+      dimensions = @"windowSizeX;screenSizeY";
     } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
       NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      topLeft = [[@"screenOriginX+screenSizeX-" stringByAppendingString:resizeExpression] stringByAppendingString:@",screenOriginY"];
-      dimensions = [resizeExpression stringByAppendingString:@",screenSizeY"];
+      topLeft = [[@"screenOriginX+screenSizeX-" stringByAppendingString:resizeExpression] stringByAppendingString:@";screenOriginY"];
+      dimensions = [resizeExpression stringByAppendingString:@";screenSizeY"];
     } else if ([style isEqualToString:NONE]) {
-      topLeft = @"screenOriginX+screenSizeX-windowSizeX,windowTopLeftY";
+      topLeft = @"screenOriginX+screenSizeX-windowSizeX;windowTopLeftY";
     } else {
       NSLog(@"ERROR: Unrecognized style '%@'", style);
       @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
@@ -219,7 +219,7 @@
     // Hard Nudge
     tlY = [tlY stringByAppendingString:y];
   }
-  Operation *op = [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:COMMA] stringByAppendingString:tlY] dimensions:@"windowSizeX,windowSizeY" monitor:REF_CURRENT_SCREEN];
+  Operation *op = [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:SEMICOLON] stringByAppendingString:tlY] dimensions:@"windowSizeX;windowSizeY" monitor:REF_CURRENT_SCREEN];
   [tokens release];
   return op;
 }
@@ -234,15 +234,15 @@
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Throw operations require the following format: 'throw screen [optional:style]'", throwOperation] userInfo:nil]);
   }
   
-  NSString *tl = @"screenOriginX,screenOriginY";
-  NSString *dim = @"windowSizeX,windowSizeY";
+  NSString *tl = @"screenOriginX;screenOriginY";
+  NSString *dim = @"windowSizeX;windowSizeY";
   if ([tokens count] >= 3) {
     NSString *style = [tokens objectAtIndex:2];
     if ([style isEqualToString:RESIZE]) {
-      tl = @"screenOriginX,screenOriginY";
-      dim = @"screenSizeX,screenSizeY";
+      tl = @"screenOriginX;screenOriginY";
+      dim = @"screenSizeX;screenSizeY";
     } else if ([style hasPrefix:RESIZE_WITH_VALUE]) {
-      tl = @"screenOriginX,screenOriginY";
+      tl = @"screenOriginX;screenOriginY";
       dim = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
     } else if ([style isEqualToString:NORESIZE]) {
       // do nothing
@@ -267,7 +267,7 @@
   }
   
   NSString *tl = nil;
-  NSString *dim = @"windowSizeX,windowSizeY";
+  NSString *dim = @"windowSizeX;windowSizeY";
   NSString *direction = [tokens objectAtIndex:1];
   
   if ([tokens count] >= 3) {
@@ -278,13 +278,13 @@
   }
   
   if ([direction isEqualToString:TOP_LEFT]) {
-    tl = @"screenOriginX,screenOriginY";
+    tl = @"screenOriginX;screenOriginY";
   } else if ([direction isEqualToString:TOP_RIGHT]) {
-    tl = [[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:COMMA] objectAtIndex:0]] stringByAppendingString:@",screenOriginY"];
+    tl = [[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:0]] stringByAppendingString:@";screenOriginY"];
   } else if ([direction isEqualToString:BOTTOM_LEFT]) {
-    tl = [@"screenOriginX,screenOriginY+screenSizeY-" stringByAppendingString:[[dim componentsSeparatedByString:COMMA] objectAtIndex:1]];
+    tl = [@"screenOriginX;screenOriginY+screenSizeY-" stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:1]];
   } else if ([direction isEqualToString:BOTTOM_RIGHT]) {
-    tl = [[[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:COMMA] objectAtIndex:0]] stringByAppendingString:@",screenOriginY+screenSizeY-"] stringByAppendingString:[[dim componentsSeparatedByString:COMMA] objectAtIndex:1]];
+    tl = [[[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:0]] stringByAppendingString:@";screenOriginY+screenSizeY-"] stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:1]];
   } else {
     NSLog(@"ERROR: Unrecognized corner '%@'", direction);
     @throw([NSException exceptionWithName:@"Unrecognized Corner" reason:[NSString stringWithFormat:@"Unrecognized corner '%@' in '%@'", direction, cornerOperation] userInfo:nil]);
