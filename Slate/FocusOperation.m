@@ -85,8 +85,9 @@
   AXUIElementRef windowToFocus;
   AXUIElementRef appToFocus;
   BOOL foundFocus = NO;
-  for (NSInteger i = 0; i < [apps count]; i++) {
-    NSDictionary *app = [apps objectAtIndex:i];
+  BOOL foundFocusInSameApp = NO;
+  for (NSInteger j = 0; j < [apps count]; j++) {
+    NSDictionary *app = [apps objectAtIndex:j];
     NSString *appName = [app objectForKey:@"NSApplicationName"];
     NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
     NSLog(@"I see application '%@' with pid '%@'", appName, appPID);
@@ -121,18 +122,18 @@
         [aw release];
         continue;
       }
-
       NSRect intersection = NSIntersectionRect(checkRect, windowRect);
       if ([MathUtils isRect:intersection biggerThan:NSZeroRect] && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == [appPID intValue]) {
         NSLog(@"  Found window in same app in direction %i",(int)direction);
-        if ([[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP defaultValue:FOCUS_PREFER_SAME_APP_DEFAULT]) {
+        if ([[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP defaultValue:FOCUS_PREFER_SAME_APP_DEFAULT]
+            && (!foundFocusInSameApp || [MathUtils isRect:intersection biggerThan:biggestIntersection])) {
           NSLog(@"   Preferring same app.");
-          if ([aw focus]) {
-            [aw release];
-            [caAW release];
-            return YES;
-          }
-        } else {
+          appToFocus = appRef;
+          windowToFocus = CFArrayGetValueAtIndex(windows, i);
+          biggestIntersection = intersection;
+          foundFocus = YES;
+          foundFocusInSameApp = YES;
+        } else if ([MathUtils isRect:intersection biggerThan:biggestIntersection]) {
           appToFocus = appRef;
           windowToFocus = CFArrayGetValueAtIndex(windows, i);
           biggestIntersection = intersection;
@@ -146,6 +147,14 @@
         foundFocus = YES;
       }
       [aw release];
+    }
+    // check if same app && foundFocus && prefer_same_app
+    if(foundFocusInSameApp && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == [appPID intValue] && [[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP defaultValue:FOCUS_PREFER_SAME_APP_DEFAULT]) {
+      AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appToFocus window:windowToFocus];
+      [aw focus];
+      [aw release];
+      [caAW release];
+      return YES;
     }
   }
   if (!foundFocus) {
