@@ -1,15 +1,20 @@
-Current Version: 0.4.4
+Current Version: 0.4.5
+
+----------------- 0.4.5 -----------------
+
+Fixed bug in "focus" operation that caused some apps to be skipped
+Fixed bug in "focus" operation that caused same-app switching to be weird
 
 ----------------- 0.4.4 -----------------
 
 Added the "focus" directive
 Added the "focusCheckWidth" config
 Added the "focusPreferSameApp" config
-Fix all MoveOperation variants to default to semicolon separators
+Fixed all MoveOperation variants to default to semicolon separators
 
 ----------------- 0.4.3 -----------------
 
-Fix bug in StringTokenizer that caused leading spaces in aliases
+Fixed bug in StringTokenizer that caused leading spaces in aliases
 
 ----------------- 0.4.2 -----------------
 
