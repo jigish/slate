@@ -1,4 +1,11 @@
-Current Version: 0.4.3
+Current Version: 0.4.4
+
+----------------- 0.4.4 -----------------
+
+Added the "focus" directive
+Added the "focusCheckWidth" config
+Added the "focusPreferSameApp" config
+Fix all MoveOperation variants to default to semicolon separators
 
 ----------------- 0.4.3 -----------------
 
