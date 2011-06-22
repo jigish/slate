@@ -91,6 +91,7 @@
 
     AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
     CFArrayRef windows = [AccessibilityWrapper windowsInApp:appRef];
+    if (!windows || CFArrayGetCount(windows) == 0) continue;
 
     for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
       AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
@@ -158,7 +159,7 @@
 }
 
 - (BOOL)testOperation {
-  if (direction != DIRECTION_UNKNOWN)
+  if (direction == DIRECTION_UNKNOWN)
     @throw [NSException exceptionWithName:@"Unknown Direction" reason:@"direction" userInfo:nil];
   return YES;
 }
