@@ -73,12 +73,14 @@
 }
 
 - (BOOL)doOperation {
+  NSLog(@"----------------- Begin Resize Operation -----------------");
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   BOOL success = NO;
   if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
   [sw release];
   [aw release];
+  NSLog(@"-----------------  End Resize Operation  -----------------");
   return success;
 }
 

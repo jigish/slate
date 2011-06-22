@@ -98,12 +98,14 @@
 }
 
 - (BOOL)doOperation {
+  NSLog(@"----------------- Begin Move Operation -----------------");
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   BOOL success = NO;
   if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
   [sw release];
   [aw release];
+  NSLog(@"-----------------  End Move Operation  -----------------");
   return success;
 }
 

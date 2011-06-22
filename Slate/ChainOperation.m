@@ -48,12 +48,14 @@
 }
 
 - (BOOL)doOperation {
+  NSLog(@"----------------- Begin Chain Operation -----------------");
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   BOOL success = NO;
   if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
   [sw release];
   [aw release];
+  NSLog(@"-----------------  End Chain Operation  -----------------");
   return success;
 }
 

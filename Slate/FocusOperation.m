@@ -54,8 +54,10 @@
 }
 
 - (BOOL)doOperation {
+  NSLog(@"----------------- Begin Focus Operation -----------------");
   // We don't use the passed in AccessibilityWrapper or ScreenWrapper so they are nil. No need to waste time creating them here.
   BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:nil];
+  NSLog(@"-----------------  End Focus Operation  -----------------");
   return success;
 }
 

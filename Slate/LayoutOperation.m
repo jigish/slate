@@ -43,10 +43,12 @@
 }
 
 - (BOOL)doOperation {
+  NSLog(@"----------------- Begin Layout Operation -----------------");
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   // We don't use the passed in AccessibilityWrapper so it is nil. No need to waste time creating one here
   BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:sw];
   [sw release];
+  NSLog(@"-----------------  End Layout Operation  -----------------");
   return success;
 }
 
