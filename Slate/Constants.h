@@ -42,6 +42,10 @@ extern NSString * const SECONDS_BETWEEN_REPEAT;
 extern double     const SECONDS_BETWEEN_REPEAT_DEFAULT;
 extern NSString * const CHECK_DEFAULTS_ON_LOAD;
 extern BOOL       const CHECK_DEFAULTS_ON_LOAD_DEFAULT;
+extern NSString * const FOCUS_CHECK_WIDTH;
+extern NSInteger  const FOCUS_CHECK_WIDTH_DEFAULT;
+extern NSString * const FOCUS_PREFER_SAME_APP;
+extern BOOL       const FOCUS_PREFER_SAME_APP_DEFAULT;
 
 // Application Option Keys
 extern NSString * const IGNORE_FAIL;
@@ -79,6 +83,7 @@ extern NSString * const NUDGE;
 extern NSString * const THROW;
 extern NSString * const CORNER;
 extern NSString * const CHAIN;
+extern NSString * const FOCUS;
 
 // Parameters and Options
 extern NSString * const CENTER;
@@ -88,17 +93,37 @@ extern NSString * const NONE;
 extern NSString * const NORESIZE;
 extern NSString * const RESIZE_WITH_VALUE;
 
-// Directions
+// Directions and Anchors
 extern NSString * const UP;
 extern NSString * const DOWN;
 extern NSString * const LEFT;
 extern NSString * const RIGHT;
 extern NSString * const TOP;
 extern NSString * const BOTTOM;
+extern NSString * const ABOVE;
+extern NSString * const BELOW;
+extern NSString * const NEXT;
+extern NSString * const PREVIOUS;
+extern NSString * const PREV;
+extern NSString * const BEHIND;
 extern NSString * const TOP_LEFT;
 extern NSString * const TOP_RIGHT;
 extern NSString * const BOTTOM_LEFT;
 extern NSString * const BOTTOM_RIGHT;
+extern NSInteger  const DIRECTION_UNKNOWN;
+extern NSInteger  const DIRECTION_UP;
+extern NSInteger  const DIRECTION_DOWN;
+extern NSInteger  const DIRECTION_LEFT;
+extern NSInteger  const DIRECTION_RIGHT;
+extern NSInteger  const DIRECTION_TOP;
+extern NSInteger  const DIRECTION_BOTTOM;
+extern NSInteger  const DIRECTION_ABOVE;
+extern NSInteger  const DIRECTION_BELOW;
+extern NSInteger  const DIRECTION_BEHIND;
+extern NSInteger  const ANCHOR_TOP_LEFT;
+extern NSInteger  const ANCHOR_TOP_RIGHT;
+extern NSInteger  const ANCHOR_BOTTOM_LEFT;
+extern NSInteger  const ANCHOR_BOTTOM_RIGHT;
 
 // Seperators and such
 extern NSString * const COMMA;
@@ -113,6 +138,7 @@ extern NSString * const QUOTES;
 extern NSString * const EQUALS;
 extern NSString * const TILDA;
 extern NSString * const SLASH;
+extern NSString * const X;
 
 // Screen constants
 extern NSString * const REF_CURRENT_SCREEN;
@@ -126,4 +152,7 @@ extern NSString * const COUNT;
 extern NSString * const RESOLUTIONS;
 
 // Notifications
-NSString * const NOTIFICATION_SCREEN_CHANGE;
+extern NSString * const NOTIFICATION_SCREEN_CHANGE;
+
+// Applications
+extern NSString * const FINDER;

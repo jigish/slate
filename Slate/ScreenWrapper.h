@@ -33,10 +33,8 @@
 - (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window;
 - (NSInteger)getScreenIdForRect:(NSRect)rect;
 - (BOOL)screenExists:(NSInteger)screenId;
-- (BOOL)isRect:(NSRect)rect1 biggerThan:(NSRect)rect2;
 - (NSDictionary *)getScreenAndWindowValues:(NSInteger)screenId window:(NSRect)cWindowRect newSize:(NSSize)nSize;
 - (NSRect)convertScreenRectToWindowCoords:(NSInteger)screenId;
 - (NSRect)convertScreenVisibleRectToWindowCoords:(NSInteger)screenId;
-- (NSRect)flipYCoordinateOfRect:(NSRect)original withReference:(NSRect)reference;
 
 @end

@@ -20,9 +20,10 @@
 
 #import "ChainOperation.h"
 #import "Constants.h"
-#import "OperationFactory.h"
+#import "FocusOperation.h"
 #import "LayoutOperation.h"
 #import "MoveOperation.h"
+#import "OperationFactory.h"
 #import "ResizeOperation.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
@@ -51,6 +52,8 @@
     operation = [self createChainOperationFromString:opString];
   } else if ([op isEqualToString:LAYOUT]) {
     operation = [self createLayoutOperationFromString:opString];
+  } else if ([op isEqualToString:FOCUS]) {
+    operation = [self createFocusOperationFromString:opString];
   } else {
     NSLog(@"ERROR: Unrecognized operation '%@'", opString);
     [tokens release];
@@ -335,6 +338,21 @@
   }
 
   Operation *op = [[LayoutOperation alloc] initWithName:[tokens objectAtIndex:1]];
+  [tokens release];
+  return op;
+}
+
++ (id)createFocusOperationFromString:(NSString *)focusOperation {
+  // focus direction
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:focusOperation into:tokens maxTokens:2];
+
+  if ([tokens count] < 2) {
+    NSLog(@"ERROR: Invalid Parameters '%@'", focusOperation);
+    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Layout operations require the following format: 'focus direction'", focusOperation] userInfo:nil]);
+  }
+
+  Operation *op = [[FocusOperation alloc] initWithDirection:[tokens objectAtIndex:1]];
   [tokens release];
   return op;
 }

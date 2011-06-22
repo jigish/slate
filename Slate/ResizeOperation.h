@@ -24,12 +24,12 @@
 
 @interface ResizeOperation : Operation {
 @private
-  NSString *anchor;
+  NSInteger anchor;
   NSString *xResize;
   NSString *yResize;
 }
 
-@property (copy) NSString *anchor;
+@property (assign) NSInteger anchor;
 @property (copy) NSString *xResize;
 @property (copy) NSString *yResize;
 

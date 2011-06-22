@@ -38,8 +38,9 @@ List of allowed configs:
 | resizePercentOf | String | windowSize | Will use this value for the resize percent calculation. Possible values are "windowSize" and "screenSize". |
 | repeatOnHoldOps | String | resize,nudge | Comma separated list of operations that should repeat when the hotkey is held. |
 | secondsBetweenRepeat | Number | 0.2 | The number of seconds between repeats (for ops in repeatOnHoldOps) |
-| checkDefaultsOnLoad | Boolean | false | "true" causes the default directives to be checked/triggered after any
-configuration load |
+| checkDefaultsOnLoad | Boolean | false | "true" causes the default directives to be checked/triggered after any configuration load |
+| focusCheckWidth | Integer | 100 | The width (in pixels) of the rectangle used to check directions in the focus directive. Only used for right, left, up, above, down, and below directions. The larger this is, the futher away focus will check for adjacent windows. Consequently, the larger this is, the more irritatingly stupid focus can be. |
+| focusPreferSameApp | Boolean | true | When this is true, the focus operation will *always* choose a window in the same app to focus if it exists in the check width regardless of intersection size. When this is false, focus will treat all application windows the same and choose the largest intersection size |
 
 Example:
 
@@ -287,6 +288,16 @@ Some operations allow you to specify a screen. Here are the list of possible val
         bind 1:ctrl layout myLayout
 
     Will bind the keystroke ctrl-l to activate the layout called "myLayout"
+
+* Focus a window from any application in a direction: "focus direction"
+
+        direction = right|left|up|above|down|below|behind
+
+    Example:
+
+        bind 1:ctrl focus above
+
+    Will bind the keystroke ctrl-1 to focus the window Slate finds to be above the currently focused window. (minimized and hidden windows are ignored and a couple global configuration options set using the "config" directive exist to tweak this).
 
 ### The "source" Directive ###
 

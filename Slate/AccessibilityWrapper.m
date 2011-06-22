@@ -128,6 +128,18 @@
   return YES;
 }
 
+- (BOOL)focus {
+  if (AXUIElementSetAttributeValue(app, (CFStringRef)NSAccessibilityFrontmostAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
+    NSLog(@"ERROR: Could not change focus to app");
+    return NO;
+  }
+  if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilityMainAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
+    NSLog(@"ERROR: Could not change focus to window");
+    return NO;
+  }
+  return YES;
+}
+
 + (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element {
   pid_t pid = 0;
   if (AXUIElementGetPid (element, &pid) == kAXErrorSuccess) {
@@ -161,6 +173,22 @@
     return title;
   }
   return @"";
+}
+
++ (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window {
+  CFTypeRef _isMinimized;
+  CFTypeRef _isHidden;
+  BOOL isMinimized = NO;
+  BOOL isHidden = NO;
+  if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityHiddenAttribute, (CFTypeRef *)&_isHidden) == kAXErrorSuccess) {
+    NSNumber *isHiddenNum = _isHidden;
+    isHidden = [isHiddenNum boolValue];
+  }
+  if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityMinimizedAttribute, (CFTypeRef *)&_isMinimized) == kAXErrorSuccess) {
+    NSNumber *isMinimizedNum = _isMinimized;
+    isMinimized = [isMinimizedNum boolValue];
+  }
+  return isMinimized || isHidden;
 }
 
 @end

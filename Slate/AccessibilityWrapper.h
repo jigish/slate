@@ -40,9 +40,11 @@
 - (NSSize)getCurrentSize;
 - (BOOL)moveWindow:(NSPoint)thePoint;
 - (BOOL)resizeWindow:(NSSize)theSize;
+- (BOOL)focus;
 + (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element;
 + (CFArrayRef)windowsInApp:(AXUIElementRef)app;
 + (BOOL)isMainWindow:(AXUIElementRef)window;
 + (NSString *)getTitle:(AXUIElementRef)window;
++ (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window;
 
 @end

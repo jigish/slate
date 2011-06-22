@@ -1,8 +1,8 @@
 //
-//  OperationFactory.h
+//  FocusOperation.h
 //  Slate
 //
-//  Created by Jigish Patel on 5/28/11.
+//  Created by Jigish Patel on 6/21/11.
 //  Copyright 2011 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -21,18 +21,14 @@
 #import <Foundation/Foundation.h>
 #import "Operation.h"
 
-@interface OperationFactory : NSObject {}
 
-+ (id)createOperationFromString:(NSString *)opString;
+@interface FocusOperation : Operation {
+@private
+  NSInteger direction;
+}
 
-+ (id)createMoveOperationFromString:(NSString *)moveOperation;
-+ (id)createResizeOperationFromString:(NSString *)resizeOperation;
-+ (id)createPushOperationFromString:(NSString *)pushOperation;
-+ (id)createNudgeOperationFromString:(NSString *)nudgeOperation;
-+ (id)createThrowOperationFromString:(NSString *)throwOperation;
-+ (id)createCornerOperationFromString:(NSString *)cornerOperation;
-+ (id)createChainOperationFromString:(NSString *)chainOperation;
-+ (id)createLayoutOperationFromString:(NSString *)layoutOperation;
-+ (id)createFocusOperationFromString:(NSString *)focusOperation;
+@property (assign) NSInteger direction;
+
+- (id)initWithDirection:(NSString *)d;
 
 @end

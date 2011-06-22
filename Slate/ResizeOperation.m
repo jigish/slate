@@ -33,18 +33,20 @@
 
 - (id)init {
   self = [super init];
-  
-  if (self) {
-  }
-  
   return self;
 }
 
 - (id)initWithAnchor:(NSString *)a xResize:(NSString *)x yResize:(NSString *)y {
   self = [self init];
   if (self) {
-    if ([a isEqualToString:TOP_LEFT] || [a isEqualToString:TOP_RIGHT] || [a isEqualToString:BOTTOM_LEFT] || [a isEqualToString:BOTTOM_RIGHT]) {
-      [self setAnchor:a];
+    if ([a isEqualToString:TOP_LEFT]) {
+      [self setAnchor:ANCHOR_TOP_LEFT];
+    } else if ([a isEqualToString:TOP_RIGHT]) {
+      [self setAnchor:ANCHOR_TOP_RIGHT];
+    } else if ([a isEqualToString:BOTTOM_LEFT]) {
+      [self setAnchor:ANCHOR_BOTTOM_LEFT];
+    } else if ([a isEqualToString:BOTTOM_RIGHT]) {
+      [self setAnchor:ANCHOR_BOTTOM_RIGHT];
     } else {
       NSLog(@"ERROR: Unrecognized anchor '%@'", a);
       return nil;
@@ -92,17 +94,17 @@
 - (NSPoint)getTopLeftWithCurrentWindow:(NSRect)cWindowRect newSize:(NSSize)nSize {
   NSPoint cTopLeft = cWindowRect.origin;
   NSSize cSize = cWindowRect.size;
-  if ([anchor isEqualToString:TOP_LEFT]) {
+  if (anchor == ANCHOR_TOP_LEFT) {
     return cTopLeft;
-  } else if ([anchor isEqualToString:TOP_RIGHT]) {
+  } else if (anchor == ANCHOR_TOP_RIGHT) {
     NSInteger x = cTopLeft.x + cSize.width - nSize.width;
     NSInteger y = cTopLeft.y;
     return NSMakePoint(x,y);
-  } else if ([anchor isEqualToString:BOTTOM_LEFT]) {
+  } else if (anchor == ANCHOR_BOTTOM_LEFT) {
     NSInteger x = cTopLeft.x;
     NSInteger y = cTopLeft.y + cSize.height - nSize.height;
     return NSMakePoint(x,y);
-  } else if ([anchor isEqualToString:BOTTOM_RIGHT]) {
+  } else if (anchor == ANCHOR_BOTTOM_RIGHT) {
     NSInteger x = cTopLeft.x + cSize.width - nSize.width;
     NSInteger y = cTopLeft.y + cSize.height - nSize.height;
     return NSMakePoint(x,y);
@@ -143,7 +145,6 @@
 }
 
 - (void)dealloc {
-  [self setAnchor:nil];
   [self setXResize:nil];
   [self setYResize:nil];
   [super dealloc];

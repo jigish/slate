@@ -51,7 +51,7 @@
 }
 
 // Note that the AccessibilityWrapper is never used because layouts use multiple applications
-- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)unused screenWrapper:(ScreenWrapper *)sw {
+- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
   BOOL success = YES;
   NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
   for (NSInteger i = 0; i < [apps count]; i++) {

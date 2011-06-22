@@ -19,6 +19,7 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 #import "Constants.h"
+#import "MathUtils.h"
 #import "ScreenWrapper.h"
 #import "SlateConfig.h"
 
@@ -50,7 +51,7 @@
 - (void)getScreenResolutionStrings:(NSMutableArray *)strings {
   for (NSInteger i = 0; i < [screens count]; i++) {
     NSRect screenRect = [self convertScreenRectToWindowCoords:i];
-    NSString *resolution = [NSString stringWithFormat:@"%ix%i",(int)screenRect.size.width,(int)screenRect.size.height];
+    NSString *resolution = [NSString stringWithFormat:@"%i%@%i",(int)screenRect.size.width,X,(int)screenRect.size.height];
     NSLog(@"Adding resolution: %@",resolution);
     [strings addObject:resolution];
   }
@@ -60,30 +61,30 @@
   NSInteger screenId = ID_IGNORE_SCREEN;
   NSInteger currentScreenId = [self getScreenIdForRect:window];
   NSRect screenRect = [self convertScreenRectToWindowCoords:currentScreenId];
-  if ([screenRef rangeOfString:@"right"].length > 0) {
+  if ([screenRef rangeOfString:RIGHT].length > 0) {
     NSRect testRect = NSMakeRect(screenRect.origin.x+screenRect.size.width, screenRect.origin.y, 1, screenRect.size.height);
     screenId = [self getScreenIdForRect:testRect];
-  } else if ([screenRef rangeOfString:@"left"].length > 0) {
+  } else if ([screenRef rangeOfString:LEFT].length > 0) {
     NSRect testRect = NSMakeRect(screenRect.origin.x-1, screenRect.origin.y, 1, screenRect.size.height);
     screenId = [self getScreenIdForRect:testRect];
-  } else if ([screenRef rangeOfString:@"above"].length > 0 || [screenRef rangeOfString:@"up"].length > 0) {
+  } else if ([screenRef rangeOfString:ABOVE].length > 0 || [screenRef rangeOfString:UP].length > 0) {
     NSRect testRect = NSMakeRect(screenRect.origin.x, screenRect.origin.y - 1, screenRect.size.width, 1);
     screenId = [self getScreenIdForRect:testRect];
-  } else if ([screenRef rangeOfString:@"below"].length > 0 || [screenRef rangeOfString:@"down"].length > 0) {
+  } else if ([screenRef rangeOfString:BELOW].length > 0 || [screenRef rangeOfString:UP].length > 0) {
     NSRect testRect = NSMakeRect(screenRect.origin.x, screenRect.origin.y + screenRect.size.height, screenRect.size.width, 1);
     screenId = [self getScreenIdForRect:testRect];
-  } else if ([screenRef rangeOfString:@"next"].length > 0) {
+  } else if ([screenRef rangeOfString:NEXT].length > 0) {
     if (currentScreenId == [screens count] - 1)
       screenId = ID_MAIN_SCREEN;
     else
       screenId = currentScreenId+1;
-  } else if ([screenRef rangeOfString:@"prev"].length > 0) {
+  } else if ([screenRef rangeOfString:PREVIOUS].length > 0 || [screenRef rangeOfString:PREV].length > 0) {
     if (currentScreenId == ID_MAIN_SCREEN)
       screenId = [screens count] - 1;
     else
       screenId = currentScreenId-1;
-  } else if ([screenRef rangeOfString:@"x"].length > 0) {
-    NSArray *tokens = [screenRef componentsSeparatedByString:@"x"];
+  } else if ([screenRef rangeOfString:X].length > 0) {
+    NSArray *tokens = [screenRef componentsSeparatedByString:X];
     if ([tokens count] < 2) return ID_IGNORE_SCREEN;
     NSInteger width = [[tokens objectAtIndex:0] integerValue];
     NSInteger height = [[tokens objectAtIndex:1] integerValue];
@@ -115,7 +116,7 @@
   NSInteger screenIndex = ID_IGNORE_SCREEN;
   for (NSInteger i = 0; i < [screens count]; i++) {
     NSRect currentIntersection = NSIntersectionRect([self convertScreenRectToWindowCoords:i], rect);
-    if ([self isRect:currentIntersection biggerThan:largestIntersection]) {
+    if ([MathUtils isRect:currentIntersection biggerThan:largestIntersection]) {
       largestIntersection = currentIntersection;
       screenIndex = i;
     }
@@ -126,10 +127,6 @@
 - (BOOL)screenExists:(NSInteger)screenId {
   NSInteger count = ((NSInteger)[[NSScreen screens] count]);
   return (ID_MAIN_SCREEN <= screenId && screenId < count) ? YES : NO;
-}
-
-- (BOOL)isRect:(NSRect)rect1 biggerThan:(NSRect)rect2 {
-  return rect1.size.width*rect1.size.height > rect2.size.width*rect2.size.height;
 }
 
 - (NSDictionary *)getScreenAndWindowValues:(NSInteger)screenId window:(NSRect)cWindowRect newSize:(NSSize)nSize {
@@ -175,38 +172,18 @@
   if (screenId == ID_MAIN_SCREEN) {
     return [[screens objectAtIndex:screenId] frame];
   } else if ([self screenExists:screenId]) {
-    return [self flipYCoordinateOfRect:[[screens objectAtIndex:screenId] frame] withReference:[[screens objectAtIndex:ID_MAIN_SCREEN] frame]];
+    return [MathUtils flipYCoordinateOfRect:[[screens objectAtIndex:screenId] frame] withReference:[[screens objectAtIndex:ID_MAIN_SCREEN] frame]];
   }
   return NSZeroRect;
 }
 
 - (NSRect)convertScreenVisibleRectToWindowCoords:(NSInteger)screenId {
   if (screenId == ID_MAIN_SCREEN) {
-    return [self flipYCoordinateOfRect:[[screens objectAtIndex:ID_MAIN_SCREEN] visibleFrame] withReference:[[screens objectAtIndex:ID_MAIN_SCREEN] frame]];
+    return [MathUtils flipYCoordinateOfRect:[[screens objectAtIndex:ID_MAIN_SCREEN] visibleFrame] withReference:[[screens objectAtIndex:ID_MAIN_SCREEN] frame]];
   } else if ([self screenExists:screenId]) {
-    return [self flipYCoordinateOfRect:[[screens objectAtIndex:screenId] visibleFrame] withReference:[[screens objectAtIndex:ID_MAIN_SCREEN] frame]];
+    return [MathUtils flipYCoordinateOfRect:[[screens objectAtIndex:screenId] visibleFrame] withReference:[[screens objectAtIndex:ID_MAIN_SCREEN] frame]];
   }
   return NSZeroRect;
-}
-
-// I understand that the following method is stupidly written. Apple apparently enjoys keeping
-// multiple types of coordinate spaces. NSScreen.origin returns bottom-left while we need
-// top-left for window moving. Go figure.
-- (NSRect)flipYCoordinateOfRect:(NSRect)original withReference:(NSRect)reference {
-  return NSMakeRect(original.origin.x,
-                    reference.size.height - (reference.origin.y + original.origin.y + original.size.height),
-                    original.size.width,
-                    original.size.height);
-}
-
-// I understand that the following method is stupidly written. Apple apparently enjoys keeping
-// multiple types of coordinate spaces. NSScreen.origin returns bottom-left while we need
-// top-left for window moving. Go figure.
-- (NSRect)unflipYCoordinateOfRect:(NSRect)original withReference:(NSRect)reference {
-  return NSMakeRect(original.origin.x,
-                    reference.size.height - (reference.origin.y + original.origin.y + original.size.height),
-                    original.size.width,
-                    original.size.height);
 }
 
 @end

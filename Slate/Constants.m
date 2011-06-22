@@ -44,6 +44,10 @@ NSString * const SECONDS_BETWEEN_REPEAT = @"secondsBetweenRepeat";
 double     const SECONDS_BETWEEN_REPEAT_DEFAULT = 0.2;
 NSString * const CHECK_DEFAULTS_ON_LOAD = @"checkDefaultsOnLoad";
 BOOL       const CHECK_DEFAULTS_ON_LOAD_DEFAULT = NO;
+NSString * const FOCUS_CHECK_WIDTH = @"focusCheckWidth";
+NSInteger  const FOCUS_CHECK_WIDTH_DEFAULT = 100;
+NSString * const FOCUS_PREFER_SAME_APP = @"focusPreferSameApp";
+BOOL       const FOCUS_PREFER_SAME_APP_DEFAULT = YES;
 
 // Application Option Keys
 NSString * const IGNORE_FAIL = @"IGNORE_FAIL";
@@ -81,6 +85,7 @@ NSString * const NUDGE = @"nudge";
 NSString * const THROW = @"throw";
 NSString * const CORNER = @"corner";
 NSString * const CHAIN = @"chain";
+NSString * const FOCUS = @"focus";
 
 // Parameters and Options
 NSString * const CENTER = @"center";
@@ -90,17 +95,37 @@ NSString * const NONE = @"none";
 NSString * const NORESIZE = @"noresize";
 NSString * const RESIZE_WITH_VALUE = @"resize:";
 
-// Directions
+// Directions and Anchors
 NSString * const UP = @"up";
 NSString * const DOWN = @"down";
 NSString * const LEFT = @"left";
 NSString * const RIGHT = @"right";
 NSString * const TOP = @"top";
 NSString * const BOTTOM = @"bottom";
+NSString * const ABOVE = @"above";
+NSString * const BELOW = @"below";
+NSString * const NEXT = @"next";
+NSString * const PREVIOUS = @"previous";
+NSString * const PREV = @"prev";
+NSString * const BEHIND = @"behind";
 NSString * const TOP_LEFT = @"top-left";
 NSString * const TOP_RIGHT = @"top-right";
 NSString * const BOTTOM_LEFT = @"bottom-left";
 NSString * const BOTTOM_RIGHT = @"bottom-right";
+NSInteger  const DIRECTION_UNKNOWN = -1;
+NSInteger  const DIRECTION_UP = 0;
+NSInteger  const DIRECTION_DOWN = 1;
+NSInteger  const DIRECTION_LEFT = 2;
+NSInteger  const DIRECTION_RIGHT = 3;
+NSInteger  const DIRECTION_TOP = 4;
+NSInteger  const DIRECTION_BOTTOM = 5;
+NSInteger  const DIRECTION_ABOVE = 6;
+NSInteger  const DIRECTION_BELOW = 7;
+NSInteger  const DIRECTION_BEHIND = 8;
+NSInteger  const ANCHOR_TOP_LEFT = 0;
+NSInteger  const ANCHOR_TOP_RIGHT = 1;
+NSInteger  const ANCHOR_BOTTOM_LEFT = 2;
+NSInteger  const ANCHOR_BOTTOM_RIGHT = 3;
 
 // Seperators and such
 NSString * const COMMA = @",";
@@ -115,6 +140,7 @@ NSString * const QUOTES = @"'\"";
 NSString * const EQUALS = @"=";
 NSString * const TILDA = @"~";
 NSString * const SLASH = @"/";
+NSString * const X = @"x";
 
 // Screen constants
 NSString * const REF_CURRENT_SCREEN = @"-1";
@@ -129,3 +155,6 @@ NSString * const RESOLUTIONS = @"resolutions";
 
 // Notifications
 NSString * const NOTIFICATION_SCREEN_CHANGE = @"O3DeviceTimingChanged";
+
+// Applications
+NSString * const FINDER = @"Finder";
