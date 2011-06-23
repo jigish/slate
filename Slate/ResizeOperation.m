@@ -131,7 +131,7 @@
   NSSize cSize = cWindowRect.size;
   NSInteger sizeX = cSize.width;
   NSInteger sizeY = cSize.height;
-  NSString *resizePercentOf = [[SlateConfig getInstance] getConfig:RESIZE_PERCENT_OF defaultValue:RESIZE_PERCENT_OF_DEFAULT];
+  NSString *resizePercentOf = [[SlateConfig getInstance] getConfig:RESIZE_PERCENT_OF];
   if ([resizePercentOf isEqualToString:SCREEN_SIZE]) {
     NSInteger screenId = [sw getScreenId:REF_CURRENT_SCREEN windowRect:cWindowRect];
     if (![sw screenExists:screenId]) {

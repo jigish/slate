@@ -49,7 +49,7 @@ static SlateConfig *_instance = nil;
 - (id)init {
   self = [super init];
   if (self) {
-    [self setConfigs:[[NSMutableDictionary alloc] init]];
+    [self setupDefaultConfigs];
     [self setBindings:[[NSMutableArray alloc] initWithCapacity:10]];
     [self setLayouts:[[NSMutableDictionary alloc] init]];
     [self setDefaultLayouts:[[NSMutableArray alloc] init]];
@@ -66,49 +66,26 @@ static SlateConfig *_instance = nil;
   return [[configs objectForKey:key] boolValue];
 }
 
-- (BOOL)getBoolConfig:(NSString *)key defaultValue:(BOOL)defaultValue {
-  if ([configs objectForKey:key] != nil)
-    return [[configs objectForKey:key] boolValue];
-  return defaultValue;
-}
-
 - (NSInteger)getIntegerConfig:(NSString *)key {
   return [[configs objectForKey:key] integerValue];
-}
-
-- (NSInteger)getIntegerConfig:(NSString *)key defaultValue:(NSInteger)defaultValue {
-  if ([configs objectForKey:key] != nil)
-    return [[configs objectForKey:key] integerValue];
-  return defaultValue;
 }
 
 - (double)getDoubleConfig:(NSString *)key {
   return [[configs objectForKey:key] doubleValue];
 }
 
-- (double)getDoubleConfig:(NSString *)key defaultValue:(double)defaultValue {
-  if ([configs objectForKey:key] != nil)
-    return [[configs objectForKey:key] doubleValue];
-  return defaultValue;
-}
-
 - (NSString *)getConfig:(NSString *)key {
   return [configs objectForKey:key];
-}
-
-- (NSString *)getConfig:(NSString *)key defaultValue:(NSString *)defaultValue{
-  if ([configs objectForKey:key] != nil)
-    return [configs objectForKey:key];
-  return defaultValue;
 }
 
 - (BOOL)load {
   NSLog(@"Loading config...");
 
   // Reset configs and bindings in case we are calling from menu
-  [self setConfigs:[[NSMutableDictionary alloc] init]];
+  [self setupDefaultConfigs];
   [self setBindings:[[NSMutableArray alloc] initWithCapacity:10]];
   [self setLayouts:[[NSMutableDictionary alloc] init]];
+  [self setDefaultLayouts:[[NSMutableArray alloc] init]];
   [self setAliases:[[NSMutableDictionary alloc] init]];
 
   if (![self append:@"~/.slate"]) {
@@ -127,7 +104,7 @@ static SlateConfig *_instance = nil;
     return NO;
   }
 
-  if ([[SlateConfig getInstance] getBoolConfig:CHECK_DEFAULTS_ON_LOAD defaultValue:CHECK_DEFAULTS_ON_LOAD_DEFAULT]) {
+  if ([[SlateConfig getInstance] getBoolConfig:CHECK_DEFAULTS_ON_LOAD]) {
     NSLog(@"Config loaded. Checking defaults...");
     [self onScreenChange:nil];
     NSLog(@"Defaults loaded.");
@@ -175,7 +152,22 @@ static SlateConfig *_instance = nil;
     if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:CONFIG]) {
       // config <key> <value>
       NSLog(@"  LoadingC: %@",line);
-      [configs setObject:[tokens objectAtIndex:2] forKey:[tokens objectAtIndex:1]];
+      if ([configs objectForKey:[tokens objectAtIndex:1]] == nil) {
+        NSLog(@"   ERROR Unrecognized config '%@'",[tokens objectAtIndex:1]);
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"Quit"];
+        [alert addButtonWithTitle:@"Skip"];
+        [alert setMessageText:[NSString stringWithFormat:@"Unrecognized Config '%@'",[tokens objectAtIndex:1]]];
+        [alert setInformativeText:line];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        if ([alert runModal] == NSAlertFirstButtonReturn) {
+          NSLog(@"User selected exit");
+          [NSApp terminate:nil];
+        }
+        [alert release];
+      } else {
+        [configs setObject:[tokens objectAtIndex:2] forKey:[tokens objectAtIndex:1]];
+      }
     } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:BIND]) {
       // bind <key:modifiers> <op> <parameters>
       @try {
@@ -313,12 +305,6 @@ static SlateConfig *_instance = nil;
   [tokens release];
 }
 
-- (void)dealloc {
-  [self setConfigs:nil];
-  [self setBindings:nil];
-  [super dealloc];
-}
-
 - (NSString *)replaceAliases:(NSString *)line {
   NSArray *aliasNames = [aliases allKeys];
   for (NSInteger i = 0; i < [aliasNames count]; i++) {
@@ -367,6 +353,28 @@ static SlateConfig *_instance = nil;
   }
   [resolutions release];
   [sw release];
+}
+
+- (void)setupDefaultConfigs {
+  [self setConfigs:[[NSMutableDictionary alloc] initWithCapacity:10]];
+  [configs setObject:DEFAULT_TO_CURRENT_SCREEN_DEFAULT forKey:DEFAULT_TO_CURRENT_SCREEN];
+  [configs setObject:NUDGE_PERCENT_OF_DEFAULT forKey:NUDGE_PERCENT_OF];
+  [configs setObject:RESIZE_PERCENT_OF_DEFAULT forKey:RESIZE_PERCENT_OF];
+  [configs setObject:REPEAT_ON_HOLD_OPS_DEFAULT forKey:REPEAT_ON_HOLD_OPS];
+  [configs setObject:SECONDS_BETWEEN_REPEAT_DEFAULT forKey:SECONDS_BETWEEN_REPEAT];
+  [configs setObject:CHECK_DEFAULTS_ON_LOAD_DEFAULT forKey:CHECK_DEFAULTS_ON_LOAD];
+  [configs setObject:FOCUS_CHECK_WIDTH_DEFAULT forKey:FOCUS_CHECK_WIDTH];
+  [configs setObject:FOCUS_CHECK_WIDTH_MAX_DEFAULT forKey:FOCUS_CHECK_WIDTH_MAX];
+  [configs setObject:FOCUS_PREFER_SAME_APP_DEFAULT forKey:FOCUS_PREFER_SAME_APP];
+}
+
+- (void)dealloc {
+  [self setConfigs:nil];
+  [self setBindings:nil];
+  [self setAliases:nil];
+  [self setDefaultLayouts:nil];
+  [self setLayouts:nil];
+  [super dealloc];
 }
 
 @end

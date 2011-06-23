@@ -31,7 +31,7 @@ extern NSString * const IF_EXISTS;
 
 // Config Keys
 extern NSString * const DEFAULT_TO_CURRENT_SCREEN;
-extern BOOL       const DEFAULT_TO_CURRENT_SCREEN_DEFAULT;
+extern NSString * const DEFAULT_TO_CURRENT_SCREEN_DEFAULT;
 extern NSString * const NUDGE_PERCENT_OF;
 extern NSString * const NUDGE_PERCENT_OF_DEFAULT;
 extern NSString * const RESIZE_PERCENT_OF;
@@ -39,15 +39,15 @@ extern NSString * const RESIZE_PERCENT_OF_DEFAULT;
 extern NSString * const REPEAT_ON_HOLD_OPS;
 extern NSString * const REPEAT_ON_HOLD_OPS_DEFAULT;
 extern NSString * const SECONDS_BETWEEN_REPEAT;
-extern double     const SECONDS_BETWEEN_REPEAT_DEFAULT;
+extern NSString * const SECONDS_BETWEEN_REPEAT_DEFAULT;
 extern NSString * const CHECK_DEFAULTS_ON_LOAD;
-extern BOOL       const CHECK_DEFAULTS_ON_LOAD_DEFAULT;
+extern NSString * const CHECK_DEFAULTS_ON_LOAD_DEFAULT;
 extern NSString * const FOCUS_CHECK_WIDTH;
-extern NSInteger  const FOCUS_CHECK_WIDTH_DEFAULT;
+extern NSString * const FOCUS_CHECK_WIDTH_DEFAULT;
 extern NSString * const FOCUS_CHECK_WIDTH_MAX;
-extern NSInteger  const FOCUS_CHECK_WIDTH_MAX_DEFAULT;
+extern NSString * const FOCUS_CHECK_WIDTH_MAX_DEFAULT;
 extern NSString * const FOCUS_PREFER_SAME_APP;
-extern BOOL       const FOCUS_PREFER_SAME_APP_DEFAULT;
+extern NSString * const FOCUS_PREFER_SAME_APP_DEFAULT;
 
 // Application Option Keys
 extern NSString * const IGNORE_FAIL;

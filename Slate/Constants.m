@@ -33,7 +33,7 @@ NSString * const IF_EXISTS = @"if_exists";
 
 // Config Keys
 NSString * const DEFAULT_TO_CURRENT_SCREEN = @"defaultToCurrentScreen";
-BOOL       const DEFAULT_TO_CURRENT_SCREEN_DEFAULT = NO;
+NSString * const DEFAULT_TO_CURRENT_SCREEN_DEFAULT = @"false";
 NSString * const NUDGE_PERCENT_OF = @"nudgePercentOf";
 NSString * const NUDGE_PERCENT_OF_DEFAULT = @"windowSize";
 NSString * const RESIZE_PERCENT_OF = @"resizePercentOf";
@@ -41,15 +41,15 @@ NSString * const RESIZE_PERCENT_OF_DEFAULT = @"windowSize";
 NSString * const REPEAT_ON_HOLD_OPS = @"repeatOnHoldOps";
 NSString * const REPEAT_ON_HOLD_OPS_DEFAULT = @"resize,nudge";
 NSString * const SECONDS_BETWEEN_REPEAT = @"secondsBetweenRepeat";
-double     const SECONDS_BETWEEN_REPEAT_DEFAULT = 0.2;
+NSString * const SECONDS_BETWEEN_REPEAT_DEFAULT = @"0.2";
 NSString * const CHECK_DEFAULTS_ON_LOAD = @"checkDefaultsOnLoad";
-BOOL       const CHECK_DEFAULTS_ON_LOAD_DEFAULT = NO;
+NSString * const CHECK_DEFAULTS_ON_LOAD_DEFAULT = @"false";
 NSString * const FOCUS_CHECK_WIDTH = @"focusCheckWidth";
-NSInteger  const FOCUS_CHECK_WIDTH_DEFAULT = 100;
+NSString * const FOCUS_CHECK_WIDTH_DEFAULT = @"100";
 NSString * const FOCUS_CHECK_WIDTH_MAX = @"focusCheckWidthMax";
-NSInteger  const FOCUS_CHECK_WIDTH_MAX_DEFAULT = 100;
+NSString * const FOCUS_CHECK_WIDTH_MAX_DEFAULT = @"100";
 NSString * const FOCUS_PREFER_SAME_APP = @"focusPreferSameApp";
-BOOL       const FOCUS_PREFER_SAME_APP_DEFAULT = YES;
+NSString * const FOCUS_PREFER_SAME_APP_DEFAULT = @"true";
 
 // Application Option Keys
 NSString * const IGNORE_FAIL = @"IGNORE_FAIL";

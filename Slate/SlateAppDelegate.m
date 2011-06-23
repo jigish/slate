@@ -90,8 +90,7 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
         }
         // Setup timer to repeat operation
         currentHotKey = hkCom;
-        currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:SECONDS_BETWEEN_REPEAT
-                                                                                          defaultValue:SECONDS_BETWEEN_REPEAT_DEFAULT]
+        currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:SECONDS_BETWEEN_REPEAT]
                                 target:selfRef
                                 selector:@selector(runBinding:)
                                 userInfo:nil

@@ -92,8 +92,7 @@
       NSSize size = [self convertScreenRectToWindowCoords:i].size;
       if (size.width == width && size.height == height) return i;
     }
-    screenId = [[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN 
-                                           defaultValue:DEFAULT_TO_CURRENT_SCREEN_DEFAULT] ? ID_CURRENT_SCREEN : ID_IGNORE_SCREEN;
+    screenId = [[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN] ? ID_CURRENT_SCREEN : ID_IGNORE_SCREEN;
   } else {
     screenId = [screenRef integerValue];
   }
@@ -104,7 +103,7 @@
     return ID_IGNORE_SCREEN;
   } else if (ID_MAIN_SCREEN <= screenId && screenId < [screens count]) {
     return screenId;
-  } else if ([[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN defaultValue:DEFAULT_TO_CURRENT_SCREEN_DEFAULT]) {
+  } else if ([[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN]) {
     return currentScreenId;
   } else {
     return ID_IGNORE_SCREEN;

@@ -80,7 +80,7 @@ static NSDictionary *dictionary = nil;
       }
     }
 
-    NSArray *repeatOps = [[[SlateConfig getInstance] getConfig:REPEAT_ON_HOLD_OPS defaultValue:REPEAT_ON_HOLD_OPS_DEFAULT] componentsSeparatedByString:COMMA];
+    NSArray *repeatOps = [[[SlateConfig getInstance] getConfig:REPEAT_ON_HOLD_OPS] componentsSeparatedByString:COMMA];
     for (NSInteger i = 0; i < [repeatOps count]; i++) {
       NSMutableString *opStr = [[NSMutableString alloc] initWithCapacity:10];
       [StringTokenizer firstToken:[tokens objectAtIndex:2] into:opStr];

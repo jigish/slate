@@ -40,15 +40,12 @@
 - (BOOL)load;
 - (BOOL)append:(NSString *)file;
 - (BOOL)getBoolConfig:(NSString *)key;
-- (BOOL)getBoolConfig:(NSString *)key defaultValue:(BOOL)defaultValue;
 - (NSInteger)getIntegerConfig:(NSString *)key;
-- (NSInteger)getIntegerConfig:(NSString *)key defaultValue:(NSInteger)defaultValue;
 - (double)getDoubleConfig:(NSString *)key;
-- (double)getDoubleConfig:(NSString *)key defaultValue:(double)defaultValue;
 - (NSString *)getConfig:(NSString *)key;
-- (NSString *)getConfig:(NSString *)key defaultValue:(NSString *)defaultValue;
 - (void)addAlias:(NSString *)line;
 - (NSString *)replaceAliases:(NSString *)line;
 - (void)onScreenChange:(id)notification;
+- (void)setupDefaultConfigs;
 
 @end
