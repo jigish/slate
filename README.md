@@ -196,8 +196,6 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
 * Move/Resize the window any which way: "move topLeftX;topLeftY sizeX;sizeY screen"
 
-    This is the granddaddy of all the operations. The rest of the operations are all wrapped versions of move.
-
         topLeftX = top left x coordinate of the window's desired position (can be an expression)
         topLeftY = top left y coordinate of the window's desired position (can be an expression)
         sizeX = width of the window's desired position (can be an expression)
@@ -278,7 +276,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
         bind 1:ctrl chain push up | push right | push down | push left
 
-    Will bind the keystroke ctrl-1 to push up on the first press, then push right on the second press, then push down on the third pres, the push left on the fourth press and rotate back to pushing up on the fifth press (etc).
+    Will bind the keystroke ctrl-1 to push up on the first press, then push right on the second press, then push down on the third press, the push left on the fourth press and rotate back to pushing up on the fifth press (etc).
 
 * Activate a layout: "layout name"
 
