@@ -1,4 +1,8 @@
-Current Version: 0.4.6
+Current Version: 0.4.7
+
+----------------- 0.4.7 -----------------
+
+Added whitelist checking to SlateConfig
 
 ----------------- 0.4.6 -----------------
 
