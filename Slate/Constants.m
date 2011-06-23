@@ -46,6 +46,8 @@ NSString * const CHECK_DEFAULTS_ON_LOAD = @"checkDefaultsOnLoad";
 BOOL       const CHECK_DEFAULTS_ON_LOAD_DEFAULT = NO;
 NSString * const FOCUS_CHECK_WIDTH = @"focusCheckWidth";
 NSInteger  const FOCUS_CHECK_WIDTH_DEFAULT = 100;
+NSString * const FOCUS_CHECK_WIDTH_MAX = @"focusCheckWidthMax";
+NSInteger  const FOCUS_CHECK_WIDTH_MAX_DEFAULT = 100;
 NSString * const FOCUS_PREFER_SAME_APP = @"focusPreferSameApp";
 BOOL       const FOCUS_PREFER_SAME_APP_DEFAULT = YES;
 

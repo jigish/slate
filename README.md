@@ -40,6 +40,7 @@ List of allowed configs:
 | secondsBetweenRepeat | Number | 0.2 | The number of seconds between repeats (for ops in repeatOnHoldOps) |
 | checkDefaultsOnLoad | Boolean | false | "true" causes the default directives to be checked/triggered after any configuration load |
 | focusCheckWidth | Integer | 100 | The width (in pixels) of the rectangle used to check directions in the focus directive. Only used for right, left, up, above, down, and below directions. The larger this is, the futher away focus will check for adjacent windows. Consequently, the larger this is, the more irritatingly stupid focus can be. |
+| focusCheckWidthMax | Integer | 100 | If set to anything above focusCheckWidth, the focus option will keep expanding the rectangle used to check directions by focusCheckWidth if it does not find a window until it either finds a window or the width of the rectangle is greater than focusCheckWidthMax |
 | focusPreferSameApp | Boolean | true | When this is true, the focus operation will *always* choose a window in the same app to focus if it exists in the check width regardless of intersection size. When this is false, focus will treat all application windows the same and choose the largest intersection size |
 
 Example:

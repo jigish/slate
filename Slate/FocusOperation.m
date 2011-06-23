@@ -62,7 +62,6 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
-  BOOL success = YES;
   AccessibilityWrapper *caAW = [[AccessibilityWrapper alloc] init];
   if (![caAW inited]) return NO;
   NSPoint cwTL = [caAW getCurrentTopLeft];
@@ -71,102 +70,104 @@
   NSString *cwTitle = [AccessibilityWrapper getTitle:[caAW window]];
   NSRect checkRect;
   NSInteger focusCheckWidth = [[SlateConfig getInstance] getIntegerConfig:FOCUS_CHECK_WIDTH defaultValue:FOCUS_CHECK_WIDTH_DEFAULT];
-  if (direction == DIRECTION_UP) checkRect = NSMakeRect(cwTL.x, cwTL.y-focusCheckWidth, cwSize.width, focusCheckWidth);
-  else if (direction == DIRECTION_DOWN) checkRect = NSMakeRect(cwTL.x, cwTL.y+cwSize.height, cwSize.width, focusCheckWidth);
-  else if (direction == DIRECTION_LEFT) checkRect = NSMakeRect(cwTL.x-focusCheckWidth, cwTL.y, focusCheckWidth, cwSize.height);
-  else if (direction == DIRECTION_RIGHT) checkRect = NSMakeRect(cwTL.x+cwSize.width, cwTL.y, focusCheckWidth, cwSize.height);
-  else if (direction == DIRECTION_BEHIND) checkRect = NSMakeRect(cwTL.x, cwTL.y, cwSize.width, cwSize.height);
-  else {
-    [caAW release];
-    return NO;
-  }
-  NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
-  NSRect biggestIntersection = NSZeroRect;
-  AXUIElementRef windowToFocus;
-  AXUIElementRef appToFocus;
-  BOOL foundFocus = NO;
-  BOOL foundFocusInSameApp = NO;
-  for (NSInteger j = 0; j < [apps count]; j++) {
-    NSDictionary *app = [apps objectAtIndex:j];
-    NSString *appName = [app objectForKey:@"NSApplicationName"];
-    NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
-    NSLog(@"I see application '%@' with pid '%@'", appName, appPID);
+  while (focusCheckWidth <= [[SlateConfig getInstance] getIntegerConfig:FOCUS_CHECK_WIDTH_MAX defaultValue:FOCUS_CHECK_WIDTH_MAX_DEFAULT]) {
+    NSLog(@"Checking for adjacent windows with width=%i",(int)focusCheckWidth);
+    if (direction == DIRECTION_UP) checkRect = NSMakeRect(cwTL.x, cwTL.y-focusCheckWidth, cwSize.width, focusCheckWidth);
+    else if (direction == DIRECTION_DOWN) checkRect = NSMakeRect(cwTL.x, cwTL.y+cwSize.height, cwSize.width, focusCheckWidth);
+    else if (direction == DIRECTION_LEFT) checkRect = NSMakeRect(cwTL.x-focusCheckWidth, cwTL.y, focusCheckWidth, cwSize.height);
+    else if (direction == DIRECTION_RIGHT) checkRect = NSMakeRect(cwTL.x+cwSize.width, cwTL.y, focusCheckWidth, cwSize.height);
+    else if (direction == DIRECTION_BEHIND) checkRect = NSMakeRect(cwTL.x, cwTL.y, cwSize.width, cwSize.height);
+    else {
+      [caAW release];
+      return NO;
+    }
+    NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
+    NSRect biggestIntersection = NSZeroRect;
+    AXUIElementRef windowToFocus;
+    AXUIElementRef appToFocus;
+    BOOL foundFocus = NO;
+    BOOL foundFocusInSameApp = NO;
+    for (NSInteger j = 0; j < [apps count]; j++) {
+      NSDictionary *app = [apps objectAtIndex:j];
+      NSString *appName = [app objectForKey:@"NSApplicationName"];
+      NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
+      NSLog(@"I see application '%@' with pid '%@'", appName, appPID);
 
-    AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
-    CFArrayRef windows = [AccessibilityWrapper windowsInApp:appRef];
-    if (!windows || CFArrayGetCount(windows) == 0) continue;
+      AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
+      CFArrayRef windows = [AccessibilityWrapper windowsInApp:appRef];
+      if (!windows || CFArrayGetCount(windows) == 0) continue;
 
-    for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
-      AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
+      for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
+        AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
 
-      if ([AccessibilityWrapper isWindowMinimizedOrHidden:[aw window]]) {
-        NSLog(@" Window is minimized, skipping");
-        [aw release];
-        continue;
-      }
+        if ([AccessibilityWrapper isWindowMinimizedOrHidden:[aw window]]) {
+          NSLog(@" Window is minimized, skipping");
+          [aw release];
+          continue;
+        }
 
-      NSString *wTitle = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windows, i)];
-      if ([wTitle isEqualToString:@""]){
-        NSLog(@" Title is empty, skipping");
-        [aw release];
-        continue; // Chrome and Finder have invisible windows for some reason
-      }
+        NSString *wTitle = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windows, i)];
+        if ([wTitle isEqualToString:@""]){
+          NSLog(@" Title is empty, skipping");
+          [aw release];
+          continue; // Chrome and Finder have invisible windows for some reason
+        }
 
-      NSPoint wTL = [aw getCurrentTopLeft];
-      NSSize wSize = [aw getCurrentSize];
-      NSLog(@" Checking window in %@ in direction %i with rect: (%f,%f %f,%f), title: [%@]",appName,(int)direction,wTL.x,wTL.y,wSize.width,wSize.height,wTitle);
-      NSRect windowRect = NSMakeRect(wTL.x, wTL.y, wSize.width, wSize.height);
+        NSPoint wTL = [aw getCurrentTopLeft];
+        NSSize wSize = [aw getCurrentSize];
+        NSLog(@" Checking window in %@ in direction %i with rect: (%f,%f %f,%f), title: [%@]",appName,(int)direction,wTL.x,wTL.y,wSize.width,wSize.height,wTitle);
+        NSRect windowRect = NSMakeRect(wTL.x, wTL.y, wSize.width, wSize.height);
 
-      if ([wTitle isEqualToString:cwTitle] && NSEqualRects(windowRect, cwRect) && NSEqualPoints(wTL, cwTL)) {
-        NSLog(@" Ignoring current window");
-        [aw release];
-        continue;
-      }
-      NSRect intersection = NSIntersectionRect(checkRect, windowRect);
-      if ([MathUtils isRect:intersection biggerThan:NSZeroRect] && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == [appPID intValue]) {
-        NSLog(@"  Found window in same app in direction %i",(int)direction);
-        if ([[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP defaultValue:FOCUS_PREFER_SAME_APP_DEFAULT]
-            && (!foundFocusInSameApp || [MathUtils isRect:intersection biggerThan:biggestIntersection])) {
-          NSLog(@"   Preferring same app.");
-          appToFocus = appRef;
-          windowToFocus = CFArrayGetValueAtIndex(windows, i);
-          biggestIntersection = intersection;
-          foundFocus = YES;
-          foundFocusInSameApp = YES;
+        if ([wTitle isEqualToString:cwTitle] && NSEqualRects(windowRect, cwRect) && NSEqualPoints(wTL, cwTL)) {
+          NSLog(@" Ignoring current window");
+          [aw release];
+          continue;
+        }
+        NSRect intersection = NSIntersectionRect(checkRect, windowRect);
+        if ([MathUtils isRect:intersection biggerThan:NSZeroRect] && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == [appPID intValue]) {
+          NSLog(@"  Found window in same app in direction %i",(int)direction);
+          if ([[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP defaultValue:FOCUS_PREFER_SAME_APP_DEFAULT]
+              && (!foundFocusInSameApp || [MathUtils isRect:intersection biggerThan:biggestIntersection])) {
+            NSLog(@"   Preferring same app.");
+            appToFocus = appRef;
+            windowToFocus = CFArrayGetValueAtIndex(windows, i);
+            biggestIntersection = intersection;
+            foundFocus = YES;
+            foundFocusInSameApp = YES;
+          } else if ([MathUtils isRect:intersection biggerThan:biggestIntersection]) {
+            appToFocus = appRef;
+            windowToFocus = CFArrayGetValueAtIndex(windows, i);
+            biggestIntersection = intersection;
+            foundFocus = YES;
+          }
         } else if ([MathUtils isRect:intersection biggerThan:biggestIntersection]) {
+          NSLog(@"  Found window in %@ in direction %i (intersection: %f,%f %f,%f)",appName,(int)direction,intersection.origin.x,intersection.origin.y,intersection.size.width,intersection.size.height);
           appToFocus = appRef;
           windowToFocus = CFArrayGetValueAtIndex(windows, i);
           biggestIntersection = intersection;
           foundFocus = YES;
         }
-      } else if ([MathUtils isRect:intersection biggerThan:biggestIntersection]) {
-        NSLog(@"  Found window in %@ in direction %i (intersection: %f,%f %f,%f)",appName,(int)direction,intersection.origin.x,intersection.origin.y,intersection.size.width,intersection.size.height);
-        appToFocus = appRef;
-        windowToFocus = CFArrayGetValueAtIndex(windows, i);
-        biggestIntersection = intersection;
-        foundFocus = YES;
+        [aw release];
       }
-      [aw release];
+      // check if same app && foundFocus && prefer_same_app
+      if(foundFocusInSameApp && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == [appPID intValue] && [[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP defaultValue:FOCUS_PREFER_SAME_APP_DEFAULT]) {
+        AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appToFocus window:windowToFocus];
+        [aw focus];
+        [aw release];
+        [caAW release];
+        return YES;
+      }
     }
-    // check if same app && foundFocus && prefer_same_app
-    if(foundFocusInSameApp && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == [appPID intValue] && [[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP defaultValue:FOCUS_PREFER_SAME_APP_DEFAULT]) {
+    if (foundFocus) {
       AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appToFocus window:windowToFocus];
       [aw focus];
       [aw release];
-      [caAW release];
       return YES;
     }
-  }
-  if (!foundFocus) {
-    [caAW release];
-    return NO;
-  } else {
-    AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appToFocus window:windowToFocus];
-    [aw focus];
-    [aw release];
+    focusCheckWidth += [[SlateConfig getInstance] getIntegerConfig:FOCUS_CHECK_WIDTH defaultValue:FOCUS_CHECK_WIDTH_DEFAULT];
   }
   [caAW release];
-  return success;
+  return NO;
 }
 
 - (BOOL)testOperation {

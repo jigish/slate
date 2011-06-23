@@ -44,6 +44,8 @@ extern NSString * const CHECK_DEFAULTS_ON_LOAD;
 extern BOOL       const CHECK_DEFAULTS_ON_LOAD_DEFAULT;
 extern NSString * const FOCUS_CHECK_WIDTH;
 extern NSInteger  const FOCUS_CHECK_WIDTH_DEFAULT;
+extern NSString * const FOCUS_CHECK_WIDTH_MAX;
+extern NSInteger  const FOCUS_CHECK_WIDTH_MAX_DEFAULT;
 extern NSString * const FOCUS_PREFER_SAME_APP;
 extern BOOL       const FOCUS_PREFER_SAME_APP_DEFAULT;
 
