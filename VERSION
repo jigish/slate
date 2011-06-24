@@ -1,4 +1,8 @@
-Current Version: 0.4.7
+Current Version: 0.4.8
+
+----------------- 0.4.8 -----------------
+
+Fixed some memory leaks
 
 ----------------- 0.4.7 -----------------
 
