@@ -1,4 +1,9 @@
-Current Version: 0.4.8
+Current Version: 0.4.9
+
+----------------- 0.4.9 -----------------
+
+Added "orderScreensLeftToRight" config (default is true)
+Added new monitor identifier "ordered"
 
 ----------------- 0.4.8 -----------------
 

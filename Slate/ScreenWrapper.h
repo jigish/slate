@@ -27,6 +27,8 @@
 
 @property (retain) NSArray *screens;
 
++ (void)updateLeftToRightToDefault;
++ (void)updateLeftToRightToDefault:(NSArray *)theScreens;
 - (id)initWithScreens:(NSArray *)theScreens; // Used for testing
 - (NSInteger)getScreenCount;
 - (void)getScreenResolutionStrings:(NSMutableArray *)strings;
@@ -35,6 +37,7 @@
 - (BOOL)screenExists:(NSInteger)screenId;
 - (NSDictionary *)getScreenAndWindowValues:(NSInteger)screenId window:(NSRect)cWindowRect newSize:(NSSize)nSize;
 - (NSRect)convertScreenRectToWindowCoords:(NSInteger)screenId;
++ (NSRect)convertScreenRectToWindowCoords:(NSScreen *)screen withReference:(NSScreen *)refScreen;
 - (NSRect)convertScreenVisibleRectToWindowCoords:(NSInteger)screenId;
 
 @end

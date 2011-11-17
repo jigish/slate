@@ -337,6 +337,9 @@
 /* Begin PBXProject section */
 		47C4A2861384E8890066B6DE /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = 47C4A2891384E8890066B6DE /* Build configuration list for PBXProject "Slate" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;

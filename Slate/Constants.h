@@ -48,6 +48,8 @@ extern NSString * const FOCUS_CHECK_WIDTH_MAX;
 extern NSString * const FOCUS_CHECK_WIDTH_MAX_DEFAULT;
 extern NSString * const FOCUS_PREFER_SAME_APP;
 extern NSString * const FOCUS_PREFER_SAME_APP_DEFAULT;
+extern NSString * const ORDER_SCREENS_LEFT_TO_RIGHT;
+extern NSString * const ORDER_SCREENS_LEFT_TO_RIGHT_DEFAULT;
 
 // Application Option Keys
 extern NSString * const IGNORE_FAIL;
@@ -152,6 +154,7 @@ extern NSInteger const TYPE_COUNT;
 extern NSInteger const TYPE_RESOLUTIONS;
 extern NSString * const COUNT;
 extern NSString * const RESOLUTIONS;
+extern NSString * const ORDERED;
 
 // Notifications
 extern NSString * const NOTIFICATION_SCREEN_CHANGE;

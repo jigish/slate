@@ -50,6 +50,8 @@ NSString * const FOCUS_CHECK_WIDTH_MAX = @"focusCheckWidthMax";
 NSString * const FOCUS_CHECK_WIDTH_MAX_DEFAULT = @"100";
 NSString * const FOCUS_PREFER_SAME_APP = @"focusPreferSameApp";
 NSString * const FOCUS_PREFER_SAME_APP_DEFAULT = @"true";
+NSString * const ORDER_SCREENS_LEFT_TO_RIGHT = @"orderScreensLeftToRight";
+NSString * const ORDER_SCREENS_LEFT_TO_RIGHT_DEFAULT = @"true";
 
 // Application Option Keys
 NSString * const IGNORE_FAIL = @"IGNORE_FAIL";
@@ -154,6 +156,7 @@ NSInteger const TYPE_COUNT = 0;
 NSInteger const TYPE_RESOLUTIONS = 1;
 NSString * const COUNT = @"count";
 NSString * const RESOLUTIONS = @"resolutions";
+NSString * const ORDERED = @"ordered";
 
 // Notifications
 NSString * const NOTIFICATION_SCREEN_CHANGE = @"O3DeviceTimingChanged";

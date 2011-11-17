@@ -42,6 +42,7 @@ List of allowed configs:
 | focusCheckWidth | Integer | 100 | The width (in pixels) of the rectangle used to check directions in the focus directive. Only used for right, left, up, above, down, and below directions. The larger this is, the futher away focus will check for adjacent windows. Consequently, the larger this is, the more irritatingly stupid focus can be. |
 | focusCheckWidthMax | Integer | 100 | If set to anything above focusCheckWidth, the focus option will keep expanding the rectangle used to check directions by focusCheckWidth if it does not find a window until it either finds a window or the width of the rectangle is greater than focusCheckWidthMax |
 | focusPreferSameApp | Boolean | true | When this is true, the focus operation will *always* choose a window in the same app to focus if it exists in the check width regardless of intersection size. When this is false, focus will treat all application windows the same and choose the largest intersection size |
+| orderScreensLeftToRight | Boolean | true | When this is true, monitors will be ordered from left to right by X coordinate (if two X coordiates are the same, then the lowest Y coordinate will be first). When this is false, screens will be ordered according to the internal Mac OS X ordering which changes depending on which screen was plugged in first. If this is false, you can force ordering of screens by prefixing the screen ID with "ordered:" |
 
 Example:
 
@@ -187,7 +188,7 @@ In addition to the variables above, expressions can be used with the following f
 
 Some operations allow you to specify a screen. Here are the list of possible values for screen:
 
-* Integer representing the screen ID (indexed at 0. Note that this will change if you unplug/replug your monitors in different orders)
+* Integer representing the screen ID (indexed at 0). Screens are ordered from left to right (by X coordinate of the origin which is the top-left point). If orderScreensLeftToRight is set to false, the screen ID is the Mac OS internal ID (indexed at 0). If orderScreensLeftToRight is set to false but you still want to reference screens in the default ordered mode, prefix the screen ID with "ordered:".
 * Screen resolution in the format WIDTHxHEIGHT (e.g. 1440x900)
 * Screen direction relative to the current screen (left|right|up|above|down|below)
 * "next" or "previous" (represents the currentID+1 or currentID-1 screen)

@@ -318,6 +318,7 @@ static SlateConfig *_instance = nil;
 
 - (void)onScreenChange:(id)notification {
   NSLog(@"onScreenChange");
+  [ScreenWrapper updateLeftToRightToDefault];
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   NSInteger screenCount = [sw getScreenCount];
   NSMutableArray *resolutions = [[NSMutableArray alloc] initWithCapacity:10];
@@ -366,6 +367,7 @@ static SlateConfig *_instance = nil;
   [configs setObject:FOCUS_CHECK_WIDTH_DEFAULT forKey:FOCUS_CHECK_WIDTH];
   [configs setObject:FOCUS_CHECK_WIDTH_MAX_DEFAULT forKey:FOCUS_CHECK_WIDTH_MAX];
   [configs setObject:FOCUS_PREFER_SAME_APP_DEFAULT forKey:FOCUS_PREFER_SAME_APP];
+  [configs setObject:ORDER_SCREENS_LEFT_TO_RIGHT_DEFAULT forKey:ORDER_SCREENS_LEFT_TO_RIGHT];
 }
 
 - (void)dealloc {

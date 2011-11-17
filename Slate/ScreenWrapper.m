@@ -23,10 +23,54 @@
 #import "ScreenWrapper.h"
 #import "SlateConfig.h"
 
+static NSMutableArray *leftToRightToDefault = nil;
 
 @implementation ScreenWrapper
 
 @synthesize screens;
+
++ (void)initialize {
+  if (!leftToRightToDefault) {
+    leftToRightToDefault = [[NSMutableArray alloc] init];
+    [ScreenWrapper updateLeftToRightToDefault];
+  }
+}
+
++ (void)updateLeftToRightToDefault {
+  [ScreenWrapper updateLeftToRightToDefault:[NSScreen screens]];
+}
+
++ (void)updateLeftToRightToDefault:(NSArray *)theScreens {
+  [leftToRightToDefault release];
+  leftToRightToDefault = [[NSMutableArray alloc] initWithCapacity:[theScreens count]];
+  NSArray *sortedByXThenY = [theScreens sortedArrayUsingComparator: ^(id screen1, id screen2) {
+    NSRect screen1Rect = [ScreenWrapper convertScreenRectToWindowCoords:screen1 withReference:[theScreens objectAtIndex:ID_MAIN_SCREEN]];
+    NSRect screen2Rect = [ScreenWrapper convertScreenRectToWindowCoords:screen2 withReference:[theScreens objectAtIndex:ID_MAIN_SCREEN]];
+    if (screen1Rect.origin.x > screen2Rect.origin.x) {
+      return (NSComparisonResult)NSOrderedDescending;
+    }
+    if (screen1Rect.origin.x < screen2Rect.origin.x) {
+      return (NSComparisonResult)NSOrderedAscending;
+    }
+    if (screen1Rect.origin.y < screen2Rect.origin.y) {
+      return (NSComparisonResult)NSOrderedDescending;
+    }
+    if (screen1Rect.origin.y > screen2Rect.origin.y) {
+      return (NSComparisonResult)NSOrderedAscending;
+    }
+    return (NSComparisonResult)NSOrderedSame;
+  }];
+  for (NSInteger i = 0; i < [sortedByXThenY count]; i++) {
+    NSNumber *defaultId = nil;
+    for (NSInteger j = 0; j < [theScreens count]; j++) {
+      if ([sortedByXThenY objectAtIndex:i] == [theScreens objectAtIndex:j]) {
+        defaultId = [NSNumber numberWithInteger:j];
+        break;
+      }
+    }
+    [leftToRightToDefault addObject:defaultId];
+  }
+}
 
 - (id)init {
   self = [super init];
@@ -40,6 +84,7 @@
   self = [super init];
   if (self) {
     [self setScreens:theScreens];
+    [ScreenWrapper updateLeftToRightToDefault:theScreens];
   }
   return self;
 }
@@ -61,7 +106,7 @@
   NSInteger screenId = ID_IGNORE_SCREEN;
   NSInteger currentScreenId = [self getScreenIdForRect:window];
   NSRect screenRect = [self convertScreenRectToWindowCoords:currentScreenId];
-  if ([screenRef rangeOfString:RIGHT].length > 0) {
+  if ([screenRef rangeOfString:RIGHT].length > 0) { // Orientation Based
     NSRect testRect = NSMakeRect(screenRect.origin.x+screenRect.size.width, screenRect.origin.y, 1, screenRect.size.height);
     screenId = [self getScreenIdForRect:testRect];
   } else if ([screenRef rangeOfString:LEFT].length > 0) {
@@ -83,7 +128,7 @@
       screenId = [screens count] - 1;
     else
       screenId = currentScreenId-1;
-  } else if ([screenRef rangeOfString:X].length > 0) {
+  } else if ([screenRef rangeOfString:X].length > 0) { // Resolution Based
     NSArray *tokens = [screenRef componentsSeparatedByString:X];
     if ([tokens count] < 2) return ID_IGNORE_SCREEN;
     NSInteger width = [[tokens objectAtIndex:0] integerValue];
@@ -93,8 +138,18 @@
       if (size.width == width && size.height == height) return i;
     }
     screenId = [[SlateConfig getInstance] getBoolConfig:DEFAULT_TO_CURRENT_SCREEN] ? ID_CURRENT_SCREEN : ID_IGNORE_SCREEN;
+  } else if ([screenRef rangeOfString:ORDERED].length > 0) { // Explicitly Ordered
+    NSArray *tokens = [screenRef componentsSeparatedByString:COLON];
+    if ([tokens count] < 2) return ID_IGNORE_SCREEN;
+    NSInteger leftToRightId = [[tokens objectAtIndex:1] integerValue];
+    screenId = (leftToRightId < ID_MAIN_SCREEN || leftToRightId > [screens count]) ? leftToRightId : [[leftToRightToDefault objectAtIndex:leftToRightId] integerValue];
   } else {
-    screenId = [screenRef integerValue];
+    NSInteger screenRefInt = [screenRef integerValue];
+    if (screenRefInt < ID_MAIN_SCREEN || screenRefInt > [screens count]) {
+      screenId = screenRefInt;
+    } else {
+      screenId = [[SlateConfig getInstance] getBoolConfig:ORDER_SCREENS_LEFT_TO_RIGHT] ? [[leftToRightToDefault objectAtIndex:screenRefInt] integerValue] : screenRefInt;
+    }
   }
   NSLog(@"getScreenId for ref=[%@] current=[%ld] screen=[%ld]", screenRef, (long)currentScreenId, (long)screenId);
   if (screenId == ID_CURRENT_SCREEN) {
@@ -165,13 +220,20 @@
           [NSNumber numberWithInteger:(NSInteger)cTopLeft.y], WINDOW_TOP_LEFT_Y, nil];
 }
 
-// The following two methods are the only methods that should contain the frame/visibleFrame calls. All other methods should fetch the frame
+// The following three methods are the only methods that should contain the frame/visibleFrame calls. All other methods should fetch the frame
 // and/or visibleFrame using these methods. This is due to the comment above flipYCoordinateOfRect.
 - (NSRect)convertScreenRectToWindowCoords:(NSInteger)screenId {
   if (screenId == ID_MAIN_SCREEN) {
     return [[screens objectAtIndex:screenId] frame];
   } else if ([self screenExists:screenId]) {
     return [MathUtils flipYCoordinateOfRect:[[screens objectAtIndex:screenId] frame] withReference:[[screens objectAtIndex:ID_MAIN_SCREEN] frame]];
+  }
+  return NSZeroRect;
+}
+
++ (NSRect)convertScreenRectToWindowCoords:(NSScreen *)screen withReference:(NSScreen *)refScreen {
+  if (screen) {
+    return [MathUtils flipYCoordinateOfRect:[screen frame] withReference:[refScreen frame]];
   }
   return NSZeroRect;
 }
