@@ -1,4 +1,8 @@
-Current Version: 0.4.9
+Current Version: 0.4.10
+
+----------------- 0.4.10 ----------------
+
+Fixed Issue #25 - Binding parse error when starting up Slate when referencing unconnected screens
 
 ----------------- 0.4.9 -----------------
 

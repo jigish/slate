@@ -145,7 +145,7 @@ static NSMutableArray *leftToRightToDefault = nil;
     screenId = (leftToRightId < ID_MAIN_SCREEN || leftToRightId > [screens count]) ? leftToRightId : [[leftToRightToDefault objectAtIndex:leftToRightId] integerValue];
   } else {
     NSInteger screenRefInt = [screenRef integerValue];
-    if (screenRefInt < ID_MAIN_SCREEN || screenRefInt > [screens count]) {
+    if (screenRefInt < ID_MAIN_SCREEN || screenRefInt >= [screens count]) {
       screenId = screenRefInt;
     } else {
       screenId = [[SlateConfig getInstance] getBoolConfig:ORDER_SCREENS_LEFT_TO_RIGHT] ? [[leftToRightToDefault objectAtIndex:screenRefInt] integerValue] : screenRefInt;
