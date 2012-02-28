@@ -41,6 +41,10 @@ static SlateAppDelegate *selfRef = nil;
   [self registerHotKeys];
 }
 
+- (IBAction)currentWindowInfo {
+  [windowInfoController showWindow:windowInfo];
+}
+
 - (void)loadConfig {
   [[SlateConfig getInstance] load];
 }
@@ -126,8 +130,13 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
 }
 
 - (void)awakeFromNib {
+  windowInfoController = [[NSWindowController alloc] initWithWindow:windowInfo];
+  
   NSMenuItem *loadConfigItem = [statusMenu insertItemWithTitle:@"Load Config" action:@selector(reconfig) keyEquivalent:@"" atIndex:0];
   [loadConfigItem setTarget:self];
+  
+  NSMenuItem *windowInfoItem = [statusMenu insertItemWithTitle:@"Current Window Info" action:@selector(currentWindowInfo) keyEquivalent:@"" atIndex:1];
+  [windowInfoItem setTarget:self];
 
   statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength: NSVariableStatusItemLength] retain];
   [statusItem setMenu:statusMenu];

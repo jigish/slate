@@ -73,11 +73,7 @@ static NSMutableArray *leftToRightToDefault = nil;
 }
 
 - (id)init {
-  self = [super init];
-  if (self) {
-    [self setScreens:[NSScreen screens]];
-  }
-  return self;
+  return [self initWithScreens:[NSScreen screens]];
 }
 
 - (id)initWithScreens:(NSArray *)theScreens {
@@ -100,6 +96,10 @@ static NSMutableArray *leftToRightToDefault = nil;
     NSLog(@"Adding resolution: %@",resolution);
     [strings addObject:resolution];
   }
+}
+
+- (NSInteger)convertDefaultOrderToLeftToRightOrder:(NSInteger)screenId {
+  return [[leftToRightToDefault objectAtIndex:screenId] integerValue];
 }
 
 - (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window {
@@ -245,6 +245,11 @@ static NSMutableArray *leftToRightToDefault = nil;
     return [MathUtils flipYCoordinateOfRect:[[screens objectAtIndex:screenId] visibleFrame] withReference:[[screens objectAtIndex:ID_MAIN_SCREEN] frame]];
   }
   return NSZeroRect;
+}
+
+- (NSPoint)convertTopLeftToScreenRelative:(NSPoint)topLeft screen:(NSInteger)screenId {
+  NSRect screenRect = [self convertScreenVisibleRectToWindowCoords:screenId];
+  return NSMakePoint(topLeft.x-screenRect.origin.x, topLeft.y-screenRect.origin.y);
 }
 
 @end

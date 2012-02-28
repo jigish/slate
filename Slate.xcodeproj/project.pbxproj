@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
 		3B3E241013A5F59E00B0D762 /* WindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E240F13A5F59E00B0D762 /* WindowState.m */; };
 		3B40AC2113A73530006C9A5C /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40AC2013A73530006C9A5C /* Layout.m */; };
 		3B40AC2413A743B0006C9A5C /* LayoutOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40AC2313A743AF006C9A5C /* LayoutOperation.m */; };
@@ -53,6 +54,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B3335AB14FC1EA900F72638 /* WindowInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowInfoView.h; sourceTree = "<group>"; };
+		3B3335AC14FC1EA900F72638 /* WindowInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowInfoView.m; sourceTree = "<group>"; };
 		3B3E240E13A5F59E00B0D762 /* WindowState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowState.h; sourceTree = "<group>"; };
 		3B3E240F13A5F59E00B0D762 /* WindowState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowState.m; sourceTree = "<group>"; };
 		3B40AC1F13A73530006C9A5C /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
@@ -257,6 +260,8 @@
 				47C4A2A81384E8890066B6DE /* MainMenu.xib */,
 				47C4A2A51384E8890066B6DE /* SlateAppDelegate.h */,
 				47C4A2A61384E8890066B6DE /* SlateAppDelegate.m */,
+				3B3335AB14FC1EA900F72638 /* WindowInfoView.h */,
+				3B3335AC14FC1EA900F72638 /* WindowInfoView.m */,
 			);
 			path = Slate;
 			sourceTree = "<group>";
@@ -425,6 +430,7 @@
 				3BB5380413AEDA1B0005CFFC /* ScreenState.m in Sources */,
 				3BCE40F513B15FF300804615 /* FocusOperation.m in Sources */,
 				3BA7485913B1D0F500CFA792 /* MathUtils.m in Sources */,
+				3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

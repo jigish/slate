@@ -31,6 +31,7 @@
 + (void)updateLeftToRightToDefault:(NSArray *)theScreens;
 - (id)initWithScreens:(NSArray *)theScreens; // Used for testing
 - (NSInteger)getScreenCount;
+- (NSInteger)convertDefaultOrderToLeftToRightOrder:(NSInteger)screenId;
 - (void)getScreenResolutionStrings:(NSMutableArray *)strings;
 - (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window;
 - (NSInteger)getScreenIdForRect:(NSRect)rect;
@@ -39,5 +40,6 @@
 - (NSRect)convertScreenRectToWindowCoords:(NSInteger)screenId;
 + (NSRect)convertScreenRectToWindowCoords:(NSScreen *)screen withReference:(NSScreen *)refScreen;
 - (NSRect)convertScreenVisibleRectToWindowCoords:(NSInteger)screenId;
+- (NSPoint)convertTopLeftToScreenRelative:(NSPoint)topLeft screen:(NSInteger)screenId;
 
 @end

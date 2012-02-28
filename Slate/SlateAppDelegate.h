@@ -24,10 +24,13 @@
 @interface SlateAppDelegate : NSObject <NSApplicationDelegate> {
 @private
   IBOutlet NSMenu *statusMenu;
+  IBOutlet NSWindow *windowInfo;
   NSStatusItem *statusItem;
+  NSWindowController *windowInfoController;
 }
 
 - (IBAction)reconfig;
+- (IBAction)currentWindowInfo;
 - (void)loadConfig;
 - (void)registerHotKeys;
 - (void)processNotification:(id)notification;
