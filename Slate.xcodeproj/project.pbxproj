@@ -22,6 +22,11 @@
 		3BB5380413AEDA1B0005CFFC /* ScreenState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5380313AEDA190005CFFC /* ScreenState.m */; };
 		3BCE40F513B15FF300804615 /* FocusOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE40F413B15FF300804615 /* FocusOperation.m */; };
 		3BDC2B5B1391C55400B0D151 /* ChainOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDC2B5A1391C55400B0D151 /* ChainOperation.m */; };
+		3BDDA17A14FD95E200829D2A /* SnapshotOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17914FD95E200829D2A /* SnapshotOperation.m */; };
+		3BDDA17D14FDA50C00829D2A /* Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17C14FDA50C00829D2A /* Snapshot.m */; };
+		3BDDA18014FDA55600829D2A /* WindowSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */; };
+		3BDDA18314FDAA6600829D2A /* SnapshotList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA18214FDAA6600829D2A /* SnapshotList.m */; };
+		3BF39E1214FDB16F0083E9C4 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF39E1114FDB16F0083E9C4 /* JSONKit.m */; };
 		4747E1EF13877C160005180C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4747E1EE13877C150005180C /* icon.icns */; };
 		47850891138BB234005DFB62 /* status.png in Resources */ = {isa = PBXBuildFile; fileRef = 47850890138BB234005DFB62 /* status.png */; };
 		4786D53513882381004554B1 /* ASCIIToCode.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4786D53413882381004554B1 /* ASCIIToCode.plist */; };
@@ -84,6 +89,16 @@
 		3BCE40F413B15FF300804615 /* FocusOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FocusOperation.m; sourceTree = "<group>"; };
 		3BDC2B591391C55400B0D151 /* ChainOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainOperation.h; sourceTree = "<group>"; };
 		3BDC2B5A1391C55400B0D151 /* ChainOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChainOperation.m; sourceTree = "<group>"; };
+		3BDDA17814FD95E200829D2A /* SnapshotOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapshotOperation.h; sourceTree = "<group>"; };
+		3BDDA17914FD95E200829D2A /* SnapshotOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapshotOperation.m; sourceTree = "<group>"; };
+		3BDDA17B14FDA50C00829D2A /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
+		3BDDA17C14FDA50C00829D2A /* Snapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Snapshot.m; sourceTree = "<group>"; };
+		3BDDA17E14FDA55600829D2A /* WindowSnapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowSnapshot.h; sourceTree = "<group>"; };
+		3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowSnapshot.m; sourceTree = "<group>"; };
+		3BDDA18114FDAA6600829D2A /* SnapshotList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapshotList.h; sourceTree = "<group>"; };
+		3BDDA18214FDAA6600829D2A /* SnapshotList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapshotList.m; sourceTree = "<group>"; };
+		3BF39E1014FDB16F0083E9C4 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		3BF39E1114FDB16F0083E9C4 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		4747E1EE13877C150005180C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Slate/icon.icns; sourceTree = "<group>"; };
 		47850890138BB234005DFB62 /* status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = status.png; path = Slate/status.png; sourceTree = "<group>"; };
 		4786D53413882381004554B1 /* ASCIIToCode.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode.plist; sourceTree = "<group>"; };
@@ -140,6 +155,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3BF39E0F14FDB16F0083E9C4 /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				3BF39E1014FDB16F0083E9C4 /* JSONKit.h */,
+				3BF39E1114FDB16F0083E9C4 /* JSONKit.m */,
+			);
+			path = JSONKit;
+			sourceTree = "<group>";
+		};
 		4747E1F013877D260005180C /* icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +185,12 @@
 				47C4A2CA1384EA510066B6DE /* SlateConfig.m */,
 				3B42D72D13A831E6009103A0 /* ApplicationOptions.h */,
 				3B42D72E13A831E6009103A0 /* ApplicationOptions.m */,
+				3BDDA17B14FDA50C00829D2A /* Snapshot.h */,
+				3BDDA17C14FDA50C00829D2A /* Snapshot.m */,
+				3BDDA18114FDAA6600829D2A /* SnapshotList.h */,
+				3BDDA18214FDAA6600829D2A /* SnapshotList.m */,
+				3BDDA17E14FDA55600829D2A /* WindowSnapshot.h */,
+				3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */,
 			);
 			name = Config;
 			sourceTree = "<group>";
@@ -182,6 +212,8 @@
 				3BA4677C1391721F0081D75C /* OperationFactory.m */,
 				3B7EB3A5138F3F6800EBEC2B /* ResizeOperation.h */,
 				3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */,
+				3BDDA17814FD95E200829D2A /* SnapshotOperation.h */,
+				3BDDA17914FD95E200829D2A /* SnapshotOperation.m */,
 			);
 			name = Operation;
 			sourceTree = "<group>";
@@ -252,6 +284,7 @@
 		47C4A2991384E8890066B6DE /* Slate */ = {
 			isa = PBXGroup;
 			children = (
+				3BF39E0F14FDB16F0083E9C4 /* JSONKit */,
 				4747E1F013877D260005180C /* icons */,
 				478293E813859C0B00452C07 /* Common */,
 				478293E513859BA000452C07 /* Config */,
@@ -431,6 +464,11 @@
 				3BCE40F513B15FF300804615 /* FocusOperation.m in Sources */,
 				3BA7485913B1D0F500CFA792 /* MathUtils.m in Sources */,
 				3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */,
+				3BDDA17A14FD95E200829D2A /* SnapshotOperation.m in Sources */,
+				3BDDA17D14FDA50C00829D2A /* Snapshot.m in Sources */,
+				3BDDA18014FDA55600829D2A /* WindowSnapshot.m in Sources */,
+				3BDDA18314FDAA6600829D2A /* SnapshotList.m in Sources */,
+				3BF39E1214FDB16F0083E9C4 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

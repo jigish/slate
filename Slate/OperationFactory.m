@@ -25,6 +25,7 @@
 #import "MoveOperation.h"
 #import "OperationFactory.h"
 #import "ResizeOperation.h"
+#import "SnapshotOperation.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 
@@ -54,6 +55,12 @@
     operation = [self createLayoutOperationFromString:opString];
   } else if ([op isEqualToString:FOCUS]) {
     operation = [self createFocusOperationFromString:opString];
+  } else if ([op isEqualToString:SNAPSHOT]) {
+    operation = [self createSnapshotOperationFromString:opString];
+  } else if ([op isEqualToString:ACTIVATE_SNAPSHOT]) {
+    operation = [self createActivateSnapshotOperationFromString:opString];
+  } else if ([op isEqualToString:DELETE_SNAPSHOT]) {
+    operation = [self createDeleteSnapshotOperationFromString:opString];
   } else {
     NSLog(@"ERROR: Unrecognized operation '%@'", opString);
     [tokens release];
@@ -349,12 +356,35 @@
 
   if ([tokens count] < 2) {
     NSLog(@"ERROR: Invalid Parameters '%@'", focusOperation);
-    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Layout operations require the following format: 'focus direction'", focusOperation] userInfo:nil]);
+    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Focus operations require the following format: 'focus direction'", focusOperation] userInfo:nil]);
   }
 
   Operation *op = [[FocusOperation alloc] initWithDirection:[tokens objectAtIndex:1]];
   [tokens release];
   return [op autorelease];
+}
+
++ (id)createSnapshotOperationFromString:(NSString *)snapshotOperation {
+  // snapshot name options
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:snapshotOperation into:tokens maxTokens:3];
+  
+  if ([tokens count] < 2) {
+    NSLog(@"ERROR: Invalid Parameters '%@'", snapshotOperation);
+    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Snapshot operations require the following format: 'snapshot name options'", snapshotOperation] userInfo:nil]);
+  }
+  
+  Operation *op = [[SnapshotOperation alloc] initWithName:[tokens objectAtIndex:1] options:([tokens count] > 2 ? [tokens objectAtIndex:2] : nil)];
+  [tokens release];
+  return [op autorelease];
+}
+
++ (id)createActivateSnapshotOperationFromString:(NSString *)activateSnapshotOperation {
+  return nil;
+}
+
++ (id)createDeleteSnapshotOperationFromString:(NSString *)deleteSnapshotOperation {
+  return nil;
 }
 
 @end

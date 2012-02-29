@@ -19,7 +19,7 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 #import <Foundation/Foundation.h>
-
+#import "Snapshot.h"
 
 @interface SlateConfig : NSObject {
 @private
@@ -28,6 +28,7 @@
   NSMutableDictionary *layouts;
   NSMutableArray *defaultLayouts;
   NSMutableDictionary *aliases;
+  NSMutableDictionary *snapshots;
 }
 
 @property (retain) NSMutableDictionary *configs;
@@ -35,6 +36,7 @@
 @property (retain) NSMutableDictionary *layouts;
 @property (retain) NSMutableArray *defaultLayouts;
 @property (retain) NSMutableDictionary *aliases;
+@property (retain) NSMutableDictionary *snapshots;
 
 + (SlateConfig *)getInstance;
 - (BOOL)load;
@@ -47,5 +49,6 @@
 - (NSString *)replaceAliases:(NSString *)line;
 - (void)onScreenChange:(id)notification;
 - (void)setupDefaultConfigs;
+- (void)addSnapshot:(Snapshot *)snapshot name:(NSString *)name saveToDisk:(BOOL)saveToDisk isStack:(BOOL)isStack;
 
 @end

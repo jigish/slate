@@ -34,5 +34,8 @@
 + (id)createChainOperationFromString:(NSString *)chainOperation;
 + (id)createLayoutOperationFromString:(NSString *)layoutOperation;
 + (id)createFocusOperationFromString:(NSString *)focusOperation;
++ (id)createSnapshotOperationFromString:(NSString *)snapshotOperation;
++ (id)createActivateSnapshotOperationFromString:(NSString *)activateSnapshotOperation;
++ (id)createDeleteSnapshotOperationFromString:(NSString *)deleteSnapshotOperation;
 
 @end

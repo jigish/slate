@@ -18,6 +18,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
+extern NSString * const SNAPSHOTS_FILE;
+
 // Directive Keys
 extern NSString * const BIND;
 extern NSString * const CONFIG;
@@ -88,6 +90,9 @@ extern NSString * const THROW;
 extern NSString * const CORNER;
 extern NSString * const CHAIN;
 extern NSString * const FOCUS;
+extern NSString * const SNAPSHOT;
+extern NSString * const ACTIVATE_SNAPSHOT;
+extern NSString * const DELETE_SNAPSHOT;
 
 // Parameters and Options
 extern NSString * const CENTER;
@@ -96,6 +101,14 @@ extern NSString * const BAR_RESIZE_WITH_VALUE;
 extern NSString * const NONE;
 extern NSString * const NORESIZE;
 extern NSString * const RESIZE_WITH_VALUE;
+extern NSString * const SAVE_TO_DISK;
+extern NSString * const STACK;
+extern NSString * const NAME;
+extern NSString * const SNAPSHOTS;
+extern NSString * const APPS;
+extern NSString * const APP_NAME;
+extern NSString * const TITLE;
+extern NSString * const SIZE;
 
 // Directions and Anchors
 extern NSString * const UP;
@@ -143,6 +156,9 @@ extern NSString * const EQUALS;
 extern NSString * const TILDA;
 extern NSString * const SLASH;
 extern NSString * const X;
+extern NSString * const Y;
+extern NSString * const WIDTH;
+extern NSString * const HEIGHT;
 
 // Screen constants
 extern NSString * const REF_CURRENT_SCREEN;

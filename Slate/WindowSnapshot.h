@@ -1,5 +1,5 @@
 //
-//  SnapshotOperation.h
+//  WindowSnapshot.h
 //  Slate
 //
 //  Created by Jigish Patel on 2/28/12.
@@ -18,19 +18,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
-#import "Operation.h"
+#import <Foundation/Foundation.h>
 
-@interface SnapshotOperation : Operation {
+@interface WindowSnapshot : NSObject {
 @private
-  NSString *name;
-  BOOL saveToDisk;
-  BOOL isStack;
+  NSString *appName;
+  NSString *title;
+  NSPoint topLeft;
+  NSSize size;
 }
 
-@property (retain) NSString *name;
-@property (assign) BOOL saveToDisk;
-@property (assign) BOOL isStack;
+@property (retain) NSString *appName;
+@property (retain) NSString *title;
+@property (assign) NSPoint topLeft;
+@property (assign) NSSize size;
 
-- (id)initWithName:(NSString *)theName options:(NSString *)options;
+- (id)initWithAppName:(NSString *)theAppName title:(NSString *)theTitle topLeft:(NSPoint)theTopLeft size:(NSSize)theSize;
+- (NSDictionary *)toDictionary;
 
 @end

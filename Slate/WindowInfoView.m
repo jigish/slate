@@ -26,10 +26,6 @@
 
 - (id)initWithFrame:(NSRect)frame {
   self = [super initWithFrame:frame];
-  if (self) {
-    
-  }
-
   return self;
 }
 
@@ -63,7 +59,6 @@
       if ([title isEqualToString:@""]) continue;
       AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windowsArr, i)];
       NSSize size = [aw getCurrentSize];
-      // TODO fix top left here
       NSPoint badTL = [aw getCurrentTopLeft];
       NSInteger badScreenID = [sw getScreenIdForRect:NSMakeRect(badTL.x, badTL.y, size.width, size.height)];
       NSInteger screenID = [sw convertDefaultOrderToLeftToRightOrder:badScreenID];
@@ -72,6 +67,8 @@
     }
   }
   [self setString:text];
+  [sw release];
+  [resolutions release];
 }
 
 @end

@@ -26,7 +26,9 @@
 #import "ScreenWrapper.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
-
+#import "Snapshot.h"
+#import "SnapshotList.h"
+#import "JSONKit.h"
 
 @implementation SlateConfig
 
@@ -35,6 +37,7 @@
 @synthesize layouts;
 @synthesize defaultLayouts;
 @synthesize aliases;
+@synthesize snapshots;
 
 static SlateConfig *_instance = nil;
 
@@ -54,6 +57,7 @@ static SlateConfig *_instance = nil;
     [self setLayouts:[[NSMutableDictionary alloc] init]];
     [self setDefaultLayouts:[[NSMutableArray alloc] init]];
     [self setAliases:[[NSMutableDictionary alloc] init]];
+    [self setSnapshots:[[NSMutableDictionary alloc] init]];
 
     // Listen for screen change notifications
     NSNotificationCenter *nc = [NSDistributedNotificationCenter defaultCenter];
@@ -354,6 +358,38 @@ static SlateConfig *_instance = nil;
   }
   [resolutions release];
   [sw release];
+}
+
+- (void)saveSnapshots {
+  // Build NSDictionary with snapshots
+  NSMutableDictionary *snapshotDict = [NSMutableDictionary dictionary];
+  NSArray *keys = [snapshots allKeys];
+  for (NSString *name in keys) {
+    SnapshotList *list = [snapshots objectForKey:name];
+    if (![list saveToDisk]) continue;
+    [snapshotDict setObject:[list toDictionary] forKey:name];
+  }
+  
+  // Get NSData from NSDictionary
+  NSData *jsonData = [snapshotDict JSONData];
+  
+  // Save NSData to file
+  [jsonData writeToFile:[SNAPSHOTS_FILE stringByExpandingTildeInPath] atomically:YES];
+}
+
+- (void)addSnapshot:(Snapshot *)snapshot name:(NSString *)name saveToDisk:(BOOL)saveToDisk isStack:(BOOL)isStack {
+  SnapshotList *list = [snapshots objectForKey:name];
+  if (list == nil) {
+    list = [[SnapshotList alloc] initWithName:name saveToDisk:saveToDisk isStack:isStack];
+  } else {
+    [list setName:name];
+    [list setSaveToDisk:saveToDisk];
+    [list setIsStack:isStack];
+  }
+  [list addSnapshot:snapshot];
+  [snapshots setObject:list forKey:name];
+  
+  [self saveSnapshots];
 }
 
 - (void)setupDefaultConfigs {

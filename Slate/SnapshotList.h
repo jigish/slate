@@ -1,5 +1,5 @@
 //
-//  SnapshotOperation.h
+//  SnapshotList.h
 //  Slate
 //
 //  Created by Jigish Patel on 2/28/12.
@@ -18,19 +18,26 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
-#import "Operation.h"
+#import <Foundation/Foundation.h>
 
-@interface SnapshotOperation : Operation {
+@class Snapshot;
+
+@interface SnapshotList : NSObject {
 @private
+  NSMutableArray *snapshots;
   NSString *name;
   BOOL saveToDisk;
   BOOL isStack;
 }
 
+@property (retain) NSMutableArray *snapshots;
 @property (retain) NSString *name;
 @property (assign) BOOL saveToDisk;
 @property (assign) BOOL isStack;
 
-- (id)initWithName:(NSString *)theName options:(NSString *)options;
+- (id)initWithName:(NSString *)theName saveToDisk:(BOOL)theSaveToDisk isStack:(BOOL)theIsStack;
+- (void)addSnapshot:(Snapshot *)snapshot;
+- (Snapshot *)popSnapshot:(BOOL)remove;
+- (NSDictionary *)toDictionary;
 
 @end

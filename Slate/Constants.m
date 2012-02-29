@@ -20,6 +20,8 @@
 
 #import "Constants.h"
 
+NSString * const SNAPSHOTS_FILE = @"~/.slate.snapshots";
+
 // Directive Keys
 NSString * const BIND = @"bind";
 NSString * const CONFIG = @"config";
@@ -90,6 +92,9 @@ NSString * const THROW = @"throw";
 NSString * const CORNER = @"corner";
 NSString * const CHAIN = @"chain";
 NSString * const FOCUS = @"focus";
+NSString * const SNAPSHOT = @"snapshot";
+NSString * const ACTIVATE_SNAPSHOT = @"activate-snapshot";
+NSString * const DELETE_SNAPSHOT = @"delete-snapshot";
 
 // Parameters and Options
 NSString * const CENTER = @"center";
@@ -98,6 +103,14 @@ NSString * const BAR_RESIZE_WITH_VALUE = @"bar-resize:";
 NSString * const NONE = @"none";
 NSString * const NORESIZE = @"noresize";
 NSString * const RESIZE_WITH_VALUE = @"resize:";
+NSString * const SAVE_TO_DISK = @"save-to-disk";
+NSString * const STACK = @"stack";
+NSString * const NAME = @"name";
+NSString * const SNAPSHOTS = @"snapshots";
+NSString * const APPS = @"apps";
+NSString * const APP_NAME = @"app-name";
+NSString * const TITLE = @"title";
+NSString * const SIZE = @"size";
 
 // Directions and Anchors
 NSString * const UP = @"up";
@@ -145,6 +158,9 @@ NSString * const EQUALS = @"=";
 NSString * const TILDA = @"~";
 NSString * const SLASH = @"/";
 NSString * const X = @"x";
+NSString * const Y = @"y";
+NSString * const WIDTH = @"width";
+NSString * const HEIGHT = @"height";
 
 // Screen constants
 NSString * const REF_CURRENT_SCREEN = @"-1";
