@@ -59,6 +59,19 @@
   return dict;
 }
 
++ (Snapshot *)snapshotFromDictionary:(NSDictionary *)dict {
+  Snapshot *s = [[Snapshot alloc] init];
+  NSDictionary *appsDict = [dict objectForKey:APPS];
+  NSArray *appNames = [appsDict allKeys];
+  for (NSString *appName in appNames) {
+    NSArray *windowDicts = [appsDict objectForKey:appName];
+    for (NSDictionary *windowDict in windowDicts) {
+      [s addWindow:[WindowSnapshot windowSnapshotFromDictionary:windowDict] app:appName];
+    }
+  }
+  return s;
+}
+
 - (void)dealloc {
   [self setApps:nil];
   [super dealloc];

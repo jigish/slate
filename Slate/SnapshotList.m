@@ -73,6 +73,15 @@
   return snapshotList;
 }
 
++ (SnapshotList *)snapshotListFromDictionary:(NSDictionary *)dict {
+  SnapshotList *sl = [[SnapshotList alloc] initWithName:[dict objectForKey:NAME] saveToDisk:[[dict objectForKey:SAVE_TO_DISK] boolValue] isStack:[[dict objectForKey:STACK] boolValue]];
+  NSArray *snapshotsArray = [dict objectForKey:SNAPSHOTS];
+  for (NSDictionary *snap in snapshotsArray) {
+    [sl addSnapshot:[Snapshot snapshotFromDictionary:snap]];
+  }
+  return sl;
+}
+
 - (void)dealloc {
   [self setName:nil];
   [self setSnapshots:nil];

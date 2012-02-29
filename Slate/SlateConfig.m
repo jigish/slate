@@ -107,6 +107,22 @@ static SlateConfig *_instance = nil;
     [alert release];
     return NO;
   }
+  
+  if (![self loadSnapshots]) {
+    NSLog(@"  ERROR Could not load %@", SNAPSHOTS_FILE);
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"Quit"];
+    [alert addButtonWithTitle:@"Skip"];
+    [alert setMessageText:[NSString stringWithFormat:@"ERROR Could not load %@", SNAPSHOTS_FILE]];
+    [alert setInformativeText:[NSString stringWithFormat:@"I dunno. Figure it out. Maybe try deleting %@", SNAPSHOTS_FILE]];
+    [alert setAlertStyle:NSWarningAlertStyle];
+    if ([alert runModal] == NSAlertFirstButtonReturn) {
+      NSLog(@"User selected exit");
+      [NSApp terminate:nil];
+    }
+    [alert release];
+    return NO;
+  }
 
   if ([[SlateConfig getInstance] getBoolConfig:CHECK_DEFAULTS_ON_LOAD]) {
     NSLog(@"Config loaded. Checking defaults...");
@@ -121,13 +137,10 @@ static SlateConfig *_instance = nil;
 
 - (BOOL)append:(NSString *)file {
   if (file == nil) return NO;
-  NSString *homeDir = NSHomeDirectory();
   NSString *configFile = file;
-  if ([file rangeOfString:TILDA].location != NSNotFound)
-    configFile = [file stringByReplacingOccurrencesOfString:TILDA withString:homeDir];
-  else if ([file rangeOfString:SLASH].location != 0)
-    configFile = [homeDir stringByAppendingFormat:@"/%@",file];
-  NSString *fileString = [NSString stringWithContentsOfFile:configFile encoding:NSUTF8StringEncoding error:nil];
+  if ([file rangeOfString:SLASH].location != 0 && [file rangeOfString:TILDA].location != 0)
+    configFile = [NSString stringWithFormat:@"~/%@", file];
+  NSString *fileString = [NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:nil];
   if (fileString == nil)
     return NO;
   NSArray *lines = [fileString componentsSeparatedByString:@"\n"];
@@ -302,6 +315,25 @@ static SlateConfig *_instance = nil;
   return YES;
 }
 
+- (void)snapshotsFromDictionary:(NSDictionary *)snapshotsDict {
+  NSArray *keys = [snapshotsDict allKeys];
+  for (NSString *name in keys) {
+    SnapshotList *list = [SnapshotList snapshotListFromDictionary:[snapshotsDict objectForKey:name]];
+    [snapshots setObject:list forKey:[list name]];
+  }
+}
+
+- (BOOL)loadSnapshots {
+  NSString *fileString = [NSString stringWithContentsOfFile:[SNAPSHOTS_FILE stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:nil];
+  if (fileString == nil || [fileString isEqualToString:EMPTY])
+    return YES;
+  id iShouldBeADictionary = [fileString objectFromJSONString];
+  if (![iShouldBeADictionary isKindOfClass:[NSDictionary class]]) return NO;
+  NSDictionary *snapshotsDict = iShouldBeADictionary;
+  [self snapshotsFromDictionary:snapshotsDict];
+  return YES;
+}
+
 - (void)addAlias:(NSString *)line {
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:line into:tokens maxTokens:3];
@@ -360,8 +392,7 @@ static SlateConfig *_instance = nil;
   [sw release];
 }
 
-- (void)saveSnapshots {
-  // Build NSDictionary with snapshots
+- (NSDictionary *)snapshotsToDictionary {
   NSMutableDictionary *snapshotDict = [NSMutableDictionary dictionary];
   NSArray *keys = [snapshots allKeys];
   for (NSString *name in keys) {
@@ -369,6 +400,12 @@ static SlateConfig *_instance = nil;
     if (![list saveToDisk]) continue;
     [snapshotDict setObject:[list toDictionary] forKey:name];
   }
+  return snapshotDict;
+}
+
+- (void)saveSnapshots {
+  // Build NSDictionary with snapshots
+  NSDictionary *snapshotDict = [self snapshotsToDictionary];
   
   // Get NSData from NSDictionary
   NSData *jsonData = [snapshotDict JSONData];

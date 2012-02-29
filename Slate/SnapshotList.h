@@ -39,5 +39,6 @@
 - (void)addSnapshot:(Snapshot *)snapshot;
 - (Snapshot *)popSnapshot:(BOOL)remove;
 - (NSDictionary *)toDictionary;
++ (SnapshotList *)snapshotListFromDictionary:(NSDictionary *)dict;
 
 @end

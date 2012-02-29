@@ -41,6 +41,7 @@
 + (SlateConfig *)getInstance;
 - (BOOL)load;
 - (BOOL)append:(NSString *)file;
+- (BOOL)loadSnapshots;
 - (BOOL)getBoolConfig:(NSString *)key;
 - (NSInteger)getIntegerConfig:(NSString *)key;
 - (double)getDoubleConfig:(NSString *)key;

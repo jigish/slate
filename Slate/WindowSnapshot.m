@@ -51,6 +51,13 @@
           [NSNumber numberWithFloat:size.height], HEIGHT, nil];
 }
 
++ (WindowSnapshot *)windowSnapshotFromDictionary:(NSDictionary *)dict {
+  return [[WindowSnapshot alloc] initWithAppName:[dict objectForKey:APP_NAME]
+                                           title:[dict objectForKey:TITLE]
+                                         topLeft:NSMakePoint([[dict objectForKey:X] floatValue], [[dict objectForKey:Y] floatValue])
+                                            size:NSMakeSize([[dict objectForKey:WIDTH] floatValue], [[dict objectForKey:HEIGHT] floatValue])];
+}
+
 - (void)dealloc {
   [self setAppName:nil];
   [self setTitle:nil];

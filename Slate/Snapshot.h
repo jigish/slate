@@ -31,5 +31,6 @@
 
 - (void)addWindow:(WindowSnapshot *)windowSnapshot app:(NSString *)appName;
 - (NSDictionary *)toDictionary;
++ (Snapshot *)snapshotFromDictionary:(NSDictionary *)dict;
 
 @end

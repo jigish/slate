@@ -35,5 +35,6 @@
 
 - (id)initWithAppName:(NSString *)theAppName title:(NSString *)theTitle topLeft:(NSPoint)theTopLeft size:(NSSize)theSize;
 - (NSDictionary *)toDictionary;
++ (WindowSnapshot *)windowSnapshotFromDictionary:(NSDictionary *)dict;
 
 @end
