@@ -26,6 +26,7 @@
 #import "OperationFactory.h"
 #import "ResizeOperation.h"
 #import "SnapshotOperation.h"
+#import "DeleteSnapshotOperation.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 
@@ -384,7 +385,18 @@
 }
 
 + (id)createDeleteSnapshotOperationFromString:(NSString *)deleteSnapshotOperation {
-  return nil;
+  // delete-snapshot name options
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:deleteSnapshotOperation into:tokens maxTokens:3];
+  
+  if ([tokens count] < 2) {
+    NSLog(@"ERROR: Invalid Parameters '%@'", deleteSnapshotOperation);
+    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Delete Snapshot operations require the following format: 'delete-snapshot name options'", deleteSnapshotOperation] userInfo:nil]);
+  }
+  
+  Operation *op = [[DeleteSnapshotOperation alloc] initWithName:[tokens objectAtIndex:1] options:([tokens count] > 2 ? [tokens objectAtIndex:2] : nil)];
+  [tokens release];
+  return [op autorelease];
 }
 
 @end

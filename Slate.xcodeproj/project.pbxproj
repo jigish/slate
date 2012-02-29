@@ -21,6 +21,7 @@
 		3BADA37213A2C1ED009E21D8 /* AccessibilityWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BADA37113A2C1ED009E21D8 /* AccessibilityWrapper.m */; };
 		3BB5380413AEDA1B0005CFFC /* ScreenState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5380313AEDA190005CFFC /* ScreenState.m */; };
 		3BCE40F513B15FF300804615 /* FocusOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE40F413B15FF300804615 /* FocusOperation.m */; };
+		3BD8191D14FDC0CE003D63BC /* DeleteSnapshotOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD8191C14FDC0CE003D63BC /* DeleteSnapshotOperation.m */; };
 		3BDC2B5B1391C55400B0D151 /* ChainOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDC2B5A1391C55400B0D151 /* ChainOperation.m */; };
 		3BDDA17A14FD95E200829D2A /* SnapshotOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17914FD95E200829D2A /* SnapshotOperation.m */; };
 		3BDDA17D14FDA50C00829D2A /* Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17C14FDA50C00829D2A /* Snapshot.m */; };
@@ -87,6 +88,8 @@
 		3BB5380313AEDA190005CFFC /* ScreenState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenState.m; sourceTree = "<group>"; };
 		3BCE40F313B15FF300804615 /* FocusOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusOperation.h; sourceTree = "<group>"; };
 		3BCE40F413B15FF300804615 /* FocusOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FocusOperation.m; sourceTree = "<group>"; };
+		3BD8191B14FDC0CE003D63BC /* DeleteSnapshotOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteSnapshotOperation.h; sourceTree = "<group>"; };
+		3BD8191C14FDC0CE003D63BC /* DeleteSnapshotOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteSnapshotOperation.m; sourceTree = "<group>"; };
 		3BDC2B591391C55400B0D151 /* ChainOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainOperation.h; sourceTree = "<group>"; };
 		3BDC2B5A1391C55400B0D151 /* ChainOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChainOperation.m; sourceTree = "<group>"; };
 		3BDDA17814FD95E200829D2A /* SnapshotOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapshotOperation.h; sourceTree = "<group>"; };
@@ -200,6 +203,8 @@
 			children = (
 				3BDC2B591391C55400B0D151 /* ChainOperation.h */,
 				3BDC2B5A1391C55400B0D151 /* ChainOperation.m */,
+				3BD8191B14FDC0CE003D63BC /* DeleteSnapshotOperation.h */,
+				3BD8191C14FDC0CE003D63BC /* DeleteSnapshotOperation.m */,
 				3BCE40F313B15FF300804615 /* FocusOperation.h */,
 				3BCE40F413B15FF300804615 /* FocusOperation.m */,
 				3B40AC2213A743AE006C9A5C /* LayoutOperation.h */,
@@ -469,6 +474,7 @@
 				3BDDA18014FDA55600829D2A /* WindowSnapshot.m in Sources */,
 				3BDDA18314FDAA6600829D2A /* SnapshotList.m in Sources */,
 				3BF39E1214FDB16F0083E9C4 /* JSONKit.m in Sources */,
+				3BD8191D14FDC0CE003D63BC /* DeleteSnapshotOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

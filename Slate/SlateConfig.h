@@ -50,5 +50,7 @@
 - (void)onScreenChange:(id)notification;
 - (void)setupDefaultConfigs;
 - (void)addSnapshot:(Snapshot *)snapshot name:(NSString *)name saveToDisk:(BOOL)saveToDisk isStack:(BOOL)isStack;
+- (void)deleteSnapshot:(NSString *)name pop:(BOOL)pop;
+- (Snapshot *)popSnapshot:(NSString *)name remove:(BOOL)remove;
 
 @end

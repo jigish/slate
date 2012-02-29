@@ -392,6 +392,29 @@ static SlateConfig *_instance = nil;
   [self saveSnapshots];
 }
 
+- (void)deleteSnapshot:(NSString *)name pop:(BOOL)pop {
+  if (pop) {
+    SnapshotList *list = [snapshots objectForKey:name];
+    if (list) {
+      [list popSnapshot:YES];
+    }
+  } else {
+    [snapshots removeObjectForKey:name];
+  }
+  
+  [self saveSnapshots];
+}
+
+- (Snapshot *)popSnapshot:(NSString *)name remove:(BOOL)remove {
+  SnapshotList *list = [snapshots objectForKey:name];
+  Snapshot *snapshot = nil;
+  if (list) {
+    snapshot = [list popSnapshot:remove];
+  }
+  [self saveSnapshots];
+  return snapshot;
+}
+
 - (void)setupDefaultConfigs {
   [self setConfigs:[[NSMutableDictionary alloc] initWithCapacity:10]];
   [configs setObject:DEFAULT_TO_CURRENT_SCREEN_DEFAULT forKey:DEFAULT_TO_CURRENT_SCREEN];

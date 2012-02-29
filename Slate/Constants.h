@@ -109,6 +109,7 @@ extern NSString * const APPS;
 extern NSString * const APP_NAME;
 extern NSString * const TITLE;
 extern NSString * const SIZE;
+extern NSString * const ALL;
 
 // Directions and Anchors
 extern NSString * const UP;

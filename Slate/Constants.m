@@ -111,6 +111,7 @@ NSString * const APPS = @"apps";
 NSString * const APP_NAME = @"app-name";
 NSString * const TITLE = @"title";
 NSString * const SIZE = @"size";
+NSString * const ALL = @"all";
 
 // Directions and Anchors
 NSString * const UP = @"up";
