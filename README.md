@@ -299,6 +299,44 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to focus the window Slate finds to be above the currently focused window. (minimized and hidden windows are ignored and a couple global configuration options set using the "config" directive exist to tweak this).
 
+* Create a snapshot of your current window locations: "snapshot name options"
+
+        name = the name of the snapshot to create (used in delete-snapshot and activate-snapshot)
+        options = (optional) a semicolon separated list of any of the following options:
+          save-to-disk -> saves the snapshot to disk so Slate will load it when it starts up next
+          stack -> treats this snapshot as stack so you can use this binding multiple times to push snapshots on the stack
+
+    Example:
+
+         bind 1:ctrl snapshot theName save-to-disk;stack
+
+    Will bind the keystroke ctrl-1 to create a snapshot called "theName", save that snapshot to disk, and treat it as a stack so you can hit the keystroke multiple times to push snapshots onto the stack.
+
+* Delete a snapshot: "delete-snapshot name options"
+
+        name = the name of the snapshot to delete
+        options = (optional) a semicolon separated list of any of the following options:
+          all -> if the snapshot is a stack (if it isn't, this option is useless), this will delete all snapshots in the stack (if this option is not specified, the default is to only delete the top snapshot of the stack).
+
+    Example:
+
+        bind 1:ctrl delete-snapshot theName all
+
+    Will bind the keystroke ctrl-1 to delete the snapshot called "theName" if it exists. This will delete all instances of theName meaning if you have pushed multiple snapshots on the stack, it will completely clear them all.
+
+* Activate a snapshot: "activate-snapshot name options"
+
+        name = the name of the snapshot to delete
+        options = (optional) a semicolon separated list of any of the following options:
+          delete -> this will delete the snapshot after activating it (if the snapshot is a stack, it will pop the top snapshot off and keep the rest)
+
+    Example:
+
+        bind 1:ctrl activate-snapshot theName delete
+
+    Will bind the keystroke ctrl-1 to activate the snapshot called "theName" if it exists. This will also delete the snapshot (or pop it off the stack if the snapshot is a stack).
+
+
 ### The "source" Directive ###
 
 The source directive follows the following format (tokens may be separated by any number of spaces):
