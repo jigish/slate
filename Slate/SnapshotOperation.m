@@ -71,7 +71,6 @@
     NSString *appName = [app objectForKey:@"NSApplicationName"];
     NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
     NSLog(@"I see application '%@' with pid '%@'", appName, appPID);
-    // Yes, I am aware that the following blocks are inefficient. Deal with it.
     AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
     CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInApp:appRef];
     if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) continue;
