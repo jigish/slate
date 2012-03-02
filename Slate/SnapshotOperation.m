@@ -63,7 +63,7 @@
   return success;
 }
 
-- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamunused screenWrapper:(ScreenWrapper *)iamalsounused {
+- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
   NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
   Snapshot *snapshot = [[Snapshot alloc] init];
   for (NSInteger i = 0; i < [apps count]; i++) {
