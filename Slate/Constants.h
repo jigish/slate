@@ -110,6 +110,7 @@ extern NSString * const APP_NAME;
 extern NSString * const TITLE;
 extern NSString * const SIZE;
 extern NSString * const ALL;
+extern NSString * const DELETE;
 
 // Directions and Anchors
 extern NSString * const UP;

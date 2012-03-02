@@ -27,6 +27,7 @@
 #import "ResizeOperation.h"
 #import "SnapshotOperation.h"
 #import "DeleteSnapshotOperation.h"
+#import "ActivateSnapshotOperation.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 
@@ -369,19 +370,30 @@
   // snapshot name options
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:snapshotOperation into:tokens maxTokens:3];
-  
+
   if ([tokens count] < 2) {
     NSLog(@"ERROR: Invalid Parameters '%@'", snapshotOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Snapshot operations require the following format: 'snapshot name options'", snapshotOperation] userInfo:nil]);
   }
-  
+
   Operation *op = [[SnapshotOperation alloc] initWithName:[tokens objectAtIndex:1] options:([tokens count] > 2 ? [tokens objectAtIndex:2] : nil)];
   [tokens release];
   return [op autorelease];
 }
 
 + (id)createActivateSnapshotOperationFromString:(NSString *)activateSnapshotOperation {
-  return nil;
+  // activate-snapshot name options
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:activateSnapshotOperation into:tokens maxTokens:3];
+
+  if ([tokens count] < 2) {
+    NSLog(@"ERROR: Invalid Parameters '%@'", activateSnapshotOperation);
+    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Activate Snapshot operations require the following format: 'delete-snapshot name options'", activateSnapshotOperation] userInfo:nil]);
+  }
+
+  Operation *op = [[ActivateSnapshotOperation alloc] initWithName:[tokens objectAtIndex:1] options:([tokens count] > 2 ? [tokens objectAtIndex:2] : nil)];
+  [tokens release];
+  return [op autorelease];
 }
 
 + (id)createDeleteSnapshotOperationFromString:(NSString *)deleteSnapshotOperation {
