@@ -1,4 +1,8 @@
-Current Version: 0.4.12
+Current Version: 0.4.13
+
+----------------- 0.4.13 ----------------
+
+Switch to ARC (no new feature or bug fixes, but should have better memory management and performance)
 
 ----------------- 0.4.12 ----------------
 
