@@ -41,7 +41,6 @@ static NSMutableArray *leftToRightToDefault = nil;
 }
 
 + (void)updateLeftToRightToDefault:(NSArray *)theScreens {
-  [leftToRightToDefault release];
   leftToRightToDefault = [[NSMutableArray alloc] initWithCapacity:[theScreens count]];
   NSArray *sortedByXThenY = [theScreens sortedArrayUsingComparator: ^(id screen1, id screen2) {
     NSRect screen1Rect = [ScreenWrapper convertScreenRectToWindowCoords:screen1 withReference:[theScreens objectAtIndex:ID_MAIN_SCREEN]];

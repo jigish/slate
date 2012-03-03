@@ -58,10 +58,5 @@
                                             size:NSMakeSize([[dict objectForKey:WIDTH] floatValue], [[dict objectForKey:HEIGHT] floatValue])];
 }
 
-- (void)dealloc {
-  [self setAppName:nil];
-  [self setTitle:nil];
-  [super dealloc];
-}
 
 @end

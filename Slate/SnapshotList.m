@@ -82,10 +82,5 @@
   return sl;
 }
 
-- (void)dealloc {
-  [self setName:nil];
-  [self setSnapshots:nil];
-  [super dealloc];
-}
 
 @end

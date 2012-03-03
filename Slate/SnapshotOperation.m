@@ -83,7 +83,6 @@
       NSSize size = [aw getCurrentSize];
       NSPoint tl = [aw getCurrentTopLeft];
       [snapshot addWindow:[[WindowSnapshot alloc] initWithAppName:appName title:title topLeft:tl size:size] app:appName];
-      [aw release];
     }
   }
   [[SlateConfig getInstance] addSnapshot:snapshot name:name saveToDisk:saveToDisk isStack:isStack];
@@ -94,9 +93,5 @@
   return YES;
 }
 
-- (void)dealloc {
-  [self setName:nil];
-  [super dealloc];
-}
 
 @end

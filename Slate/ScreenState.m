@@ -36,7 +36,6 @@
     NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
     [StringTokenizer tokenize:state into:tokens];
     if ([tokens count] < 3) {
-      [tokens release];
       return nil;
     }
     [self setLayout:[tokens objectAtIndex:1]];
@@ -45,7 +44,6 @@
     //   resolutions:WIDTHxHEIGHT;...
     NSArray *screenSetup = [[tokens objectAtIndex:2] componentsSeparatedByString:COLON];
     if ([screenSetup count] < 2) {
-      [tokens release];
       return nil;
     }
     if ([[screenSetup objectAtIndex:0] isEqualToString:COUNT]) {
@@ -57,18 +55,11 @@
       [resolutions sortUsingSelector:@selector(compare:)];
       [self setType:TYPE_RESOLUTIONS];
     } else {
-      [tokens release];
       return nil;
     }
-    [tokens release];
   }
   return self;
 }
 
-- (void)dealloc {
-  [self setLayout:nil];
-  [self setResolutions:nil];
-  [super dealloc];
-}
 
 @end

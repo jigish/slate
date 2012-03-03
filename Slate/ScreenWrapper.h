@@ -25,7 +25,7 @@
   NSArray *screens;
 }
 
-@property (retain) NSArray *screens;
+@property  NSArray *screens;
 
 + (void)updateLeftToRightToDefault;
 + (void)updateLeftToRightToDefault:(NSArray *)theScreens;

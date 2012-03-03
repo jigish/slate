@@ -103,8 +103,6 @@
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   BOOL success = NO;
   if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
-  [sw release];
-  [aw release];
   NSLog(@"-----------------  End Move Operation  -----------------");
   return success;
 }
@@ -135,10 +133,5 @@
   return [dimensions getSizeWithDict:values];
 }
 
-- (void)dealloc {
-  [self setTopLeft:nil];
-  [self setDimensions:nil];
-  [super dealloc];
-}
 
 @end

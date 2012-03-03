@@ -65,10 +65,8 @@
     operation = [self createDeleteSnapshotOperationFromString:opString];
   } else {
     NSLog(@"ERROR: Unrecognized operation '%@'", opString);
-    [tokens release];
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);
   }
-  [tokens release];
   return operation;
 }
 
@@ -88,8 +86,7 @@
   } else {
     op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
   }
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 + (id)createResizeOperationFromString:(NSString *)resizeOperation {
@@ -107,8 +104,7 @@
     anchor = [tokens objectAtIndex:3];
   }
   Operation *op = [[ResizeOperation alloc] initWithAnchor:anchor xResize:[tokens objectAtIndex:1] yResize:[tokens objectAtIndex:2]];
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 + (id)createPushOperationFromString:(NSString *)pushOperation {
@@ -197,8 +193,7 @@
     @throw([NSException exceptionWithName:@"Unrecognized Direction" reason:[NSString stringWithFormat:@"Unrecognized direction '%@' in '%@'", direction, pushOperation] userInfo:nil]);
   }
   Operation *op = [[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 + (id)createNudgeOperationFromString:(NSString *)nudgeOperation {
@@ -232,8 +227,7 @@
     tlY = [tlY stringByAppendingString:y];
   }
   Operation *op = [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:SEMICOLON] stringByAppendingString:tlY] dimensions:@"windowSizeX;windowSizeY" monitor:REF_CURRENT_SCREEN];
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 + (id)createThrowOperationFromString:(NSString *)throwOperation {
@@ -264,8 +258,7 @@
     }
   }
   Operation *op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[tokens objectAtIndex:1]];
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 + (id)createCornerOperationFromString:(NSString *)cornerOperation {
@@ -303,8 +296,7 @@
   }
   
   Operation *op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 + (id)createChainOperationFromString:(NSString *)chainOperation {
@@ -331,9 +323,7 @@
   }
   
   Operation *op = [[ChainOperation alloc] initWithArray:opArray];
-  [opArray release];
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 + (id)createLayoutOperationFromString:(NSString *)layoutOperation {
@@ -347,8 +337,7 @@
   }
 
   Operation *op = [[LayoutOperation alloc] initWithName:[tokens objectAtIndex:1]];
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 + (id)createFocusOperationFromString:(NSString *)focusOperation {
@@ -362,8 +351,7 @@
   }
 
   Operation *op = [[FocusOperation alloc] initWithDirection:[tokens objectAtIndex:1]];
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 + (id)createSnapshotOperationFromString:(NSString *)snapshotOperation {
@@ -377,8 +365,7 @@
   }
 
   Operation *op = [[SnapshotOperation alloc] initWithName:[tokens objectAtIndex:1] options:([tokens count] > 2 ? [tokens objectAtIndex:2] : nil)];
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 + (id)createActivateSnapshotOperationFromString:(NSString *)activateSnapshotOperation {
@@ -392,8 +379,7 @@
   }
 
   Operation *op = [[ActivateSnapshotOperation alloc] initWithName:[tokens objectAtIndex:1] options:([tokens count] > 2 ? [tokens objectAtIndex:2] : nil)];
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 + (id)createDeleteSnapshotOperationFromString:(NSString *)deleteSnapshotOperation {
@@ -407,8 +393,7 @@
   }
   
   Operation *op = [[DeleteSnapshotOperation alloc] initWithName:[tokens objectAtIndex:1] options:([tokens count] > 2 ? [tokens objectAtIndex:2] : nil)];
-  [tokens release];
-  return [op autorelease];
+  return op;
 }
 
 @end

@@ -17,10 +17,10 @@
   NSMutableArray *resolutions;
 }
 
-@property (retain) NSString *layout;
+@property  NSString *layout;
 @property (assign) NSInteger type;
 @property (assign) NSInteger count;
-@property (retain) NSMutableArray *resolutions;
+@property  NSMutableArray *resolutions;
 
 - (id)initWithString:(NSString *)state;
 

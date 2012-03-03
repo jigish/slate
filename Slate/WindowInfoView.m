@@ -67,8 +67,6 @@
     }
   }
   [self setString:text];
-  [sw release];
-  [resolutions release];
 }
 
 @end

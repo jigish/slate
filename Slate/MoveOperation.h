@@ -31,9 +31,9 @@
   BOOL moveFirst;
 }
 
-@property (retain) ExpressionPoint *topLeft;
-@property (retain) ExpressionPoint *dimensions;
-@property (retain) NSString *monitor;
+@property  ExpressionPoint *topLeft;
+@property  ExpressionPoint *dimensions;
+@property  NSString *monitor;
 @property (assign) BOOL moveFirst;
 
 - (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSString *)mon;

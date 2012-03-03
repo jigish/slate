@@ -46,11 +46,6 @@
   return self;
 }
 
-- (void)dealloc {
-  [self setX:nil];
-  [self setY:nil];
-  [super dealloc];
-}
 
 - (NSPoint)getPointWithDict:(NSDictionary *)values {
   return NSMakePoint([self expToInteger:x withDict:values],[self expToInteger:y withDict:values]);

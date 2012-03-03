@@ -26,7 +26,7 @@
   BOOL pop;
 }
 
-@property (retain) NSString *name;
+@property  NSString *name;
 @property (assign) BOOL pop;
 
 - (id)initWithName:(NSString *)theName options:(NSString *)options;

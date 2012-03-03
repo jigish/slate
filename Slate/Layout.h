@@ -29,8 +29,8 @@
 }
 
 @property (copy) NSString *name;
-@property (retain) NSMutableDictionary *appStates;
-@property (retain) NSMutableDictionary *appOptions;
+@property  NSMutableDictionary *appStates;
+@property  NSMutableDictionary *appOptions;
 
 - (id)initWithString:(NSString *)layout;
 - (void)addWithString:(NSString *)layout;

@@ -30,8 +30,8 @@
   BOOL isStack;
 }
 
-@property (retain) NSMutableArray *snapshots;
-@property (retain) NSString *name;
+@property  NSMutableArray *snapshots;
+@property  NSString *name;
 @property (assign) BOOL saveToDisk;
 @property (assign) BOOL isStack;
 

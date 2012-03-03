@@ -28,8 +28,8 @@
   NSSize size;
 }
 
-@property (retain) NSString *appName;
-@property (retain) NSString *title;
+@property  NSString *appName;
+@property  NSString *title;
 @property (assign) NSPoint topLeft;
 @property (assign) NSSize size;
 

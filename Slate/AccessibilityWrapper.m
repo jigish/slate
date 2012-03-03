@@ -160,7 +160,7 @@
 + (BOOL)isMainWindow:(AXUIElementRef)window {
   CFTypeRef _isMain;
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityMainAttribute, (CFTypeRef *)&_isMain) == kAXErrorSuccess) {
-    NSNumber *isMain = _isMain;
+    NSNumber *isMain = (__bridge NSNumber *) _isMain;
     return [isMain boolValue];
   }
   return NO;
@@ -169,7 +169,7 @@
 + (NSString *)getTitle:(AXUIElementRef)window {
   CFTypeRef _title;
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityTitleAttribute, (CFTypeRef *)&_title) == kAXErrorSuccess) {
-    NSString *title = _title;
+    NSString *title = (__bridge NSString *) _title;
     return title;
   }
   return @"";
@@ -181,11 +181,11 @@
   BOOL isMinimized = NO;
   BOOL isHidden = NO;
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityHiddenAttribute, (CFTypeRef *)&_isHidden) == kAXErrorSuccess) {
-    NSNumber *isHiddenNum = _isHidden;
+    NSNumber *isHiddenNum = (__bridge NSNumber *) _isHidden;
     isHidden = [isHiddenNum boolValue];
   }
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityMinimizedAttribute, (CFTypeRef *)&_isMinimized) == kAXErrorSuccess) {
-    NSNumber *isMinimizedNum = _isMinimized;
+    NSNumber *isMinimizedNum = (__bridge NSNumber *) _isMinimized;
     isMinimized = [isMinimizedNum boolValue];
   }
   return isMinimized || isHidden;

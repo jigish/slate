@@ -78,7 +78,6 @@
     else if (direction == DIRECTION_RIGHT) checkRect = NSMakeRect(cwTL.x+cwSize.width, cwTL.y, focusCheckWidth, cwSize.height);
     else if (direction == DIRECTION_BEHIND) checkRect = NSMakeRect(cwTL.x, cwTL.y, cwSize.width, cwSize.height);
     else {
-      [caAW release];
       return NO;
     }
     NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
@@ -102,14 +101,12 @@
 
         if ([AccessibilityWrapper isWindowMinimizedOrHidden:[aw window]]) {
           NSLog(@" Window is minimized, skipping");
-          [aw release];
           continue;
         }
 
         NSString *wTitle = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windows, i)];
         if ([wTitle isEqualToString:@""]){
           NSLog(@" Title is empty, skipping");
-          [aw release];
           continue; // Chrome and Finder have invisible windows for some reason
         }
 
@@ -120,7 +117,6 @@
 
         if ([wTitle isEqualToString:cwTitle] && NSEqualRects(windowRect, cwRect) && NSEqualPoints(wTL, cwTL)) {
           NSLog(@" Ignoring current window");
-          [aw release];
           continue;
         }
         NSRect intersection = NSIntersectionRect(checkRect, windowRect);
@@ -147,26 +143,21 @@
           biggestIntersection = intersection;
           foundFocus = YES;
         }
-        [aw release];
       }
       // check if same app && foundFocus && prefer_same_app
       if(foundFocusInSameApp && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == [appPID intValue] && [[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP]) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appToFocus window:windowToFocus];
         [aw focus];
-        [aw release];
-        [caAW release];
         return YES;
       }
     }
     if (foundFocus) {
       AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appToFocus window:windowToFocus];
       [aw focus];
-      [aw release];
       return YES;
     }
     focusCheckWidth += [[SlateConfig getInstance] getIntegerConfig:FOCUS_CHECK_WIDTH];
   }
-  [caAW release];
   return NO;
 }
 
@@ -176,8 +167,5 @@
   return YES;
 }
 
-- (void)dealloc {
-  [super dealloc];
-}
 
 @end

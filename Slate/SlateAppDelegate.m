@@ -58,8 +58,8 @@ static SlateAppDelegate *selfRef = nil;
   eventReleasedType.eventClass = kEventClassKeyboard;
   eventReleasedType.eventKind = kEventHotKeyReleased;
 
-  InstallApplicationEventHandler(&OnHotKeyEvent, 1, &eventType, (void *)self, NULL);
-  InstallApplicationEventHandler(&OnHotKeyReleasedEvent, 1, &eventReleasedType, (void *)self, NULL);
+  InstallApplicationEventHandler(&OnHotKeyEvent, 1, &eventType, (__bridge void *)self, NULL);
+  InstallApplicationEventHandler(&OnHotKeyReleasedEvent, 1, &eventReleasedType, (__bridge void *)self, NULL);
 
   NSArray *bindings = [[SlateConfig getInstance] bindings];
   for (NSInteger i = 0; i < [bindings count]; i++) {
@@ -138,7 +138,7 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
   NSMenuItem *windowInfoItem = [statusMenu insertItemWithTitle:@"Current Window Info" action:@selector(currentWindowInfo) keyEquivalent:@"" atIndex:1];
   [windowInfoItem setTarget:self];
 
-  statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength: NSVariableStatusItemLength] retain];
+  statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: NSVariableStatusItemLength];
   [statusItem setMenu:statusMenu];
   [statusItem setImage:[NSImage imageNamed:@"status"]];
   [statusItem setHighlightMode:YES];

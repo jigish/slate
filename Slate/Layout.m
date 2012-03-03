@@ -82,9 +82,8 @@
       }
     }
     [appOptions setObject:appOpts forKey:appName];
-    [appOpts release];
   } else {
-    [appOptions setObject:[[[ApplicationOptions alloc] init] autorelease] forKey:appName];
+    [appOptions setObject:[[ApplicationOptions alloc] init] forKey:appName];
   }
   NSString *opsString = [tokens objectAtIndex:3];
   NSArray *ops = [opsString componentsSeparatedByString:PIPE];
@@ -100,8 +99,6 @@
   }
 
   [[self appStates] setObject:opArray forKey:appName];
-  [opArray release];
-  [tokens release];
 }
 
 @end

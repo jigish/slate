@@ -47,7 +47,6 @@
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   // We don't use the passed in AccessibilityWrapper so it is nil. No need to waste time creating one here
   BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:sw];
-  [sw release];
   NSLog(@"-----------------  End Layout Operation  -----------------");
   return success;
 }
@@ -152,7 +151,6 @@
         appSuccess = [[operations objectAtIndex:((i-failedWindows) % [operations count])] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
         if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
           failedWindows++;
-        [aw release];
       }
     } else {
       for (NSInteger i = 0; i < CFArrayGetCount(windows) && i-failedWindows < [operations count]; i++) {
@@ -160,7 +158,6 @@
         appSuccess = [[operations objectAtIndex:(i-failedWindows)] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
         if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
           failedWindows++;
-        [aw release];
       }
     }
     success = appSuccess && success;

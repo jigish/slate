@@ -53,8 +53,6 @@
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   BOOL success = NO;
   if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
-  [sw release];
-  [aw release];
   NSLog(@"-----------------  End Chain Operation  -----------------");
   return success;
 }
@@ -98,7 +96,6 @@
 - (NSInteger)getNextOperation:(AccessibilityWrapper *)aw {
   WindowState *ws = [[WindowState alloc] init:aw];
   NSNumber *nextOp = [currentOp objectForKey:ws];
-  [ws release];
   if (nextOp != nil)
     return [nextOp integerValue];
   return 0;
@@ -107,12 +104,7 @@
 - (void)setNextOperation:(AccessibilityWrapper *)aw nextOp:(NSNumber *)op {
   WindowState *ws = [[WindowState alloc] init:aw];
   [currentOp setObject:op forKey:ws];
-  [ws release];
 }
 
-- (void)dealloc {
-  [self setOperations:nil];
-  [super dealloc];
-}
 
 @end

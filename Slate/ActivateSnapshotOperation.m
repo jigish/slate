@@ -94,7 +94,6 @@
       if (bestSnapshot == nil) continue;
       [aw moveWindow:[bestSnapshot topLeft]];
       [aw resizeWindow:[bestSnapshot size]];
-      [aw release];
     }
   }
   return YES;

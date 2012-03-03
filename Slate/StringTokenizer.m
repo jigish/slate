@@ -37,7 +37,6 @@
     if ([self isSpaceChar:[s characterAtIndex:i]]) {
       if (![token isEqualToString:@""]) {
         [array addObject:[NSString stringWithString:token]];
-        [token release];
         token = [[NSMutableString alloc] initWithCapacity:10];
       }
     } else {
@@ -47,7 +46,6 @@
   if (![token isEqualToString:@""]) {
     [array addObject:[NSString stringWithString:token]];
   }
-  [token release];
 }
 
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens {
@@ -61,7 +59,6 @@
       if (![token isEqualToString:@""] && numTokens < (maxTokens-1)) {
         numTokens++;
         [array addObject:[NSString stringWithString:token]];
-        [token release];
         token = [[NSMutableString alloc] initWithCapacity:10];
       } else if (numTokens >= (maxTokens-1)) {
         if ([token isEqualToString:@""] && [self isSpaceChar:[s characterAtIndex:i]]) continue;
@@ -74,7 +71,6 @@
   if (![token isEqualToString:@""]) {
     [array addObject:[NSString stringWithString:token]];
   }
-  [token release];
 }
 
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens quoteChars:(NSCharacterSet *)quotes {
@@ -89,7 +85,6 @@
       if (![token isEqualToString:@""] && numTokens < (maxTokens-1) && !quoteSeen) {
         numTokens++;
         [array addObject:[NSString stringWithString:token]];
-        [token release];
         token = [[NSMutableString alloc] initWithCapacity:10];
       } else if (numTokens >= (maxTokens-1) || quoteSeen) {
         [token appendFormat:@"%C", [s characterAtIndex:i]];
@@ -105,7 +100,6 @@
   if (![token isEqualToString:@""]) {
     [array addObject:[NSString stringWithString:token]];
   }
-  [token release];
 }
 
 + (void)firstToken:(NSString *)s into:(NSMutableString *)token {

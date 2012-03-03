@@ -104,7 +104,6 @@ static SlateConfig *_instance = nil;
       NSLog(@"User selected exit");
       [NSApp terminate:nil];
     }
-    [alert release];
     return NO;
   }
   
@@ -120,7 +119,6 @@ static SlateConfig *_instance = nil;
       NSLog(@"User selected exit");
       [NSApp terminate:nil];
     }
-    [alert release];
     return NO;
   }
 
@@ -162,7 +160,6 @@ static SlateConfig *_instance = nil;
         NSLog(@"User selected exit");
         [NSApp terminate:nil];
       }
-      [alert release];
     }
     NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
     [StringTokenizer tokenize:line into:tokens];
@@ -181,7 +178,6 @@ static SlateConfig *_instance = nil;
           NSLog(@"User selected exit");
           [NSApp terminate:nil];
         }
-        [alert release];
       } else {
         [configs setObject:[tokens objectAtIndex:2] forKey:[tokens objectAtIndex:1]];
       }
@@ -191,7 +187,6 @@ static SlateConfig *_instance = nil;
         Binding *bind = [[Binding alloc] initWithString:line];
         NSLog(@"  LoadingB: %@",line);
         [bindings addObject:bind];
-        [bind release];
       } @catch (NSException *ex) {
         NSLog(@"   ERROR %@",[ex name]);
         NSAlert *alert = [[NSAlert alloc] init];
@@ -204,7 +199,6 @@ static SlateConfig *_instance = nil;
           NSLog(@"User selected exit");
           [NSApp terminate:nil];
         }
-        [alert release];
       }
     } else if ([tokens count] >= 4 && [[tokens objectAtIndex:0] isEqualToString:LAYOUT]) {
       // layout <name> <app name> <op+params> (| <op+params>)*
@@ -230,7 +224,6 @@ static SlateConfig *_instance = nil;
           NSLog(@"User selected exit");
           [NSApp terminate:nil];
         }
-        [alert release];
       }
     } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:DEFAULT]) {
       // default <name> <screen-setup>
@@ -248,12 +241,10 @@ static SlateConfig *_instance = nil;
             NSLog(@"User selected exit");
             [NSApp terminate:nil];
           }
-          [alert release];
         } else {
           [defaultLayouts addObject:state];
           NSLog(@"  LoadingDL: %@",line);
         }
-        [state release];
       } @catch (NSException *ex) {
         NSLog(@"   ERROR %@",[ex name]);
         NSAlert *alert = [[NSAlert alloc] init];
@@ -266,7 +257,6 @@ static SlateConfig *_instance = nil;
           NSLog(@"User selected exit");
           [NSApp terminate:nil];
         }
-        [alert release];
       }
     } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:ALIAS]) {
       // alias <name> <value>
@@ -285,7 +275,6 @@ static SlateConfig *_instance = nil;
           NSLog(@"User selected exit");
           [NSApp terminate:nil];
         }
-        [alert release];
       }
     } else if ([tokens count] >= 2 && [[tokens objectAtIndex:0] isEqualToString:SOURCE]) {
       // source filename optional:if_exists
@@ -305,11 +294,9 @@ static SlateConfig *_instance = nil;
             NSLog(@"User selected exit");
             [NSApp terminate:nil];
           }
-        [alert release];
         }
       }
     }
-    [tokens release];
     line = [e nextObject];
   }
   return YES;
@@ -338,7 +325,6 @@ static SlateConfig *_instance = nil;
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:line into:tokens maxTokens:3];
   [aliases setObject:[tokens objectAtIndex:2] forKey:[NSString stringWithFormat:@"${%@}",[tokens objectAtIndex:1]]];
-  [tokens release];
 }
 
 - (NSString *)replaceAliases:(NSString *)line {
@@ -367,7 +353,6 @@ static SlateConfig *_instance = nil;
       NSLog(@"onScreenChange count found");
       LayoutOperation *op = [[LayoutOperation alloc] initWithName:[state layout]];
       [op doOperation];
-      [op release];
       break;
     }
     // Check resolutions
@@ -383,13 +368,10 @@ static SlateConfig *_instance = nil;
       if (isEqual) {
         LayoutOperation *op = [[LayoutOperation alloc] initWithName:[state layout]];
         [op doOperation];
-        [op release];
         break;
       }
     }
   }
-  [resolutions release];
-  [sw release];
 }
 
 - (NSDictionary *)snapshotsToDictionary {
@@ -466,13 +448,5 @@ static SlateConfig *_instance = nil;
   [configs setObject:ORDER_SCREENS_LEFT_TO_RIGHT_DEFAULT forKey:ORDER_SCREENS_LEFT_TO_RIGHT];
 }
 
-- (void)dealloc {
-  [self setConfigs:nil];
-  [self setBindings:nil];
-  [self setAliases:nil];
-  [self setDefaultLayouts:nil];
-  [self setLayouts:nil];
-  [super dealloc];
-}
 
 @end

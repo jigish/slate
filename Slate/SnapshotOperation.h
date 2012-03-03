@@ -27,7 +27,7 @@
   BOOL isStack;
 }
 
-@property (retain) NSString *name;
+@property  NSString *name;
 @property (assign) BOOL saveToDisk;
 @property (assign) BOOL isStack;
 

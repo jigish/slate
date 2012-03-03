@@ -31,12 +31,12 @@
   NSMutableDictionary *snapshots;
 }
 
-@property (retain) NSMutableDictionary *configs;
-@property (retain) NSMutableArray *bindings;
-@property (retain) NSMutableDictionary *layouts;
-@property (retain) NSMutableArray *defaultLayouts;
-@property (retain) NSMutableDictionary *aliases;
-@property (retain) NSMutableDictionary *snapshots;
+@property  NSMutableDictionary *configs;
+@property  NSMutableArray *bindings;
+@property  NSMutableDictionary *layouts;
+@property  NSMutableArray *defaultLayouts;
+@property  NSMutableDictionary *aliases;
+@property  NSMutableDictionary *snapshots;
 
 + (SlateConfig *)getInstance;
 - (BOOL)load;

@@ -72,9 +72,5 @@
   return s;
 }
 
-- (void)dealloc {
-  [self setApps:nil];
-  [super dealloc];
-}
 
 @end

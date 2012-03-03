@@ -78,8 +78,6 @@
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   BOOL success = NO;
   if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
-  [sw release];
-  [aw release];
   NSLog(@"-----------------  End Resize Operation  -----------------");
   return success;
 }
@@ -89,7 +87,6 @@
   NSRect cWindowRect = NSMakeRect(0, 0, 1000, 1000);
   NSSize nSize = [self getDimensionsWithCurrentWindow:cWindowRect screenWrapper:sw];
   [self getTopLeftWithCurrentWindow:cWindowRect newSize:nSize];
-  [sw release];
   return YES;
 }
 
@@ -146,10 +143,5 @@
   return NSMakeSize(dimX,dimY);
 }
 
-- (void)dealloc {
-  [self setXResize:nil];
-  [self setYResize:nil];
-  [super dealloc];
-}
 
 @end

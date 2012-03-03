@@ -24,6 +24,6 @@
 @property (assign) BOOL mainFirst;
 @property (assign) BOOL mainLast;
 @property (assign) BOOL sortTitle;
-@property (retain) NSArray *titleOrder;
+@property  NSArray *titleOrder;
 
 @end

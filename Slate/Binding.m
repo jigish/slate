@@ -103,7 +103,6 @@ static NSDictionary *dictionary = nil;
       NSLog(@"ERROR: Unable to test binding '%@'", binding);
       @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], binding] userInfo:nil]);
     }
-    [tokens release];
   }
 
   return self;
@@ -114,16 +113,13 @@ static NSDictionary *dictionary = nil;
 }
 
 - (void)dealloc {
-  [self setOp:nil];
   [self setHotKeyRef:nil];
-  [super dealloc];
 }
 
 // This returns a dictionary containing mappings from ASCII to keyCode
 + (NSDictionary *)asciiToCodeDict {
   if (dictionary == nil) {
     dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ASCIIToCode" ofType:@"plist"]];
-    [dictionary retain];
   }
   return dictionary;
 }

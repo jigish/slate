@@ -31,9 +31,6 @@
   return self;
 }
 
-- (void)dealloc {
-  [super dealloc];
-}
 
 - (BOOL)doOperation {
   return YES;

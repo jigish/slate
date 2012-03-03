@@ -27,7 +27,7 @@
   NSMutableDictionary *apps;
 }
 
-@property (retain) NSMutableDictionary *apps;
+@property  NSMutableDictionary *apps;
 
 - (void)addWindow:(WindowSnapshot *)windowSnapshot app:(NSString *)appName;
 - (NSDictionary *)toDictionary;
