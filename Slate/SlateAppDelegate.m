@@ -149,6 +149,20 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
     timerLock = [[NSObject alloc] init];
   }
 
+  // Check if Accessibility API is enabled
+  if (!AXAPIEnabled()) {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"Quit"];
+    [alert addButtonWithTitle:@"Skip"];
+    [alert setMessageText:[NSString stringWithFormat:@"ERROR Access for assistive devices is not enabled. Please enable it."]];
+    [alert setInformativeText:[NSString stringWithFormat:@"Settings > Universal Access > Enable access for assistive devices."]];
+    [alert setAlertStyle:NSWarningAlertStyle];
+    if ([alert runModal] == NSAlertFirstButtonReturn) {
+      NSLog(@"User selected exit");
+      [NSApp terminate:nil];
+    }
+  }
+
   // Read Config
   [self loadConfig];
 
