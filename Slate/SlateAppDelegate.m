@@ -46,6 +46,8 @@ static SlateAppDelegate *selfRef = nil;
 
 - (IBAction)currentWindowInfo {
   [windowInfoController showWindow:windowInfo];
+  [windowInfo makeKeyAndOrderFront:NSApp];
+  [windowInfo setLevel:(NSScreenSaverWindowLevel - 1)];
 }
 
 - (void)loadConfig {
