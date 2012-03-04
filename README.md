@@ -214,7 +214,9 @@ Some operations allow you to specify a screen. Here are the list of possible val
         topLeftY = top left y coordinate of the window's desired position (can be an expression)
         sizeX = width of the window's desired position (can be an expression)
         sizeY = height of the window's desired position (can be an expression)
-        screen = (optional) the reference to the screen of the window's desired position. If this is not specified, it will default to the screen the window is currently on. See the table at the beginning of the Operation section for more information.
+        screen = (optional) the reference to the screen of the window's desired position.
+                 If this is not specified, it will default to the screen the window is currently on.
+                 See the table at the beginning of the Operation section for more information.
 
     Example:
 
@@ -240,7 +242,9 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
         direction = top|up|bottom|down|left|right
         style = (optional) none|center|bar|bar-resize:expression (default is none)
-        screen = (optional) the reference to the screen of the window's desired position. If this is not specified, it will default to the screen the window is currently on. See the table at the beginning of the Operation section for more information.
+        screen = (optional) the reference to the screen of the window's desired position.
+                 If this is not specified, it will default to the screen the window is currently on.
+                 See the table at the beginning of the Operation section for more information.
 
     Example:
 
@@ -274,7 +278,9 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
         direction = top-left|top-right|bottom-left|bottom-right
         style = (optional) resize:x-expression;y-expression (default will not resize)
-        screen = (optional) the reference to the screen of the window's desired position. If this is not specified, it will default to the screen the window is currently on. See the table at the beginning of the Operation section for more information.
+        screen = (optional) the reference to the screen of the window's desired position.
+                 If this is not specified, it will default to the screen the window is currently on.
+                 See the table at the beginning of the Operation section for more information.
 
     Example:
 
@@ -329,7 +335,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
         name = the name of the snapshot to delete
         options = (optional) a semicolon separated list of any of the following options:
-          all -> if the snapshot is a stack (if it isn't, this option is useless), this will delete all snapshots in the stack (if this option is not specified, the default is to only delete the top snapshot of the stack).
+          all -> if the snapshot is a stack (if it isn't, this option is useless), this will delete all snapshots in the
+                 stack (if this option is not specified, the default is to only delete the top snapshot of the stack).
 
     Example:
 
@@ -341,7 +348,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
         name = the name of the snapshot to delete
         options = (optional) a semicolon separated list of any of the following options:
-          delete -> this will delete the snapshot after activating it (if the snapshot is a stack, it will pop the top snapshot off and keep the rest)
+          delete -> this will delete the snapshot after activating it (if the snapshot is a stack, it will pop the top
+                    snapshot off and keep the rest)
 
     Example:
 
@@ -351,7 +359,11 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
 * Show Window Hints (similar to Link Hints in Vimium except for Windows): "hint characters"
 
-        characters = (optional) a simple string of characters to be used for the hints. each hint consists of one character. if there are more windows than characters then some windows will not get hints. this string can contain any of the single character Allowed Keys. Letters may be upper case or lower case, but both will be bound to the lowercase letter for the hint. Using upper or lower case only changes how they are displayed. The default string of characters is "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        characters = (optional) a simple string of characters to be used for the hints. each hint consists of one character.
+                     if there are more windows than characters then some windows will not get hints. this string can contain
+                     any of the single character Allowed Keys. Letters may be upper case or lower case, but both will be bound
+                     to the lowercase letter for the hint. Using upper or lower case only changes how they are displayed.
+                     The default string of characters is "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
     Example:
 
