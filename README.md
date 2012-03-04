@@ -71,9 +71,9 @@ When you set an alias, you can refer to it in any directive (sequentially after 
 
 Example:
 
-    alias bottom-right-2nd-monitor move screenOriginX+2*screenSizeX/3;screenOriginY+screenSizeY/2 screenSizeX/3;screenSizeY/2 1
+    alias bot-right-2nd-mon move screenOriginX+2*screenSizeX/3;screenOriginY+screenSizeY/2 screenSizeX/3;screenSizeY/2 1
 
-Will allow you to use "${bottom-right-2nd-monitor}" as a reference to "move screenOriginX+2*screenSizeX/3;screenOriginY+screenSizeY/2 screenSizeX/3;screenSizeY/2 1" in any directive following the alias (including other alias directives)
+Will allow you to use "${bot-right-2nd-mon}" as a reference to "move screenOriginX+2*screenSizeX/3;screenOriginY+screenSizeY/2 screenSizeX/3;screenSizeY/2 1" in any directive following the alias (including other alias directives)
 
 ### The "layout" Directive ###
 
@@ -86,7 +86,7 @@ Where:
     name = the name you want to use to reference the layout
     'app name' = single-quoted name of the application to add to the layout.
     OPTIONS = a comma separated list of options for this application
-    operations = a pipe separated list of operations (any operation in the bind directive is allowed except chain and layout)
+    operations = a pipe separated list of operations (move, resize, push, nudge, throw, or corner)
 
 Possible Options:
 
