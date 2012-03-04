@@ -1,8 +1,12 @@
 # About Slate #
 
-Slate is a window management application similar to Divvy and SizeUp (except better and free!). Originally written to replace them due to some limitations in how each work, it attemps to overcome them by simply being extremely configurable.
+Slate is a window management application similar to Divvy and SizeUp (except better and free!). Originally written to replace them due to some limitations in how each work, it attemps to overcome them by simply being extremely configurable. As a result, it may be a bit daunting to get configured, but once it is done, the benifit is huge.
 
 Slate currently works on Mac OS X 10.6 and above
+
+## Credits ##
+
+Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and initial implementation).
 
 # Using Slate #
 
@@ -45,6 +49,13 @@ List of allowed configs:
 | focusCheckWidthMax | Integer | 100 | If set to anything above focusCheckWidth, the focus option will keep expanding the rectangle used to check directions by focusCheckWidth if it does not find a window until it either finds a window or the width of the rectangle is greater than focusCheckWidthMax |
 | focusPreferSameApp | Boolean | true | When this is true, the focus operation will *always* choose a window in the same app to focus if it exists in the check width regardless of intersection size. When this is false, focus will treat all application windows the same and choose the largest intersection size |
 | orderScreensLeftToRight | Boolean | true | When this is true, monitors will be ordered from left to right by X coordinate (if two X coordiates are the same, then the lowest Y coordinate will be first). When this is false, screens will be ordered according to the internal Mac OS X ordering which changes depending on which screen was plugged in first. If this is false, you can force ordering of screens by prefixing the screen ID with "ordered:" |
+| windowHintsBackgroundColor | Comma Separated Array of Floats | 50,53,58,0.7 | The background color for Window Hints as an array in the form "Red,Green,Blue,Alpha" where Red, Green, and Blue are numbers between 0.0 and 255 and Alpha is a number between 0.0 and 1.0 |
+| windowHintsWidth | Integer | 100 | The width of the Window Hints ovelay in pixels |
+| windowHintsHeight | Integer | 100 | The height of the Window Hints overlay in pixels |
+| windowHintsFontColor | Comma Separated Array of Numbers | 255,255,255,1.0 | The font color for Window Hints as an array in the form "Red,Green,Blue,Alpha" where Red, Green, and Blue are numbers between 0.0 and 255 and Alpha is a number between 0.0 and 1.0 |
+| windowHintsFontName | String | Helvetica | The name of the Window Hints font |
+| windowHintsFontSize | Integer | 40 | The size of the Window Hints font |
+| windowHintsDuration | Number | 3 | The number of seconds that Window Hints will display for |
 
 Example:
 
@@ -337,6 +348,16 @@ Some operations allow you to specify a screen. Here are the list of possible val
         bind 1:ctrl activate-snapshot theName delete
 
     Will bind the keystroke ctrl-1 to activate the snapshot called "theName" if it exists. This will also delete the snapshot (or pop it off the stack if the snapshot is a stack).
+
+* Show Window Hints (similar to Link Hints in Vimium except for Windows): "hint characters"
+
+        characters = (optional) a simple string of characters to be used for the hints. each hint consists of one character. if there are more windows than characters then some windows will not get hints. this string can contain any of the single character Allowed Keys. Letters may be upper case or lower case, but both will be bound to the lowercase letter for the hint. Using upper or lower case only changes how they are displayed. The default string of characters is "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+    Example:
+
+        bind 1:ctrl hint QWERTYUIOP
+
+    Will bind the keystroke ctrl-1 to show Window Hints using the letters Q, W, E, R, T, Y, U, I, O, and P.  This will show an overlay in the top-left corner of every window on screen containing one of those letters. While the overlays are showing, if one of those letters is pressed, the corresponding window will be focused. If there are more than 10 windows, some windows will not get hints.
 
 
 ### The "source" Directive ###

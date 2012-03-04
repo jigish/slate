@@ -1,4 +1,8 @@
-Current Version: 0.4.13
+Current Version: 0.4.14
+
+----------------- 0.4.14 ----------------
+
+Added Window Hints
 
 ----------------- 0.4.13 ----------------
 
@@ -6,11 +10,11 @@ Switch to ARC (no new feature or bug fixes, but should have better memory manage
 
 ----------------- 0.4.12 ----------------
 
-Add Snapshot operations
+Added Snapshot operations
 
 ----------------- 0.4.11 ----------------
 
-Add Current Window Info menu option (Issue #20)
+Added Current Window Info menu option (Issue #20)
 
 ----------------- 0.4.10 ----------------
 
