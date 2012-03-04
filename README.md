@@ -359,11 +359,12 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
 * Show Window Hints (similar to Link Hints in Vimium except for Windows): "hint characters"
 
-        characters = (optional) a simple string of characters to be used for the hints. each hint consists of one character.
-                     if there are more windows than characters then some windows will not get hints. this string can contain
-                     any of the single character Allowed Keys. Letters may be upper case or lower case, but both will be bound
-                     to the lowercase letter for the hint. Using upper or lower case only changes how they are displayed.
-                     The default string of characters is "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        characters = (optional) a simple string of characters to be used for the hints. each hint consists of one
+                     character. if there are more windows than characters then some windows will not get hints.
+                     this string can contain any of the single character Allowed Keys. Letters may be upper case or
+                     lower case, but both will be bound to the lowercase letter for the hint. Using upper or lower
+                     case only changes how they are displayed. The default string of characters is
+                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
     Example:
 
