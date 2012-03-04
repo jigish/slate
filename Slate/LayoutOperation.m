@@ -23,6 +23,7 @@
 #import "Layout.h"
 #import "LayoutOperation.h"
 #import "SlateConfig.h"
+#import "StringTokenizer.h"
 
 
 @implementation LayoutOperation
@@ -186,6 +187,20 @@
     }
   }
   return success;
+}
+
++ (id)layoutOperationFromString:(NSString *)layoutOperation {
+  // layout <name>
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:layoutOperation into:tokens maxTokens:2];
+  
+  if ([tokens count] < 2) {
+    NSLog(@"ERROR: Invalid Parameters '%@'", layoutOperation);
+    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Layout operations require the following format: 'layout <name>'", layoutOperation] userInfo:nil]);
+  }
+  
+  Operation *op = [[LayoutOperation alloc] initWithName:[tokens objectAtIndex:1]];
+  return op;
 }
 
 @end

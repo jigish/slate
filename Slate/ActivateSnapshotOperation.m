@@ -24,6 +24,7 @@
 #import "SlateConfig.h"
 #import "WindowSnapshot.h"
 #import "NSString+Levenshtein.h"
+#import "StringTokenizer.h"
 
 @implementation ActivateSnapshotOperation
 
@@ -100,6 +101,20 @@
 
 - (BOOL)testOperation {
   return YES;
+}
+
++ (id)activateSnapshotOperationFromString:(NSString *)activateSnapshotOperation {
+  // activate-snapshot name options
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:activateSnapshotOperation into:tokens maxTokens:3];
+  
+  if ([tokens count] < 2) {
+    NSLog(@"ERROR: Invalid Parameters '%@'", activateSnapshotOperation);
+    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Activate Snapshot operations require the following format: 'delete-snapshot name options'", activateSnapshotOperation] userInfo:nil]);
+  }
+  
+  Operation *op = [[ActivateSnapshotOperation alloc] initWithName:[tokens objectAtIndex:1] options:([tokens count] > 2 ? [tokens objectAtIndex:2] : nil)];
+  return op;
 }
 
 @end

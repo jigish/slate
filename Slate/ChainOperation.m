@@ -21,6 +21,8 @@
 #import "ChainOperation.h"
 #import "ScreenWrapper.h"
 #import "WindowState.h"
+#import "StringTokenizer.h"
+#import "Constants.h"
 
 
 @implementation ChainOperation
@@ -106,5 +108,31 @@
   [currentOp setObject:op forKey:ws];
 }
 
++ (id)chainOperationFromString:(NSString *)chainOperation {
+  // chain op[ | op]+
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:chainOperation into:tokens maxTokens:2];
+  
+  if ([tokens count] < 2) {
+    NSLog(@"ERROR: Invalid Parameters '%@'", chainOperation);
+    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Chain operations require the following format: 'chain op[|op]+'", chainOperation] userInfo:nil]);
+  }
+  
+  NSString *opsString = [tokens objectAtIndex:1];
+  NSArray *ops = [opsString componentsSeparatedByString:PIPE];
+  NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
+  for (NSInteger i = 0; i < [ops count]; i++) {
+    Operation *op = [Operation operationFromString:[ops objectAtIndex:i]];
+    if (op != nil) {
+      [opArray addObject:op];
+    } else {
+      NSLog(@"ERROR: Invalid Operation in Chain: '%@'", [ops objectAtIndex:i]);
+      @throw([NSException exceptionWithName:@"Invalid Operation in Chain" reason:[NSString stringWithFormat:@"Invalid operation '%@' in chain.", [ops objectAtIndex:i]] userInfo:nil]);
+    }
+  }
+  
+  Operation *op = [[ChainOperation alloc] initWithArray:opArray];
+  return op;
+}
 
 @end

@@ -33,4 +33,6 @@
 
 - (id)initWithName:(NSString *)theName options:(NSString *)options;
 
++ (id)snapshotOperationFromString:(NSString *)snapshotOperation;
+
 @end

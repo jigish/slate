@@ -47,4 +47,6 @@
 - (void)killHints;
 - (void)activateHintKey:(NSInteger)hintId;
 
++ (id)hintOperationFromString:(NSString *)hintOperation;
+
 @end

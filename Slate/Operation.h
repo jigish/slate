@@ -29,4 +29,6 @@
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;
 - (BOOL)testOperation;
 
++ (id)operationFromString:(NSString *)opString;
+
 @end

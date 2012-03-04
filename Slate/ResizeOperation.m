@@ -23,6 +23,7 @@
 #import "ResizeOperation.h"
 #import "ScreenWrapper.h"
 #import "SlateConfig.h"
+#import "StringTokenizer.h"
 
 
 @implementation ResizeOperation
@@ -143,5 +144,22 @@
   return NSMakeSize(dimX,dimY);
 }
 
++ (id)resizeOperationFromString:(NSString *)resizeOperation {
+  // resize <x> <y> <optional:anchor>
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:resizeOperation into:tokens];
+  
+  if ([tokens count] < 3) {
+    NSLog(@"ERROR: Invalid Parameters '%@'", resizeOperation);
+    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Resize operations require the following format: 'resize resizeX resizeY [optional:anchor]'", resizeOperation] userInfo:nil]);
+  }
+  
+  NSString *anchor = TOP_LEFT;
+  if ([tokens count] >= 4) {
+    anchor = [tokens objectAtIndex:3];
+  }
+  Operation *op = [[ResizeOperation alloc] initWithAnchor:anchor xResize:[tokens objectAtIndex:1] yResize:[tokens objectAtIndex:2]];
+  return op;
+}
 
 @end

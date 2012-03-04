@@ -32,4 +32,6 @@
 - (id)initWithName:(NSString *)theName;
 - (BOOL)testOperation:(Operation *)op;
 
++ (id)layoutOperationFromString:(NSString *)layoutOperation;
+
 @end

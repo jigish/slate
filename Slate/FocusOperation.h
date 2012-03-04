@@ -31,4 +31,6 @@
 
 - (id)initWithDirection:(NSString *)d;
 
++ (id)focusOperationFromString:(NSString *)focusOperation;
+
 @end

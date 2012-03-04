@@ -20,7 +20,6 @@
 
 #import "Binding.h"
 #import "Constants.h"
-#import "OperationFactory.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 
@@ -90,7 +89,7 @@ static NSDictionary *dictionary = nil;
       }
     }
 
-    [self setOp:[OperationFactory createOperationFromString:[tokens objectAtIndex:2]]];
+    [self setOp:[Operation operationFromString:[tokens objectAtIndex:2]]];
 
     if (op == nil) {
       NSLog(@"ERROR: Unable to create binding");

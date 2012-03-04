@@ -22,7 +22,6 @@
 #import "Constants.h"
 #import "Layout.h"
 #import "Operation.h"
-#import "OperationFactory.h"
 #import "StringTokenizer.h"
 
 
@@ -89,7 +88,7 @@
   NSArray *ops = [opsString componentsSeparatedByString:PIPE];
   NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
   for (NSInteger i = 0; i < [ops count]; i++) {
-    Operation *op = [OperationFactory createOperationFromString:[ops objectAtIndex:i]];
+    Operation *op = [Operation operationFromString:[ops objectAtIndex:i]];
     if (op != nil) {
       [opArray addObject:op];
     } else {

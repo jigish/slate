@@ -27,6 +27,7 @@
 #import "Binding.h"
 #import "SlateAppDelegate.h"
 #import "SlateConfig.h"
+#import "StringTokenizer.h"
 
 @implementation HintOperation
 
@@ -174,6 +175,14 @@
     [aw focus];
   }
   [self killHints];
+}
+
++ (id)hintOperationFromString:(NSString *)hintOperation {
+  // hint characters
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:hintOperation into:tokens maxTokens:2];
+  Operation *op = [[HintOperation alloc] initWithCharacters:([tokens count] > 1) ? [tokens objectAtIndex:1] : nil];
+  return op;
 }
 
 @end
