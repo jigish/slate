@@ -45,7 +45,9 @@
 - (BOOL)getBoolConfig:(NSString *)key;
 - (NSInteger)getIntegerConfig:(NSString *)key;
 - (double)getDoubleConfig:(NSString *)key;
+- (float)getFloatConfig:(NSString *)key;
 - (NSString *)getConfig:(NSString *)key;
+- (NSArray *)getArrayConfig:(NSString *)key;
 - (void)addAlias:(NSString *)line;
 - (NSString *)replaceAliases:(NSString *)line;
 - (void)onScreenChange:(id)notification;

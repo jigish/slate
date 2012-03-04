@@ -65,8 +65,7 @@
   NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
   Snapshot *snapshot = [[SlateConfig getInstance] popSnapshot:name remove:del];
   if (snapshot == nil) return YES;
-  for (NSInteger i = 0; i < [apps count]; i++) {
-    NSDictionary *app = [apps objectAtIndex:i];
+  for (NSDictionary *app in apps) {
     NSString *appName = [app objectForKey:@"NSApplicationName"];
     NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
     NSLog(@"I see application '%@' with pid '%@'", appName, appPID);

@@ -22,8 +22,11 @@
 #import "SlateAppDelegate.h"
 #import "SlateConfig.h"
 #import "Binding.h"
+#import "HintOperation.h"
 
 @implementation SlateAppDelegate
+
+@synthesize currentHintOperation;
 
 static NSObject *timerLock = nil;
 static NSTimer *currentTimer = nil;
@@ -81,8 +84,15 @@ static SlateAppDelegate *selfRef = nil;
 }
 
 OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
+  if (![(__bridge id)userData isKindOfClass:[SlateAppDelegate class]]) return noErr;
   EventHotKeyID hkCom;
   GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
+  
+  HintOperation *hintop = [(__bridge SlateAppDelegate *)userData currentHintOperation];
+  if (hintop != nil) {
+    [hintop activateHintKey:hkCom.id];
+    return noErr;
+  }
 
   if ([[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id]) {
     [[[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id] doOperation];
@@ -107,6 +117,8 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
 }
 
 OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
+  if (![(__bridge id)userData isKindOfClass:[SlateAppDelegate class]]) return noErr;
+  if ([(__bridge SlateAppDelegate *)userData currentHintOperation] != nil) return noErr;
   EventHotKeyID hkCom;
   GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
 
@@ -130,6 +142,8 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
 }
 
 - (void)awakeFromNib {
+  currentHintOperation = nil;
+
   windowInfoController = [[NSWindowController alloc] initWithWindow:windowInfo];
   
   NSMenuItem *loadConfigItem = [statusMenu insertItemWithTitle:@"Load Config" action:@selector(reconfig) keyEquivalent:@"" atIndex:0];

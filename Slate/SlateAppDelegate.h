@@ -21,13 +21,18 @@
 #import <Carbon/Carbon.h>
 #import <Cocoa/Cocoa.h>
 
+@class HintOperation;
+
 @interface SlateAppDelegate : NSObject <NSApplicationDelegate> {
 @private
   IBOutlet NSMenu *statusMenu;
   IBOutlet NSWindow *windowInfo;
   NSStatusItem *statusItem;
   NSWindowController *windowInfoController;
+  HintOperation *currentHintOperation;
 }
+
+@property HintOperation *currentHintOperation;
 
 - (IBAction)reconfig;
 - (IBAction)currentWindowInfo;

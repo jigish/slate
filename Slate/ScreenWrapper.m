@@ -177,6 +177,16 @@ static NSMutableArray *leftToRightToDefault = nil;
   return screenIndex;
 }
 
+- (NSInteger)getScreenIdForPoint:(NSPoint)point {
+  for (NSInteger i = 0; i < [screens count]; i++) {
+    NSRect screen = [self convertScreenRectToWindowCoords:i];
+    if (screen.origin.x <= point.x && screen.origin.x+screen.size.width >= point.x &&
+        screen.origin.y <= point.y && screen.origin.y+screen.size.height >= point.y)
+      return i;
+  }
+  return -1;
+}
+
 - (BOOL)screenExists:(NSInteger)screenId {
   NSInteger count = ((NSInteger)[[NSScreen screens] count]);
   return (ID_MAIN_SCREEN <= screenId && screenId < count) ? YES : NO;

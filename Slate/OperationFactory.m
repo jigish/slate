@@ -28,6 +28,7 @@
 #import "SnapshotOperation.h"
 #import "DeleteSnapshotOperation.h"
 #import "ActivateSnapshotOperation.h"
+#import "HintOperation.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 
@@ -63,6 +64,8 @@
     operation = [self createActivateSnapshotOperationFromString:opString];
   } else if ([op isEqualToString:DELETE_SNAPSHOT]) {
     operation = [self createDeleteSnapshotOperationFromString:opString];
+  } else if ([op isEqualToString:HINT]) {
+    operation = [self createHintOperationFromString:opString];
   } else {
     NSLog(@"ERROR: Unrecognized operation '%@'", opString);
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);
@@ -393,6 +396,14 @@
   }
   
   Operation *op = [[DeleteSnapshotOperation alloc] initWithName:[tokens objectAtIndex:1] options:([tokens count] > 2 ? [tokens objectAtIndex:2] : nil)];
+  return op;
+}
+
++ (id)createHintOperationFromString:(NSString *)hintOperation {
+  // hint characters
+  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
+  [StringTokenizer tokenize:hintOperation into:tokens maxTokens:2];
+  Operation *op = [[HintOperation alloc] initWithCharacters:([tokens count] > 1) ? [tokens objectAtIndex:1] : nil];
   return op;
 }
 

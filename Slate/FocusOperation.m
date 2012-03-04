@@ -86,8 +86,7 @@
     AXUIElementRef appToFocus;
     BOOL foundFocus = NO;
     BOOL foundFocusInSameApp = NO;
-    for (NSInteger j = 0; j < [apps count]; j++) {
-      NSDictionary *app = [apps objectAtIndex:j];
+    for (NSDictionary *app in apps) {
       NSString *appName = [app objectForKey:@"NSApplicationName"];
       NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
       NSLog(@"I see application '%@' with pid '%@'", appName, appPID);

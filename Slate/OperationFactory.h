@@ -37,5 +37,6 @@
 + (id)createSnapshotOperationFromString:(NSString *)snapshotOperation;
 + (id)createActivateSnapshotOperationFromString:(NSString *)activateSnapshotOperation;
 + (id)createDeleteSnapshotOperationFromString:(NSString *)deleteSnapshotOperation;
++ (id)createHintOperationFromString:(NSString *)hintOperation;
 
 @end

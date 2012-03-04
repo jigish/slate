@@ -78,6 +78,14 @@ static SlateConfig *_instance = nil;
   return [[configs objectForKey:key] doubleValue];
 }
 
+- (float)getFloatConfig:(NSString *)key {
+  return [[configs objectForKey:key] floatValue];
+}
+
+- (NSArray *)getArrayConfig:(NSString *)key {
+  return [[configs objectForKey:key] componentsSeparatedByString:COMMA];
+}
+
 - (NSString *)getConfig:(NSString *)key {
   return [configs objectForKey:key];
 }
@@ -446,6 +454,12 @@ static SlateConfig *_instance = nil;
   [configs setObject:FOCUS_CHECK_WIDTH_MAX_DEFAULT forKey:FOCUS_CHECK_WIDTH_MAX];
   [configs setObject:FOCUS_PREFER_SAME_APP_DEFAULT forKey:FOCUS_PREFER_SAME_APP];
   [configs setObject:ORDER_SCREENS_LEFT_TO_RIGHT_DEFAULT forKey:ORDER_SCREENS_LEFT_TO_RIGHT];
+  [configs setObject:WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT forKey:WINDOW_HINTS_BACKGROUND_COLOR];
+  [configs setObject:WINDOW_HINTS_FONT_COLOR_DEFAULT forKey:WINDOW_HINTS_FONT_COLOR];
+  [configs setObject:WINDOW_HINTS_FONT_NAME_DEFAULT forKey:WINDOW_HINTS_FONT_NAME];
+  [configs setObject:WINDOW_HINTS_FONT_SIZE_DEFAULT forKey:WINDOW_HINTS_FONT_SIZE];
+  [configs setObject:WINDOW_HINTS_HEIGHT_DEFAULT forKey:WINDOW_HINTS_HEIGHT];
+  [configs setObject:WINDOW_HINTS_WIDTH_DEFAULT forKey:WINDOW_HINTS_WIDTH];
 }
 
 

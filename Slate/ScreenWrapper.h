@@ -35,6 +35,7 @@
 - (void)getScreenResolutionStrings:(NSMutableArray *)strings;
 - (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window;
 - (NSInteger)getScreenIdForRect:(NSRect)rect;
+- (NSInteger)getScreenIdForPoint:(NSPoint)point;
 - (BOOL)screenExists:(NSInteger)screenId;
 - (NSDictionary *)getScreenAndWindowValues:(NSInteger)screenId window:(NSRect)cWindowRect newSize:(NSSize)nSize;
 - (NSRect)convertScreenRectToWindowCoords:(NSInteger)screenId;

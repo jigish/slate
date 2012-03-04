@@ -66,8 +66,7 @@
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
   NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
   Snapshot *snapshot = [[Snapshot alloc] init];
-  for (NSInteger i = 0; i < [apps count]; i++) {
-    NSDictionary *app = [apps objectAtIndex:i];
+  for (NSDictionary *app in apps) {
     NSString *appName = [app objectForKey:@"NSApplicationName"];
     NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
     NSLog(@"I see application '%@' with pid '%@'", appName, appPID);
