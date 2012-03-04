@@ -66,6 +66,8 @@ NSString *const WINDOW_HINTS_HEIGHT = @"windowHintsHeight";
 NSString *const WINDOW_HINTS_HEIGHT_DEFAULT = @"100";
 NSString *const WINDOW_HINTS_BACKGROUND_COLOR = @"windowHintsBackgroundColor";
 NSString *const WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT = @"50,53,58,0.7";
+NSString *const WINDOW_HINTS_DURATION = @"windowHintsDuration";
+NSString *const WINDOW_HINTS_DURATION_DEFAULT = @"3";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";

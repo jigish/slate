@@ -64,6 +64,8 @@ extern NSString *const WINDOW_HINTS_HEIGHT;
 extern NSString *const WINDOW_HINTS_HEIGHT_DEFAULT;
 extern NSString *const WINDOW_HINTS_BACKGROUND_COLOR;
 extern NSString *const WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT;
+extern NSString *const WINDOW_HINTS_DURATION;
+extern NSString *const WINDOW_HINTS_DURATION_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;

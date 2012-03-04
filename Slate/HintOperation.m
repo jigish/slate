@@ -133,7 +133,11 @@
       [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef];
     }
   }
-  [self setHideTimer:[NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(killHints) userInfo:nil repeats:NO]];
+  [self setHideTimer:[NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_DURATION]
+                                                      target:self
+                                                    selector:@selector(killHints)
+                                                    userInfo:nil
+                                                     repeats:NO]];
   [(SlateAppDelegate *)[NSApp delegate] setCurrentHintOperation:self];
   return YES;
 }

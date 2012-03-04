@@ -460,6 +460,7 @@ static SlateConfig *_instance = nil;
   [configs setObject:WINDOW_HINTS_FONT_SIZE_DEFAULT forKey:WINDOW_HINTS_FONT_SIZE];
   [configs setObject:WINDOW_HINTS_HEIGHT_DEFAULT forKey:WINDOW_HINTS_HEIGHT];
   [configs setObject:WINDOW_HINTS_WIDTH_DEFAULT forKey:WINDOW_HINTS_WIDTH];
+  [configs setObject:WINDOW_HINTS_DURATION_DEFAULT forKey:WINDOW_HINTS_DURATION];
 }
 
 
