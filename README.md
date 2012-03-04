@@ -391,7 +391,7 @@ Will append all of the configurations from the file "~/.slate.test" to the curre
 
 ### Example Config ###
 
-You can check out my own config in the file [here](https://github.com/jigish/dotfiles/blob/master/slate).
+You can check out my own config [here](https://github.com/jigish/dotfiles/blob/master/slate).
 
 # Contact #
 
