@@ -54,15 +54,16 @@
                                                   blue:[[fColorArr objectAtIndex:2] floatValue]/255.0
                                                  alpha:[[fColorArr objectAtIndex:3] floatValue]];
   [backgroundColor set];
-  NSRect backgoundRect = NSMakeRect(self.bounds.origin.x + HINT_CORNER_RADIUS,
-                                    self.bounds.origin.y + HINT_CORNER_RADIUS,
-                                    self.bounds.size.width - 2 * HINT_CORNER_RADIUS,
-                                    self.bounds.size.height - 2 * HINT_CORNER_RADIUS);
+  NSInteger cornerSize = [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_ROUNDED_CORNER_SIZE];
+  NSRect backgoundRect = NSMakeRect(self.bounds.origin.x + cornerSize,
+                                    self.bounds.origin.y + cornerSize,
+                                    self.bounds.size.width - 2 * cornerSize,
+                                    self.bounds.size.height - 2 * cornerSize);
   [NSBezierPath fillRect:backgoundRect];
   [[self layer] setBackgroundColor:[backgroundColor cgColor]];
   [[self layer] setBorderColor:[backgroundColor cgColor]];
-  [[self layer] setCornerRadius:HINT_CORNER_RADIUS];
-  [[self layer] setBorderWidth:HINT_CORNER_RADIUS];
+  [[self layer] setCornerRadius:cornerSize];
+  [[self layer] setBorderWidth:cornerSize];
   [self drawCenteredText:text
                   bounds:self.bounds
               attributes:[NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_FONT_NAME]

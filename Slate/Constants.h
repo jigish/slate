@@ -66,6 +66,8 @@ extern NSString *const WINDOW_HINTS_BACKGROUND_COLOR;
 extern NSString *const WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT;
 extern NSString *const WINDOW_HINTS_DURATION;
 extern NSString *const WINDOW_HINTS_DURATION_DEFAULT;
+extern NSString *const WINDOW_HINTS_ROUNDED_CORNER_SIZE;
+extern NSString *const WINDOW_HINTS_ROUNDED_CORNER_SIZE_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;
@@ -197,5 +199,4 @@ extern NSString *const FINDER;
 
 // Window Hint
 extern NSInteger const HINT_X_PADDING;
-extern NSInteger const HINT_CORNER_RADIUS;
 extern NSString *const HINT_CHARACTERS;

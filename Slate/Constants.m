@@ -68,6 +68,8 @@ NSString *const WINDOW_HINTS_BACKGROUND_COLOR = @"windowHintsBackgroundColor";
 NSString *const WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT = @"50,53,58,0.7";
 NSString *const WINDOW_HINTS_DURATION = @"windowHintsDuration";
 NSString *const WINDOW_HINTS_DURATION_DEFAULT = @"3";
+NSString *const WINDOW_HINTS_ROUNDED_CORNER_SIZE = @"windowHintsRoundedCornerSize";
+NSString *const WINDOW_HINTS_ROUNDED_CORNER_SIZE_DEFAULT = @"5";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";
@@ -199,5 +201,4 @@ NSString *const FINDER = @"Finder";
 
 // Window Hints
 NSInteger const HINT_X_PADDING = 4;
-NSInteger const HINT_CORNER_RADIUS = 8;
 NSString *const HINT_CHARACTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
