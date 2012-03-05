@@ -187,6 +187,19 @@ static NSMutableArray *leftToRightToDefault = nil;
   return -1;
 }
 
+- (BOOL)isRectOffScreen:(NSRect)rect {
+  // Check all corners to see if they are on a screen
+  // Top-left
+  if ([self getScreenIdForPoint:NSMakePoint(rect.origin.x, rect.origin.y)] < 0) return YES;
+  // Top-right
+  if ([self getScreenIdForPoint:NSMakePoint(rect.origin.x+rect.size.width, rect.origin.y)] < 0) return YES;
+  // Bottom-left
+  if ([self getScreenIdForPoint:NSMakePoint(rect.origin.x, rect.origin.y+rect.size.height)] < 0) return YES;
+  // Bottom-right
+  if ([self getScreenIdForPoint:NSMakePoint(rect.origin.x+rect.size.width, rect.origin.y+rect.size.height)] < 0) return YES;
+  return NO;
+}
+
 - (BOOL)screenExists:(NSInteger)screenId {
   NSInteger count = ((NSInteger)[[NSScreen screens] count]);
   return (ID_MAIN_SCREEN <= screenId && screenId < count) ? YES : NO;

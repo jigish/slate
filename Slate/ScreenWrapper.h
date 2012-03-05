@@ -36,6 +36,7 @@
 - (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window;
 - (NSInteger)getScreenIdForRect:(NSRect)rect;
 - (NSInteger)getScreenIdForPoint:(NSPoint)point;
+- (BOOL)isRectOffScreen:(NSRect)rect;
 - (BOOL)screenExists:(NSInteger)screenId;
 - (NSDictionary *)getScreenAndWindowValues:(NSInteger)screenId window:(NSRect)cWindowRect newSize:(NSSize)nSize;
 - (NSRect)convertScreenRectToWindowCoords:(NSInteger)screenId;

@@ -85,11 +85,26 @@
   NSSize cSize = [aw getCurrentSize];
   NSRect cWindowRect = NSMakeRect(cTopLeft.x, cTopLeft.y, cSize.width, cSize.height);
   NSSize nSize = [self getDimensionsWithCurrentWindowRect:cWindowRect screenWrapper:sw];
-  if (moveFirst) {
+  BOOL shouldMoveFirst = moveFirst;
+  if (shouldMoveFirst) {
+    NSLog(@"Move First");
     NSPoint nTopLeft = [self getTopLeftWithCurrentWindowRect:cWindowRect newSize:nSize screenWrapper:sw];
-    success = [aw moveWindow:nTopLeft];
-    success = [aw resizeWindow:nSize] && success;
+
+    // check if we really should move first - if moving first moves the window offscreen, we should resize first and assume that will work better
+    NSRect tmpWindowRect = NSMakeRect(nTopLeft.x, nTopLeft.y, cSize.width, cSize.height);
+    if ([sw isRectOffScreen:tmpWindowRect]) {
+      // Resize First
+      NSLog(@"Resize First because moving first would fail.");
+      success = [aw resizeWindow:nSize];
+      NSSize realNewSize = [aw getCurrentSize];
+      nTopLeft = [self getTopLeftWithCurrentWindowRect:cWindowRect newSize:realNewSize screenWrapper:sw];
+      success = [aw moveWindow:nTopLeft] && success;
+    } else {
+      success = [aw moveWindow:nTopLeft];
+      success = [aw resizeWindow:nSize] && success;
+    }
   } else {
+    NSLog(@"Resize First");
     success = [aw resizeWindow:nSize];
     NSSize realNewSize = [aw getCurrentSize];
     NSPoint nTopLeft = [self getTopLeftWithCurrentWindowRect:cWindowRect newSize:realNewSize screenWrapper:sw];
