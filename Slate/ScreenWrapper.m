@@ -22,6 +22,7 @@
 #import "MathUtils.h"
 #import "ScreenWrapper.h"
 #import "SlateConfig.h"
+#import "SlateLogger.h"
 
 static NSMutableArray *leftToRightToDefault = nil;
 
@@ -92,7 +93,7 @@ static NSMutableArray *leftToRightToDefault = nil;
   for (NSInteger i = 0; i < [screens count]; i++) {
     NSRect screenRect = [self convertScreenRectToWindowCoords:i];
     NSString *resolution = [NSString stringWithFormat:@"%i%@%i",(int)screenRect.size.width,X,(int)screenRect.size.height];
-    NSLog(@"Adding resolution: %@",resolution);
+    SlateLogger(@"Adding resolution: %@",resolution);
     [strings addObject:resolution];
   }
 }
@@ -150,7 +151,7 @@ static NSMutableArray *leftToRightToDefault = nil;
       screenId = [[SlateConfig getInstance] getBoolConfig:ORDER_SCREENS_LEFT_TO_RIGHT] ? [[leftToRightToDefault objectAtIndex:screenRefInt] integerValue] : screenRefInt;
     }
   }
-  NSLog(@"getScreenId for ref=[%@] current=[%ld] screen=[%ld]", screenRef, (long)currentScreenId, (long)screenId);
+  SlateLogger(@"getScreenId for ref=[%@] current=[%ld] screen=[%ld]", screenRef, (long)currentScreenId, (long)screenId);
   if (screenId == ID_CURRENT_SCREEN) {
     return currentScreenId;
   } else if (screenId < ID_MAIN_SCREEN) {
@@ -221,7 +222,7 @@ static NSMutableArray *leftToRightToDefault = nil;
   }
   NSSize cSize = cWindowRect.size;
   NSPoint cTopLeft = cWindowRect.origin;
-  NSLog(@"screenOrigin:(%ld,%ld), screenSize:(%ld,%ld), windowSize:(%f,%f), windowTopLeft:(%f,%f)",(long)originX,
+  SlateLogger(@"screenOrigin:(%ld,%ld), screenSize:(%ld,%ld), windowSize:(%f,%f), windowTopLeft:(%f,%f)",(long)originX,
         (long)originY,
         (long)sizeX,
         (long)sizeY,

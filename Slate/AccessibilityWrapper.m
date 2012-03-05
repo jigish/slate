@@ -20,6 +20,7 @@
 
 #import "AccessibilityWrapper.h"
 #import "Constants.h"
+#import "SlateLogger.h"
 
 @implementation AccessibilityWrapper
 
@@ -32,7 +33,7 @@
   self = [super init];
   if (self) {
     if (!AXAPIEnabled()) {
-      NSLog(@"ERROR: AXAPI must be enabled!");
+      SlateLogger(@"ERROR: AXAPI must be enabled!");
       [self setInited:NO];
       return self;
     }
@@ -50,7 +51,7 @@
       [self setInited:YES];
     } else {
       [self setInited:NO];
-      NSLog(@"ERROR: Could not fetch focused window");
+      SlateLogger(@"ERROR: Could not fetch focused window");
     }
   }
 
@@ -61,7 +62,7 @@
   self = [super init];
   if (self) {
     if (!AXAPIEnabled()) {
-      NSLog(@"ERROR: AXAPI must be enabled!");
+      SlateLogger(@"ERROR: AXAPI must be enabled!");
       [self setInited:NO];
       return self;
     }
@@ -80,11 +81,11 @@
 
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityPositionAttribute, (CFTypeRef *)&_cPosition) == kAXErrorSuccess) {
     if (!AXValueGetValue(_cPosition, kAXValueCGPointType, (void *)&cTopLeft)) {
-      NSLog(@"ERROR: Could not decode position");
+      SlateLogger(@"ERROR: Could not decode position");
       cTopLeft = NSMakePoint(0, 0);
     }
   } else {
-    NSLog(@"ERROR: Could not fetch position");
+    SlateLogger(@"ERROR: Could not fetch position");
     cTopLeft = NSMakePoint(0, 0);
   }
 
@@ -97,11 +98,11 @@
 
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)&_cSize) == kAXErrorSuccess) {
     if (!AXValueGetValue(_cSize, kAXValueCGSizeType, (void *)&cSize)) {
-      NSLog(@"ERROR: Could not decode size");
+      SlateLogger(@"ERROR: Could not decode size");
       cSize = NSMakeSize(0, 0);
     }
   } else {
-    NSLog(@"ERROR: Could not fetch size");
+    SlateLogger(@"ERROR: Could not fetch size");
     cSize = NSMakeSize(0, 0);
   }
 
@@ -112,7 +113,7 @@
   CFTypeRef _position;
   _position = (CFTypeRef)(AXValueCreate(kAXValueCGPointType, (const void *)&thePoint));
   if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilityPositionAttribute, (CFTypeRef *)_position) != kAXErrorSuccess) {
-    NSLog(@"ERROR: Could not change position");
+    SlateLogger(@"ERROR: Could not change position");
     return NO;
   }
   return YES;
@@ -122,7 +123,7 @@
   CFTypeRef _size;
   _size = (CFTypeRef)(AXValueCreate(kAXValueCGSizeType, (const void *)&theSize));
   if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)_size) != kAXErrorSuccess) {
-    NSLog(@"ERROR: Could not change size");
+    SlateLogger(@"ERROR: Could not change size");
     return NO;
   }
   return YES;
@@ -130,11 +131,11 @@
 
 - (BOOL)focus {
   if (AXUIElementSetAttributeValue(app, (CFStringRef)NSAccessibilityFrontmostAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
-    NSLog(@"ERROR: Could not change focus to app");
+    SlateLogger(@"ERROR: Could not change focus to app");
     return NO;
   }
   if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilityMainAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
-    NSLog(@"ERROR: Could not change focus to window");
+    SlateLogger(@"ERROR: Could not change focus to window");
     return NO;
   }
   return YES;

@@ -22,6 +22,7 @@
 #import "Constants.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
+#import "SlateLogger.h"
 
 @implementation DeleteSnapshotOperation
 
@@ -53,9 +54,9 @@
 }
 
 - (BOOL)doOperation {
-  NSLog(@"----------------- Begin Delete Snapshot Operation -----------------");
+  SlateLogger(@"----------------- Begin Delete Snapshot Operation -----------------");
   BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:nil];
-  NSLog(@"-----------------  End Delete Snapshot Operation  -----------------");
+  SlateLogger(@"-----------------  End Delete Snapshot Operation  -----------------");
   return success;
 }
 
@@ -74,7 +75,7 @@
   [StringTokenizer tokenize:deleteSnapshotOperation into:tokens maxTokens:3];
   
   if ([tokens count] < 2) {
-    NSLog(@"ERROR: Invalid Parameters '%@'", deleteSnapshotOperation);
+    SlateLogger(@"ERROR: Invalid Parameters '%@'", deleteSnapshotOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Delete Snapshot operations require the following format: 'delete-snapshot name options'", deleteSnapshotOperation] userInfo:nil]);
   }
   

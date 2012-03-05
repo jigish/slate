@@ -24,6 +24,7 @@
 #import "WindowSnapshot.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
+#import "SlateLogger.h"
 
 @implementation SnapshotOperation
 
@@ -58,9 +59,9 @@
 }
 
 - (BOOL)doOperation {
-  NSLog(@"----------------- Begin Snapshot Operation -----------------");
+  SlateLogger(@"----------------- Begin Snapshot Operation -----------------");
   BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:nil];
-  NSLog(@"-----------------  End Snapshot Operation  -----------------");
+  SlateLogger(@"-----------------  End Snapshot Operation  -----------------");
   return success;
 }
 
@@ -70,13 +71,13 @@
   for (NSDictionary *app in apps) {
     NSString *appName = [app objectForKey:@"NSApplicationName"];
     NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
-    NSLog(@"I see application '%@' with pid '%@'", appName, appPID);
+    SlateLogger(@"I see application '%@' with pid '%@'", appName, appPID);
     AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
     CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInApp:appRef];
     if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) continue;
     CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, windowsArrRef);
     for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
-      NSLog(@" Printing Window: %@", [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)]);
+      SlateLogger(@" Printing Window: %@", [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)]);
       NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
       if ([title isEqualToString:@""]) continue;
       AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windowsArr, i)];
@@ -99,7 +100,7 @@
   [StringTokenizer tokenize:snapshotOperation into:tokens maxTokens:3];
   
   if ([tokens count] < 2) {
-    NSLog(@"ERROR: Invalid Parameters '%@'", snapshotOperation);
+    SlateLogger(@"ERROR: Invalid Parameters '%@'", snapshotOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Snapshot operations require the following format: 'snapshot name options'", snapshotOperation] userInfo:nil]);
   }
   

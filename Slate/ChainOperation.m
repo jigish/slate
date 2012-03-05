@@ -23,7 +23,7 @@
 #import "WindowState.h"
 #import "StringTokenizer.h"
 #import "Constants.h"
-
+#import "SlateLogger.h"
 
 @implementation ChainOperation
 
@@ -50,12 +50,12 @@
 }
 
 - (BOOL)doOperation {
-  NSLog(@"----------------- Begin Chain Operation -----------------");
+  SlateLogger(@"----------------- Begin Chain Operation -----------------");
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   BOOL success = NO;
   if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
-  NSLog(@"-----------------  End Chain Operation  -----------------");
+  SlateLogger(@"-----------------  End Chain Operation  -----------------");
   return success;
 }
 
@@ -114,7 +114,7 @@
   [StringTokenizer tokenize:chainOperation into:tokens maxTokens:2];
   
   if ([tokens count] < 2) {
-    NSLog(@"ERROR: Invalid Parameters '%@'", chainOperation);
+    SlateLogger(@"ERROR: Invalid Parameters '%@'", chainOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Chain operations require the following format: 'chain op[|op]+'", chainOperation] userInfo:nil]);
   }
   
@@ -126,7 +126,7 @@
     if (op != nil) {
       [opArray addObject:op];
     } else {
-      NSLog(@"ERROR: Invalid Operation in Chain: '%@'", [ops objectAtIndex:i]);
+      SlateLogger(@"ERROR: Invalid Operation in Chain: '%@'", [ops objectAtIndex:i]);
       @throw([NSException exceptionWithName:@"Invalid Operation in Chain" reason:[NSString stringWithFormat:@"Invalid operation '%@' in chain.", [ops objectAtIndex:i]] userInfo:nil]);
     }
   }

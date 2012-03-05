@@ -24,7 +24,7 @@
 #import "LayoutOperation.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
-
+#import "SlateLogger.h"
 
 @implementation LayoutOperation
 
@@ -44,11 +44,11 @@
 }
 
 - (BOOL)doOperation {
-  NSLog(@"----------------- Begin Layout Operation -----------------");
+  SlateLogger(@"----------------- Begin Layout Operation -----------------");
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   // We don't use the passed in AccessibilityWrapper so it is nil. No need to waste time creating one here
   BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:sw];
-  NSLog(@"-----------------  End Layout Operation  -----------------");
+  SlateLogger(@"-----------------  End Layout Operation  -----------------");
   return success;
 }
 
@@ -59,7 +59,7 @@
   for (NSDictionary *app in apps) {
     NSString *appName = [app objectForKey:@"NSApplicationName"];
     NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
-    NSLog(@"I see application '%@' with pid '%@'", appName, appPID);
+    SlateLogger(@"I see application '%@' with pid '%@'", appName, appPID);
     Layout *layout = [[[SlateConfig getInstance] layouts] objectForKey:[self name]];
     if (layout == nil) {
       @throw([NSException exceptionWithName:@"Unrecognized Layout" reason:[self name] userInfo:nil]);
@@ -78,22 +78,22 @@
     CFMutableArrayRef windowsAppend = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
     // First Pass for main window if needed
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] mainFirst]) {
-      NSLog(@"Main First");
+      SlateLogger(@"Main First");
       for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
         if([AccessibilityWrapper isMainWindow:CFArrayGetValueAtIndex(windowsArr, i)]) {
-          NSLog(@" Found Main");
+          SlateLogger(@" Found Main");
           CFArrayAppendValue(windows, CFArrayGetValueAtIndex(windowsArr, i));
           CFArrayRemoveValueAtIndex(windowsArr, i);
           break;
         }
       }
     } else if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] mainLast]) {
-      NSLog(@"Main Last");
+      SlateLogger(@"Main Last");
       CFRelease(windowsAppend);
       windowsAppend = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
       for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
         if([AccessibilityWrapper isMainWindow:CFArrayGetValueAtIndex(windowsArr, i)]) {
-          NSLog(@" Found Main");
+          SlateLogger(@" Found Main");
           CFArrayAppendValue(windowsAppend, CFArrayGetValueAtIndex(windowsArr, i));
           CFArrayRemoveValueAtIndex(windowsArr, i);
           break;
@@ -103,12 +103,12 @@
     // Second Pass for title order if needed
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] titleOrder] != nil) {
       NSMutableArray *titleOrder = [NSMutableArray arrayWithArray:[(ApplicationOptions *)[[layout appOptions] objectForKey:appName] titleOrder]];
-      NSLog(@"Title Order: %@", titleOrder);
+      SlateLogger(@"Title Order: %@", titleOrder);
       for (NSInteger j = 0; j < [titleOrder count]; j++) {
         for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
-          NSLog(@" Checking Title: %@", [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)]);
+          SlateLogger(@" Checking Title: %@", [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)]);
           if([[AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)] isEqualToString:[titleOrder objectAtIndex:j]]) {
-            NSLog(@" Found Title: %@", [titleOrder objectAtIndex:j]);
+            SlateLogger(@" Found Title: %@", [titleOrder objectAtIndex:j]);
             CFArrayAppendValue(windows, CFArrayGetValueAtIndex(windowsArr, i));
             CFArrayRemoveValueAtIndex(windowsArr, i);
             break;
@@ -118,7 +118,7 @@
     }
     // Third Pass for sort
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] sortTitle]) {
-      NSLog(@"Sort By Title");
+      SlateLogger(@"Sort By Title");
       while (CFArrayGetCount(windowsArr) > 0) {
         NSString *title = nil;
         NSInteger index = 0;
@@ -138,7 +138,7 @@
         CFArrayRemoveValueAtIndex(windowsArr, index);
       }
     } else {
-      NSLog(@"No Sort");
+      SlateLogger(@"No Sort");
       CFArrayAppendArray(windows, windowsArr, CFRangeMake(0, CFArrayGetCount(windowsArr)));
     }
     CFArrayAppendArray(windows, windowsAppend, CFRangeMake(0, CFArrayGetCount(windowsAppend)));
@@ -195,7 +195,7 @@
   [StringTokenizer tokenize:layoutOperation into:tokens maxTokens:2];
   
   if ([tokens count] < 2) {
-    NSLog(@"ERROR: Invalid Parameters '%@'", layoutOperation);
+    SlateLogger(@"ERROR: Invalid Parameters '%@'", layoutOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Layout operations require the following format: 'layout <name>'", layoutOperation] userInfo:nil]);
   }
   

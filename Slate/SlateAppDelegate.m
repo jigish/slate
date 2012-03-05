@@ -23,6 +23,7 @@
 #import "SlateConfig.h"
 #import "Binding.h"
 #import "HintOperation.h"
+#import "SlateLogger.h"
 
 @implementation SlateAppDelegate
 
@@ -55,7 +56,7 @@ static SlateAppDelegate *selfRef = nil;
 }
 
 - (void)registerHotKeys {
-  NSLog(@"Registering HotKeys...");
+  SlateLogger(@"Registering HotKeys...");
   EventTypeSpec eventType;
   EventTypeSpec eventReleasedType;
   eventType.eventClass = kEventClassKeyboard;
@@ -76,7 +77,7 @@ static SlateAppDelegate *selfRef = nil;
     RegisterEventHotKey([binding keyCode], [binding modifiers], myHotKeyID, GetApplicationEventTarget(), 0, &myHotKeyRef);
     [binding setHotKeyRef:myHotKeyRef];
   }
-  NSLog(@"HotKeys registered.");
+  SlateLogger(@"HotKeys registered.");
 }
 
 - (void) runBinding:(NSTimer *)timer {
@@ -139,8 +140,8 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
 }
 
 - (void)processNotification:(id)notification {
-  NSLog(@"Notification: %@", notification);
-  NSLog(@"Notification Name: %@", [notification name]);
+  SlateLogger(@"Notification: %@", notification);
+  SlateLogger(@"Notification Name: %@", [notification name]);
 }
 
 - (void)awakeFromNib {
@@ -174,7 +175,7 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
     [alert setInformativeText:[NSString stringWithFormat:@"Settings > Universal Access > Enable access for assistive devices."]];
     [alert setAlertStyle:NSWarningAlertStyle];
     if ([alert runModal] == NSAlertFirstButtonReturn) {
-      NSLog(@"User selected exit");
+      SlateLogger(@"User selected exit");
       [NSApp terminate:nil];
     }
   }

@@ -22,7 +22,7 @@
 #import "Constants.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
-
+#import "SlateLogger.h"
 
 @implementation Binding
 
@@ -71,7 +71,7 @@ static NSDictionary *dictionary = nil;
           } else if ([mod isEqualToString:SHIFT]) {
             modifiers += shiftKey;
           } else {
-            NSLog(@"ERROR: Unrecognized modifier '%@'", mod);
+            SlateLogger(@"ERROR: Unrecognized modifier '%@'", mod);
             @throw([NSException exceptionWithName:@"Unrecognized Modifier" reason:[NSString stringWithFormat:@"Unrecognized modifier '%@' in '%@'", mod, binding] userInfo:nil]);
           }
           mod = [modEnum nextObject];
@@ -92,14 +92,14 @@ static NSDictionary *dictionary = nil;
     [self setOp:[Operation operationFromString:[tokens objectAtIndex:2]]];
 
     if (op == nil) {
-      NSLog(@"ERROR: Unable to create binding");
+      SlateLogger(@"ERROR: Unable to create binding");
       @throw([NSException exceptionWithName:@"Unable To Create Binding" reason:[NSString stringWithFormat:@"Unable to create '%@'", binding] userInfo:nil]);
     }
 
     @try {
       [op testOperation];
     } @catch (NSException *ex) {
-      NSLog(@"ERROR: Unable to test binding '%@'", binding);
+      SlateLogger(@"ERROR: Unable to test binding '%@'", binding);
       @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], binding] userInfo:nil]);
     }
   }

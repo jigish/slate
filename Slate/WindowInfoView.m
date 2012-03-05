@@ -21,6 +21,7 @@
 #import "WindowInfoView.h"
 #import "AccessibilityWrapper.h"
 #import "ScreenWrapper.h"
+#import "SlateLogger.h"
 
 @implementation WindowInfoView
 
@@ -31,7 +32,7 @@
 
 - (void)viewWillDraw {
   [super viewWillDraw];
-  NSLog(@"WindowInfoView will draw.");
+  SlateLogger(@"WindowInfoView will draw.");
   NSString *text = @"----------------- Screens -----------------\n";
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   NSMutableArray *resolutions = [NSMutableArray array];
@@ -46,7 +47,7 @@
     NSDictionary *app = [apps objectAtIndex:i];
     NSString *appName = [app objectForKey:@"NSApplicationName"];
     NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
-    NSLog(@"I see application '%@' with pid '%@'", appName, appPID);
+    SlateLogger(@"I see application '%@' with pid '%@'", appName, appPID);
     text = [text stringByAppendingFormat:@"\nApplication: %@\n", appName];
     // Yes, I am aware that the following blocks are inefficient. Deal with it.
     AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
@@ -54,7 +55,7 @@
     if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) continue;
     CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, windowsArrRef);
     for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
-      NSLog(@" Printing Window: %@", [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)]);
+      SlateLogger(@" Printing Window: %@", [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)]);
       NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
       if ([title isEqualToString:@""]) continue;
       AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windowsArr, i)];

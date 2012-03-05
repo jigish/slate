@@ -29,6 +29,7 @@
 #import "Snapshot.h"
 #import "SnapshotList.h"
 #import "JSONKit.h"
+#import "SlateLogger.h"
 
 @implementation SlateConfig
 
@@ -91,7 +92,7 @@ static SlateConfig *_instance = nil;
 }
 
 - (BOOL)load {
-  NSLog(@"Loading config...");
+  SlateLogger(@"Loading config...");
 
   // Reset configs and bindings in case we are calling from menu
   [self setupDefaultConfigs];
@@ -101,7 +102,7 @@ static SlateConfig *_instance = nil;
   [self setAliases:[[NSMutableDictionary alloc] init]];
 
   if (![self append:@"~/.slate"]) {
-    NSLog(@"  ERROR Could not load ~/.slate");
+    SlateLogger(@"  ERROR Could not load ~/.slate");
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"Quit"];
     [alert addButtonWithTitle:@"Skip"];
@@ -109,14 +110,14 @@ static SlateConfig *_instance = nil;
     [alert setInformativeText:@"I dunno. Figure it out."];
     [alert setAlertStyle:NSWarningAlertStyle];
     if ([alert runModal] == NSAlertFirstButtonReturn) {
-      NSLog(@"User selected exit");
+      SlateLogger(@"User selected exit");
       [NSApp terminate:nil];
     }
     return NO;
   }
   
   if (![self loadSnapshots]) {
-    NSLog(@"  ERROR Could not load %@", SNAPSHOTS_FILE);
+    SlateLogger(@"  ERROR Could not load %@", SNAPSHOTS_FILE);
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"Quit"];
     [alert addButtonWithTitle:@"Skip"];
@@ -124,18 +125,18 @@ static SlateConfig *_instance = nil;
     [alert setInformativeText:[NSString stringWithFormat:@"I dunno. Figure it out. Maybe try deleting %@", SNAPSHOTS_FILE]];
     [alert setAlertStyle:NSWarningAlertStyle];
     if ([alert runModal] == NSAlertFirstButtonReturn) {
-      NSLog(@"User selected exit");
+      SlateLogger(@"User selected exit");
       [NSApp terminate:nil];
     }
     return NO;
   }
 
   if ([[SlateConfig getInstance] getBoolConfig:CHECK_DEFAULTS_ON_LOAD]) {
-    NSLog(@"Config loaded. Checking defaults...");
+    SlateLogger(@"Config loaded. Checking defaults...");
     [self onScreenChange:nil];
-    NSLog(@"Defaults loaded.");
+    SlateLogger(@"Defaults loaded.");
   } else {
-    NSLog(@"Config loaded.");
+    SlateLogger(@"Config loaded.");
   }
 
   return YES;
@@ -157,7 +158,7 @@ static SlateConfig *_instance = nil;
     @try {
       line = [self replaceAliases:line];
     } @catch (NSException *ex) {
-      NSLog(@"   ERROR %@",[ex name]);
+      SlateLogger(@"   ERROR %@",[ex name]);
       NSAlert *alert = [[NSAlert alloc] init];
       [alert addButtonWithTitle:@"Quit"];
       [alert addButtonWithTitle:@"Skip"];
@@ -165,7 +166,7 @@ static SlateConfig *_instance = nil;
       [alert setInformativeText:[ex reason]];
       [alert setAlertStyle:NSWarningAlertStyle];
       if ([alert runModal] == NSAlertFirstButtonReturn) {
-        NSLog(@"User selected exit");
+        SlateLogger(@"User selected exit");
         [NSApp terminate:nil];
       }
     }
@@ -173,9 +174,9 @@ static SlateConfig *_instance = nil;
     [StringTokenizer tokenize:line into:tokens];
     if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:CONFIG]) {
       // config <key> <value>
-      NSLog(@"  LoadingC: %@",line);
+      SlateLogger(@"  LoadingC: %@",line);
       if ([configs objectForKey:[tokens objectAtIndex:1]] == nil) {
-        NSLog(@"   ERROR Unrecognized config '%@'",[tokens objectAtIndex:1]);
+        SlateLogger(@"   ERROR Unrecognized config '%@'",[tokens objectAtIndex:1]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
         [alert addButtonWithTitle:@"Skip"];
@@ -183,7 +184,7 @@ static SlateConfig *_instance = nil;
         [alert setInformativeText:line];
         [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal] == NSAlertFirstButtonReturn) {
-          NSLog(@"User selected exit");
+          SlateLogger(@"User selected exit");
           [NSApp terminate:nil];
         }
       } else {
@@ -193,10 +194,10 @@ static SlateConfig *_instance = nil;
       // bind <key:modifiers> <op> <parameters>
       @try {
         Binding *bind = [[Binding alloc] initWithString:line];
-        NSLog(@"  LoadingB: %@",line);
+        SlateLogger(@"  LoadingB: %@",line);
         [bindings addObject:bind];
       } @catch (NSException *ex) {
-        NSLog(@"   ERROR %@",[ex name]);
+        SlateLogger(@"   ERROR %@",[ex name]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
         [alert addButtonWithTitle:@"Skip"];
@@ -204,7 +205,7 @@ static SlateConfig *_instance = nil;
         [alert setInformativeText:[ex reason]];
         [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal] == NSAlertFirstButtonReturn) {
-          NSLog(@"User selected exit");
+          SlateLogger(@"User selected exit");
           [NSApp terminate:nil];
         }
       }
@@ -213,15 +214,15 @@ static SlateConfig *_instance = nil;
       @try {
         if ([layouts objectForKey:[tokens objectAtIndex:1]] == nil) {
           Layout *layout = [[Layout alloc] initWithString:line];
-          NSLog(@"  LoadingL: %@",line);
+          SlateLogger(@"  LoadingL: %@",line);
           [layouts setObject:layout forKey:[layout name]];
         } else {
           Layout *layout = [layouts objectForKey:[tokens objectAtIndex:1]];
           [layout addWithString:line];
-          NSLog(@"  LoadingL: %@",line);
+          SlateLogger(@"  LoadingL: %@",line);
         }
       } @catch (NSException *ex) {
-        NSLog(@"   ERROR %@",[ex name]);
+        SlateLogger(@"   ERROR %@",[ex name]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
         [alert addButtonWithTitle:@"Skip"];
@@ -229,7 +230,7 @@ static SlateConfig *_instance = nil;
         [alert setInformativeText:[ex reason]];
         [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal] == NSAlertFirstButtonReturn) {
-          NSLog(@"User selected exit");
+          SlateLogger(@"User selected exit");
           [NSApp terminate:nil];
         }
       }
@@ -238,7 +239,7 @@ static SlateConfig *_instance = nil;
       @try {
         ScreenState *state = [[ScreenState alloc] initWithString:line];
         if (state == nil) {
-          NSLog(@"   ERROR Loading default layout");
+          SlateLogger(@"   ERROR Loading default layout");
           NSAlert *alert = [[NSAlert alloc] init];
           [alert addButtonWithTitle:@"Quit"];
           [alert addButtonWithTitle:@"Skip"];
@@ -246,15 +247,15 @@ static SlateConfig *_instance = nil;
           [alert setInformativeText:line];
           [alert setAlertStyle:NSWarningAlertStyle];
           if ([alert runModal] == NSAlertFirstButtonReturn) {
-            NSLog(@"User selected exit");
+            SlateLogger(@"User selected exit");
             [NSApp terminate:nil];
           }
         } else {
           [defaultLayouts addObject:state];
-          NSLog(@"  LoadingDL: %@",line);
+          SlateLogger(@"  LoadingDL: %@",line);
         }
       } @catch (NSException *ex) {
-        NSLog(@"   ERROR %@",[ex name]);
+        SlateLogger(@"   ERROR %@",[ex name]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
         [alert addButtonWithTitle:@"Skip"];
@@ -262,7 +263,7 @@ static SlateConfig *_instance = nil;
         [alert setInformativeText:[ex reason]];
         [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal] == NSAlertFirstButtonReturn) {
-          NSLog(@"User selected exit");
+          SlateLogger(@"User selected exit");
           [NSApp terminate:nil];
         }
       }
@@ -270,9 +271,9 @@ static SlateConfig *_instance = nil;
       // alias <name> <value>
       @try {
         [self addAlias:line];
-        NSLog(@"  LoadingL: %@",line);
+        SlateLogger(@"  LoadingL: %@",line);
       } @catch (NSException *ex) {
-        NSLog(@"   ERROR %@",[ex name]);
+        SlateLogger(@"   ERROR %@",[ex name]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
         [alert addButtonWithTitle:@"Skip"];
@@ -280,18 +281,18 @@ static SlateConfig *_instance = nil;
         [alert setInformativeText:[ex reason]];
         [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal] == NSAlertFirstButtonReturn) {
-          NSLog(@"User selected exit");
+          SlateLogger(@"User selected exit");
           [NSApp terminate:nil];
         }
       }
     } else if ([tokens count] >= 2 && [[tokens objectAtIndex:0] isEqualToString:SOURCE]) {
       // source filename optional:if_exists
-      NSLog(@"  LoadingS: %@",line);
+      SlateLogger(@"  LoadingS: %@",line);
       if (![self append:[tokens objectAtIndex:1]]) {
         if ([tokens count] >= 3 && [[tokens objectAtIndex:2] isEqualToString:IF_EXISTS]) {
-          NSLog(@"   Could not find file '%@' but that's ok. User specified if_exists.",[tokens objectAtIndex:1]);
+          SlateLogger(@"   Could not find file '%@' but that's ok. User specified if_exists.",[tokens objectAtIndex:1]);
         } else {
-          NSLog(@"   ERROR Sourcing file '%@'",[tokens objectAtIndex:1]);
+          SlateLogger(@"   ERROR Sourcing file '%@'",[tokens objectAtIndex:1]);
           NSAlert *alert = [[NSAlert alloc] init];
           [alert addButtonWithTitle:@"Quit"];
           [alert addButtonWithTitle:@"Skip"];
@@ -299,7 +300,7 @@ static SlateConfig *_instance = nil;
           [alert setInformativeText:@"I dunno. Figure it out."];
           [alert setAlertStyle:NSWarningAlertStyle];
           if ([alert runModal] == NSAlertFirstButtonReturn) {
-            NSLog(@"User selected exit");
+            SlateLogger(@"User selected exit");
             [NSApp terminate:nil];
           }
         }
@@ -347,7 +348,7 @@ static SlateConfig *_instance = nil;
 }
 
 - (void)onScreenChange:(id)notification {
-  NSLog(@"onScreenChange");
+  SlateLogger(@"onScreenChange");
   [ScreenWrapper updateLeftToRightToDefault];
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   NSInteger screenCount = [sw getScreenCount];
@@ -358,14 +359,14 @@ static SlateConfig *_instance = nil;
     ScreenState *state = [defaultLayouts objectAtIndex:i];
     // Check count
     if ([state type] == TYPE_COUNT && [state count] == screenCount) {
-      NSLog(@"onScreenChange count found");
+      SlateLogger(@"onScreenChange count found");
       LayoutOperation *op = [[LayoutOperation alloc] initWithName:[state layout]];
       [op doOperation];
       break;
     }
     // Check resolutions
     if ([resolutions count] == [[state resolutions] count]) {
-      NSLog(@"onScreenChange resolution counts equal. Check %@ vs %@",resolutions,[state resolutions]);
+      SlateLogger(@"onScreenChange resolution counts equal. Check %@ vs %@",resolutions,[state resolutions]);
       BOOL isEqual = YES;
       for (NSInteger j = 0; j < [resolutions count]; j++) {
         if (![[resolutions objectAtIndex:j] isEqualToString:[[state resolutions] objectAtIndex:j]]) {

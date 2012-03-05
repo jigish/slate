@@ -23,7 +23,7 @@
 #import "MathUtils.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
-
+#import "SlateLogger.h"
 
 @implementation FocusOperation
 
@@ -55,10 +55,10 @@
 }
 
 - (BOOL)doOperation {
-  NSLog(@"----------------- Begin Focus Operation -----------------");
+  SlateLogger(@"----------------- Begin Focus Operation -----------------");
   // We don't use the passed in AccessibilityWrapper or ScreenWrapper so they are nil. No need to waste time creating them here.
   BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:nil];
-  NSLog(@"-----------------  End Focus Operation  -----------------");
+  SlateLogger(@"-----------------  End Focus Operation  -----------------");
   return success;
 }
 
@@ -72,7 +72,7 @@
   NSRect checkRect;
   NSInteger focusCheckWidth = [[SlateConfig getInstance] getIntegerConfig:FOCUS_CHECK_WIDTH];
   while (focusCheckWidth <= [[SlateConfig getInstance] getIntegerConfig:FOCUS_CHECK_WIDTH_MAX]) {
-    NSLog(@"Checking for adjacent windows with width=%i",(int)focusCheckWidth);
+    SlateLogger(@"Checking for adjacent windows with width=%i",(int)focusCheckWidth);
     if (direction == DIRECTION_UP) checkRect = NSMakeRect(cwTL.x, cwTL.y-focusCheckWidth, cwSize.width, focusCheckWidth);
     else if (direction == DIRECTION_DOWN) checkRect = NSMakeRect(cwTL.x, cwTL.y+cwSize.height, cwSize.width, focusCheckWidth);
     else if (direction == DIRECTION_LEFT) checkRect = NSMakeRect(cwTL.x-focusCheckWidth, cwTL.y, focusCheckWidth, cwSize.height);
@@ -88,9 +88,8 @@
     BOOL foundFocus = NO;
     BOOL foundFocusInSameApp = NO;
     for (NSDictionary *app in apps) {
-      NSString *appName = [app objectForKey:@"NSApplicationName"];
       NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
-      NSLog(@"I see application '%@' with pid '%@'", appName, appPID);
+      SlateLogger(@"I see application '%@' with pid '%@'", [app objectForKey:@"NSApplicationName"], appPID);
 
       AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
       CFArrayRef windows = [AccessibilityWrapper windowsInApp:appRef];
@@ -100,31 +99,31 @@
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
 
         if ([AccessibilityWrapper isWindowMinimizedOrHidden:[aw window]]) {
-          NSLog(@" Window is minimized, skipping");
+          SlateLogger(@" Window is minimized, skipping");
           continue;
         }
 
         NSString *wTitle = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windows, i)];
         if ([wTitle isEqualToString:@""]){
-          NSLog(@" Title is empty, skipping");
+          SlateLogger(@" Title is empty, skipping");
           continue; // Chrome and Finder have invisible windows for some reason
         }
 
         NSPoint wTL = [aw getCurrentTopLeft];
         NSSize wSize = [aw getCurrentSize];
-        NSLog(@" Checking window in %@ in direction %i with rect: (%f,%f %f,%f), title: [%@]",appName,(int)direction,wTL.x,wTL.y,wSize.width,wSize.height,wTitle);
+        SlateLogger(@" Checking window in %@ in direction %i with rect: (%f,%f %f,%f), title: [%@]",appName,(int)direction,wTL.x,wTL.y,wSize.width,wSize.height,wTitle);
         NSRect windowRect = NSMakeRect(wTL.x, wTL.y, wSize.width, wSize.height);
 
         if ([wTitle isEqualToString:cwTitle] && NSEqualRects(windowRect, cwRect) && NSEqualPoints(wTL, cwTL)) {
-          NSLog(@" Ignoring current window");
+          SlateLogger(@" Ignoring current window");
           continue;
         }
         NSRect intersection = NSIntersectionRect(checkRect, windowRect);
         if ([MathUtils isRect:intersection biggerThan:NSZeroRect] && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == [appPID intValue]) {
-          NSLog(@"  Found window in same app in direction %i",(int)direction);
+          SlateLogger(@"  Found window in same app in direction %i",(int)direction);
           if ([[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP]
               && (!foundFocusInSameApp || [MathUtils isRect:intersection biggerThan:biggestIntersection])) {
-            NSLog(@"   Preferring same app.");
+            SlateLogger(@"   Preferring same app.");
             appToFocus = appRef;
             windowToFocus = CFArrayGetValueAtIndex(windows, i);
             biggestIntersection = intersection;
@@ -137,7 +136,7 @@
             foundFocus = YES;
           }
         } else if ([MathUtils isRect:intersection biggerThan:biggestIntersection]) {
-          NSLog(@"  Found window in %@ in direction %i (intersection: %f,%f %f,%f)",appName,(int)direction,intersection.origin.x,intersection.origin.y,intersection.size.width,intersection.size.height);
+          SlateLogger(@"  Found window in %@ in direction %i (intersection: %f,%f %f,%f)",appName,(int)direction,intersection.origin.x,intersection.origin.y,intersection.size.width,intersection.size.height);
           appToFocus = appRef;
           windowToFocus = CFArrayGetValueAtIndex(windows, i);
           biggestIntersection = intersection;
@@ -173,7 +172,7 @@
   [StringTokenizer tokenize:focusOperation into:tokens maxTokens:2];
   
   if ([tokens count] < 2) {
-    NSLog(@"ERROR: Invalid Parameters '%@'", focusOperation);
+    SlateLogger(@"ERROR: Invalid Parameters '%@'", focusOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Focus operations require the following format: 'focus direction'", focusOperation] userInfo:nil]);
   }
   

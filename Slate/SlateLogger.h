@@ -1,8 +1,8 @@
 //
-//  MathUtils.h
+//  SlateLogger.h
 //  Slate
 //
-//  Created by Jigish Patel on 6/22/11.
+//  Created by Jigish Patel on 3/5/12.
 //  Copyright 2011 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -18,14 +18,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
-#import <Foundation/Foundation.h>
+#ifndef Slate_SlateLogger_h
+#define Slate_SlateLogger_h
 
+#ifdef DEBUG
+#define SlateLogger(...) NSLog(__VA_ARGS__)
+#else
+#define SlateLogger(...)
+#endif
 
-@interface MathUtils : NSObject {}
-
-+ (BOOL)isRect:(NSRect)rect1 biggerThan:(NSRect)rect2;
-+ (NSRect)flipYCoordinateOfRect:(NSRect)original withReference:(NSRect)reference;
-+ (NSRect)scaleRect:(NSRect)rect factor:(double)factor;
-+ (NSRect)weightedIntersectionOf:(NSRect)rect1 and:(NSRect)rect2 weight:(double)weight;
-
-@end
+#endif

@@ -30,7 +30,7 @@
 #import "HintOperation.h"
 #import "StringTokenizer.h"
 #import "Constants.h"
-
+#import "SlateLogger.h"
 
 @implementation Operation
 
@@ -87,7 +87,7 @@
   } else if ([op isEqualToString:HINT]) {
     operation = [HintOperation hintOperationFromString:opString];
   } else {
-    NSLog(@"ERROR: Unrecognized operation '%@'", opString);
+    SlateLogger(@"ERROR: Unrecognized operation '%@'", opString);
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);
   }
   return operation;

@@ -24,7 +24,7 @@
 #import "ScreenWrapper.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
-
+#import "SlateLogger.h"
 
 @implementation ResizeOperation
 
@@ -49,7 +49,7 @@
     } else if ([a isEqualToString:BOTTOM_RIGHT]) {
       [self setAnchor:ANCHOR_BOTTOM_RIGHT];
     } else {
-      NSLog(@"ERROR: Unrecognized anchor '%@'", a);
+      SlateLogger(@"ERROR: Unrecognized anchor '%@'", a);
       return nil;
     }
     [self setXResize:x];
@@ -74,12 +74,12 @@
 }
 
 - (BOOL)doOperation {
-  NSLog(@"----------------- Begin Resize Operation -----------------");
+  SlateLogger(@"----------------- Begin Resize Operation -----------------");
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   BOOL success = NO;
   if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
-  NSLog(@"-----------------  End Resize Operation  -----------------");
+  SlateLogger(@"-----------------  End Resize Operation  -----------------");
   return success;
 }
 
@@ -150,7 +150,7 @@
   [StringTokenizer tokenize:resizeOperation into:tokens];
   
   if ([tokens count] < 3) {
-    NSLog(@"ERROR: Invalid Parameters '%@'", resizeOperation);
+    SlateLogger(@"ERROR: Invalid Parameters '%@'", resizeOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Resize operations require the following format: 'resize resizeX resizeY [optional:anchor]'", resizeOperation] userInfo:nil]);
   }
   

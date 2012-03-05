@@ -23,7 +23,7 @@
 #import "Layout.h"
 #import "Operation.h"
 #import "StringTokenizer.h"
-
+#import "SlateLogger.h"
 
 @implementation Layout
 
@@ -92,7 +92,7 @@
     if (op != nil) {
       [opArray addObject:op];
     } else {
-      NSLog(@"ERROR: Invalid Operation in Chain: '%@'", [ops objectAtIndex:i]);
+      SlateLogger(@"ERROR: Invalid Operation in Chain: '%@'", [ops objectAtIndex:i]);
       @throw([NSException exceptionWithName:@"Invalid Operation in Chain" reason:[NSString stringWithFormat:@"Invalid operation '%@' in chain.", [ops objectAtIndex:i]] userInfo:nil]);
     }
   }

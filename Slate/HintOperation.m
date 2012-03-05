@@ -28,6 +28,7 @@
 #import "SlateAppDelegate.h"
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
+#import "SlateLogger.h"
 
 @implementation HintOperation
 
@@ -59,15 +60,15 @@
   NSString *code = nil;
   if (currentHint >= [hintCharacters length]) return code;
   code = [hintCharacters substringWithRange:NSMakeRange(currentHint, 1)];
-  NSLog(@"    GIVING CODE: %@", code);
+  SlateLogger(@"    GIVING CODE: %@", code);
   currentHint++;
   return code;
 }
 
 - (BOOL)doOperation {
-  NSLog(@"----------------- Begin Hint Operation -----------------");
+  SlateLogger(@"----------------- Begin Hint Operation -----------------");
   BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:nil];
-  NSLog(@"-----------------  End Hint Operation  -----------------");
+  SlateLogger(@"-----------------  End Hint Operation  -----------------");
   return success;
 }
 
@@ -120,9 +121,8 @@
   [self setCurrentWindow:[[AccessibilityWrapper alloc] init]];
   NSArray *appsArr = [[NSWorkspace sharedWorkspace] launchedApplications];
   for (NSDictionary *app in appsArr) {
-    NSString *appName = [app objectForKey:@"NSApplicationName"];
     NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
-    NSLog(@"I see application '%@' with pid '%@'", appName, appPID);
+    SlateLogger(@"I see application '%@' with pid '%@'", [app objectForKey:@"NSApplicationName"], appPID);
     AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
     CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInApp:appRef];
     if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) continue;
@@ -130,7 +130,7 @@
     for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
       NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
       if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
-      NSLog(@"  Hinting Window: %@", title);
+      SlateLogger(@"  Hinting Window: %@", title);
       [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef];
     }
   }
