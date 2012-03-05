@@ -200,3 +200,4 @@ extern NSString *const FINDER;
 // Window Hint
 extern NSInteger const HINT_X_PADDING;
 extern NSString *const HINT_CHARACTERS;
+extern NSInteger const MAIN_MENU_HEIGHT;

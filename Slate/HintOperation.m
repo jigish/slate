@@ -83,8 +83,8 @@
   // convert top left to screen relative
   tl = [sw convertTopLeftToScreenRelative:tl screen:screenId];
   // now need to flip y coord
-  tl.y = [[[sw screens] objectAtIndex:screenId] visibleFrame].size.height - tl.y;
-  NSRect frame = NSMakeRect(tl.x + HINT_X_PADDING,
+  tl.y = [[[sw screens] objectAtIndex:screenId] frame].size.height - ([sw isMainScreen:screenId] ? MAIN_MENU_HEIGHT : 0) - tl.y;
+  NSRect frame = NSMakeRect(tl.x,
                             tl.y - [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_HEIGHT],
                             [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_WIDTH],
                             [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_HEIGHT]);

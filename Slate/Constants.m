@@ -202,3 +202,4 @@ NSString *const FINDER = @"Finder";
 // Window Hints
 NSInteger const HINT_X_PADDING = 4;
 NSString *const HINT_CHARACTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+NSInteger const MAIN_MENU_HEIGHT = 22;

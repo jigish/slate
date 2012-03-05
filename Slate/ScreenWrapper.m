@@ -188,6 +188,10 @@ static NSMutableArray *leftToRightToDefault = nil;
   return -1;
 }
 
+- (BOOL)isMainScreen:(NSInteger)screenID {
+  return screenID == ID_MAIN_SCREEN;
+}
+
 - (BOOL)isRectOffScreen:(NSRect)rect {
   // Check all corners to see if they are on a screen
   // Top-left
