@@ -111,7 +111,7 @@
 
         NSPoint wTL = [aw getCurrentTopLeft];
         NSSize wSize = [aw getCurrentSize];
-        SlateLogger(@" Checking window in %@ in direction %i with rect: (%f,%f %f,%f), title: [%@]",appName,(int)direction,wTL.x,wTL.y,wSize.width,wSize.height,wTitle);
+        SlateLogger(@" Checking window in %@ in direction %i with rect: (%f,%f %f,%f), title: [%@]",[app objectForKey:@"NSApplicationName"],(int)direction,wTL.x,wTL.y,wSize.width,wSize.height,wTitle);
         NSRect windowRect = NSMakeRect(wTL.x, wTL.y, wSize.width, wSize.height);
 
         if ([wTitle isEqualToString:cwTitle] && NSEqualRects(windowRect, cwRect) && NSEqualPoints(wTL, cwTL)) {
@@ -136,7 +136,7 @@
             foundFocus = YES;
           }
         } else if ([MathUtils isRect:intersection biggerThan:biggestIntersection]) {
-          SlateLogger(@"  Found window in %@ in direction %i (intersection: %f,%f %f,%f)",appName,(int)direction,intersection.origin.x,intersection.origin.y,intersection.size.width,intersection.size.height);
+          SlateLogger(@"  Found window in %@ in direction %i (intersection: %f,%f %f,%f)",[app objectForKey:@"NSApplicationName"],(int)direction,intersection.origin.x,intersection.origin.y,intersection.size.width,intersection.size.height);
           appToFocus = appRef;
           windowToFocus = CFArrayGetValueAtIndex(windows, i);
           biggestIntersection = intersection;
