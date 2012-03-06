@@ -193,6 +193,7 @@ extern NSString *const ORDERED;
 
 // Notifications
 extern NSString *const NOTIFICATION_SCREEN_CHANGE;
+extern NSString *const NOTIFICATION_SCREEN_CHANGE_LION;
 
 // Applications
 extern NSString *const FINDER;

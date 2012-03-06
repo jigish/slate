@@ -63,6 +63,8 @@ static SlateConfig *_instance = nil;
     // Listen for screen change notifications
     NSNotificationCenter *nc = [NSDistributedNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(onScreenChange:) name:NOTIFICATION_SCREEN_CHANGE object:nil];
+    [nc addObserver:self selector:@selector(onScreenChange:) name:NOTIFICATION_SCREEN_CHANGE_LION object:nil];
+    //[nc addObserver:self selector:@selector(processNotification:) name:nil object:nil];
   }
   return self;
 }
@@ -347,9 +349,14 @@ static SlateConfig *_instance = nil;
   return line;
 }
 
+/*- (void)processNotification:(id)notification {
+  SlateLogger(@"Notification: %@", notification);
+  SlateLogger(@"Notification Name: <%@>", [notification name]);
+}*/
+
 - (void)onScreenChange:(id)notification {
   SlateLogger(@"onScreenChange");
-  [ScreenWrapper updateLeftToRightToDefault];
+  [ScreenWrapper updateStatics];
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   NSInteger screenCount = [sw getScreenCount];
   NSMutableArray *resolutions = [[NSMutableArray alloc] initWithCapacity:10];

@@ -195,6 +195,7 @@ NSString *const ORDERED = @"ordered";
 
 // Notifications
 NSString *const NOTIFICATION_SCREEN_CHANGE = @"O3DeviceTimingChanged";
+NSString *const NOTIFICATION_SCREEN_CHANGE_LION = @" com.apple.BezelServices.BMDisplayHWReconfiguredEvent";
 
 // Applications
 NSString *const FINDER = @"Finder";

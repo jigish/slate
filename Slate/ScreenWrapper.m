@@ -25,6 +25,7 @@
 #import "SlateLogger.h"
 
 static NSMutableArray *leftToRightToDefault = nil;
+static NSString *resolutions = nil;
 
 @implementation ScreenWrapper
 
@@ -33,7 +34,7 @@ static NSMutableArray *leftToRightToDefault = nil;
 + (void)initialize {
   if (!leftToRightToDefault) {
     leftToRightToDefault = [[NSMutableArray alloc] init];
-    [ScreenWrapper updateLeftToRightToDefault];
+    [ScreenWrapper updateStatics];
   }
 }
 
@@ -70,6 +71,35 @@ static NSMutableArray *leftToRightToDefault = nil;
     }
     [leftToRightToDefault addObject:defaultId];
   }
+}
+
++ (void)updateScreenResolutions {
+  [ScreenWrapper updateScreenResolutions:[NSScreen screens]];
+}
+
++ (void)updateScreenResolutions:(NSArray *)theScreens {
+  resolutions = @"";
+  for (NSScreen *screen in theScreens) {
+    NSRect screenRect =[screen frame];
+    resolutions = [resolutions stringByAppendingFormat:@"%i%@%i,",(int)screenRect.size.width,X,(int)screenRect.size.height];
+  }
+}
+
++ (void)updateStatics {
+  [ScreenWrapper updateLeftToRightToDefault];
+  [ScreenWrapper updateScreenResolutions];
+}
+
++ (BOOL)hasScreenConfigChanged {
+  NSString *oldResolutions = [NSString stringWithString:resolutions];
+  NSArray *oldLeftToRight = [NSArray arrayWithArray:leftToRightToDefault];
+  [ScreenWrapper updateStatics];
+  if (![oldResolutions isEqualToString:resolutions]) return YES;
+  if ([oldLeftToRight count] != [leftToRightToDefault count]) return YES;
+  for (NSInteger i = 0; i < [oldLeftToRight count]; i++) {
+    if ([[oldLeftToRight objectAtIndex:i] integerValue] != [[leftToRightToDefault objectAtIndex:i] integerValue]) return YES;
+  }
+  return NO;
 }
 
 - (id)init {

@@ -29,6 +29,10 @@
 
 + (void)updateLeftToRightToDefault;
 + (void)updateLeftToRightToDefault:(NSArray *)theScreens;
++ (void)updateScreenResolutions;
++ (void)updateScreenResolutions:(NSArray *)theScreens;
++ (void)updateStatics;
++ (BOOL)hasScreenConfigChanged;
 - (id)initWithScreens:(NSArray *)theScreens; // Used for testing
 - (NSInteger)getScreenCount;
 - (NSInteger)convertDefaultOrderToLeftToRightOrder:(NSInteger)screenId;

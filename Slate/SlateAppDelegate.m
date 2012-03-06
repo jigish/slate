@@ -139,11 +139,6 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
   
 }
 
-- (void)processNotification:(id)notification {
-  SlateLogger(@"Notification: %@", notification);
-  SlateLogger(@"Notification Name: %@", [notification name]);
-}
-
 - (void)awakeFromNib {
   currentHintOperation = nil;
 
