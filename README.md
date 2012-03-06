@@ -56,6 +56,7 @@ List of allowed configs:
 | windowHintsFontName | String | Helvetica | The name of the Window Hints font |
 | windowHintsFontSize | Integer | 40 | The size of the Window Hints font |
 | windowHintsDuration | Number | 3 | The number of seconds that Window Hints will display for |
+| windowHintsRoundedCornerSize | Integer | 5 | The size of the rounded corner. Set this to 0 if you do not want rounded corners |
 
 Example:
 

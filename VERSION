@@ -1,4 +1,10 @@
-Current Version: 0.4.14
+Current Version: 0.4.15
+
+----------------- 0.4.15 ----------------
+
+Fix Issues #34, #35, #40
+Added windowHintsRoundedCornerSize config
+Fixed Current Window Info menu option to allow scroll
 
 ----------------- 0.4.14 ----------------
 
