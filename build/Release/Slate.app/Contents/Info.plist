@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>0.4.15</string>
+	<string>0.4.16</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
@@ -39,7 +39,7 @@
 	<key>DTXcodeBuild</key>
 	<string>4E109</string>
 	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.productivity</string>
+	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>
 	<false/>
 	<key>LSMinimumSystemVersion</key>
