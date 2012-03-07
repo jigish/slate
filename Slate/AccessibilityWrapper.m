@@ -22,9 +22,10 @@
 #import "Constants.h"
 #import "SlateLogger.h"
 
+static AXUIElementRef systemWideElement = NULL;
+
 @implementation AccessibilityWrapper
 
-@synthesize systemWideElement;
 @synthesize app;
 @synthesize window;
 @synthesize inited;
@@ -32,12 +33,9 @@
 - (id)init {
   self = [super init];
   if (self) {
-    if (!AXAPIEnabled()) {
-      SlateLogger(@"ERROR: AXAPI must be enabled!");
-      [self setInited:NO];
-      return self;
+    if (systemWideElement == NULL) {
+      systemWideElement = AXUIElementCreateSystemWide();
     }
-    [self setSystemWideElement:AXUIElementCreateSystemWide()];
 
     // Get App that has focus
     CFTypeRef _app;
@@ -61,12 +59,9 @@
 - (id)initWithApp:(AXUIElementRef)appRef window:(AXUIElementRef)windowRef {
   self = [super init];
   if (self) {
-    if (!AXAPIEnabled()) {
-      SlateLogger(@"ERROR: AXAPI must be enabled!");
-      [self setInited:NO];
-      return self;
+    if (systemWideElement == NULL) {
+      systemWideElement = AXUIElementCreateSystemWide();
     }
-    [self setSystemWideElement:AXUIElementCreateSystemWide()];
     [self setApp:appRef];
     [self setWindow:windowRef];
     [self setInited:YES];

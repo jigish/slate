@@ -23,13 +23,11 @@
 
 @interface AccessibilityWrapper : NSObject {
 @private
-  AXUIElementRef systemWideElement;
   AXUIElementRef app;
   AXUIElementRef window;
   BOOL inited;
 }
 
-@property (assign) AXUIElementRef systemWideElement;
 @property (assign) AXUIElementRef app;
 @property (assign) AXUIElementRef window;
 @property (assign) BOOL inited;
