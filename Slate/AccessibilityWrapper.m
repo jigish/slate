@@ -188,6 +188,16 @@ static AXUIElementRef systemWideElement = NULL;
   return isMinimized || isHidden;
 }
 
++ (AXUIElementRef)windowUnderPoint:(NSPoint)point {
+  AXUIElementRef _element;
+  CFTypeRef _window;
+  if ((AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), point.x, point.y, &_element) ==
+       kAXErrorSuccess) && _element && AXUIElementCopyAttributeValue(_element, (CFStringRef)NSAccessibilityWindowAttribute, (CFTypeRef *)&_window) == kAXErrorSuccess) {
+    return (AXUIElementRef)_window;
+  }
+  return NULL;
+}
+
 + (void)createSystemWideElement {
   if (systemWideElement == NULL) {
     systemWideElement = AXUIElementCreateSystemWide();

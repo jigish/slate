@@ -44,6 +44,7 @@
 + (BOOL)isMainWindow:(AXUIElementRef)window;
 + (NSString *)getTitle:(AXUIElementRef)window;
 + (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window;
++ (AXUIElementRef)windowUnderPoint:(NSPoint)point;
 + (void)createSystemWideElement;
 
 @end
