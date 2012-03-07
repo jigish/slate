@@ -67,16 +67,16 @@
 
 - (BOOL)doOperation {
   SlateLogger(@"----------------- Begin Hint Operation -----------------");
-  BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:nil];
+  ScreenWrapper *sw = [[ScreenWrapper alloc] init];
+  BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:sw];
   SlateLogger(@"-----------------  End Hint Operation  -----------------");
   return success;
 }
 
-- (void)createHintWindowFor:(AXUIElementRef)windowRef inApp:(AXUIElementRef)appRef {
+- (void)createHintWindowFor:(AXUIElementRef)windowRef inApp:(AXUIElementRef)appRef screenWrapper:(ScreenWrapper *)sw {
   NSString *hintCode = [self currentHintCode];
   if (hintCode == nil) return;
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:windowRef];
-  ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   NSPoint tl = [aw getCurrentTopLeft];
   NSInteger screenId = [sw getScreenIdForPoint:tl];
   if (screenId < 0) return;
@@ -125,7 +125,7 @@
   [hotkeyRefs addObject:[NSValue valueWithPointer:myHotKeyRef]];
 }
 
-- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
+- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
   if (hideTimer != nil) return YES;
   [self setCurrentHint:0];
   [self setCurrentWindow:[[AccessibilityWrapper alloc] init]];
@@ -141,7 +141,7 @@
       NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
       if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
       SlateLogger(@"  Hinting Window: %@", title);
-      [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef];
+      [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw];
     }
   }
   [self setHideTimer:[NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_DURATION]
