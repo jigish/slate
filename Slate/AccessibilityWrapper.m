@@ -33,9 +33,7 @@ static AXUIElementRef systemWideElement = NULL;
 - (id)init {
   self = [super init];
   if (self) {
-    if (systemWideElement == NULL) {
-      systemWideElement = AXUIElementCreateSystemWide();
-    }
+    [AccessibilityWrapper createSystemWideElement];
 
     // Get App that has focus
     CFTypeRef _app;
@@ -59,9 +57,7 @@ static AXUIElementRef systemWideElement = NULL;
 - (id)initWithApp:(AXUIElementRef)appRef window:(AXUIElementRef)windowRef {
   self = [super init];
   if (self) {
-    if (systemWideElement == NULL) {
-      systemWideElement = AXUIElementCreateSystemWide();
-    }
+    [AccessibilityWrapper createSystemWideElement];
     [self setApp:appRef];
     [self setWindow:windowRef];
     [self setInited:YES];
@@ -137,6 +133,7 @@ static AXUIElementRef systemWideElement = NULL;
 }
 
 + (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element {
+  [AccessibilityWrapper createSystemWideElement];
   pid_t pid = 0;
   if (AXUIElementGetPid (element, &pid) == kAXErrorSuccess) {
     return pid;
@@ -146,6 +143,7 @@ static AXUIElementRef systemWideElement = NULL;
 }
 
 + (CFArrayRef)windowsInApp:(AXUIElementRef)app {
+  [AccessibilityWrapper createSystemWideElement];
   CFArrayRef _windows;
   if (AXUIElementCopyAttributeValues(app, kAXWindowsAttribute, 0, 100, &_windows) == kAXErrorSuccess) {
     return _windows;
@@ -154,6 +152,7 @@ static AXUIElementRef systemWideElement = NULL;
 }
 
 + (BOOL)isMainWindow:(AXUIElementRef)window {
+  [AccessibilityWrapper createSystemWideElement];
   CFTypeRef _isMain;
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityMainAttribute, (CFTypeRef *)&_isMain) == kAXErrorSuccess) {
     NSNumber *isMain = (__bridge NSNumber *) _isMain;
@@ -163,6 +162,7 @@ static AXUIElementRef systemWideElement = NULL;
 }
 
 + (NSString *)getTitle:(AXUIElementRef)window {
+  [AccessibilityWrapper createSystemWideElement];
   CFTypeRef _title;
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityTitleAttribute, (CFTypeRef *)&_title) == kAXErrorSuccess) {
     NSString *title = (__bridge NSString *) _title;
@@ -172,6 +172,7 @@ static AXUIElementRef systemWideElement = NULL;
 }
 
 + (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window {
+  [AccessibilityWrapper createSystemWideElement];
   CFTypeRef _isMinimized;
   CFTypeRef _isHidden;
   BOOL isMinimized = NO;
@@ -185,6 +186,12 @@ static AXUIElementRef systemWideElement = NULL;
     isMinimized = [isMinimizedNum boolValue];
   }
   return isMinimized || isHidden;
+}
+
++ (void)createSystemWideElement {
+  if (systemWideElement == NULL) {
+    systemWideElement = AXUIElementCreateSystemWide();
+  }
 }
 
 @end
