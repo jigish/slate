@@ -80,10 +80,11 @@
   NSPoint tl = [aw getCurrentTopLeft];
   NSInteger screenId = [sw getScreenIdForPoint:tl];
   if (screenId < 0) return;
+  NSScreen *screen = [[sw screens] objectAtIndex:screenId];
   // convert top left to screen relative
   tl = [sw convertTopLeftToScreenRelative:tl screen:screenId];
   // now need to flip y coord
-  tl.y = [[[sw screens] objectAtIndex:screenId] frame].size.height - ([sw isMainScreen:screenId] ? MAIN_MENU_HEIGHT : 0) - tl.y;
+  tl.y = [screen frame].size.height - ([sw isMainScreen:screenId] ? MAIN_MENU_HEIGHT : 0) - tl.y;
   NSRect frame = NSMakeRect(tl.x,
                             tl.y - [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_HEIGHT],
                             [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_WIDTH],
@@ -95,7 +96,7 @@
                                                      styleMask:NSBorderlessWindowMask
                                                        backing:NSBackingStoreBuffered
                                                          defer:NO
-                                                        screen:[[sw screens] objectAtIndex:screenId]];
+                                                        screen:screen];
     [window setReleasedWhenClosed:NO];
     [window setOpaque:NO];
     [window setBackgroundColor:[NSColor colorWithDeviceRed:0.0 green:0.0 blue:0.0 alpha:0.0]];
@@ -104,11 +105,11 @@
     HintView *label = [[HintView alloc] initWithFrame:frame];
     [label setText:hintCode];
     [window setContentView:label];
-    [window setReleasedWhenClosed:NO];
     NSWindowController *wc = [[NSWindowController alloc] initWithWindow:window];
     [hints addObject:wc];
   } else {
     NSWindowController *wc = [hints objectAtIndex:(currentHint - 1)];
+    [[wc window] setFrame:NSMakeRect(frame.origin.x+screen.frame.origin.x, frame.origin.y+screen.frame.origin.y, frame.size.width, frame.size.height) display:NO];
     [wc showWindow:[wc window]];
   }
   [windows addObject:[NSValue valueWithPointer:windowRef]];
