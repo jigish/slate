@@ -134,9 +134,8 @@
     NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
     SlateLogger(@"I see application '%@' with pid '%@'", [app objectForKey:@"NSApplicationName"], appPID);
     AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
-    CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInApp:appRef];
-    if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) continue;
-    CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, windowsArrRef);
+    CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:appRef];
+    if (!windowsArr || CFArrayGetCount(windowsArr) == 0) continue;
     for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
       NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
       if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
