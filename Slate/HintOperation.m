@@ -88,20 +88,29 @@
                             tl.y - [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_HEIGHT],
                             [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_WIDTH],
                             [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_HEIGHT]);
-  NSWindow *window = [[HintWindow alloc] initWithContentRect:frame
-                                                   styleMask:NSBorderlessWindowMask
-                                                     backing:NSBackingStoreBuffered
-                                                       defer:NO
-                                                      screen:[[sw screens] objectAtIndex:screenId]];
-  [window setReleasedWhenClosed:NO];
-  [window setOpaque:NO];
-  [window setBackgroundColor:[NSColor colorWithDeviceRed:0.0 green:0.0 blue:0.0 alpha:0.0]];
-  [window makeKeyAndOrderFront:NSApp];
-  [window setLevel:(NSScreenSaverWindowLevel - 1)];
-  HintView *label = [[HintView alloc] initWithFrame:frame];
-  [label setText:hintCode];
-  [window setContentView:label];
-  [hints addObject:window];
+
+  if ([hints count] < currentHint) {
+    SlateLogger(@"        New Window!");
+    NSWindow *window = [[HintWindow alloc] initWithContentRect:frame
+                                                     styleMask:NSBorderlessWindowMask
+                                                       backing:NSBackingStoreBuffered
+                                                         defer:NO
+                                                        screen:[[sw screens] objectAtIndex:screenId]];
+    [window setReleasedWhenClosed:NO];
+    [window setOpaque:NO];
+    [window setBackgroundColor:[NSColor colorWithDeviceRed:0.0 green:0.0 blue:0.0 alpha:0.0]];
+    [window makeKeyAndOrderFront:NSApp];
+    [window setLevel:(NSScreenSaverWindowLevel - 1)];
+    HintView *label = [[HintView alloc] initWithFrame:frame];
+    [label setText:hintCode];
+    [window setContentView:label];
+    [window setReleasedWhenClosed:NO];
+    NSWindowController *wc = [[NSWindowController alloc] initWithWindow:window];
+    [hints addObject:wc];
+  } else {
+    NSWindowController *wc = [hints objectAtIndex:(currentHint - 1)];
+    [wc showWindow:[wc window]];
+  }
   [windows addObject:[NSValue valueWithPointer:windowRef]];
   [apps addObject:[NSValue valueWithPointer:appRef]];
   
@@ -158,10 +167,9 @@
   [hotkeyRefs removeAllObjects];
   if ([self hideTimer]) [[self hideTimer] invalidate];
   [self setHideTimer:nil];
-  for (NSWindow *hint in hints) {
+  for (NSWindowController *hint in hints) {
     [hint close];
   }
-  [hints removeAllObjects];
   [windows removeAllObjects];
   [apps removeAllObjects];
   if (refocus && currentWindow) [currentWindow focus];
