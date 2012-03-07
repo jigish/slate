@@ -45,14 +45,14 @@
   NSArray *fColorArr = [[SlateConfig getInstance] getArrayConfig:WINDOW_HINTS_FONT_COLOR];
   if ([bgColorArr count] < 4) bgColorArr = [WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT componentsSeparatedByString:COMMA];
   if ([fColorArr count] < 4) fColorArr = [WINDOW_HINTS_FONT_COLOR_DEFAULT componentsSeparatedByString:COMMA];
-  NSColor *backgroundColor = [NSColor colorWithCalibratedRed:[[bgColorArr objectAtIndex:0] floatValue]/255.0
-                                                       green:[[bgColorArr objectAtIndex:1] floatValue]/255.0
-                                                        blue:[[bgColorArr objectAtIndex:2] floatValue]/255.0
-                                                       alpha:[[bgColorArr objectAtIndex:3] floatValue]];
-  NSColor *fontColor = [NSColor colorWithCalibratedRed:[[fColorArr objectAtIndex:0] floatValue]/255.0
-                                                 green:[[fColorArr objectAtIndex:1] floatValue]/255.0
-                                                  blue:[[fColorArr objectAtIndex:2] floatValue]/255.0
-                                                 alpha:[[fColorArr objectAtIndex:3] floatValue]];
+  NSColor *backgroundColor = [NSColor colorWithDeviceRed:[[bgColorArr objectAtIndex:0] floatValue]/255.0
+                                                   green:[[bgColorArr objectAtIndex:1] floatValue]/255.0
+                                                    blue:[[bgColorArr objectAtIndex:2] floatValue]/255.0
+                                                   alpha:[[bgColorArr objectAtIndex:3] floatValue]];
+  NSColor *fontColor = [NSColor colorWithDeviceRed:[[fColorArr objectAtIndex:0] floatValue]/255.0
+                                             green:[[fColorArr objectAtIndex:1] floatValue]/255.0
+                                              blue:[[fColorArr objectAtIndex:2] floatValue]/255.0
+                                             alpha:[[fColorArr objectAtIndex:3] floatValue]];
   [backgroundColor set];
   NSInteger cornerSize = [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_ROUNDED_CORNER_SIZE];
   NSRect backgoundRect = NSMakeRect(self.bounds.origin.x + cornerSize,
