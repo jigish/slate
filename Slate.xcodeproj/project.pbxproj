@@ -20,6 +20,7 @@
 		3B7EB3A7138F3F6800EBEC2B /* ResizeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */; };
 		3B7EB475138F691800EBEC2B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB474138F691800EBEC2B /* Constants.m */; };
 		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
+		3B84A552150552DC006E2194 /* ConfigurationHelperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B84A551150552DC006E2194 /* ConfigurationHelperView.m */; };
 		3BA7485913B1D0F500CFA792 /* MathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA7485813B1D0F500CFA792 /* MathUtils.m */; };
 		3BADA37213A2C1ED009E21D8 /* AccessibilityWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BADA37113A2C1ED009E21D8 /* AccessibilityWrapper.m */; };
 		3BB5380413AEDA1B0005CFFC /* ScreenState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5380313AEDA190005CFFC /* ScreenState.m */; };
@@ -92,6 +93,8 @@
 		3B7EB474138F691800EBEC2B /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Constants.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3B7EB4CA138F72D900EBEC2B /* StringTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringTokenizer.h; sourceTree = "<group>"; };
 		3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringTokenizer.m; sourceTree = "<group>"; };
+		3B84A550150552DC006E2194 /* ConfigurationHelperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationHelperView.h; sourceTree = "<group>"; };
+		3B84A551150552DC006E2194 /* ConfigurationHelperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationHelperView.m; sourceTree = "<group>"; };
 		3BA7485713B1D0F500CFA792 /* MathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		3BA7485813B1D0F500CFA792 /* MathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MathUtils.m; sourceTree = "<group>"; };
 		3BADA37013A2C1ED009E21D8 /* AccessibilityWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessibilityWrapper.h; sourceTree = "<group>"; };
@@ -331,6 +334,8 @@
 				478293E713859BED00452C07 /* Operation */,
 				47C4A29A1384E8890066B6DE /* Supporting Files */,
 				47C4A2A81384E8890066B6DE /* MainMenu.xib */,
+				3B84A550150552DC006E2194 /* ConfigurationHelperView.h */,
+				3B84A551150552DC006E2194 /* ConfigurationHelperView.m */,
 				47C4A2A51384E8890066B6DE /* SlateAppDelegate.h */,
 				47C4A2A61384E8890066B6DE /* SlateAppDelegate.m */,
 				3B3335AB14FC1EA900F72638 /* WindowInfoView.h */,
@@ -515,6 +520,7 @@
 				3B3C41A31501BE8600C1E927 /* HintWindow.m in Sources */,
 				3B58153C1502FB7D0078D568 /* HintView.m in Sources */,
 				3B58153F1502FF350078D568 /* NSColor+Conversions.m in Sources */,
+				3B84A552150552DC006E2194 /* ConfigurationHelperView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,8 +27,11 @@
 @private
   IBOutlet NSMenu *statusMenu;
   IBOutlet NSWindow *windowInfo;
+  IBOutlet NSWindow *configHelper;
+  IBOutlet NSTextView *configHelperTextView;
   NSStatusItem *statusItem;
   NSWindowController *windowInfoController;
+  NSWindowController *configHelperController;
   HintOperation *currentHintOperation;
 }
 
@@ -36,6 +39,7 @@
 
 - (IBAction)reconfig;
 - (IBAction)currentWindowInfo;
+- (IBAction)configurationHelper;
 - (void)loadConfig;
 - (void)registerHotKeys;
 

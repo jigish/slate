@@ -51,6 +51,14 @@ static SlateAppDelegate *selfRef = nil;
   [windowInfo setLevel:(NSScreenSaverWindowLevel - 1)];
 }
 
+- (IBAction)configurationHelper {
+  NSString *configFile = [@"~/.slate" stringByExpandingTildeInPath];
+  [configHelperTextView setString:[NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:nil]];
+  [configHelperController showWindow:configHelper];
+  [configHelper makeKeyAndOrderFront:NSApp];
+  [configHelper setLevel:(NSScreenSaverWindowLevel - 1)];
+}
+
 - (void)loadConfig {
   [[SlateConfig getInstance] load];
 }
@@ -143,12 +151,16 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
   currentHintOperation = nil;
 
   windowInfoController = [[NSWindowController alloc] initWithWindow:windowInfo];
+  configHelperController = [[NSWindowController alloc] initWithWindow:configHelper];
   
   NSMenuItem *loadConfigItem = [statusMenu insertItemWithTitle:@"Load Config" action:@selector(reconfig) keyEquivalent:@"" atIndex:0];
   [loadConfigItem setTarget:self];
   
   NSMenuItem *windowInfoItem = [statusMenu insertItemWithTitle:@"Current Window Info" action:@selector(currentWindowInfo) keyEquivalent:@"" atIndex:1];
   [windowInfoItem setTarget:self];
+
+  //NSMenuItem *configInfoItem = [statusMenu insertItemWithTitle:@"Configuration Helper" action:@selector(configurationHelper) keyEquivalent:@"" atIndex:1];
+  //[configInfoItem setTarget:self];
 
   statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: NSVariableStatusItemLength];
   [statusItem setMenu:statusMenu];
