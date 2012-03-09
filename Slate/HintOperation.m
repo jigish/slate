@@ -84,14 +84,18 @@
   NSInteger screenId = [sw getScreenIdForPoint:wTL];
   if (screenId < 0) return;
   NSScreen *screen = [[sw screens] objectAtIndex:screenId];
-  // convert top left to screen relative
+  // convert top left to screen relative for the NSWindow
   NSPoint tl = [sw convertTopLeftToScreenRelative:wTL screen:screenId];
   // now need to flip y coord
   tl.y = [screen frame].size.height - ([sw isMainScreen:screenId] ? MAIN_MENU_HEIGHT : 0) - tl.y;
-  NSDictionary *values = [sw getScreenAndWindowValues:screenId window:NSMakeRect(wTL.x, wTL.y, wSize.width, wSize.height) newSize:wSize];
+  NSMutableDictionary *values = [[sw getScreenAndWindowValues:screenId window:NSMakeRect(tl.x, tl.y, wSize.width, wSize.height) newSize:wSize] mutableCopy];
   float whHeight = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_HEIGHT] withDict:values];
   float whWidth = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_WIDTH] withDict:values];
-  NSRect frame = NSMakeRect(tl.x, tl.y - whHeight, whWidth, whHeight);
+  [values setObject:[NSNumber numberWithFloat:whWidth] forKey:WINDOW_HINTS_WIDTH];
+  [values setObject:[NSNumber numberWithFloat:whHeight] forKey:WINDOW_HINTS_HEIGHT];
+  float whTLX = tl.x + [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_TOP_LEFT_X] withDict:values];
+  float whTLY = tl.y - [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_TOP_LEFT_Y] withDict:values];
+  NSRect frame = NSMakeRect(whTLX, whTLY - whHeight, whWidth, whHeight);
   // check frame boundaries to make sure it is over the window we want it to be over
   if (ignoreHidden &&
       ![[AccessibilityWrapper getTitle:[AccessibilityWrapper

@@ -70,6 +70,10 @@ extern NSString *const WINDOW_HINTS_ROUNDED_CORNER_SIZE;
 extern NSString *const WINDOW_HINTS_ROUNDED_CORNER_SIZE_DEFAULT;
 extern NSString *const WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS;
 extern NSString *const WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS_DEFAULT;
+extern NSString *const WINDOW_HINTS_TOP_LEFT_X;
+extern NSString *const WINDOW_HINTS_TOP_LEFT_X_DEFAULT;
+extern NSString *const WINDOW_HINTS_TOP_LEFT_Y;
+extern NSString *const WINDOW_HINTS_TOP_LEFT_Y_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;
