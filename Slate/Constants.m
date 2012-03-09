@@ -70,6 +70,8 @@ NSString *const WINDOW_HINTS_DURATION = @"windowHintsDuration";
 NSString *const WINDOW_HINTS_DURATION_DEFAULT = @"3";
 NSString *const WINDOW_HINTS_ROUNDED_CORNER_SIZE = @"windowHintsRoundedCornerSize";
 NSString *const WINDOW_HINTS_ROUNDED_CORNER_SIZE_DEFAULT = @"5";
+NSString *const WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS = @"windowHintsIgnoreHiddenWindows";
+NSString *const WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS_DEFAULT = @"true";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";

@@ -32,6 +32,7 @@
   AccessibilityWrapper *currentWindow;
   NSInteger currentHint;
   NSString *hintCharacters;
+  BOOL ignoreHidden;
 }
 
 @property NSMutableArray *hints;

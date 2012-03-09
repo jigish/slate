@@ -68,6 +68,8 @@ extern NSString *const WINDOW_HINTS_DURATION;
 extern NSString *const WINDOW_HINTS_DURATION_DEFAULT;
 extern NSString *const WINDOW_HINTS_ROUNDED_CORNER_SIZE;
 extern NSString *const WINDOW_HINTS_ROUNDED_CORNER_SIZE_DEFAULT;
+extern NSString *const WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS;
+extern NSString *const WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;

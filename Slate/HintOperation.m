@@ -44,6 +44,7 @@
     hideTimer = nil;
     currentHint = 0;
     [self setHintCharacters:HINT_CHARACTERS];
+    ignoreHidden = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
   }
   return self;
 }
@@ -77,19 +78,28 @@
   NSString *hintCode = [self currentHintCode];
   if (hintCode == nil) return;
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:windowRef];
-  NSPoint tl = [aw getCurrentTopLeft];
-  NSInteger screenId = [sw getScreenIdForPoint:tl];
+  NSPoint tlAbsolute = [aw getCurrentTopLeft];
+  NSInteger screenId = [sw getScreenIdForPoint:tlAbsolute];
   if (screenId < 0) return;
   NSScreen *screen = [[sw screens] objectAtIndex:screenId];
   // convert top left to screen relative
-  tl = [sw convertTopLeftToScreenRelative:tl screen:screenId];
+  NSPoint tl = [sw convertTopLeftToScreenRelative:tlAbsolute screen:screenId];
   // now need to flip y coord
   tl.y = [screen frame].size.height - ([sw isMainScreen:screenId] ? MAIN_MENU_HEIGHT : 0) - tl.y;
   NSRect frame = NSMakeRect(tl.x,
                             tl.y - [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_HEIGHT],
                             [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_WIDTH],
                             [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_HEIGHT]);
-
+  // check frame boundaries to make sure it is over the window we want it to be over
+  if (ignoreHidden &&
+      ![[AccessibilityWrapper getTitle:[AccessibilityWrapper
+                                        windowUnderPoint:NSMakePoint(tlAbsolute.x + [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_WIDTH]/2,
+                                                                     tlAbsolute.y + [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_HEIGHT]/2)]]
+        isEqualToString:[AccessibilityWrapper getTitle:windowRef]]) {
+    SlateLogger(@"        Top left is not seen, do not show hint!");
+    currentHint--; // reset current hint so we can use this code again
+    return;
+  }
   if ([hints count] < currentHint) {
     SlateLogger(@"        New Window!");
     NSWindow *window = [[HintWindow alloc] initWithContentRect:frame
@@ -127,6 +137,7 @@
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
   if (hideTimer != nil) return YES;
+  ignoreHidden = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
   [self setCurrentHint:0];
   [self setCurrentWindow:[[AccessibilityWrapper alloc] init]];
   NSArray *appsArr = [[NSWorkspace sharedWorkspace] launchedApplications];
