@@ -24,16 +24,23 @@
 @private
   NSTextField *directiveLabel;
   NSPopUpButton *directive;
+  NSButton *save;
   NSMutableDictionary *configs;
 }
 
 @property NSTextField *directiveLabel;
 @property NSPopUpButton *directive;
+@property NSButton *save;
 @property NSMutableDictionary *configs;
 
 - (void)directiveChanged;
 - (void)updateDirectiveSpecificUI:(NSString *)str;
 - (void)addDirectiveSpecificUIs;
 - (void)addConfigUI;
+- (void)hideAll:(NSArray *)theThings;
+- (void)showAll:(NSArray *)theThings;
+- (void)hide:(NSTextField *)theThings;
+- (void)show:(NSTextField *)theThings;
+- (void)saveToConfig;
 
 @end

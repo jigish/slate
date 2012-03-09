@@ -34,6 +34,7 @@
 @implementation SlateConfig
 
 @synthesize configs;
+@synthesize configDefaults;
 @synthesize bindings;
 @synthesize layouts;
 @synthesize defaultLayouts;
@@ -91,6 +92,10 @@ static SlateConfig *_instance = nil;
 
 - (NSString *)getConfig:(NSString *)key {
   return [configs objectForKey:key];
+}
+
+- (NSString *)getConfigDefault:(NSString *)key {
+  return [configDefaults objectForKey:key];
 }
 
 - (BOOL)load {
@@ -451,28 +456,30 @@ static SlateConfig *_instance = nil;
 }
 
 - (void)setupDefaultConfigs {
-  [self setConfigs:[[NSMutableDictionary alloc] initWithCapacity:10]];
-  [configs setObject:DEFAULT_TO_CURRENT_SCREEN_DEFAULT forKey:DEFAULT_TO_CURRENT_SCREEN];
-  [configs setObject:NUDGE_PERCENT_OF_DEFAULT forKey:NUDGE_PERCENT_OF];
-  [configs setObject:RESIZE_PERCENT_OF_DEFAULT forKey:RESIZE_PERCENT_OF];
-  [configs setObject:REPEAT_ON_HOLD_OPS_DEFAULT forKey:REPEAT_ON_HOLD_OPS];
-  [configs setObject:SECONDS_BETWEEN_REPEAT_DEFAULT forKey:SECONDS_BETWEEN_REPEAT];
-  [configs setObject:CHECK_DEFAULTS_ON_LOAD_DEFAULT forKey:CHECK_DEFAULTS_ON_LOAD];
-  [configs setObject:FOCUS_CHECK_WIDTH_DEFAULT forKey:FOCUS_CHECK_WIDTH];
-  [configs setObject:FOCUS_CHECK_WIDTH_MAX_DEFAULT forKey:FOCUS_CHECK_WIDTH_MAX];
-  [configs setObject:FOCUS_PREFER_SAME_APP_DEFAULT forKey:FOCUS_PREFER_SAME_APP];
-  [configs setObject:ORDER_SCREENS_LEFT_TO_RIGHT_DEFAULT forKey:ORDER_SCREENS_LEFT_TO_RIGHT];
-  [configs setObject:WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT forKey:WINDOW_HINTS_BACKGROUND_COLOR];
-  [configs setObject:WINDOW_HINTS_FONT_COLOR_DEFAULT forKey:WINDOW_HINTS_FONT_COLOR];
-  [configs setObject:WINDOW_HINTS_FONT_NAME_DEFAULT forKey:WINDOW_HINTS_FONT_NAME];
-  [configs setObject:WINDOW_HINTS_FONT_SIZE_DEFAULT forKey:WINDOW_HINTS_FONT_SIZE];
-  [configs setObject:WINDOW_HINTS_HEIGHT_DEFAULT forKey:WINDOW_HINTS_HEIGHT];
-  [configs setObject:WINDOW_HINTS_WIDTH_DEFAULT forKey:WINDOW_HINTS_WIDTH];
-  [configs setObject:WINDOW_HINTS_DURATION_DEFAULT forKey:WINDOW_HINTS_DURATION];
-  [configs setObject:WINDOW_HINTS_ROUNDED_CORNER_SIZE_DEFAULT forKey:WINDOW_HINTS_ROUNDED_CORNER_SIZE];
-  [configs setObject:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS_DEFAULT forKey:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
-  [configs setObject:WINDOW_HINTS_TOP_LEFT_X_DEFAULT forKey:WINDOW_HINTS_TOP_LEFT_X];
-  [configs setObject:WINDOW_HINTS_TOP_LEFT_Y_DEFAULT forKey:WINDOW_HINTS_TOP_LEFT_Y];
+  [self setConfigDefaults:[NSMutableDictionary dictionaryWithCapacity:10]];
+  [configDefaults setObject:DEFAULT_TO_CURRENT_SCREEN_DEFAULT forKey:DEFAULT_TO_CURRENT_SCREEN];
+  [configDefaults setObject:NUDGE_PERCENT_OF_DEFAULT forKey:NUDGE_PERCENT_OF];
+  [configDefaults setObject:RESIZE_PERCENT_OF_DEFAULT forKey:RESIZE_PERCENT_OF];
+  [configDefaults setObject:REPEAT_ON_HOLD_OPS_DEFAULT forKey:REPEAT_ON_HOLD_OPS];
+  [configDefaults setObject:SECONDS_BETWEEN_REPEAT_DEFAULT forKey:SECONDS_BETWEEN_REPEAT];
+  [configDefaults setObject:CHECK_DEFAULTS_ON_LOAD_DEFAULT forKey:CHECK_DEFAULTS_ON_LOAD];
+  [configDefaults setObject:FOCUS_CHECK_WIDTH_DEFAULT forKey:FOCUS_CHECK_WIDTH];
+  [configDefaults setObject:FOCUS_CHECK_WIDTH_MAX_DEFAULT forKey:FOCUS_CHECK_WIDTH_MAX];
+  [configDefaults setObject:FOCUS_PREFER_SAME_APP_DEFAULT forKey:FOCUS_PREFER_SAME_APP];
+  [configDefaults setObject:ORDER_SCREENS_LEFT_TO_RIGHT_DEFAULT forKey:ORDER_SCREENS_LEFT_TO_RIGHT];
+  [configDefaults setObject:WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT forKey:WINDOW_HINTS_BACKGROUND_COLOR];
+  [configDefaults setObject:WINDOW_HINTS_FONT_COLOR_DEFAULT forKey:WINDOW_HINTS_FONT_COLOR];
+  [configDefaults setObject:WINDOW_HINTS_FONT_NAME_DEFAULT forKey:WINDOW_HINTS_FONT_NAME];
+  [configDefaults setObject:WINDOW_HINTS_FONT_SIZE_DEFAULT forKey:WINDOW_HINTS_FONT_SIZE];
+  [configDefaults setObject:WINDOW_HINTS_HEIGHT_DEFAULT forKey:WINDOW_HINTS_HEIGHT];
+  [configDefaults setObject:WINDOW_HINTS_WIDTH_DEFAULT forKey:WINDOW_HINTS_WIDTH];
+  [configDefaults setObject:WINDOW_HINTS_DURATION_DEFAULT forKey:WINDOW_HINTS_DURATION];
+  [configDefaults setObject:WINDOW_HINTS_ROUNDED_CORNER_SIZE_DEFAULT forKey:WINDOW_HINTS_ROUNDED_CORNER_SIZE];
+  [configDefaults setObject:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS_DEFAULT forKey:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
+  [configDefaults setObject:WINDOW_HINTS_TOP_LEFT_X_DEFAULT forKey:WINDOW_HINTS_TOP_LEFT_X];
+  [configDefaults setObject:WINDOW_HINTS_TOP_LEFT_Y_DEFAULT forKey:WINDOW_HINTS_TOP_LEFT_Y];
+  [self setConfigs:[NSMutableDictionary dictionaryWithCapacity:10]];
+  [configs setValuesForKeysWithDictionary:configDefaults];
 }
 
 

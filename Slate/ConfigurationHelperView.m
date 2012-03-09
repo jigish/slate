@@ -25,11 +25,12 @@
 
 @implementation ConfigurationHelperView
 
-@synthesize directiveLabel, directive, configs;
+@synthesize directiveLabel, directive, save, configs;
 
 - (NSTextField *)createLabel:(NSString *)text frame:(NSRect)frame {
   NSTextField *label = [[NSTextField alloc] initWithFrame:frame];
   [label setStringValue:text];
+  [label setFont:[NSFont fontWithName:@"Menlo" size:11]];
   [label setSelectable:NO];
   [label setEnabled:NO];
   [label setDrawsBackground:NO];
@@ -38,17 +39,30 @@
   return label;
 }
 
+- (NSTextField *)createTextField:(NSString *)text frame:(NSRect)frame {
+  NSTextField *field = [[NSTextField alloc] initWithFrame:frame];
+  [field setStringValue:text];
+  [field setFont:[NSFont fontWithName:@"Menlo" size:11]];
+  return field;
+}
+
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
       configs = [NSMutableDictionary dictionary];
-      directiveLabel = [self createLabel:@"Directive:" frame:NSMakeRect(5, frame.size.height - 25, 70, 20)];
+      directiveLabel = [self createLabel:@"Choose a Directive:" frame:NSMakeRect(5, frame.size.height - 25, 150, 20)];
       [self addSubview:directiveLabel];
-      directive = [[NSPopUpButton alloc] initWithFrame:NSMakeRect(70, frame.size.height - 25, 100, 22)];
-      [directive addItemsWithTitles:[NSArray arrayWithObjects:CONFIG, ALIAS, LAYOUT, DEFAULT, BIND, SOURCE, nil]];
+      directive = [[NSPopUpButton alloc] initWithFrame:NSMakeRect(150, frame.size.height - 25, 100, 22)];
+      [directive addItemsWithTitles:[NSArray arrayWithObjects:EMPTY, CONFIG, LAYOUT, DEFAULT, BIND, nil]];
       [directive setTarget:self];
       [directive setAction:@selector(directiveChanged)];
+      save = [[NSButton alloc] initWithFrame:NSMakeRect(frame.size.width/2 - 50, 30, 100, 25)];
+      [save setTitle:@"Save"];
+      [save setTarget:self];
+      [save setAction:@selector(saveToConfig)];
+      [save setBezelStyle:NSRoundedBezelStyle];
       [self addSubview:directive];
+      [self addSubview:save];
       [self addDirectiveSpecificUIs];
       [self updateDirectiveSpecificUI:[[directive selectedItem] title]];
     }
@@ -66,45 +80,74 @@
   [self addConfigUI];
 }
 
+- (void)hideDirectiveSpecificUIs {
+  [self hideConfigUI];
+}
+
 - (void)addConfigUI {
   SlateLogger(@"addConfigUI");
   NSInteger i = 0;
   for (NSString *configName in [[[SlateConfig getInstance] configs] allKeys]) {
     if ([configs objectForKey:configName]) continue;
     SlateLogger(@"ADDING CONFIG %@", configName);
-    NSTextField *configLabel = [self createLabel:configName frame:NSMakeRect(5, [self frame].size.height - 25 * (i+2), 200, 20)];
-    [configs setObject:configLabel forKey:configName];
-    [self performSelectorOnMainThread:@selector(hideLabel:) withObject:configLabel waitUntilDone:YES];
+    NSTextField *configLabel = [self createLabel:configName frame:NSMakeRect(5, [self frame].size.height - 25 * (i+2), 215, 20)];
+    NSTextField *configField = [self createTextField:[[SlateConfig getInstance] getConfig:configName] frame:NSMakeRect(220, [self frame].size.height - 25 * (i+2) + 1, 200, 20)];
+    NSTextField *configDefault = [self createLabel:[NSString stringWithFormat:@"Default: %@", [[SlateConfig getInstance] getConfigDefault:configName]] frame:NSMakeRect(420, [self frame].size.height - 25 * (i+2), 200, 20)];
+    NSArray *objects = [NSArray arrayWithObjects:configLabel, configField, configDefault, nil];
+    [configs setObject:objects forKey:configName];
+    [self performSelectorOnMainThread:@selector(hideAll:) withObject:objects waitUntilDone:YES];
     [self addSubview:configLabel];
+    [self addSubview:configField];
+    [self addSubview:configDefault];
     i++;
+  }
+}
+
+- (void)updateConfigUI {
+  for (NSString *configName in [configs allKeys]) {
+    [[[configs objectForKey:configName] objectAtIndex:1] setStringValue:[[SlateConfig getInstance] getConfig:configName]];
   }
 }
 
 - (void)hideConfigUI {
   for (NSString *configName in [configs allKeys]) {
     SlateLogger(@"HIDING CONFIG %@", configName);
-    [self performSelectorOnMainThread:@selector(hideLabel:) withObject:[configs objectForKey:configName] waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(hideAll:) withObject:[configs objectForKey:configName] waitUntilDone:YES];
   }
 }
 
 - (void)showConfigUI {
+  [self updateConfigUI];
   for (NSString *configName in [configs allKeys]) {
     SlateLogger(@"HIDING CONFIG %@", configName);
-    [self performSelectorOnMainThread:@selector(showLabel:) withObject:[configs objectForKey:configName] waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(showAll:) withObject:[configs objectForKey:configName] waitUntilDone:YES];
   }
 }
 
-- (void)hideLabel:(NSTextField *)label {
-  [label setHidden:YES];
+- (void)hideAll:(NSArray *)theThings {
+  for (NSTextField *field in theThings) {
+    [self hide:field];
+  }
 }
 
-- (void)showLabel:(NSTextField *)label {
-  [label setHidden:NO];
+- (void)showAll:(NSArray *)theThings {
+  for (NSTextField *field in theThings) {
+    [self show:field];
+    [field needsDisplay];
+  }
+}
+
+- (void)hide:(NSTextField *)field {
+  [field setHidden:YES];
+}
+
+- (void)show:(NSTextField *)field {
+  [field setHidden:NO];
 }
 
 - (void)updateDirectiveSpecificUI:(NSString *)str {
   // Remove everything first
-  [self hideConfigUI];
+  [self hideDirectiveSpecificUIs];
   if ([str isEqualToString:CONFIG]) {
     SlateLogger(@"IN CONFIG");
     [self showConfigUI];
@@ -118,12 +161,28 @@
     
   } else if ([str isEqualToString:SOURCE]) {
     
+  } else if ([str isEqualToString:EMPTY]) {
+    // do nothing
   }
   [self setNeedsDisplay:YES];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
   [super drawRect:dirtyRect];// Drawing code here.
+}
+
+- (void)saveConfig {
+  // Update SlateConfig
+
+  
+
+  // Save to file
+}
+
+- (void)saveToConfig {
+  if ([[[directive selectedItem] title] isEqualToString:CONFIG]) {
+    [self saveConfig];
+  }
 }
 
 @end

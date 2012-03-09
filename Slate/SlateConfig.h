@@ -24,6 +24,7 @@
 @interface SlateConfig : NSObject {
 @private
   NSMutableDictionary *configs;
+  NSMutableDictionary *configDefaults;
   NSMutableArray *bindings;
   NSMutableDictionary *layouts;
   NSMutableArray *defaultLayouts;
@@ -32,6 +33,7 @@
 }
 
 @property  NSMutableDictionary *configs;
+@property  NSMutableDictionary *configDefaults;
 @property  NSMutableArray *bindings;
 @property  NSMutableDictionary *layouts;
 @property  NSMutableArray *defaultLayouts;
@@ -47,6 +49,7 @@
 - (double)getDoubleConfig:(NSString *)key;
 - (float)getFloatConfig:(NSString *)key;
 - (NSString *)getConfig:(NSString *)key;
+- (NSString *)getConfigDefault:(NSString *)key;
 - (NSArray *)getArrayConfig:(NSString *)key;
 - (void)addAlias:(NSString *)line;
 - (NSString *)replaceAliases:(NSString *)line;

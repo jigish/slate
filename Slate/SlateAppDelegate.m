@@ -54,6 +54,7 @@ static SlateAppDelegate *selfRef = nil;
 
 - (IBAction)configurationHelper {
   NSString *configFile = [@"~/.slate" stringByExpandingTildeInPath];
+  [configHelperTextView setFont:[NSFont fontWithName:@"Menlo" size:11]];
   [configHelperTextView setString:[NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:nil]];
   [configHelperController showWindow:configHelper];
   [configHelper makeKeyAndOrderFront:NSApp];

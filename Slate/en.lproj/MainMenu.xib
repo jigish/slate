@@ -1376,29 +1376,6 @@
 										<object class="NSTextView" id="213582190">
 											<reference key="NSNextResponder" ref="825391227"/>
 											<int key="NSvFlags">2322</int>
-											<object class="NSMutableSet" key="NSDragTypes">
-												<bool key="EncodedWithXMLCoder">YES</bool>
-												<object class="NSArray" key="set.sortedObjects">
-													<bool key="EncodedWithXMLCoder">YES</bool>
-													<string>Apple HTML pasteboard type</string>
-													<string>Apple PDF pasteboard type</string>
-													<string>Apple PICT pasteboard type</string>
-													<string>Apple PNG pasteboard type</string>
-													<string>Apple URL pasteboard type</string>
-													<string>CorePasteboardFlavorType 0x6D6F6F76</string>
-													<string>NSColor pasteboard type</string>
-													<string>NSFilenamesPboardType</string>
-													<string>NSStringPboardType</string>
-													<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
-													<string>NeXT RTFD pasteboard type</string>
-													<string>NeXT Rich Text Format v1.0 pasteboard type</string>
-													<string>NeXT TIFF v4.0 pasteboard type</string>
-													<string>NeXT font pasteboard type</string>
-													<string>NeXT ruler pasteboard type</string>
-													<string>WebURLsWithTitlesPboardType</string>
-													<string>public.url</string>
-												</object>
-											</object>
 											<string key="NSFrame">{{0, 34}, {480, 133}}</string>
 											<reference key="NSSuperview" ref="825391227"/>
 											<reference key="NSWindow"/>
@@ -1586,7 +1563,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSSplitView" id="344465982">
 							<reference key="NSNextResponder" ref="361597867"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">286</int>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSCustomView" id="417103217">
@@ -1612,29 +1589,6 @@
 												<object class="NSTextView" id="923129638">
 													<reference key="NSNextResponder" ref="653232742"/>
 													<int key="NSvFlags">2322</int>
-													<object class="NSMutableSet" key="NSDragTypes">
-														<bool key="EncodedWithXMLCoder">YES</bool>
-														<object class="NSArray" key="set.sortedObjects">
-															<bool key="EncodedWithXMLCoder">YES</bool>
-															<string>Apple HTML pasteboard type</string>
-															<string>Apple PDF pasteboard type</string>
-															<string>Apple PICT pasteboard type</string>
-															<string>Apple PNG pasteboard type</string>
-															<string>Apple URL pasteboard type</string>
-															<string>CorePasteboardFlavorType 0x6D6F6F76</string>
-															<string>NSColor pasteboard type</string>
-															<string>NSFilenamesPboardType</string>
-															<string>NSStringPboardType</string>
-															<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
-															<string>NeXT RTFD pasteboard type</string>
-															<string>NeXT Rich Text Format v1.0 pasteboard type</string>
-															<string>NeXT TIFF v4.0 pasteboard type</string>
-															<string>NeXT font pasteboard type</string>
-															<string>NeXT ruler pasteboard type</string>
-															<string>WebURLsWithTitlesPboardType</string>
-															<string>public.url</string>
-														</object>
-													</object>
 													<string key="NSFrameSize">{693, 14}</string>
 													<reference key="NSSuperview" ref="653232742"/>
 													<reference key="NSWindow"/>
