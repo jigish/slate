@@ -182,7 +182,7 @@ Will trigger `myLayout` anytime the screen configuration changes to have 2 monit
 
     default myLayout2 resolutions:1440x900;1024x768;1680x1050
 
-Will trigger `myLayout2` anytime the screen configuration changes to have exactly 3 monitors with resolutions 1440x900, 1024x768, and 1680x1050.
+Will trigger `myLayout2` anytime the screen configuration changes to have exactly 3 monitors with resolutions `1440x900`, `1024x768`, and `1680x1050`.
 
 ### The `bind` Directive ###
 
@@ -212,7 +212,7 @@ Operations define what to actually do to the focused window.
 Some operations allow you to specify a screen. Here are the list of possible values for screen:
 
 * Integer representing the screen ID (indexed at 0). Screens are ordered from left to right (by X coordinate of the origin which is the top-left point). If `orderScreensLeftToRight` is set to false, the screen ID is the Mac OS internal ID (indexed at 0). If `orderScreensLeftToRight` is set to false but you still want to reference screens in the default ordered mode, prefix the screen ID with `ordered:`.
-* Screen resolution in the format WIDTHxHEIGHT (e.g. `1440x900`)
+* Screen resolution in the format `WIDTHxHEIGHT` (e.g. `1440x900`)
 * Screen direction relative to the current screen (`left|right|up|above|down|below`)
 * `next` or `previous` (represents the `currentID+1` or `currentID-1` screen)
 
@@ -392,17 +392,17 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
 The source directive follows the following format (tokens may be separated by any number of spaces):
 
-        source filename optional:if_exists
+    source filename optional:if_exists
 
-    Where `filename` is the name of a file containing any of the directives above (including source). If no absolute path is specified, the user's home directory will be prepended to `filename`. If the user specifies the option `if_exists` as the second argument, Slate will not complain if it cannot find the file.
+Where `filename` is the name of a file containing any of the directives above (including source). If no absolute path is specified, the user's home directory will be prepended to `filename`. If the user specifies the option `if_exists` as the second argument, Slate will not complain if it cannot find the file.
 
-    For Example:
+For Example:
 
-        source ~/.slate.test if_exists
+    source ~/.slate.test if_exists
 
-    Will append all of the configurations from the file `~/.slate.test` to the current configuration if the file `~/.slate.tests` exists.
+Will append all of the configurations from the file `~/.slate.test` to the current configuration if the file `~/.slate.tests` exists.
 
-    **Note:** You may use any aliases, layouts, etc that you specify before the source directive in the file you source. Any aliases, layouts, etc specified after cannot be used. Additionally, any aliases, layouts, etc that you specify in the file you source can be used after the source directive.
+**Note:** You may use any aliases, layouts, etc that you specify before the source directive in the file you source. Any aliases, layouts, etc specified after cannot be used. Additionally, any aliases, layouts, etc that you specify in the file you source can be used after the source directive.
 
 ### Example Config ###
 
