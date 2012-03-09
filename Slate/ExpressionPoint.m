@@ -48,21 +48,21 @@
 
 
 - (NSPoint)getPointWithDict:(NSDictionary *)values {
-  return NSMakePoint([self expToInteger:x withDict:values],[self expToInteger:y withDict:values]);
+  return NSMakePoint([ExpressionPoint expToFloat:x withDict:values],[ExpressionPoint expToFloat:y withDict:values]);
 }
 
 - (NSSize)getSizeWithDict:(NSDictionary *)values {
-  return NSMakeSize([self expToInteger:x withDict:values],[self expToInteger:y withDict:values]);
+  return NSMakeSize([ExpressionPoint expToFloat:x withDict:values],[ExpressionPoint expToFloat:y withDict:values]);
 }
 
-- (NSInteger)expToInteger:(NSString *)exp withDict:(NSDictionary *)values {
++ (float)expToFloat:(NSString *)exp withDict:(NSDictionary *)values {
   if (exp != nil) {
     NSComparisonPredicate *pred = (NSComparisonPredicate *)[NSPredicate predicateWithFormat:[exp stringByAppendingString:@" == 42"]];
     NSExpression *lexp = [pred leftExpression];
     NSNumber *result = [lexp expressionValueWithObject:values context:nil];
     if (result == nil)
       @throw([NSException exceptionWithName:@"Unable to compute result" reason:exp userInfo:nil]);
-    return [result integerValue];
+    return [result floatValue];
   }
   @throw([NSException exceptionWithName:@"Expression is nil" reason:exp userInfo:nil]);
 }

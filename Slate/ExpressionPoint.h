@@ -35,6 +35,6 @@
 - (NSPoint)getPointWithDict:(NSDictionary *)values;
 - (NSSize)getSizeWithDict:(NSDictionary *)values;
 
-- (NSInteger)expToInteger:(NSString *)exp withDict:(NSDictionary *)values;
++ (float)expToFloat:(NSString *)exp withDict:(NSDictionary *)values;
 
 @end

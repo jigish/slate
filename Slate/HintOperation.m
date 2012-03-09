@@ -29,6 +29,7 @@
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 #import "SlateLogger.h"
+#import "ExpressionPoint.h"
 
 @implementation HintOperation
 
@@ -78,23 +79,24 @@
   NSString *hintCode = [self currentHintCode];
   if (hintCode == nil) return;
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:windowRef];
-  NSPoint tlAbsolute = [aw getCurrentTopLeft];
-  NSInteger screenId = [sw getScreenIdForPoint:tlAbsolute];
+  NSPoint wTL = [aw getCurrentTopLeft];
+  NSSize wSize = [aw getCurrentSize];
+  NSInteger screenId = [sw getScreenIdForPoint:wTL];
   if (screenId < 0) return;
   NSScreen *screen = [[sw screens] objectAtIndex:screenId];
   // convert top left to screen relative
-  NSPoint tl = [sw convertTopLeftToScreenRelative:tlAbsolute screen:screenId];
+  NSPoint tl = [sw convertTopLeftToScreenRelative:wTL screen:screenId];
   // now need to flip y coord
   tl.y = [screen frame].size.height - ([sw isMainScreen:screenId] ? MAIN_MENU_HEIGHT : 0) - tl.y;
-  NSRect frame = NSMakeRect(tl.x,
-                            tl.y - [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_HEIGHT],
-                            [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_WIDTH],
-                            [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_HEIGHT]);
+  NSDictionary *values = [sw getScreenAndWindowValues:screenId window:NSMakeRect(wTL.x, wTL.y, wSize.width, wSize.height) newSize:wSize];
+  float whHeight = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_HEIGHT] withDict:values];
+  float whWidth = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_WIDTH] withDict:values];
+  NSRect frame = NSMakeRect(tl.x, tl.y - whHeight, whWidth, whHeight);
   // check frame boundaries to make sure it is over the window we want it to be over
   if (ignoreHidden &&
       ![[AccessibilityWrapper getTitle:[AccessibilityWrapper
-                                        windowUnderPoint:NSMakePoint(tlAbsolute.x + [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_WIDTH]/2,
-                                                                     tlAbsolute.y + [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_HEIGHT]/2)]]
+                                        windowUnderPoint:NSMakePoint(wTL.x + whWidth/2,
+                                                                     wTL.y + whHeight/2)]]
         isEqualToString:[AccessibilityWrapper getTitle:windowRef]]) {
     SlateLogger(@"        Top left is not seen, do not show hint!");
     currentHint--; // reset current hint so we can use this code again
