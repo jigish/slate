@@ -66,7 +66,7 @@ static AXUIElementRef systemWideElement = NULL;
   return self;
 }
 
-- (NSPoint)getCurrentTopLeft {
++ (NSPoint)getTopLeftForWindow:(AXUIElementRef)window {
   CFTypeRef _cPosition;
   NSPoint cTopLeft;
 
@@ -83,7 +83,11 @@ static AXUIElementRef systemWideElement = NULL;
   return cTopLeft;
 }
 
-- (NSSize)getCurrentSize {
+- (NSPoint)getCurrentTopLeft {
+  return [AccessibilityWrapper getTopLeftForWindow:window];
+}
+
++ (NSSize)getSizeForWindow:(AXUIElementRef)window {
   CFTypeRef _cSize;
   NSSize cSize;
 
@@ -98,6 +102,10 @@ static AXUIElementRef systemWideElement = NULL;
   }
 
   return cSize;
+}
+
+- (NSSize)getCurrentSize {
+  return [AccessibilityWrapper getSizeForWindow:window];
 }
 
 - (BOOL)moveWindow:(NSPoint)thePoint {
@@ -190,11 +198,17 @@ static AXUIElementRef systemWideElement = NULL;
 
 + (AXUIElementRef)windowUnderPoint:(NSPoint)point {
   AXUIElementRef _element;
-  CFTypeRef _window;
-  if ((AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), point.x, point.y, &_element) ==
-       kAXErrorSuccess) && _element && AXUIElementCopyAttributeValue(_element, (CFStringRef)NSAccessibilityWindowAttribute, (CFTypeRef *)&_window) == kAXErrorSuccess) {
-    return (AXUIElementRef)_window;
+  if ((AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), point.x, point.y, &_element) == kAXErrorSuccess) && _element) {
+    CFTypeRef _role;
+    if (AXUIElementCopyAttributeValue(_element, (CFStringRef)NSAccessibilityRoleAttribute, (CFTypeRef *)&_role) == kAXErrorSuccess) {
+      if ([(__bridge NSString *)_role isEqualToString:NSAccessibilityWindowRole])
+        return _element;
+    }
+    CFTypeRef _window;
+    if (AXUIElementCopyAttributeValue(_element, (CFStringRef)NSAccessibilityWindowAttribute, (CFTypeRef *)&_window) == kAXErrorSuccess)
+      return (AXUIElementRef)_window;
   }
+  SlateLogger(@"Returning null");
   return NULL;
 }
 

@@ -34,7 +34,9 @@
 
 - (id)initWithApp:(AXUIElementRef)appRef window:(AXUIElementRef)windowRef;
 
++ (NSPoint)getTopLeftForWindow:(AXUIElementRef)window;
 - (NSPoint)getCurrentTopLeft;
++ (NSSize)getSizeForWindow:(AXUIElementRef)window;
 - (NSSize)getCurrentSize;
 - (BOOL)moveWindow:(NSPoint)thePoint;
 - (BOOL)resizeWindow:(NSSize)theSize;
