@@ -22,12 +22,12 @@ Slate is configured using a ".slate" file in the current user's home directory. 
 
 Configuration is split into the following directives:
 
-* config (for global configurations)
-* alias (to create alias variables)
-* layout (to configure layouts)
-* default (to default certain screen configurations to layouts)
-* bind (for key bindings)
-* source (to load configs from another file)
+* `config` (for global configurations)
+* `alias` (to create alias variables)
+* `layout` (to configure layouts)
+* `default` (to default certain screen configurations to layouts)
+* `bind` (for key bindings)
+* `source` (to load configs from another file)
 
 ###Expressions###
 
