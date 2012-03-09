@@ -24,10 +24,11 @@
 #import "Binding.h"
 #import "HintOperation.h"
 #import "SlateLogger.h"
+#import "SnapshotList.h"
 
 @implementation SlateAppDelegate
 
-@synthesize currentHintOperation;
+@synthesize currentHintOperation, menuSnapshotOperation, menuActivateSnapshotOperation;
 
 static NSObject *timerLock = nil;
 static NSTimer *currentTimer = nil;
@@ -86,6 +87,19 @@ static SlateAppDelegate *selfRef = nil;
     [binding setHotKeyRef:myHotKeyRef];
   }
   SlateLogger(@"HotKeys registered.");
+}
+
+- (void)createMenuSnapshotOperations {
+  [self setMenuSnapshotOperation:[SnapshotOperation operationFromString:@"snapshot menuSnapshot"]];
+  [self setMenuActivateSnapshotOperation:[ActivateSnapshotOperation operationFromString:@"activate-snapshot menuSnapshot delete"]];
+}
+
+- (IBAction)takeSnapshot {
+  [menuSnapshotOperation doOperation];
+}
+
+- (IBAction)activateSnapshot {
+  [menuActivateSnapshotOperation doOperation];
 }
 
 - (void) runBinding:(NSTimer *)timer {
@@ -152,14 +166,20 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
 
   windowInfoController = [[NSWindowController alloc] initWithWindow:windowInfo];
   configHelperController = [[NSWindowController alloc] initWithWindow:configHelper];
-  
+
+  NSMenuItem *takeSnapshotItem = [statusMenu insertItemWithTitle:@"Take Snapshot" action:@selector(takeSnapshot) keyEquivalent:@"" atIndex:1];
+  [takeSnapshotItem setTarget:self];
+
+  activateSnapshotItem = [statusMenu insertItemWithTitle:@"Activate Snapshot" action:@selector(activateSnapshot) keyEquivalent:@"" atIndex:2];
+  [activateSnapshotItem setTarget:self];
+
   NSMenuItem *loadConfigItem = [statusMenu insertItemWithTitle:@"Load Config" action:@selector(reconfig) keyEquivalent:@"" atIndex:0];
   [loadConfigItem setTarget:self];
-  
+
   NSMenuItem *windowInfoItem = [statusMenu insertItemWithTitle:@"Current Window Info" action:@selector(currentWindowInfo) keyEquivalent:@"" atIndex:1];
   [windowInfoItem setTarget:self];
 
-  //NSMenuItem *configInfoItem = [statusMenu insertItemWithTitle:@"Configuration Helper" action:@selector(configurationHelper) keyEquivalent:@"" atIndex:1];
+  //NSMenuItem *configInfoItem = [statusMenu insertItemWithTitle:@"Configuration Helper" action:@selector(configurationHelper) keyEquivalent:@"" atIndex:2];
   //[configInfoItem setTarget:self];
 
   statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: NSVariableStatusItemLength];
@@ -193,7 +213,19 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
   // Register Hot Keys
   [self registerHotKeys];
 
+  [self createMenuSnapshotOperations];
+
   selfRef = self;
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
+  if (menuItem == activateSnapshotItem) {
+    SnapshotList *menuSnapshots = [[[SlateConfig getInstance] snapshots] objectForKey:@"menuSnapshot"];
+    if (menuSnapshots == nil || [[menuSnapshots snapshots] count] <= 0) {
+      return NO;
+    }
+  }
+  return YES;
 }
 
 @end
