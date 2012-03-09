@@ -1,4 +1,12 @@
-Current Version: 0.4.16
+Current Version: 0.4.17
+
+----------------- 0.4.17 ----------------
+
+Fix Issue #36, #37, #38, #42
+Add windowHintsIgnoreHiddenWindows config
+Add ability to use expressions for windowHintsHeight and windowHintsWidth configs
+Add windowHintsTopLeftOffsetX and windowHintsTopLeftOffsetY configs
+Add menu options to Take/Activate Snapshots
 
 ----------------- 0.4.16 ----------------
 

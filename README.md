@@ -29,6 +29,55 @@ Configuration is split into the following directives:
 * bind (for key bindings)
 * source (to load configs from another file)
 
+###Expressions###
+
+Some directives allow parameters that can be expressions. The following strings will be replaced with the appropriate values when using expressions:
+
+    screenOriginX = target screen's top left x coordinate (should not be used in Window Hints configs)
+    screenOriginY = target screen's top left y coordinate (should not be used in Window Hints configs)
+    screenSizeX = target screen's width
+    screenSizeY = target screen's height
+    windowTopLeftX = window's current top left x coordinate (should not be used in Window Hints configs)
+    windowTopLeftY = window's current top left y coordinate (should not be used in Window Hints configs)
+    windowSizeX = window's width
+    windowSizeY = window's height
+    newWindowSizeX = window's new width (after resize, only usable in topLeftX and topLeftY, should not be
+                     used in configs)
+    newWindowSizeY = window's new height (after resize, only usable in topLeftX and topLeftY, should not be
+                     used in configs)
+    windowHintsWidth = the value of the windowHintsWidth config (only usable in windowHintsTopLeftOffsetX and
+                       windowHintsTopLeftOffsetY)
+    windowHintsHeight = the value of the windowHintsHeight config (only usable in windowHintsTopLeftOffsetX and
+                        windowHintsTopLeftOffsetY)
+
+In addition to the variables above, expressions can be used with the following functions and operators:
+
+    +          e.g. 1+1 = 2
+    -          e.g. 1-1 = 0
+    *          e.g. 2*2 = 4
+    /          e.g. 4/2 = 2
+    **         e.g. 3**2 = 9
+    sum        e.g. sum({1,2,3}) = 6
+    count      e.g. count({4,5,6}) = 3
+    min        e.g. min({1,3,5}) = 1
+    max        e.g. max({1,3,5}) = 5
+    average    e.g. average({1,2,3,4}) = 2.5
+    median     e.g. median({1,2,3,10,15}) = 3
+    mode       e.g. mode({1,3,4,3,5}) = 3
+    stddev     e.g. stddev({1,2,3,4,5}) = 1.4142135623730951
+    sqrt       e.g. sqrt(9) = 3.0
+    log        e.g. log(100) = 2.0
+    ln         e.g. ln(8) = 2.0794415416798357
+    exp        e.g. exp(2) = 7.3890560989306504 (this is "e**parameter")
+    floor      e.g. floor(1.9) = 1.0
+    ceiling    e.g. ceiling(1.1) = 2.0
+    abs        e.g. abs(-1) = 1
+    trunc      e.g. trunc(1.1123123123) = 1.0
+    random     e.g. random() = 0.20607629744336009 (random float between 0 and 1)
+    randomn    e.g. randomn(10) = 4 (random integer between 0 and parameter-1)
+
+**Note:** When using expressions spaces are *not* allowed!
+
 ### The "config" Directive ###
 
 The bind directive follows the following format:
@@ -50,13 +99,16 @@ List of allowed configs:
 | focusPreferSameApp | Boolean | true | When this is true, the focus operation will *always* choose a window in the same app to focus if it exists in the check width regardless of intersection size. When this is false, focus will treat all application windows the same and choose the largest intersection size |
 | orderScreensLeftToRight | Boolean | true | When this is true, monitors will be ordered from left to right by X coordinate (if two X coordiates are the same, then the lowest Y coordinate will be first). When this is false, screens will be ordered according to the internal Mac OS X ordering which changes depending on which screen was plugged in first. If this is false, you can force ordering of screens by prefixing the screen ID with "ordered:" |
 | windowHintsBackgroundColor | Comma Separated Array of Floats | 50,53,58,0.7 | The background color for Window Hints as an array in the form "Red,Green,Blue,Alpha" where Red, Green, and Blue are numbers between 0.0 and 255 and Alpha is a number between 0.0 and 1.0 |
-| windowHintsWidth | Integer | 100 | The width of the Window Hints ovelay in pixels |
-| windowHintsHeight | Integer | 100 | The height of the Window Hints overlay in pixels |
+| windowHintsWidth | Expression | 100 | The width of the Window Hints ovelay in pixels. Please see the "Expressions" section above more information on expressions. |
+| windowHintsHeight | Expression | 100 | The height of the Window Hints overlay in pixels. Please see the "Expressions" section above more information on expressions. |
 | windowHintsFontColor | Comma Separated Array of Numbers | 255,255,255,1.0 | The font color for Window Hints as an array in the form "Red,Green,Blue,Alpha" where Red, Green, and Blue are numbers between 0.0 and 255 and Alpha is a number between 0.0 and 1.0 |
 | windowHintsFontName | String | Helvetica | The name of the Window Hints font |
 | windowHintsFontSize | Integer | 40 | The size of the Window Hints font |
 | windowHintsDuration | Number | 3 | The number of seconds that Window Hints will display for |
 | windowHintsRoundedCornerSize | Integer | 5 | The size of the rounded corner. Set this to 0 if you do not want rounded corners |
+| windowHintsIgnoreHiddenWindows | Boolean | true | If this is set to true, window hints will not show for windows that are hidden. Hints will show for all windows if this is false. A window is hidden if the window under the point at the center of where the hint overlay would show is not the window in question. |
+| windowHintsTopLeftOffsetX | Expression | 0 | The x offset for window hints from the window's top left point (right is positive, left is negative) |
+| windowHintsTopLeftOffsetY | Expression | 0 | The y offset for window hints from the window's top left point (down is positive, up is negative) |
 
 Example:
 
@@ -154,49 +206,6 @@ modifiers is a comma or semicolon separated list of standard modifier keys. Allo
 #### Operation ####
 
 Operations define what to actually do to the focused window.
-
-**Expressions**
-
-Some operations allow parameters that can be expressions. The following strings will be replaced with the appropriate values when using expressions:
-
-    screenOriginX = target screen's top left x coordinate
-    screenOriginY = target screen's top left y coordinate
-    screenSizeX = target screen's width
-    screenSizeY = target screen's height
-    windowTopLeftX = window's current top left x coordinate
-    windowTopLeftY = window's current top left y coordinate
-    windowSizeX = window's width
-    windowSizeY = window's height
-    newWindowSizeX = window's new width (after resize, only usable in topLeftX and topLeftY)
-    newWindowSizeY = window's new height (after resize, only usable in topLeftX and topLeftY)
-
-In addition to the variables above, expressions can be used with the following functions and operators:
-
-    +          e.g. 1+1 = 2
-    -          e.g. 1-1 = 0
-    *          e.g. 2*2 = 4
-    /          e.g. 4/2 = 2
-    **         e.g. 3**2 = 9
-    sum        e.g. sum({1,2,3}) = 6
-    count      e.g. count({4,5,6}) = 3
-    min        e.g. min({1,3,5}) = 1
-    max        e.g. max({1,3,5}) = 5
-    average    e.g. average({1,2,3,4}) = 2.5
-    median     e.g. median({1,2,3,10,15}) = 3
-    mode       e.g. mode({1,3,4,3,5}) = 3
-    stddev     e.g. stddev({1,2,3,4,5}) = 1.4142135623730951
-    sqrt       e.g. sqrt(9) = 3.0
-    log        e.g. log(100) = 2.0
-    ln         e.g. ln(8) = 2.0794415416798357
-    exp        e.g. exp(2) = 7.3890560989306504 (this is "e**parameter")
-    floor      e.g. floor(1.9) = 1.0
-    ceiling    e.g. ceiling(1.1) = 2.0
-    abs        e.g. abs(-1) = 1
-    trunc      e.g. trunc(1.1123123123) = 1.0
-    random     e.g. random() = 0.20607629744336009 (random float between 0 and 1)
-    randomn    e.g. randomn(10) = 4 (random integer between 0 and parameter-1)
-
-**Note:** When using expressions spaces are *not* allowed!
 
 **Screens**
 
@@ -332,6 +341,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to create a snapshot called "theName", save that snapshot to disk, and treat it as a stack so you can hit the keystroke multiple times to push snapshots onto the stack.
 
+**Note:** There is a menu option to take a snapshot of the current screen configuration.
+
 * Delete a snapshot: "delete-snapshot name options"
 
         name = the name of the snapshot to delete
@@ -357,6 +368,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
         bind 1:ctrl activate-snapshot theName delete
 
     Will bind the keystroke ctrl-1 to activate the snapshot called "theName" if it exists. This will also delete the snapshot (or pop it off the stack if the snapshot is a stack).
+
+**Note:** There is a menu option to activate the snapshot that you may have created using the menu option.
 
 * Show Window Hints (similar to Link Hints in Vimium except for Windows): "hint characters"
 
