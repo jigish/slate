@@ -143,14 +143,15 @@
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
   if (hideTimer != nil) return YES;
+  [(SlateAppDelegate *)[NSApp delegate] setCurrentHintOperation:self];
   ignoreHidden = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
   [self setCurrentHint:0];
   [self setCurrentWindow:[[AccessibilityWrapper alloc] init]];
-  NSArray *appsArr = [[NSWorkspace sharedWorkspace] launchedApplications];
-  for (NSDictionary *app in appsArr) {
-    NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
-    SlateLogger(@"I see application '%@' with pid '%@'", [app objectForKey:@"NSApplicationName"], appPID);
-    AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
+  NSArray *appsArr = [[NSWorkspace sharedWorkspace] runningApplications];
+  for (NSRunningApplication *app in appsArr) {
+    pid_t appPID = [app processIdentifier];
+    SlateLogger(@"I see application '%@' with pid '%d'", [app localizedName], appPID);
+    AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
     CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:appRef];
     if (!windowsArr || CFArrayGetCount(windowsArr) == 0) continue;
     for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
@@ -165,7 +166,6 @@
                                                     selector:@selector(killHints)
                                                     userInfo:nil
                                                      repeats:NO]];
-  [(SlateAppDelegate *)[NSApp delegate] setCurrentHintOperation:self];
   return YES;
 }
 

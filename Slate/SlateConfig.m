@@ -140,7 +140,7 @@ static SlateConfig *_instance = nil;
 
   if ([[SlateConfig getInstance] getBoolConfig:CHECK_DEFAULTS_ON_LOAD]) {
     SlateLogger(@"Config loaded. Checking defaults...");
-    [self onScreenChange:nil];
+    [self checkDefaults];
     SlateLogger(@"Defaults loaded.");
   } else {
     SlateLogger(@"Config loaded.");
@@ -359,9 +359,7 @@ static SlateConfig *_instance = nil;
   SlateLogger(@"Notification Name: <%@>", [notification name]);
 }*/
 
-- (void)onScreenChange:(id)notification {
-  SlateLogger(@"onScreenChange");
-  [ScreenWrapper updateStatics];
+- (void)checkDefaults {
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   NSInteger screenCount = [sw getScreenCount];
   NSMutableArray *resolutions = [[NSMutableArray alloc] initWithCapacity:10];
@@ -393,6 +391,13 @@ static SlateConfig *_instance = nil;
       }
     }
   }
+
+}
+
+- (void)onScreenChange:(id)notification {
+  SlateLogger(@"onScreenChange");
+  if (![ScreenWrapper hasScreenConfigChanged]) return;
+  [self checkDefaults];
 }
 
 - (NSDictionary *)snapshotsToDictionary {

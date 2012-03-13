@@ -64,14 +64,14 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
-  NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
+  NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
   Snapshot *snapshot = [[SlateConfig getInstance] popSnapshot:name remove:del];
   if (snapshot == nil) return YES;
-  for (NSDictionary *app in apps) {
-    NSString *appName = [app objectForKey:@"NSApplicationName"];
-    NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
-    SlateLogger(@"I see application '%@' with pid '%@'", appName, appPID);
-    AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
+  for (NSRunningApplication *app in apps) {
+    NSString *appName = [app localizedName];
+    pid_t appPID = [app processIdentifier];
+    SlateLogger(@"I see application '%@' with pid '%d'", appName, appPID);
+    AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
     CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInApp:appRef];
     if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) continue;
     CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, windowsArrRef);

@@ -55,11 +55,11 @@
 // Note that the AccessibilityWrapper is never used because layouts use multiple applications
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
   BOOL success = YES;
-  NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
-  for (NSDictionary *app in apps) {
-    NSString *appName = [app objectForKey:@"NSApplicationName"];
-    NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
-    SlateLogger(@"I see application '%@' with pid '%@'", appName, appPID);
+  NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
+  for (NSRunningApplication *app in apps) {
+    NSString *appName = [app localizedName];
+    pid_t appPID = [app processIdentifier];
+    SlateLogger(@"I see application '%@' with pid '%d'", appName, appPID);
     Layout *layout = [[[SlateConfig getInstance] layouts] objectForKey:[self name]];
     if (layout == nil) {
       @throw([NSException exceptionWithName:@"Unrecognized Layout" reason:[self name] userInfo:nil]);
@@ -70,7 +70,7 @@
     }
 
     // Yes, I am aware that the following blocks are inefficient. Deal with it.
-    AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
+    AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
     CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInApp:appRef];
     if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) continue;
     CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, windowsArrRef);

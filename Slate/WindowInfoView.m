@@ -42,15 +42,14 @@
   }
   
   text = [text stringByAppendingString:@"\n----------------- Windows -----------------\n" ];
-  NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
-  for (NSInteger i = 0; i < [apps count]; i++) {
-    NSDictionary *app = [apps objectAtIndex:i];
-    NSString *appName = [app objectForKey:@"NSApplicationName"];
-    NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
-    SlateLogger(@"I see application '%@' with pid '%@'", appName, appPID);
+  NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
+  for (NSRunningApplication *app in apps) {
+    NSString *appName = [app localizedName];
+    pid_t appPID = [app processIdentifier];
+    SlateLogger(@"I see application '%@' with pid '%d'", appName, appPID);
     text = [text stringByAppendingFormat:@"\nApplication: %@\n", appName];
     // Yes, I am aware that the following blocks are inefficient. Deal with it.
-    AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
+    AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
     CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInApp:appRef];
     if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) continue;
     CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, windowsArrRef);

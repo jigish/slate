@@ -81,17 +81,17 @@
     else {
       return NO;
     }
-    NSArray *apps = [[NSWorkspace sharedWorkspace] launchedApplications];
+    NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
     NSRect biggestIntersection = NSZeroRect;
     AXUIElementRef windowToFocus;
     AXUIElementRef appToFocus;
     BOOL foundFocus = NO;
     BOOL foundFocusInSameApp = NO;
-    for (NSDictionary *app in apps) {
-      NSNumber *appPID = [app objectForKey:@"NSApplicationProcessIdentifier"];
-      SlateLogger(@"I see application '%@' with pid '%@'", [app objectForKey:@"NSApplicationName"], appPID);
+    for (NSRunningApplication *app in apps) {
+      pid_t appPID = [app processIdentifier];
+      SlateLogger(@"I see application '%@' with pid '%d'", [app localizedName], appPID);
 
-      AXUIElementRef appRef = AXUIElementCreateApplication([appPID intValue]);
+      AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
       CFArrayRef windows = [AccessibilityWrapper windowsInApp:appRef];
       if (!windows || CFArrayGetCount(windows) == 0) continue;
 
@@ -111,7 +111,7 @@
 
         NSPoint wTL = [aw getCurrentTopLeft];
         NSSize wSize = [aw getCurrentSize];
-        SlateLogger(@" Checking window in %@ in direction %i with rect: (%f,%f %f,%f), title: [%@]",[app objectForKey:@"NSApplicationName"],(int)direction,wTL.x,wTL.y,wSize.width,wSize.height,wTitle);
+        SlateLogger(@" Checking window in %@ in direction %i with rect: (%f,%f %f,%f), title: [%@]",[app localizedName],(int)direction,wTL.x,wTL.y,wSize.width,wSize.height,wTitle);
         NSRect windowRect = NSMakeRect(wTL.x, wTL.y, wSize.width, wSize.height);
 
         if ([wTitle isEqualToString:cwTitle] && NSEqualRects(windowRect, cwRect) && NSEqualPoints(wTL, cwTL)) {
@@ -119,7 +119,7 @@
           continue;
         }
         NSRect intersection = NSIntersectionRect(checkRect, windowRect);
-        if ([MathUtils isRect:intersection biggerThan:NSZeroRect] && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == [appPID intValue]) {
+        if ([MathUtils isRect:intersection biggerThan:NSZeroRect] && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == appPID) {
           SlateLogger(@"  Found window in same app in direction %i",(int)direction);
           if ([[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP]
               && (!foundFocusInSameApp || [MathUtils isRect:intersection biggerThan:biggestIntersection])) {
@@ -136,7 +136,7 @@
             foundFocus = YES;
           }
         } else if ([MathUtils isRect:intersection biggerThan:biggestIntersection]) {
-          SlateLogger(@"  Found window in %@ in direction %i (intersection: %f,%f %f,%f)",[app objectForKey:@"NSApplicationName"],(int)direction,intersection.origin.x,intersection.origin.y,intersection.size.width,intersection.size.height);
+          SlateLogger(@"  Found window in %@ in direction %i (intersection: %f,%f %f,%f)",[app localizedName],(int)direction,intersection.origin.x,intersection.origin.y,intersection.size.width,intersection.size.height);
           appToFocus = appRef;
           windowToFocus = CFArrayGetValueAtIndex(windows, i);
           biggestIntersection = intersection;
@@ -144,7 +144,7 @@
         }
       }
       // check if same app && foundFocus && prefer_same_app
-      if(foundFocusInSameApp && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == [appPID intValue] && [[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP]) {
+      if(foundFocusInSameApp && [AccessibilityWrapper processIdentifierOfUIElement:[caAW app]] == appPID && [[SlateConfig getInstance] getBoolConfig:FOCUS_PREFER_SAME_APP]) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appToFocus window:windowToFocus];
         [aw focus];
         return YES;
