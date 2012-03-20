@@ -45,10 +45,10 @@ Some directives allow parameters that can be expressions. The following strings 
                      used in configs)
     newWindowSizeY = window's new height (after resize, only usable in topLeftX and topLeftY, should not be
                      used in configs)
-    windowHintsWidth = the value of the windowHintsWidth config (only usable in windowHintsTopLeftOffsetX and
-                       windowHintsTopLeftOffsetY)
-    windowHintsHeight = the value of the windowHintsHeight config (only usable in windowHintsTopLeftOffsetX and
-                        windowHintsTopLeftOffsetY)
+    windowHintsWidth = the value of the windowHintsWidth config (only usable in windowHintsTopLeftX and
+                       windowHintsTopLeftY)
+    windowHintsHeight = the value of the windowHintsHeight config (only usable in windowHintsTopLeftX and
+                        windowHintsTopLeftY)
 
 In addition to the variables above, expressions can be used with the following functions and operators:
 
@@ -107,8 +107,8 @@ List of allowed configs:
 | `windowHintsDuration` | Number | `3` | The number of seconds that Window Hints will display for |
 | `windowHintsRoundedCornerSize` | Integer | `5` | The size of the rounded corner. Set this to `0` if you do not want rounded corners |
 | `windowHintsIgnoreHiddenWindows` | Boolean | `true` | If this is set to `true`, window hints will not show for windows that are hidden. Hints will show for all windows if this is `false`. A window is hidden if the window under the point at the center of where the hint overlay would show is not the window in question. |
-| `windowHintsTopLeftOffsetX` | Expression | `0` | The X offset for window hints from the window's top left point (right is positive, left is negative) |
-| `windowHintsTopLeftOffsetY` | Expression | `0` | The Y offset for window hints from the window's top left point (down is positive, up is negative) |
+| `windowHintsTopLeftX` | Expression | `0` | The X offset for window hints from the window's top left point (right is positive, left is negative) |
+| `windowHintsTopLeftY` | Expression | `0` | The Y offset for window hints from the window's top left point (down is positive, up is negative) |
 
 Example:
 
