@@ -161,6 +161,17 @@
       [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw];
     }
   }
+
+  // Register the escape hotkey
+  NSNumber *keyCode = [[Binding asciiToCodeDict] objectForKey:@"esc"];
+  EventHotKeyID myHotKeyID;
+  EventHotKeyRef myHotKeyRef;
+  myHotKeyID.signature = *[@"hotkeyESC" cStringUsingEncoding:NSASCIIStringEncoding];
+  myHotKeyID.id = (UInt32)(currentHint+1);
+  RegisterEventHotKey([keyCode integerValue], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
+  [hotkeyRefs addObject:[NSValue valueWithPointer:myHotKeyRef]];
+
+  // Set the hide timer
   [self setHideTimer:[NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_DURATION]
                                                       target:self
                                                     selector:@selector(killHints)
@@ -195,6 +206,11 @@
 }
 
 - (void)activateHintKey:(NSInteger)hintId {
+  if (hintId == currentHint+1) {
+    // escape key
+    [self killHints];
+    return;
+  }
   if ([hints objectAtIndex:hintId]) {
     AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:[[apps objectAtIndex:hintId] pointerValue] window:[[windows objectAtIndex:hintId] pointerValue]];
     [aw focus];
