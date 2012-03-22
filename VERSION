@@ -2,7 +2,8 @@ Current Version: 0.4.17
 
 ----------------- 0.4.18 ----------------
 
-Fix Issue #47
+Fix Issue #45, #47
+Pressing ESC will dismiss window hints
 
 ----------------- 0.4.17 ----------------
 
