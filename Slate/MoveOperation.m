@@ -31,11 +31,9 @@
 @synthesize topLeft;
 @synthesize dimensions;
 @synthesize monitor;
-@synthesize moveFirst;
 
 - (id)init {
   self = [super init];
-  [self setMoveFirst:YES];
   return self;
 }
 
@@ -70,46 +68,17 @@
   return self;
 }
 
-- (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSString *)mon moveFirst:(BOOL)mf {
-  self = [self initWithTopLeft:tl dimensions:dim monitor:mon];
-  if (self) {
-    [self setMoveFirst:mf];
-  }
-  
-  return self;
-}
-
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = NO;
   NSPoint cTopLeft = [aw getCurrentTopLeft];
   NSSize cSize = [aw getCurrentSize];
   NSRect cWindowRect = NSMakeRect(cTopLeft.x, cTopLeft.y, cSize.width, cSize.height);
   NSSize nSize = [self getDimensionsWithCurrentWindowRect:cWindowRect screenWrapper:sw];
-  BOOL shouldMoveFirst = moveFirst;
-  if (shouldMoveFirst) {
-    SlateLogger(@"Move First");
-    NSPoint nTopLeft = [self getTopLeftWithCurrentWindowRect:cWindowRect newSize:nSize screenWrapper:sw];
-
-    // check if we really should move first - if moving first moves the window offscreen, we should resize first and assume that will work better
-    NSRect tmpWindowRect = NSMakeRect(nTopLeft.x, nTopLeft.y, cSize.width, cSize.height);
-    if ([sw isRectOffScreen:tmpWindowRect]) {
-      // Resize First
-      SlateLogger(@"Resize First because moving first would fail.");
-      success = [aw resizeWindow:nSize];
-      NSSize realNewSize = [aw getCurrentSize];
-      nTopLeft = [self getTopLeftWithCurrentWindowRect:cWindowRect newSize:realNewSize screenWrapper:sw];
-      success = [aw moveWindow:nTopLeft] && success;
-    } else {
-      success = [aw moveWindow:nTopLeft];
-      success = [aw resizeWindow:nSize] && success;
-    }
-  } else {
-    SlateLogger(@"Resize First");
-    success = [aw resizeWindow:nSize];
-    NSSize realNewSize = [aw getCurrentSize];
-    NSPoint nTopLeft = [self getTopLeftWithCurrentWindowRect:cWindowRect newSize:realNewSize screenWrapper:sw];
-    success = [aw moveWindow:nTopLeft] && success;
-  }
+  success = [aw resizeWindow:nSize];
+  NSSize realNewSize = [aw getCurrentSize];
+  NSPoint nTopLeft = [self getTopLeftWithCurrentWindowRect:cWindowRect newSize:realNewSize screenWrapper:sw];
+  success = [aw moveWindow:nTopLeft] && success;
+  success = [aw resizeWindow:nSize] && success;
   return success;
 }
 
@@ -160,11 +129,7 @@
   }
   
   Operation *op = nil;
-  if ([moveOperation rangeOfString:NEW_WINDOW_SIZE].length > 0) {
-    op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN) moveFirst:NO];
-  } else {
-    op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
-  }
+  op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
   return op;
 }
 
