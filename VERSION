@@ -4,6 +4,7 @@ Current Version: 0.4.17
 
 Fix Issue #45, #47
 Pressing ESC will dismiss window hints
+Apps will now be ordered by last use for all operations that loop through apps
 
 ----------------- 0.4.17 ----------------
 
