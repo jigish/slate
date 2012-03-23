@@ -22,6 +22,7 @@
 #import "AccessibilityWrapper.h"
 #import "ScreenWrapper.h"
 #import "SlateLogger.h"
+#import "RunningApplications.h"
 
 @implementation WindowInfoView
 
@@ -42,8 +43,7 @@
   }
   
   text = [text stringByAppendingString:@"\n----------------- Windows -----------------\n" ];
-  NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
-  for (NSRunningApplication *app in apps) {
+  for (NSRunningApplication *app in [RunningApplications getInstance]) {
     NSString *appName = [app localizedName];
     pid_t appPID = [app processIdentifier];
     SlateLogger(@"I see application '%@' with pid '%d'", appName, appPID);

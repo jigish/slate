@@ -30,6 +30,7 @@
 #import "StringTokenizer.h"
 #import "SlateLogger.h"
 #import "ExpressionPoint.h"
+#import "RunningApplications.h"
 
 @implementation HintOperation
 
@@ -147,8 +148,7 @@
   ignoreHidden = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
   [self setCurrentHint:0];
   [self setCurrentWindow:[[AccessibilityWrapper alloc] init]];
-  NSArray *appsArr = [[NSWorkspace sharedWorkspace] runningApplications];
-  for (NSRunningApplication *app in appsArr) {
+  for (NSRunningApplication *app in [RunningApplications getInstance]) {
     pid_t appPID = [app processIdentifier];
     SlateLogger(@"I see application '%@' with pid '%d'", [app localizedName], appPID);
     AXUIElementRef appRef = AXUIElementCreateApplication(appPID);

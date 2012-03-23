@@ -21,6 +21,7 @@
 		3B7EB475138F691800EBEC2B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB474138F691800EBEC2B /* Constants.m */; };
 		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
 		3B84A552150552DC006E2194 /* ConfigurationHelperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B84A551150552DC006E2194 /* ConfigurationHelperView.m */; };
+		3B9B3007151BDD960069D95E /* RunningApplications.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B3006151BDD960069D95E /* RunningApplications.m */; };
 		3BA7485913B1D0F500CFA792 /* MathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA7485813B1D0F500CFA792 /* MathUtils.m */; };
 		3BADA37213A2C1ED009E21D8 /* AccessibilityWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BADA37113A2C1ED009E21D8 /* AccessibilityWrapper.m */; };
 		3BB5380413AEDA1B0005CFFC /* ScreenState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5380313AEDA190005CFFC /* ScreenState.m */; };
@@ -95,6 +96,8 @@
 		3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringTokenizer.m; sourceTree = "<group>"; };
 		3B84A550150552DC006E2194 /* ConfigurationHelperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationHelperView.h; sourceTree = "<group>"; };
 		3B84A551150552DC006E2194 /* ConfigurationHelperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationHelperView.m; sourceTree = "<group>"; };
+		3B9B3005151BDD960069D95E /* RunningApplications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningApplications.h; sourceTree = "<group>"; };
+		3B9B3006151BDD960069D95E /* RunningApplications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningApplications.m; sourceTree = "<group>"; };
 		3BA7485713B1D0F500CFA792 /* MathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		3BA7485813B1D0F500CFA792 /* MathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MathUtils.m; sourceTree = "<group>"; };
 		3BADA37013A2C1ED009E21D8 /* AccessibilityWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessibilityWrapper.h; sourceTree = "<group>"; };
@@ -269,17 +272,19 @@
 				3B7EB474138F691800EBEC2B /* Constants.m */,
 				47C4A2D51384F5DD0066B6DE /* ExpressionPoint.h */,
 				47C4A2D61384F5DE0066B6DE /* ExpressionPoint.m */,
+				3BA7485713B1D0F500CFA792 /* MathUtils.h */,
+				3BA7485813B1D0F500CFA792 /* MathUtils.m */,
+				3B9B3005151BDD960069D95E /* RunningApplications.h */,
+				3B9B3006151BDD960069D95E /* RunningApplications.m */,
+				3BB5380213AEDA190005CFFC /* ScreenState.h */,
+				3BB5380313AEDA190005CFFC /* ScreenState.m */,
 				3B66A56013ADBDFD0015EDD5 /* ScreenWrapper.h */,
 				3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */,
+				3B58154215054EBD0078D568 /* SlateLogger.h */,
 				3B7EB4CA138F72D900EBEC2B /* StringTokenizer.h */,
 				3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */,
 				3B3E240E13A5F59E00B0D762 /* WindowState.h */,
 				3B3E240F13A5F59E00B0D762 /* WindowState.m */,
-				3BB5380213AEDA190005CFFC /* ScreenState.h */,
-				3BB5380313AEDA190005CFFC /* ScreenState.m */,
-				3BA7485713B1D0F500CFA792 /* MathUtils.h */,
-				3BA7485813B1D0F500CFA792 /* MathUtils.m */,
-				3B58154215054EBD0078D568 /* SlateLogger.h */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -521,6 +526,7 @@
 				3B58153C1502FB7D0078D568 /* HintView.m in Sources */,
 				3B58153F1502FF350078D568 /* NSColor+Conversions.m in Sources */,
 				3B84A552150552DC006E2194 /* ConfigurationHelperView.m in Sources */,
+				3B9B3007151BDD960069D95E /* RunningApplications.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

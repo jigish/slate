@@ -25,6 +25,7 @@
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 #import "SlateLogger.h"
+#import "RunningApplications.h"
 
 @implementation LayoutOperation
 
@@ -55,8 +56,7 @@
 // Note that the AccessibilityWrapper is never used because layouts use multiple applications
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
   BOOL success = YES;
-  NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
-  for (NSRunningApplication *app in apps) {
+  for (NSRunningApplication *app in [RunningApplications getInstance]) {
     NSString *appName = [app localizedName];
     pid_t appPID = [app processIdentifier];
     SlateLogger(@"I see application '%@' with pid '%d'", appName, appPID);

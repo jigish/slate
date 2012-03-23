@@ -216,6 +216,9 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
 
   [self createMenuSnapshotOperations];
 
+  // Setup App list
+  [RunningApplications getInstance];
+
   selfRef = self;
 }
 

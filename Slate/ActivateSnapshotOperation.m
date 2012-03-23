@@ -26,6 +26,7 @@
 #import "NSString+Levenshtein.h"
 #import "StringTokenizer.h"
 #import "SlateLogger.h"
+#import "RunningApplications.h"
 
 @implementation ActivateSnapshotOperation
 
@@ -64,10 +65,9 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
-  NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
   Snapshot *snapshot = [[SlateConfig getInstance] popSnapshot:name remove:del];
   if (snapshot == nil) return YES;
-  for (NSRunningApplication *app in apps) {
+  for (NSRunningApplication *app in [RunningApplications getInstance]) {
     NSString *appName = [app localizedName];
     pid_t appPID = [app processIdentifier];
     SlateLogger(@"I see application '%@' with pid '%d'", appName, appPID);

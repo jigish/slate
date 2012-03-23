@@ -48,5 +48,7 @@
 + (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window;
 + (AXUIElementRef)windowUnderPoint:(NSPoint)point;
 + (void)createSystemWideElement;
++ (BOOL)isAppSelectable:(NSRunningApplication *)app;
++ (BOOL)isAppIgnored:(NSRunningApplication *)app;
 
 @end

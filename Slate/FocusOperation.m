@@ -24,6 +24,7 @@
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 #import "SlateLogger.h"
+#import "RunningApplications.h"
 
 @implementation FocusOperation
 
@@ -81,13 +82,12 @@
     else {
       return NO;
     }
-    NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
     NSRect biggestIntersection = NSZeroRect;
     AXUIElementRef windowToFocus;
     AXUIElementRef appToFocus;
     BOOL foundFocus = NO;
     BOOL foundFocusInSameApp = NO;
-    for (NSRunningApplication *app in apps) {
+    for (NSRunningApplication *app in [RunningApplications getInstance]) {
       pid_t appPID = [app processIdentifier];
       SlateLogger(@"I see application '%@' with pid '%d'", [app localizedName], appPID);
 
