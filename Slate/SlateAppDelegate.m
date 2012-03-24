@@ -25,15 +25,20 @@
 #import "HintOperation.h"
 #import "SlateLogger.h"
 #import "SnapshotList.h"
+#import "SnapshotOperation.h"
+#import "ActivateSnapshotOperation.h"
+#import "SwitchOperation.h"
+#import "RunningApplications.h"
 
 @implementation SlateAppDelegate
 
-@synthesize currentHintOperation, menuSnapshotOperation, menuActivateSnapshotOperation;
+@synthesize currentHintOperation, currentSwitchBinding, menuSnapshotOperation, menuActivateSnapshotOperation;
 
 static NSObject *timerLock = nil;
 static NSTimer *currentTimer = nil;
 static EventHotKeyID currentHotKey;
 static SlateAppDelegate *selfRef = nil;
+static EventHandlerRef modifiersEvent;
 
 - (IBAction)reconfig {
   NSArray *bindings = [[SlateConfig getInstance] bindings];
@@ -74,8 +79,8 @@ static SlateAppDelegate *selfRef = nil;
   eventReleasedType.eventClass = kEventClassKeyboard;
   eventReleasedType.eventKind = kEventHotKeyReleased;
 
-  InstallApplicationEventHandler(&OnHotKeyEvent, 1, &eventType, (__bridge void *)self, NULL);
-  InstallApplicationEventHandler(&OnHotKeyReleasedEvent, 1, &eventReleasedType, (__bridge void *)self, NULL);
+  InstallEventHandler(GetEventMonitorTarget(), &OnHotKeyEvent, 1, &eventType, (__bridge void *)self, NULL);
+  InstallEventHandler(GetEventMonitorTarget(), &OnHotKeyReleasedEvent, 1, &eventReleasedType, (__bridge void *)self, NULL);
 
   NSArray *bindings = [[SlateConfig getInstance] bindings];
   for (NSInteger i = 0; i < [bindings count]; i++) {
@@ -84,7 +89,7 @@ static SlateAppDelegate *selfRef = nil;
     EventHotKeyRef myHotKeyRef;
     myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",i] cStringUsingEncoding:NSASCIIStringEncoding];
     myHotKeyID.id = (UInt32)i;
-    RegisterEventHotKey([binding keyCode], [binding modifiers], myHotKeyID, GetApplicationEventTarget(), 0, &myHotKeyRef);
+    RegisterEventHotKey([binding keyCode], [binding modifiers], myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
     [binding setHotKeyRef:myHotKeyRef];
   }
   SlateLogger(@"HotKeys registered.");
@@ -115,14 +120,33 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
   GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
   
   HintOperation *hintop = [(__bridge SlateAppDelegate *)userData currentHintOperation];
+  Binding *switchop = [(__bridge SlateAppDelegate *)userData currentSwitchBinding];
   if (hintop != nil) {
     [hintop activateHintKey:hkCom.id];
     return noErr;
   }
+  if (switchop != nil) {
+    [(SwitchOperation *)[switchop op] activateSwitchKey:hkCom];
+    return noErr;
+  }
 
-  if ([[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id]) {
-    [[[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id] doOperation];
-    if ([[[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id] repeat]) {
+  Binding *binding = [[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id];
+  if (binding) {
+    SlateLogger(@"Running Operation %@", [[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id]);
+    if ([[binding op] isKindOfClass:[SwitchOperation class]]) {
+      // makes sure that if switch is called immediately after opening slate we don't run into issues
+      NSArray *currentApps = [[RunningApplications getInstance] apps];
+      if ([currentApps count] > 0) {
+        [AccessibilityWrapper focusApp:[currentApps objectAtIndex:0]];
+      }
+      [(__bridge SlateAppDelegate *)userData setCurrentSwitchBinding:binding];
+      EventTypeSpec modifiersChangedType;
+      modifiersChangedType.eventClass = kEventClassKeyboard;
+      modifiersChangedType.eventKind = kEventRawKeyModifiersChanged;
+      InstallEventHandler(GetEventMonitorTarget(), &OnModifiersChangedEvent, 1, &modifiersChangedType, userData, &modifiersEvent);
+    }
+    [binding doOperation];
+    if ([binding repeat]) {
       @synchronized(timerLock) {
         if (currentTimer != nil) {
           [currentTimer invalidate];
@@ -145,6 +169,7 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
 OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
   if (![(__bridge id)userData isKindOfClass:[SlateAppDelegate class]]) return noErr;
   if ([(__bridge SlateAppDelegate *)userData currentHintOperation] != nil) return noErr;
+  if ([(__bridge SlateAppDelegate *)userData currentSwitchBinding] != nil) return noErr;
   EventHotKeyID hkCom;
   GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
 
@@ -152,6 +177,20 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
     if (currentTimer != nil && hkCom.id == currentHotKey.id) {
       [currentTimer invalidate];
       currentTimer = nil;
+    }
+  }
+  return noErr;
+}
+
+OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
+  SlateLogger(@"Modifiers changed");
+  Binding *currSwitch = [(__bridge SlateAppDelegate *)userData currentSwitchBinding];
+  UInt32 modifiers;
+  GetEventParameter(theEvent, kEventParamKeyModifiers, typeUInt32, NULL, sizeof(modifiers), NULL, &modifiers);
+  if (currSwitch != nil) {
+    if ([(SwitchOperation *)[currSwitch op] modifiersChanged:[currSwitch modifiers] new:modifiers]) {
+      [(__bridge SlateAppDelegate *)userData setCurrentSwitchBinding:nil];
+      RemoveEventHandler(modifiersEvent);
     }
   }
   return noErr;
@@ -217,7 +256,8 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
   [self createMenuSnapshotOperations];
 
   // Setup App list
-  [RunningApplications getInstance];
+  NSArray *rapps = [[RunningApplications getInstance] apps];
+  if ([rapps count] > 0) [AccessibilityWrapper focusApp:[rapps objectAtIndex:0]];
 
   selfRef = self;
 }

@@ -74,6 +74,12 @@ extern NSString *const WINDOW_HINTS_TOP_LEFT_X;
 extern NSString *const WINDOW_HINTS_TOP_LEFT_X_DEFAULT;
 extern NSString *const WINDOW_HINTS_TOP_LEFT_Y;
 extern NSString *const WINDOW_HINTS_TOP_LEFT_Y_DEFAULT;
+extern NSString *const SWITCH_ICON_SIZE;
+extern NSString *const SWITCH_ICON_SIZE_DEFAULT;
+extern NSString *const SWITCH_BACKGROUND_COLOR;
+extern NSString *const SWITCH_BACKGROUND_COLOR_DEFAULT;
+extern NSString *const SWITCH_ROUNDED_CORNER_SIZE;
+extern NSString *const SWITCH_ROUNDED_CORNER_SIZE_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;
@@ -116,6 +122,7 @@ extern NSString *const SNAPSHOT;
 extern NSString *const ACTIVATE_SNAPSHOT;
 extern NSString *const DELETE_SNAPSHOT;
 extern NSString *const HINT;
+extern NSString *const SWITCH;
 
 // Parameters and Options
 extern NSString *const CENTER;
@@ -134,6 +141,10 @@ extern NSString *const TITLE;
 extern NSString *const SIZE;
 extern NSString *const ALL;
 extern NSString *const DELETE;
+extern NSString *const BACK;
+extern NSString *const QUIT;
+extern NSString *const FORCE_QUIT;
+extern NSString *const HIDE;
 
 // Directions and Anchors
 extern NSString *const UP;

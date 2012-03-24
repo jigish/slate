@@ -59,7 +59,7 @@
                                     self.bounds.origin.y + cornerSize,
                                     self.bounds.size.width - 2 * cornerSize,
                                     self.bounds.size.height - 2 * cornerSize);
-  [NSBezierPath fillRect:backgoundRect];
+  NSRectFill(backgoundRect);
   [[self layer] setBackgroundColor:[backgroundColor cgColor]];
   [[self layer] setBorderColor:[backgroundColor cgColor]];
   [[self layer] setCornerRadius:cornerSize];

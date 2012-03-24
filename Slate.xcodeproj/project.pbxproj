@@ -14,6 +14,9 @@
 		3B40AC2113A73530006C9A5C /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40AC2013A73530006C9A5C /* Layout.m */; };
 		3B40AC2413A743B0006C9A5C /* LayoutOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40AC2313A743AF006C9A5C /* LayoutOperation.m */; };
 		3B42D72F13A831E7009103A0 /* ApplicationOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B42D72E13A831E6009103A0 /* ApplicationOptions.m */; };
+		3B4CDD00150ACA6800B819E2 /* SwitchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4CDCFF150ACA6800B819E2 /* SwitchOperation.m */; };
+		3B4CDD03150AD68000B819E2 /* SwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4CDD02150AD68000B819E2 /* SwitchView.m */; };
+		3B4CDD06150AD69500B819E2 /* SwitchWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4CDD05150AD69500B819E2 /* SwitchWindow.m */; };
 		3B58153C1502FB7D0078D568 /* HintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B58153B1502FB7D0078D568 /* HintView.m */; };
 		3B58153F1502FF350078D568 /* NSColor+Conversions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B58153E1502FF350078D568 /* NSColor+Conversions.m */; };
 		3B66A56213ADBDFD0015EDD5 /* ScreenWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */; };
@@ -22,6 +25,8 @@
 		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
 		3B84A552150552DC006E2194 /* ConfigurationHelperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B84A551150552DC006E2194 /* ConfigurationHelperView.m */; };
 		3B9B3007151BDD960069D95E /* RunningApplications.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B3006151BDD960069D95E /* RunningApplications.m */; };
+		3B9B301E151BFC330069D95E /* SwitchAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B301D151BFC330069D95E /* SwitchAppView.m */; };
+		3B9B3021151C830F0069D95E /* SwitchAppQuittingOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B3020151C830E0069D95E /* SwitchAppQuittingOverlayView.m */; };
 		3BA7485913B1D0F500CFA792 /* MathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA7485813B1D0F500CFA792 /* MathUtils.m */; };
 		3BADA37213A2C1ED009E21D8 /* AccessibilityWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BADA37113A2C1ED009E21D8 /* AccessibilityWrapper.m */; };
 		3BB5380413AEDA1B0005CFFC /* ScreenState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5380313AEDA190005CFFC /* ScreenState.m */; };
@@ -81,6 +86,12 @@
 		3B40AC2313A743AF006C9A5C /* LayoutOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutOperation.m; sourceTree = "<group>"; };
 		3B42D72D13A831E6009103A0 /* ApplicationOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationOptions.h; sourceTree = "<group>"; };
 		3B42D72E13A831E6009103A0 /* ApplicationOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationOptions.m; sourceTree = "<group>"; };
+		3B4CDCFE150ACA6800B819E2 /* SwitchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchOperation.h; sourceTree = "<group>"; };
+		3B4CDCFF150ACA6800B819E2 /* SwitchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchOperation.m; sourceTree = "<group>"; };
+		3B4CDD01150AD68000B819E2 /* SwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchView.h; sourceTree = "<group>"; };
+		3B4CDD02150AD68000B819E2 /* SwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchView.m; sourceTree = "<group>"; };
+		3B4CDD04150AD69500B819E2 /* SwitchWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchWindow.h; sourceTree = "<group>"; };
+		3B4CDD05150AD69500B819E2 /* SwitchWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchWindow.m; sourceTree = "<group>"; };
 		3B58153A1502FB7D0078D568 /* HintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HintView.h; sourceTree = "<group>"; };
 		3B58153B1502FB7D0078D568 /* HintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HintView.m; sourceTree = "<group>"; };
 		3B58153D1502FF350078D568 /* NSColor+Conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Conversions.h"; sourceTree = "<group>"; };
@@ -98,6 +109,10 @@
 		3B84A551150552DC006E2194 /* ConfigurationHelperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationHelperView.m; sourceTree = "<group>"; };
 		3B9B3005151BDD960069D95E /* RunningApplications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningApplications.h; sourceTree = "<group>"; };
 		3B9B3006151BDD960069D95E /* RunningApplications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningApplications.m; sourceTree = "<group>"; };
+		3B9B301C151BFC330069D95E /* SwitchAppView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchAppView.h; sourceTree = "<group>"; };
+		3B9B301D151BFC330069D95E /* SwitchAppView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchAppView.m; sourceTree = "<group>"; };
+		3B9B301F151C830E0069D95E /* SwitchAppQuittingOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchAppQuittingOverlayView.h; sourceTree = "<group>"; };
+		3B9B3020151C830E0069D95E /* SwitchAppQuittingOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchAppQuittingOverlayView.m; sourceTree = "<group>"; };
 		3BA7485713B1D0F500CFA792 /* MathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		3BA7485813B1D0F500CFA792 /* MathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MathUtils.m; sourceTree = "<group>"; };
 		3BADA37013A2C1ED009E21D8 /* AccessibilityWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessibilityWrapper.h; sourceTree = "<group>"; };
@@ -258,6 +273,16 @@
 				3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */,
 				3BDDA17814FD95E200829D2A /* SnapshotOperation.h */,
 				3BDDA17914FD95E200829D2A /* SnapshotOperation.m */,
+				3B9B301F151C830E0069D95E /* SwitchAppQuittingOverlayView.h */,
+				3B9B3020151C830E0069D95E /* SwitchAppQuittingOverlayView.m */,
+				3B9B301C151BFC330069D95E /* SwitchAppView.h */,
+				3B9B301D151BFC330069D95E /* SwitchAppView.m */,
+				3B4CDCFE150ACA6800B819E2 /* SwitchOperation.h */,
+				3B4CDCFF150ACA6800B819E2 /* SwitchOperation.m */,
+				3B4CDD01150AD68000B819E2 /* SwitchView.h */,
+				3B4CDD02150AD68000B819E2 /* SwitchView.m */,
+				3B4CDD04150AD69500B819E2 /* SwitchWindow.h */,
+				3B4CDD05150AD69500B819E2 /* SwitchWindow.m */,
 			);
 			name = Operation;
 			sourceTree = "<group>";
@@ -526,7 +551,12 @@
 				3B58153C1502FB7D0078D568 /* HintView.m in Sources */,
 				3B58153F1502FF350078D568 /* NSColor+Conversions.m in Sources */,
 				3B84A552150552DC006E2194 /* ConfigurationHelperView.m in Sources */,
+				3B4CDD00150ACA6800B819E2 /* SwitchOperation.m in Sources */,
+				3B4CDD03150AD68000B819E2 /* SwitchView.m in Sources */,
+				3B4CDD06150AD69500B819E2 /* SwitchWindow.m in Sources */,
 				3B9B3007151BDD960069D95E /* RunningApplications.m in Sources */,
+				3B9B301E151BFC330069D95E /* SwitchAppView.m in Sources */,
+				3B9B3021151C830F0069D95E /* SwitchAppQuittingOverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

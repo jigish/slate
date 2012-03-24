@@ -23,6 +23,8 @@
 #import "SlateConfig.h"
 #import "StringTokenizer.h"
 #import "SlateLogger.h"
+#import "Operation.h"
+#import "SwitchOperation.h"
 
 @implementation Binding
 
@@ -101,6 +103,10 @@ static NSDictionary *dictionary = nil;
     } @catch (NSException *ex) {
       SlateLogger(@"ERROR: Unable to test binding '%@'", binding);
       @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], binding] userInfo:nil]);
+    }
+
+    if ([op isKindOfClass:[SwitchOperation class]]) {
+      [(SwitchOperation *)op setModifiers:modifiers];
     }
   }
 

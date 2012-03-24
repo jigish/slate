@@ -141,6 +141,16 @@ static NSDictionary *unselectableApps = nil;
   return YES;
 }
 
++ (BOOL)focusApp:(NSRunningApplication *)app {
+  SlateLogger(@"Focusing app: '%@'", [app localizedName]);
+  AXUIElementRef appRef = AXUIElementCreateApplication([app processIdentifier]);
+  if (AXUIElementSetAttributeValue(appRef, (CFStringRef)NSAccessibilityFrontmostAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
+    SlateLogger(@"ERROR: Could not change focus to app");
+    return NO;
+  }
+  return YES;
+}
+
 + (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element {
   [AccessibilityWrapper createSystemWideElement];
   pid_t pid = 0;
@@ -230,7 +240,10 @@ static NSDictionary *unselectableApps = nil;
 + (void)createSystemWideElement {
   if (systemWideElement == NULL) {
     systemWideElement = AXUIElementCreateSystemWide();
-    unselectableApps = [NSDictionary dictionaryWithObjectsAndKeys:@"SystemUIServer", @"SystemUIServer", @"Slate", @"Slate", nil];
+    unselectableApps = [NSDictionary dictionaryWithObjectsAndKeys:@"SystemUIServer", @"SystemUIServer",
+                                                                  @"Slate", @"Slate",
+                                                                  @"Dropbox", @"Dropbox",
+                                                                  @"loginwindow", @"loginwindow", nil];
   }
 }
 

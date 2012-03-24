@@ -76,6 +76,12 @@ NSString *const WINDOW_HINTS_TOP_LEFT_X = @"windowHintsTopLeftX";
 NSString *const WINDOW_HINTS_TOP_LEFT_X_DEFAULT = @"0";
 NSString *const WINDOW_HINTS_TOP_LEFT_Y = @"windowHintsTopLeftY";
 NSString *const WINDOW_HINTS_TOP_LEFT_Y_DEFAULT = @"0";
+NSString *const SWITCH_ICON_SIZE = @"switchIconSize";
+NSString *const SWITCH_ICON_SIZE_DEFAULT = @"100";
+NSString *const SWITCH_BACKGROUND_COLOR = @"switchBackgroundColor";
+NSString *const SWITCH_BACKGROUND_COLOR_DEFAULT = @"50,53,58,0.4";
+NSString *const SWITCH_ROUNDED_CORNER_SIZE = @"switchRoundedCornerSize";
+NSString *const SWITCH_ROUNDED_CORNER_SIZE_DEFAULT = @"5";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";
@@ -118,6 +124,7 @@ NSString *const SNAPSHOT = @"snapshot";
 NSString *const ACTIVATE_SNAPSHOT = @"activate-snapshot";
 NSString *const DELETE_SNAPSHOT = @"delete-snapshot";
 NSString *const HINT = @"hint";
+NSString *const SWITCH = @"switch";
 
 // Parameters and Options
 NSString *const CENTER = @"center";
@@ -136,6 +143,10 @@ NSString *const TITLE = @"title";
 NSString *const SIZE = @"size";
 NSString *const ALL = @"all";
 NSString *const DELETE = @"delete";
+NSString *const BACK = @"back";
+NSString *const QUIT = @"quit";
+NSString *const FORCE_QUIT = @"force-quit";
+NSString *const HIDE = @"hide";
 
 // Directions and Anchors
 NSString *const UP = @"up";

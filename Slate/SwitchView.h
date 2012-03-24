@@ -1,9 +1,9 @@
 //
-//  Binding.h
+//  SwitchView.h
 //  Slate
 //
-//  Created by Jigish Patel on 5/18/11.
-//  Copyright 2011 Jigish Patel. All rights reserved.
+//  Created by Jigish Patel on 3/9/12.
+//  Copyright 2012 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,28 +18,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
-#import <Carbon/Carbon.h>
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
-@class Operation;
-
-@interface Binding : NSObject {
-@private
-  Operation *op;
-  UInt32 keyCode;
-  UInt32 modifiers;
-  EventHotKeyRef hotKeyRef;
-  BOOL repeat;
-}
-
-@property  Operation *op;
-@property (assign) UInt32 keyCode;
-@property (assign) UInt32 modifiers;
-@property (assign) EventHotKeyRef hotKeyRef;
-@property (assign) BOOL repeat;
-
-+ (NSDictionary *)asciiToCodeDict;
-- (id)initWithString:(NSString *)binding;
-- (BOOL)doOperation;
+@interface SwitchView : NSView
 
 @end

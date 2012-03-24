@@ -483,6 +483,9 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS_DEFAULT forKey:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
   [configDefaults setObject:WINDOW_HINTS_TOP_LEFT_X_DEFAULT forKey:WINDOW_HINTS_TOP_LEFT_X];
   [configDefaults setObject:WINDOW_HINTS_TOP_LEFT_Y_DEFAULT forKey:WINDOW_HINTS_TOP_LEFT_Y];
+  [configDefaults setObject:SWITCH_ICON_SIZE_DEFAULT forKey:SWITCH_ICON_SIZE];
+  [configDefaults setObject:SWITCH_BACKGROUND_COLOR_DEFAULT forKey:SWITCH_BACKGROUND_COLOR];
+  [configDefaults setObject:SWITCH_ROUNDED_CORNER_SIZE_DEFAULT forKey:SWITCH_ROUNDED_CORNER_SIZE];
   [self setConfigs:[NSMutableDictionary dictionaryWithCapacity:10]];
   [configs setValuesForKeysWithDictionary:configDefaults];
 }

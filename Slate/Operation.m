@@ -31,6 +31,7 @@
 #import "StringTokenizer.h"
 #import "Constants.h"
 #import "SlateLogger.h"
+#import "SwitchOperation.h"
 
 @implementation Operation
 
@@ -86,6 +87,8 @@
     operation = [DeleteSnapshotOperation deleteSnapshotOperationFromString:opString];
   } else if ([op isEqualToString:HINT]) {
     operation = [HintOperation hintOperationFromString:opString];
+  } else if ([op isEqualToString:SWITCH]) {
+    operation = [SwitchOperation switchOperationFromString:opString];
   } else {
     SlateLogger(@"ERROR: Unrecognized operation '%@'", opString);
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);

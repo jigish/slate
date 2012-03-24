@@ -20,10 +20,12 @@
 
 #import <Carbon/Carbon.h>
 #import <Cocoa/Cocoa.h>
-#import "SnapshotOperation.h"
-#import "ActivateSnapshotOperation.h"
 
+@class SwitchOperation;
+@class SnapshotOperation;
+@class ActivateSnapshotOperation;
 @class HintOperation;
+@class Binding;
 
 @interface SlateAppDelegate : NSObject <NSApplicationDelegate> {
 @private
@@ -36,11 +38,13 @@
   NSWindowController *windowInfoController;
   NSWindowController *configHelperController;
   HintOperation *currentHintOperation;
+  Binding *currentSwitchBinding;
   SnapshotOperation *menuSnapshotOperation;
   ActivateSnapshotOperation *menuActivateSnapshotOperation;
 }
 
 @property HintOperation *currentHintOperation;
+@property Binding *currentSwitchBinding;
 @property SnapshotOperation *menuSnapshotOperation;
 @property ActivateSnapshotOperation *menuActivateSnapshotOperation;
 
@@ -55,5 +59,6 @@
 
 OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
 OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
+OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
 
 @end

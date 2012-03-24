@@ -1,9 +1,9 @@
 //
-//  Binding.h
+//  SwitchOperation.h
 //  Slate
 //
-//  Created by Jigish Patel on 5/18/11.
-//  Copyright 2011 Jigish Patel. All rights reserved.
+//  Created by Jigish Patel on 3/9/12.
+//  Copyright 2012 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,28 +18,27 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
+#import "Operation.h"
 #import <Carbon/Carbon.h>
-#import <Foundation/Foundation.h>
 
-@class Operation;
-
-@interface Binding : NSObject {
-@private
-  Operation *op;
-  UInt32 keyCode;
+@interface SwitchOperation : Operation {
+  NSMutableArray *switchers;
+  NSMutableArray *switchersToViews;
   UInt32 modifiers;
-  EventHotKeyRef hotKeyRef;
-  BOOL repeat;
+  UInt32 backKeyCode;
+  EventHotKeyRef backHotKeyRef;
+  UInt32 quitKeyCode;
+  EventHotKeyRef quitHotKeyRef;
+  UInt32 fquitKeyCode;
+  EventHotKeyRef fquitHotKeyRef;
+  UInt32 hideKeyCode;
+  EventHotKeyRef hideHotKeyRef;
 }
 
-@property  Operation *op;
-@property (assign) UInt32 keyCode;
 @property (assign) UInt32 modifiers;
-@property (assign) EventHotKeyRef hotKeyRef;
-@property (assign) BOOL repeat;
 
-+ (NSDictionary *)asciiToCodeDict;
-- (id)initWithString:(NSString *)binding;
-- (BOOL)doOperation;
+- (void)activateSwitchKey:(EventHotKeyID)key;
+- (BOOL)modifiersChanged:(UInt32)was new:(UInt32)new;
++ (id)switchOperationFromString:(NSString *)hintOperation;
 
 @end

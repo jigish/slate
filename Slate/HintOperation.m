@@ -136,9 +136,9 @@
   NSNumber *keyCode = [[Binding asciiToCodeDict] objectForKey:[hintCode lowercaseString]];
   EventHotKeyID myHotKeyID;
   EventHotKeyRef myHotKeyRef;
-  myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",(currentHint-1)] cStringUsingEncoding:NSASCIIStringEncoding];
-  myHotKeyID.id = (UInt32)(currentHint-1);
-  RegisterEventHotKey([keyCode integerValue], 0, myHotKeyID, GetApplicationEventTarget(), 0, &myHotKeyRef);
+  myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",(currentHint - 1)] cStringUsingEncoding:NSASCIIStringEncoding];
+  myHotKeyID.id = (UInt32)(currentHint - 1);
+  RegisterEventHotKey([keyCode integerValue], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
   [hotkeyRefs addObject:[NSValue valueWithPointer:myHotKeyRef]];
 }
 
