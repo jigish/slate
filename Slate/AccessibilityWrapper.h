@@ -41,6 +41,7 @@
 - (BOOL)moveWindow:(NSPoint)thePoint;
 - (BOOL)resizeWindow:(NSSize)theSize;
 - (BOOL)focus;
++ (BOOL)focusWindow:(AXUIElementRef)window;
 + (BOOL)focusApp:(NSRunningApplication *)app;
 + (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element;
 + (CFArrayRef)windowsInApp:(AXUIElementRef)app;

@@ -130,15 +130,7 @@ static NSDictionary *unselectableApps = nil;
 }
 
 - (BOOL)focus {
-  if (AXUIElementSetAttributeValue(app, (CFStringRef)NSAccessibilityFrontmostAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
-    SlateLogger(@"ERROR: Could not change focus to app");
-    return NO;
-  }
-  if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilityMainAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
-    SlateLogger(@"ERROR: Could not change focus to window");
-    return NO;
-  }
-  return YES;
+  return [AccessibilityWrapper focusWindow:window];
 }
 
 + (BOOL)focusApp:(NSRunningApplication *)app {
@@ -148,6 +140,18 @@ static NSDictionary *unselectableApps = nil;
     SlateLogger(@"ERROR: Could not change focus to app");
     return NO;
   }
+  return YES;
+}
+
++ (BOOL)focusWindow:(AXUIElementRef)window {
+  if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilityMainAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
+    SlateLogger(@"ERROR: Could not change focus to window");
+    return NO;
+  }
+  pid_t focusPID = [AccessibilityWrapper processIdentifierOfUIElement:window];
+  ProcessSerialNumber psn;
+  GetProcessForPID(focusPID, &psn);
+  SetFrontProcessWithOptions(&psn, kSetFrontProcessFrontWindowOnly);
   return YES;
 }
 
