@@ -100,24 +100,17 @@ static const float SHOWN_ALPHA = 1.0;
 - (void)drawRect:(NSRect)dirtyRect {
   NSColor *backgroundColor = [NSColor clearColor];
   if (selected) {
-    NSArray *bgColorArr = [[SlateConfig getInstance] getArrayConfig:SWITCH_BACKGROUND_COLOR];
-    if ([bgColorArr count] < 4) bgColorArr = [SWITCH_BACKGROUND_COLOR_DEFAULT componentsSeparatedByString:COMMA];
+    NSArray *bgColorArr = [[SlateConfig getInstance] getArrayConfig:SWITCH_SELECTED_COLOR];
+    if ([bgColorArr count] < 4) bgColorArr = [SWITCH_SELECTED_COLOR_DEFAULT componentsSeparatedByString:COMMA];
     backgroundColor = [NSColor colorWithDeviceRed:[[bgColorArr objectAtIndex:0] floatValue]/255.0
                                                      green:[[bgColorArr objectAtIndex:1] floatValue]/255.0
                                                       blue:[[bgColorArr objectAtIndex:2] floatValue]/255.0
                                                      alpha:[[bgColorArr objectAtIndex:3] floatValue]];
   }
   [backgroundColor set];
-  NSInteger cornerSize = [[SlateConfig getInstance] getIntegerConfig:SWITCH_ROUNDED_CORNER_SIZE];
-  NSRect backgoundRect = NSMakeRect(self.bounds.origin.x + cornerSize,
-                                    self.bounds.origin.y + cornerSize,
-                                    self.bounds.size.width - 2 * cornerSize,
-                                    self.bounds.size.height - 2 * cornerSize);
-  NSRectFill(backgoundRect);
-  [[self layer] setBackgroundColor:[backgroundColor cgColor]];
-  [[self layer] setBorderColor:[backgroundColor cgColor]];
-  [[self layer] setCornerRadius:cornerSize];
-  [[self layer] setBorderWidth:cornerSize];
+  float cornerSize = [[SlateConfig getInstance] getFloatConfig:SWITCH_ROUNDED_CORNER_SIZE];
+  NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
+  [path fill];
 }
 
 @end

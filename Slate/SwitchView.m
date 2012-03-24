@@ -39,16 +39,9 @@
                                                     blue:[[bgColorArr objectAtIndex:2] floatValue]/255.0
                                                    alpha:[[bgColorArr objectAtIndex:3] floatValue]];
   [backgroundColor set];
-  NSInteger cornerSize = [[SlateConfig getInstance] getIntegerConfig:SWITCH_ROUNDED_CORNER_SIZE];
-  NSRect backgoundRect = NSMakeRect(self.bounds.origin.x + cornerSize,
-                                    self.bounds.origin.y + cornerSize,
-                                    self.bounds.size.width - 2 * cornerSize,
-                                    self.bounds.size.height - 2 * cornerSize);
-  [NSBezierPath fillRect:backgoundRect];
-  [[self layer] setBackgroundColor:[backgroundColor cgColor]];
-  [[self layer] setBorderColor:[backgroundColor cgColor]];
-  [[self layer] setCornerRadius:cornerSize];
-  [[self layer] setBorderWidth:cornerSize];
+  float cornerSize = [[SlateConfig getInstance] getFloatConfig:SWITCH_ROUNDED_CORNER_SIZE];
+  NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
+  [path fill];
 }
 
 @end

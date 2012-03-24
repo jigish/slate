@@ -78,6 +78,8 @@ extern NSString *const SWITCH_ICON_SIZE;
 extern NSString *const SWITCH_ICON_SIZE_DEFAULT;
 extern NSString *const SWITCH_BACKGROUND_COLOR;
 extern NSString *const SWITCH_BACKGROUND_COLOR_DEFAULT;
+extern NSString *const SWITCH_SELECTED_COLOR;
+extern NSString *const SWITCH_SELECTED_COLOR_DEFAULT;
 extern NSString *const SWITCH_ROUNDED_CORNER_SIZE;
 extern NSString *const SWITCH_ROUNDED_CORNER_SIZE_DEFAULT;
 
