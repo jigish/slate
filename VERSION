@@ -1,10 +1,12 @@
-Current Version: 0.4.17
+Current Version: 0.4.18
 
 ----------------- 0.4.18 ----------------
 
-Fix Issue #45, #47
+Fix Issue #45, #47, #48
 Pressing ESC will dismiss window hints
 Apps will now be ordered by last use for all operations that loop through apps
+Minor UI related performance enhancements for window hints (faster rounded rectangle drawing)
+Pre-release version of Switch operation (use at your own risk!)
 
 ----------------- 0.4.17 ----------------
 
