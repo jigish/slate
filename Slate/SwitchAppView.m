@@ -52,6 +52,7 @@ static const float SHOWN_ALPHA = 1.0;
 
 - (void)updateApp:(NSRunningApplication *)theApp {
   [self setApp:theApp];
+  [self setHidden:[theApp isHidden]];
   float myWidth = [self frame].size.width;
   float myHeight = [self frame].size.height;
   if (iconView != nil) {
