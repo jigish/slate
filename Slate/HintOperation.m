@@ -94,14 +94,16 @@
   float whWidth = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_WIDTH] withDict:values];
   [values setObject:[NSNumber numberWithFloat:whWidth] forKey:WINDOW_HINTS_WIDTH];
   [values setObject:[NSNumber numberWithFloat:whHeight] forKey:WINDOW_HINTS_HEIGHT];
-  float whTLX = tl.x + [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_TOP_LEFT_X] withDict:values];
-  float whTLY = tl.y - [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_TOP_LEFT_Y] withDict:values];
+  float whTLXRel = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_TOP_LEFT_X] withDict:values];
+  float whTLYRel = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_TOP_LEFT_Y] withDict:values];
+  float whTLX = tl.x + whTLXRel;
+  float whTLY = tl.y - whTLYRel;
   NSRect frame = NSMakeRect(whTLX, whTLY - whHeight, whWidth, whHeight);
   // check frame boundaries to make sure it is over the window we want it to be over
   if (ignoreHidden &&
       ![[AccessibilityWrapper getTitle:[AccessibilityWrapper
-                                        windowUnderPoint:NSMakePoint(wTL.x + whWidth/2,
-                                                                     wTL.y + whHeight/2)]]
+                                        windowUnderPoint:NSMakePoint(wTL.x + whTLXRel + whWidth/2,
+                                                                     wTL.y + whTLYRel + whHeight/2)]]
         isEqualToString:[AccessibilityWrapper getTitle:windowRef]]) {
     SlateLogger(@"        Top left is not seen, do not show hint!");
     currentHint--; // reset current hint so we can use this code again
@@ -209,6 +211,9 @@
   if (hintId == currentHint+1) {
     // escape key
     [self killHints];
+    return;
+  }
+  if (hintId >= [hints count]) {
     return;
   }
   if ([hints objectAtIndex:hintId]) {
