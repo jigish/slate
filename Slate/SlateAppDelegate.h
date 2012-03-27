@@ -41,12 +41,16 @@
   Binding *currentSwitchBinding;
   SnapshotOperation *menuSnapshotOperation;
   ActivateSnapshotOperation *menuActivateSnapshotOperation;
+  NSInteger cmdTabBinding;
+  NSInteger cmdShiftTabBinding;
 }
 
 @property HintOperation *currentHintOperation;
 @property Binding *currentSwitchBinding;
 @property SnapshotOperation *menuSnapshotOperation;
 @property ActivateSnapshotOperation *menuActivateSnapshotOperation;
+@property (assign) NSInteger cmdTabBinding;
+@property (assign) NSInteger cmdShiftTabBinding;
 
 - (IBAction)reconfig;
 - (IBAction)currentWindowInfo;
@@ -56,6 +60,7 @@
 - (void)createMenuSnapshotOperations;
 - (IBAction)takeSnapshot;
 - (IBAction)activateSnapshot;
+- (OSStatus)activateBinding:(EventHotKeyID)hkCom;
 
 OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
 OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);

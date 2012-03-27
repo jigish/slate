@@ -32,7 +32,7 @@
 
 @implementation SlateAppDelegate
 
-@synthesize currentHintOperation, currentSwitchBinding, menuSnapshotOperation, menuActivateSnapshotOperation;
+@synthesize currentHintOperation, currentSwitchBinding, menuSnapshotOperation, menuActivateSnapshotOperation, cmdTabBinding, cmdShiftTabBinding;
 
 static NSObject *timerLock = nil;
 static NSTimer *currentTimer = nil;
@@ -85,6 +85,13 @@ static EventHandlerRef modifiersEvent;
   NSArray *bindings = [[SlateConfig getInstance] bindings];
   for (NSInteger i = 0; i < [bindings count]; i++) {
     Binding *binding = [bindings objectAtIndex:i];
+    if ([binding keyCode] == 48 && [binding modifiers] == cmdKey) {
+      cmdTabBinding = i;
+      SlateLogger(@"Found CMD+Tab binding!");
+    } else if ([binding keyCode] == 48 && [binding modifiers] == (cmdKey + shiftKey)) {
+      cmdShiftTabBinding = i;
+      SlateLogger(@"Found CMD+Shift+Tab binding!");
+    }
     EventHotKeyID myHotKeyID;
     EventHotKeyRef myHotKeyRef;
     myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",i] cStringUsingEncoding:NSASCIIStringEncoding];
@@ -108,19 +115,15 @@ static EventHandlerRef modifiersEvent;
   [menuActivateSnapshotOperation doOperation];
 }
 
-- (void) runBinding:(NSTimer *)timer {
+- (void)runBinding:(NSTimer *)timer {
   if ([[[SlateConfig getInstance] bindings] objectAtIndex:currentHotKey.id]) {
     [[[[SlateConfig getInstance] bindings] objectAtIndex:currentHotKey.id] doOperation];
   }
 }
 
-OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
-  if (![(__bridge id)userData isKindOfClass:[SlateAppDelegate class]]) return noErr;
-  EventHotKeyID hkCom;
-  GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
-  
-  HintOperation *hintop = [(__bridge SlateAppDelegate *)userData currentHintOperation];
-  Binding *switchop = [(__bridge SlateAppDelegate *)userData currentSwitchBinding];
+- (OSStatus)activateBinding:(EventHotKeyID)hkCom {
+  HintOperation *hintop = [self currentHintOperation];
+  Binding *switchop = [self currentSwitchBinding];
   if (hintop != nil) {
     [hintop activateHintKey:hkCom.id];
     return noErr;
@@ -139,11 +142,11 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
       if ([currentApps count] > 0) {
         [AccessibilityWrapper focusApp:[currentApps objectAtIndex:0]];
       }
-      [(__bridge SlateAppDelegate *)userData setCurrentSwitchBinding:binding];
+      [self setCurrentSwitchBinding:binding];
       EventTypeSpec modifiersChangedType;
       modifiersChangedType.eventClass = kEventClassKeyboard;
       modifiersChangedType.eventKind = kEventRawKeyModifiersChanged;
-      InstallEventHandler(GetEventMonitorTarget(), &OnModifiersChangedEvent, 1, &modifiersChangedType, userData, &modifiersEvent);
+      InstallEventHandler(GetEventMonitorTarget(), &OnModifiersChangedEvent, 1, &modifiersChangedType, (__bridge void *)self, &modifiersEvent);
     }
     [binding doOperation];
     if ([binding repeat]) {
@@ -155,15 +158,47 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
         // Setup timer to repeat operation
         currentHotKey = hkCom;
         currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:SECONDS_BETWEEN_REPEAT]
-                                target:selfRef
-                                selector:@selector(runBinding:)
-                                userInfo:nil
-                                repeats:YES];
+                                                        target:selfRef
+                                                      selector:@selector(runBinding:)
+                                                      userInfo:nil
+                                                       repeats:YES];
       }
     }
   }
-
   return noErr;
+}
+
+// Quartz Event Tap for reserved key bindings (CMD+Tab or CMD+Shift+Tab)
+CGEventRef EatAppSwitcherCallback(CGEventTapProxy proxy, CGEventType type,  CGEventRef event, void *refcon) {
+  CGEventFlags flags = CGEventGetFlags(event);
+  int64_t keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
+  SlateLogger(@"KEY DOWN - FLAGS: %llu, KEYCODE: %lld", (uint64_t)flags, keyCode);
+  // 48 is tab key code
+  if (keyCode == 48 &&
+      ((flags & kCGEventFlagMaskCommand) == kCGEventFlagMaskCommand) &&
+      ((flags & kCGEventFlagMaskAlternate) != kCGEventFlagMaskAlternate) &&
+      ((flags & kCGEventFlagMaskControl) != kCGEventFlagMaskControl) &&
+      ((flags & kCGEventFlagMaskAlphaShift) != kCGEventFlagMaskAlphaShift) &&
+      ((flags & kCGEventFlagMaskHelp) != kCGEventFlagMaskHelp) &&
+      ((flags & kCGEventFlagMaskNumericPad) != kCGEventFlagMaskNumericPad) &&
+      ((flags & kCGEventFlagMaskSecondaryFn) != kCGEventFlagMaskSecondaryFn)) {
+    SlateLogger(@"  IS CMD+TAB");
+    SlateAppDelegate *del = (__bridge SlateAppDelegate *)refcon;
+    EventHotKeyID myHotKeyID;
+    NSInteger hotkeyID = ((flags & kCGEventFlagMaskShift) == kCGEventFlagMaskShift) ? [del cmdShiftTabBinding] : [del cmdTabBinding];
+    myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
+    myHotKeyID.id = (UInt32)hotkeyID;
+    [del activateBinding:myHotKeyID];
+    return NULL;
+  }
+  return event;
+}
+
+OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
+  if (![(__bridge id)userData isKindOfClass:[SlateAppDelegate class]]) return noErr;
+  EventHotKeyID hkCom;
+  GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
+  return [(__bridge SlateAppDelegate *)userData activateBinding:hkCom];;
 }
 
 OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
@@ -197,11 +232,19 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-  // Insert code here to initialize your application
-  
+  if (cmdTabBinding > 0 || cmdShiftTabBinding > 0) {
+    CFMachPortRef eventTap;
+    CFRunLoopSourceRef runLoopSource;
+    eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, 0, CGEventMaskBit(kCGEventKeyDown), EatAppSwitcherCallback, (__bridge void *)self);
+    runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
+    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
+    CGEventTapEnable(eventTap, true);
+  }
 }
 
 - (void)awakeFromNib {
+  cmdTabBinding = -1;
+  cmdShiftTabBinding = -1;
   currentHintOperation = nil;
 
   windowInfoController = [[NSWindowController alloc] initWithWindow:windowInfo];
