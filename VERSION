@@ -4,6 +4,7 @@ Current Version: 0.4.18
 --------------- UNRELEASED --------------
 
 Fix Issue #52, #50
+Change windowHintsTopLeftX and windowHintsTopLeftY to array configs (array of expressions)
 Add support for cmd+tab and cmd+shift+tab bindings (this completely disables the default mac app switcher)
 Change array config format to use semi-colon as a separator instead of colon. This affects:
   windowHintsFontColor
@@ -24,7 +25,7 @@ Pre-release version of Switch operation (use at your own risk!)
 Fix Issue #36, #37, #38, #42
 Add windowHintsIgnoreHiddenWindows config
 Add ability to use expressions for windowHintsHeight and windowHintsWidth configs
-Add windowHintsTopLeftOffsetX and windowHintsTopLeftOffsetY configs
+Add windowHintsTopLeftX and windowHintsTopLeftY configs
 Add menu options to Take/Activate Snapshots
 
 ----------------- 0.4.16 ----------------
