@@ -87,7 +87,7 @@ static SlateConfig *_instance = nil;
 }
 
 - (NSArray *)getArrayConfig:(NSString *)key {
-  return [[configs objectForKey:key] componentsSeparatedByString:COMMA];
+  return [[configs objectForKey:key] componentsSeparatedByString:SEMICOLON];
 }
 
 - (NSString *)getConfig:(NSString *)key {
