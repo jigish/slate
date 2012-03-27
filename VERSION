@@ -1,5 +1,16 @@
 Current Version: 0.4.18
 
+----------------- 0.4.19 ----------------
+--------------- UNRELEASED --------------
+
+Fix Issue #52, #50
+Add support for cmd+tab and cmd+shift+tab bindings (this completely disables the default mac app switcher)
+Change array config format to use semi-colon as a separator instead of colon. This affects:
+  windowHintsFontColor
+  windowHintsBackgroundColor
+  switchBackgroundColor
+  switchSelectedColor
+
 ----------------- 0.4.18 ----------------
 
 Fix Issue #45, #47, #48
