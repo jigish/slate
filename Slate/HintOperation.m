@@ -94,20 +94,38 @@
   float whWidth = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_WIDTH] withDict:values];
   [values setObject:[NSNumber numberWithFloat:whWidth] forKey:WINDOW_HINTS_WIDTH];
   [values setObject:[NSNumber numberWithFloat:whHeight] forKey:WINDOW_HINTS_HEIGHT];
-  float whTLXRel = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_TOP_LEFT_X] withDict:values];
-  float whTLYRel = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_TOP_LEFT_Y] withDict:values];
+  // these two arrays are guarenteed to be the same size because of testOperation
+  NSArray *whTLXArr = [[SlateConfig getInstance] getArrayConfig:WINDOW_HINTS_TOP_LEFT_X];
+  NSArray *whTLYArr = [[SlateConfig getInstance] getArrayConfig:WINDOW_HINTS_TOP_LEFT_Y];
+  NSInteger i = 0;
+  float whTLXRel = [ExpressionPoint expToFloat:[whTLXArr objectAtIndex:i] withDict:values];
+  float whTLYRel = [ExpressionPoint expToFloat:[whTLYArr objectAtIndex:i] withDict:values];
   float whTLX = tl.x + whTLXRel;
   float whTLY = tl.y - whTLYRel;
   NSRect frame = NSMakeRect(whTLX, whTLY - whHeight, whWidth, whHeight);
   // check frame boundaries to make sure it is over the window we want it to be over
-  if (ignoreHidden &&
-      ![[AccessibilityWrapper getTitle:[AccessibilityWrapper
-                                        windowUnderPoint:NSMakePoint(wTL.x + whTLXRel + whWidth/2,
-                                                                     wTL.y + whTLYRel + whHeight/2)]]
-        isEqualToString:[AccessibilityWrapper getTitle:windowRef]]) {
-    SlateLogger(@"        Top left is not seen, do not show hint!");
-    currentHint--; // reset current hint so we can use this code again
-    return;
+  // cycle through config for all possible locations
+  if (ignoreHidden) {
+    BOOL foundValidLocation = NO;
+    do {
+      whTLXRel = [ExpressionPoint expToFloat:[whTLXArr objectAtIndex:i] withDict:values];
+      whTLYRel = [ExpressionPoint expToFloat:[whTLYArr objectAtIndex:i] withDict:values];
+      whTLX = tl.x + whTLXRel;
+      whTLY = tl.y - whTLYRel;
+      frame = NSMakeRect(whTLX, whTLY - whHeight, whWidth, whHeight);
+      if ([[AccessibilityWrapper getTitle:[AccessibilityWrapper
+                                           windowUnderPoint:NSMakePoint(wTL.x + whTLXRel + whWidth/2,
+                                                                        wTL.y + whTLYRel + whHeight/2)]]
+           isEqualToString:[AccessibilityWrapper getTitle:windowRef]]) {
+        foundValidLocation = YES;
+      }
+      i++;
+    } while (!foundValidLocation && i < [whTLXArr count]);
+    if (!foundValidLocation) {
+      SlateLogger(@"        No locations visible, do not show hint!");
+      currentHint--; // reset current hint so we can use this code again
+      return;
+    }
   }
   if ([hints count] < currentHint) {
     SlateLogger(@"        New Window!");
@@ -183,7 +201,9 @@
 }
 
 - (BOOL)testOperation {
-  return YES;
+  NSArray *whTLXArr = [[SlateConfig getInstance] getArrayConfig:WINDOW_HINTS_TOP_LEFT_X];
+  NSArray *whTLYArr = [[SlateConfig getInstance] getArrayConfig:WINDOW_HINTS_TOP_LEFT_Y];
+  return [whTLXArr count] == [whTLYArr count] && [whTLXArr count] > 0;
 }
 
 - (void)killHints {
