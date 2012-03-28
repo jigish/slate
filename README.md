@@ -126,6 +126,7 @@ List of allowed configs:
 | `switchBackgroundColor` | Semicolon Separated Array of Floats | Default: `50;53;58;0.3`. \[Beta Version - Use at your own risk!\] The background color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
 | `switchSelectedColor` | Semicolon Separated Array of Floats | Default: `50;53;58;0.9`. \[Beta Version - Use at your own risk!\] The selected color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
 | `switchRoundedCornerSize` | Integer | Default: `5`. \[Beta Version - Use at your own risk!\] The size of the rounded corners of the `switch` operation. Set this to `0` if you do not want rounded corners |
+| `switchOrientation` | `horiztonal` or `vertical` | Default: `horizontal`. \[Beta Version - Use at your own risk!\] Which direction to grow the application switcher. |
 
 Example:
 
