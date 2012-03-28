@@ -10,6 +10,12 @@ Add configs:
   switchSecondsBetweenRepeat
   switchStopRepeatAtEdge
   switchOnlyFocusMainWindow
+  switchIconPadding
+  switchFontSize
+  switchFontColor
+  switchFontName
+  switchShowTitles
+  switchType
 
 ----------------- 0.4.19 ----------------
 

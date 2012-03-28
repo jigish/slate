@@ -28,8 +28,15 @@
 
 static const float HIDDEN_ALPHA = 0.2;
 static const float SHOWN_ALPHA = 1.0;
+static const float STROKE_WIDTH = -5;
 
-@synthesize selected, hidden, quitting, forceQuitting, app, iconView, quittingView;
+@synthesize selected, hidden, quitting, forceQuitting, app, iconView, textField, quittingView;
+
+static NSColor *switchFontColor = nil;
+static NSFont *switchFont = nil;
+static float iconSize = -1;
+static float iconPadding = -1;
+static float switchFontHeight = -1;
 
 - (id)initWithFrame:(NSRect)frame {
   self = [super initWithFrame:frame];
@@ -41,6 +48,31 @@ static const float SHOWN_ALPHA = 1.0;
     iconView = nil;
     quittingView = nil;
     [self setWantsLayer:YES];
+    if (switchFontColor == nil) {
+      NSArray *fColorArr = [[SlateConfig getInstance] getArrayConfig:SWITCH_FONT_COLOR];
+      if ([fColorArr count] < 4) fColorArr = [SWITCH_FONT_COLOR_DEFAULT componentsSeparatedByString:SEMICOLON];
+      switchFontColor = [NSColor colorWithDeviceRed:[[fColorArr objectAtIndex:0] floatValue]/255.0
+                                              green:[[fColorArr objectAtIndex:1] floatValue]/255.0
+                                               blue:[[fColorArr objectAtIndex:2] floatValue]/255.0
+                                              alpha:[[fColorArr objectAtIndex:3] floatValue]];
+    }
+    if (switchFont == nil) {
+      switchFont = [NSFont fontWithName:[[SlateConfig getInstance] getConfig:SWITCH_FONT_NAME] size:[[SlateConfig getInstance] getFloatConfig:SWITCH_FONT_SIZE]];
+    }
+    if (iconSize < 0) {
+      iconSize = [[SlateConfig getInstance] getFloatConfig:SWITCH_ICON_SIZE];
+    }
+    if (iconPadding < 0) {
+      iconPadding = [[SlateConfig getInstance] getFloatConfig:SWITCH_ICON_PADDING];
+    }
+    if (switchFontHeight < 0) {
+      NSString *testString = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:[[SlateConfig getInstance] getConfig:SWITCH_FONT_NAME]
+                                                                                            size:[[SlateConfig getInstance] getFloatConfig:SWITCH_FONT_SIZE]],
+                                  NSFontAttributeName, nil];
+      NSSize size = [testString sizeWithAttributes:attributes];
+      switchFontHeight = size.height;
+    }
   }
   return self;
 }
@@ -53,18 +85,41 @@ static const float SHOWN_ALPHA = 1.0;
 - (void)updateApp:(NSRunningApplication *)theApp {
   [self setApp:theApp];
   [self setHidden:[theApp isHidden]];
-  float myWidth = [self frame].size.width;
-  float myHeight = [self frame].size.height;
   if (iconView != nil) {
     [iconView removeFromSuperview];
   }
-  iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(5, 5, myWidth-10, myHeight-10)];
+  if ([[SlateConfig getInstance] getBoolConfig:SWITCH_SHOW_TITLES] && [[[SlateConfig getInstance] getConfig:SWITCH_ORIENTATION] isEqualToString:SWITCH_ORIENTATION_HORIZONTAL]) {
+    iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(iconPadding, self.frame.size.height - iconSize - iconPadding*2, iconSize, iconSize)];
+  } else {
+    iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(iconPadding, iconPadding, iconSize, iconSize)];
+  }
   NSImage *icon = [app icon];
   [icon setScalesWhenResized:YES];
-  [icon setSize:NSMakeSize(myWidth-10, myHeight-10)];
+  [icon setSize:NSMakeSize(iconSize, iconSize)];
   [iconView setImage:icon];
   [iconView setAlphaValue:(hidden ? HIDDEN_ALPHA : SHOWN_ALPHA)];
   [self addSubview:iconView];
+  if ([[SlateConfig getInstance] getBoolConfig:SWITCH_SHOW_TITLES]) {
+    if ([[[SlateConfig getInstance] getConfig:SWITCH_ORIENTATION] isEqualToString:SWITCH_ORIENTATION_VERTICAL]) {
+      textField = [[NSTextField alloc] initWithFrame:NSMakeRect(iconSize+iconPadding*2, self.frame.size.height/2 - switchFontHeight/2, self.frame.size.width - iconSize - iconPadding*2, switchFontHeight)];
+    } else {
+      textField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, iconPadding, iconSize+iconPadding*2, self.frame.size.height - iconSize - iconPadding*3)];
+    }
+    NSMutableAttributedString *theTitle = [[NSMutableAttributedString alloc] initWithString:[theApp localizedName]];
+    NSRange everything = NSMakeRange(0, [theTitle length]);
+    [theTitle addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:STROKE_WIDTH] range:everything];
+    [theTitle setAlignment:NSCenterTextAlignment range:everything];
+    [textField setAttributedStringValue:theTitle];
+    [textField setSelectable:NO];
+    [textField setEditable:NO];
+    [textField setBezeled:NO];
+    [textField setBordered:NO];
+    [textField setAlignment:NSCenterTextAlignment];
+    [textField setBackgroundColor:[NSColor clearColor]];
+    [textField setFont:switchFont];
+    [textField setTextColor:switchFontColor];
+    [self addSubview:textField];
+  }
   [self setNeedsDisplay:YES];
 }
 

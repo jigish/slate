@@ -80,6 +80,8 @@ NSString *const WINDOW_HINTS_ORDER = @"windowHintsOrder";
 NSString *const WINDOW_HINTS_ORDER_DEFAULT = @"none";
 NSString *const SWITCH_ICON_SIZE = @"switchIconSize";
 NSString *const SWITCH_ICON_SIZE_DEFAULT = @"100";
+NSString *const SWITCH_ICON_PADDING = @"switchIconPadding";
+NSString *const SWITCH_ICON_PADDING_DEFAULT = @"5";
 NSString *const SWITCH_BACKGROUND_COLOR = @"switchBackgroundColor";
 NSString *const SWITCH_BACKGROUND_COLOR_DEFAULT = @"50;53;58;0.3";
 NSString *const SWITCH_SELECTED_COLOR = @"switchSelectedColor";
@@ -94,6 +96,16 @@ NSString *const SWITCH_STOP_REPEAT_AT_EDGE = @"switchStopRepeatAtEdge";
 NSString *const SWITCH_STOP_REPEAT_AT_EDGE_DEFAULT = @"true";
 NSString *const SWITCH_ONLY_FOCUS_MAIN_WINDOW = @"switchOnlyFocusMainWindow";
 NSString *const SWITCH_ONLY_FOCUS_MAIN_WINDOW_DEFAULT = @"true";
+NSString *const SWITCH_FONT_SIZE = @"switchFontSize";
+NSString *const SWITCH_FONT_SIZE_DEFAULT = @"14";
+NSString *const SWITCH_FONT_COLOR = @"switchFontColor";
+NSString *const SWITCH_FONT_COLOR_DEFAULT = @"255;255;255;1.0";
+NSString *const SWITCH_FONT_NAME = @"switchFontName";
+NSString *const SWITCH_FONT_NAME_DEFAULT = @"Helvetica";
+NSString *const SWITCH_SHOW_TITLES = @"switchShowTitles";
+NSString *const SWITCH_SHOW_TITLES_DEFAULT = @"false";
+NSString *const SWITCH_TYPE = @"switchType";
+NSString *const SWITCH_TYPE_DEFAULT = @"app";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";
@@ -162,7 +174,7 @@ NSString *const HIDE = @"hide";
 NSString *const WINDOW_HINTS_ORDER_NONE = @"none";
 NSString *const WINDOW_HINTS_ORDER_LEFT_TO_RIGHT = @"leftToRight";
 NSString *const WINDOW_HINTS_ORDER_RIGHT_TO_LEFT = @"rightToLeft";
-NSString *const SWITCH_ORIENTATION_HORIZONTAL = @"horiztonal";
+NSString *const SWITCH_ORIENTATION_HORIZONTAL = @"horizontal";
 NSString *const SWITCH_ORIENTATION_VERTICAL = @"vertical";
 
 // Directions and Anchors

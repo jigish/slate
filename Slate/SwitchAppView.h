@@ -29,6 +29,7 @@
   BOOL forceQuitting;
   NSRunningApplication *app;
   NSImageView *iconView;
+  NSTextField *textField;
   SwitchAppQuittingOverlayView *quittingView;
 }
 
@@ -38,6 +39,7 @@
 @property (assign) BOOL forceQuitting;
 @property NSRunningApplication *app;
 @property NSImageView *iconView;
+@property NSTextField *textField;
 @property SwitchAppQuittingOverlayView *quittingView;
 
 - (void)updateSelected:(BOOL)theSelected;

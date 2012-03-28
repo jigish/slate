@@ -485,12 +485,18 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:WINDOW_HINTS_TOP_LEFT_Y_DEFAULT forKey:WINDOW_HINTS_TOP_LEFT_Y];
   [configDefaults setObject:WINDOW_HINTS_ORDER_DEFAULT forKey:WINDOW_HINTS_ORDER];
   [configDefaults setObject:SWITCH_ICON_SIZE_DEFAULT forKey:SWITCH_ICON_SIZE];
+  [configDefaults setObject:SWITCH_ICON_PADDING_DEFAULT forKey:SWITCH_ICON_PADDING];
   [configDefaults setObject:SWITCH_BACKGROUND_COLOR_DEFAULT forKey:SWITCH_BACKGROUND_COLOR];
   [configDefaults setObject:SWITCH_ROUNDED_CORNER_SIZE_DEFAULT forKey:SWITCH_ROUNDED_CORNER_SIZE];
   [configDefaults setObject:SWITCH_ORIENTATION_DEFAULT forKey:SWITCH_ORIENTATION];
   [configDefaults setObject:SWITCH_SECONDS_BETWEEN_REPEAT_DEFAULT forKey:SWITCH_SECONDS_BETWEEN_REPEAT];
   [configDefaults setObject:SWITCH_STOP_REPEAT_AT_EDGE_DEFAULT forKey:SWITCH_STOP_REPEAT_AT_EDGE];
   [configDefaults setObject:SWITCH_ONLY_FOCUS_MAIN_WINDOW_DEFAULT forKey:SWITCH_ONLY_FOCUS_MAIN_WINDOW];
+  [configDefaults setObject:SWITCH_FONT_COLOR_DEFAULT forKey:SWITCH_FONT_COLOR];
+  [configDefaults setObject:SWITCH_FONT_SIZE_DEFAULT forKey:SWITCH_FONT_SIZE];
+  [configDefaults setObject:SWITCH_FONT_NAME_DEFAULT forKey:SWITCH_FONT_NAME];
+  [configDefaults setObject:SWITCH_SHOW_TITLES_DEFAULT forKey:SWITCH_SHOW_TITLES];
+  [configDefaults setObject:SWITCH_TYPE_DEFAULT forKey:SWITCH_TYPE];
   [self setConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];
 }

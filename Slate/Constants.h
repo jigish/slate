@@ -78,6 +78,8 @@ extern NSString *const WINDOW_HINTS_ORDER;
 extern NSString *const WINDOW_HINTS_ORDER_DEFAULT;
 extern NSString *const SWITCH_ICON_SIZE;
 extern NSString *const SWITCH_ICON_SIZE_DEFAULT;
+extern NSString *const SWITCH_ICON_PADDING;
+extern NSString *const SWITCH_ICON_PADDING_DEFAULT;
 extern NSString *const SWITCH_BACKGROUND_COLOR;
 extern NSString *const SWITCH_BACKGROUND_COLOR_DEFAULT;
 extern NSString *const SWITCH_SELECTED_COLOR;
@@ -92,6 +94,16 @@ extern NSString *const SWITCH_STOP_REPEAT_AT_EDGE;
 extern NSString *const SWITCH_STOP_REPEAT_AT_EDGE_DEFAULT;
 extern NSString *const SWITCH_ONLY_FOCUS_MAIN_WINDOW;
 extern NSString *const SWITCH_ONLY_FOCUS_MAIN_WINDOW_DEFAULT;
+extern NSString *const SWITCH_FONT_SIZE;
+extern NSString *const SWITCH_FONT_SIZE_DEFAULT;
+extern NSString *const SWITCH_FONT_COLOR;
+extern NSString *const SWITCH_FONT_COLOR_DEFAULT;
+extern NSString *const SWITCH_FONT_NAME;
+extern NSString *const SWITCH_FONT_NAME_DEFAULT;
+extern NSString *const SWITCH_SHOW_TITLES;
+extern NSString *const SWITCH_SHOW_TITLES_DEFAULT;
+extern NSString *const SWITCH_TYPE;
+extern NSString *const SWITCH_TYPE_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;

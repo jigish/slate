@@ -114,19 +114,40 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
     [appsToForceQuit addObject:[NSNumber numberWithBool:NO]];
   }
   float iconSize = [[SlateConfig getInstance] getFloatConfig:SWITCH_ICON_SIZE];
+  float iconPadding = [[SlateConfig getInstance] getFloatConfig:SWITCH_ICON_PADDING];
+  float iconViewSize = iconSize + 2*iconPadding;
   NSInteger switcherId = 0;
+  BOOL showTitle = [[SlateConfig getInstance] getBoolConfig:SWITCH_SHOW_TITLES];
+  float titleHeight = 0;
+  float titleWidth = 0;
+  if (showTitle) {
+    NSString *testString = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:[[SlateConfig getInstance] getConfig:SWITCH_FONT_NAME]
+                                                                                          size:[[SlateConfig getInstance] getFloatConfig:SWITCH_FONT_SIZE]],
+                                                                          NSFontAttributeName, nil];
+    NSSize size = [testString sizeWithAttributes:attributes];
+    titleHeight = size.height + iconPadding;
+    if ([[[SlateConfig getInstance] getConfig:SWITCH_ORIENTATION] isEqualToString:SWITCH_ORIENTATION_VERTICAL]) {
+      // loop through all apps and check size to set title width
+      for (NSRunningApplication *app in apps) {
+        size = [[app localizedName] sizeWithAttributes:attributes];
+        if (titleWidth < size.width) titleWidth = size.width;
+        if (titleHeight < size.height) titleHeight = size.height;
+      }
+    }
+  }
   for (NSScreen *screen in [sw screens]) {
     NSRect frame;
     if ([[[SlateConfig getInstance] getConfig:SWITCH_ORIENTATION] isEqualToString:SWITCH_ORIENTATION_VERTICAL]) {
-      frame = NSMakeRect([screen frame].size.width/2 - iconSize/2,
-                         [screen frame].size.height/2 - ([apps count]*iconSize)/2,
-                         iconSize,
-                         [apps count]*iconSize);
+      frame = NSMakeRect([screen frame].size.width/2 - (iconViewSize + titleWidth)/2,
+                         [screen frame].size.height/2 - ([apps count]*iconViewSize)/2,
+                         iconViewSize + titleWidth,
+                         [apps count]*iconViewSize);
     } else {
-      frame = NSMakeRect([screen frame].size.width/2 - ([apps count]*iconSize)/2,
-                         [screen frame].size.height/2 - iconSize/2,
-                         [apps count]*iconSize,
-                         iconSize);
+      frame = NSMakeRect([screen frame].size.width/2 - ([apps count]*iconViewSize)/2,
+                         [screen frame].size.height/2 - (iconViewSize + titleHeight)/2,
+                         [apps count]*iconViewSize,
+                         iconViewSize + titleHeight);
     }
     NSWindow *window = [[SwitchWindow alloc] initWithContentRect:frame
                                                        styleMask:NSBorderlessWindowMask
@@ -147,9 +168,9 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
     for (NSRunningApplication *app in apps) {
       SwitchAppView *appView;
       if ([[[SlateConfig getInstance] getConfig:SWITCH_ORIENTATION] isEqualToString:SWITCH_ORIENTATION_VERTICAL]) {
-        appView = [[SwitchAppView alloc] initWithFrame:NSMakeRect(0, ([apps count] - i - 1)*iconSize, iconSize, iconSize)];
+        appView = [[SwitchAppView alloc] initWithFrame:NSMakeRect(0, ([apps count] - i - 1)*iconViewSize, iconViewSize + titleWidth, iconViewSize)];
       } else {
-        appView = [[SwitchAppView alloc] initWithFrame:NSMakeRect(i*iconSize, 0, iconSize, iconSize)];
+        appView = [[SwitchAppView alloc] initWithFrame:NSMakeRect(i*iconViewSize, 0, iconViewSize, iconViewSize + titleHeight)];
       }
       [appView updateApp:app];
       [(NSView *)[[wc window] contentView] addSubview:appView];

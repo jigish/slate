@@ -27,9 +27,35 @@
 
 @synthesize text;
 
+static NSColor *hintBackgroundColor = nil;
+static NSColor *hintFontColor = nil;
+static NSFont *hintFont = nil;
+
 - (id)initWithFrame:(NSRect)frame {
   self = [super initWithFrame:frame];
-  if (self) [self setWantsLayer:YES];
+  if (self) {
+    [self setWantsLayer:YES];
+    if (hintBackgroundColor == nil) {
+      NSArray *bgColorArr = [[SlateConfig getInstance] getArrayConfig:WINDOW_HINTS_BACKGROUND_COLOR];
+      if ([bgColorArr count] < 4) bgColorArr = [WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT componentsSeparatedByString:SEMICOLON];
+      hintBackgroundColor = [NSColor colorWithDeviceRed:[[bgColorArr objectAtIndex:0] floatValue]/255.0
+                                                  green:[[bgColorArr objectAtIndex:1] floatValue]/255.0
+                                                   blue:[[bgColorArr objectAtIndex:2] floatValue]/255.0
+                                                  alpha:[[bgColorArr objectAtIndex:3] floatValue]];
+    }
+    if (hintFontColor == nil) {
+      NSArray *fColorArr = [[SlateConfig getInstance] getArrayConfig:WINDOW_HINTS_FONT_COLOR];
+      if ([fColorArr count] < 4) fColorArr = [WINDOW_HINTS_FONT_COLOR_DEFAULT componentsSeparatedByString:SEMICOLON];
+      hintFontColor = [NSColor colorWithDeviceRed:[[fColorArr objectAtIndex:0] floatValue]/255.0
+                                            green:[[fColorArr objectAtIndex:1] floatValue]/255.0
+                                             blue:[[fColorArr objectAtIndex:2] floatValue]/255.0
+                                            alpha:[[fColorArr objectAtIndex:3] floatValue]];
+    }
+    if (hintFont == nil) {
+      hintFont = [NSFont fontWithName:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_FONT_NAME]
+                                 size:[[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_FONT_SIZE]];
+    }
+  }
   return self;
 }
 
@@ -41,28 +67,15 @@
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-  NSArray *bgColorArr = [[SlateConfig getInstance] getArrayConfig:WINDOW_HINTS_BACKGROUND_COLOR];
-  NSArray *fColorArr = [[SlateConfig getInstance] getArrayConfig:WINDOW_HINTS_FONT_COLOR];
-  if ([bgColorArr count] < 4) bgColorArr = [WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT componentsSeparatedByString:SEMICOLON];
-  if ([fColorArr count] < 4) fColorArr = [WINDOW_HINTS_FONT_COLOR_DEFAULT componentsSeparatedByString:SEMICOLON];
-  NSColor *backgroundColor = [NSColor colorWithDeviceRed:[[bgColorArr objectAtIndex:0] floatValue]/255.0
-                                                   green:[[bgColorArr objectAtIndex:1] floatValue]/255.0
-                                                    blue:[[bgColorArr objectAtIndex:2] floatValue]/255.0
-                                                   alpha:[[bgColorArr objectAtIndex:3] floatValue]];
-  NSColor *fontColor = [NSColor colorWithDeviceRed:[[fColorArr objectAtIndex:0] floatValue]/255.0
-                                             green:[[fColorArr objectAtIndex:1] floatValue]/255.0
-                                              blue:[[fColorArr objectAtIndex:2] floatValue]/255.0
-                                             alpha:[[fColorArr objectAtIndex:3] floatValue]];
-  [backgroundColor set];
+  [hintBackgroundColor set];
   float cornerSize = [[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_ROUNDED_CORNER_SIZE];
   NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
   [path fill];
   [self drawCenteredText:text
                   bounds:self.bounds
-              attributes:[NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_FONT_NAME]
-                                                                                    size:[[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_FONT_SIZE]],
+              attributes:[NSDictionary dictionaryWithObjectsAndKeys:hintFont,
                                                                     NSFontAttributeName,
-                                                                    fontColor,
+                                                                    hintFontColor,
                                                                     NSForegroundColorAttributeName, nil]];
 }
 
