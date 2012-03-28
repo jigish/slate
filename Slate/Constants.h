@@ -86,6 +86,8 @@ extern NSString *const SWITCH_ROUNDED_CORNER_SIZE;
 extern NSString *const SWITCH_ROUNDED_CORNER_SIZE_DEFAULT;
 extern NSString *const SWITCH_ORIENTATION;
 extern NSString *const SWITCH_ORIENTATION_DEFAULT;
+extern NSString *const SWITCH_SECONDS_BETWEEN_REPEAT;
+extern NSString *const SWITCH_SECONDS_BETWEEN_REPEAT_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;

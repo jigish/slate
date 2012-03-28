@@ -135,7 +135,7 @@ static EventHandlerRef modifiersEvent;
       }
       // Setup timer to repeat operation
       currentHotKey = hkCom;
-      currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:SECONDS_BETWEEN_REPEAT]
+      currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:SWITCH_SECONDS_BETWEEN_REPEAT]
                                                       target:selfRef
                                                     selector:@selector(timerActivateBinding:)
                                                     userInfo:nil
@@ -168,7 +168,7 @@ static EventHandlerRef modifiersEvent;
         }
         // Setup timer to repeat operation
         currentHotKey = hkCom;
-        currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:SECONDS_BETWEEN_REPEAT]
+        currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:([[binding op] isKindOfClass:[SwitchOperation class]] ? SWITCH_SECONDS_BETWEEN_REPEAT : SECONDS_BETWEEN_REPEAT)]
                                                         target:selfRef
                                                       selector:@selector(timerActivateBinding:)
                                                       userInfo:nil
