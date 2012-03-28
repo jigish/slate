@@ -9,6 +9,7 @@ Add configs:
   switchOrientation
   switchSecondsBetweenRepeat
   switchStopRepeatAtEdge
+  switchOnlyFocusMainWindow
 
 ----------------- 0.4.19 ----------------
 

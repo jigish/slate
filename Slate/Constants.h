@@ -90,6 +90,8 @@ extern NSString *const SWITCH_SECONDS_BETWEEN_REPEAT;
 extern NSString *const SWITCH_SECONDS_BETWEEN_REPEAT_DEFAULT;
 extern NSString *const SWITCH_STOP_REPEAT_AT_EDGE;
 extern NSString *const SWITCH_STOP_REPEAT_AT_EDGE_DEFAULT;
+extern NSString *const SWITCH_ONLY_FOCUS_MAIN_WINDOW;
+extern NSString *const SWITCH_ONLY_FOCUS_MAIN_WINDOW_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;

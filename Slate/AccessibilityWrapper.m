@@ -143,6 +143,21 @@ static NSDictionary *unselectableApps = nil;
   return YES;
 }
 
++ (BOOL)focusMainWindow:(NSRunningApplication *)app {
+  CFTypeRef _window;
+  pid_t focusPID = [app processIdentifier];
+  AXUIElementCopyAttributeValue(AXUIElementCreateApplication(focusPID), (CFStringRef)NSAccessibilityFocusedWindowAttribute, (CFTypeRef *)&_window);
+  if (_window == NULL) return NO;
+  if (AXUIElementSetAttributeValue((AXUIElementRef)_window, (CFStringRef)NSAccessibilityMainAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
+    SlateLogger(@"ERROR: Could not change focus to window");
+    return NO;
+  }
+  ProcessSerialNumber psn;
+  GetProcessForPID(focusPID, &psn);
+  SetFrontProcessWithOptions(&psn, kSetFrontProcessFrontWindowOnly);
+  return YES;
+}
+
 + (BOOL)focusWindow:(AXUIElementRef)window {
   if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilityMainAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
     SlateLogger(@"ERROR: Could not change focus to window");

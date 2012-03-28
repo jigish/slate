@@ -222,7 +222,11 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
     NSRunningApplication *cApp = [apps objectAtIndex:currentApp];
     if ([cApp isHidden]) {
        SlateLogger(@"  UnHide: %ld",currentApp);
-      [AccessibilityWrapper focusApp:cApp];
+      if ([[SlateConfig getInstance] getBoolConfig:SWITCH_ONLY_FOCUS_MAIN_WINDOW]) {
+        [AccessibilityWrapper focusMainWindow:cApp];
+      } else {
+        [AccessibilityWrapper focusApp:cApp];
+      }
       for (NSInteger switcherId = 0; switcherId < [switchers count]; switcherId++) {
         [[[switchersToViews objectAtIndex:switcherId] objectAtIndex:currentApp] updateHidden:NO];
       }
@@ -248,7 +252,11 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
 - (BOOL)modifiersChanged:(UInt32)was new:(UInt32)new {
   if (was != new) {
     [self killSwitchers];
-    [AccessibilityWrapper focusApp:[apps objectAtIndex:currentApp]];
+    if ([[SlateConfig getInstance] getBoolConfig:SWITCH_ONLY_FOCUS_MAIN_WINDOW]) {
+      [AccessibilityWrapper focusMainWindow:[apps objectAtIndex:currentApp]];
+    } else {
+      [AccessibilityWrapper focusApp:[apps objectAtIndex:currentApp]];
+    }
     return YES;
   }
   return NO;

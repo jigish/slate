@@ -129,6 +129,7 @@ List of allowed configs:
 | `switchOrientation` | `horiztonal` or `vertical` | Default: `horizontal`. \[UNRELEASED Beta Version - Use at your own risk!\] Which direction to grow the application switcher. |
 | `switchSecondsBetweenRepeat` | Number | Default: `0.1`. \[UNRELEASED Beta Version - Use at your own risk!\] The number of seconds between repeating the forward/back keypresses for the switch operation. |
 | `switchStopRepeatAtEdge` | Boolean | Default: `true`. \[UNRELEASED Beta Version - Use at your own risk!\] If `true`, when holding down the switch operation forward/back keys repeats will trigger until the selected app reaches the end/beginning of the list. If `false`, holding down the switch operation forward/back keys will cycle through the app list without stopping |
+| `switchOnlyFocusMainWindow` | Boolean | Default: `true`. \[UNRELEASED Beta Version - Use at your own risk!\] If `true`, the switch operation will only bring the main window of the selected app forward. If `false`, the switch operation will work similar to the default application switcher and bring all windows of the selected app forward. |
 
 Example:
 

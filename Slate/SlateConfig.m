@@ -490,6 +490,7 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:SWITCH_ORIENTATION_DEFAULT forKey:SWITCH_ORIENTATION];
   [configDefaults setObject:SWITCH_SECONDS_BETWEEN_REPEAT_DEFAULT forKey:SWITCH_SECONDS_BETWEEN_REPEAT];
   [configDefaults setObject:SWITCH_STOP_REPEAT_AT_EDGE_DEFAULT forKey:SWITCH_STOP_REPEAT_AT_EDGE];
+  [configDefaults setObject:SWITCH_ONLY_FOCUS_MAIN_WINDOW_DEFAULT forKey:SWITCH_ONLY_FOCUS_MAIN_WINDOW];
   [self setConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];
 }
