@@ -489,6 +489,7 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:SWITCH_ROUNDED_CORNER_SIZE_DEFAULT forKey:SWITCH_ROUNDED_CORNER_SIZE];
   [configDefaults setObject:SWITCH_ORIENTATION_DEFAULT forKey:SWITCH_ORIENTATION];
   [configDefaults setObject:SWITCH_SECONDS_BETWEEN_REPEAT_DEFAULT forKey:SWITCH_SECONDS_BETWEEN_REPEAT];
+  [configDefaults setObject:SWITCH_STOP_REPEAT_AT_EDGE_DEFAULT forKey:SWITCH_STOP_REPEAT_AT_EDGE];
   [self setConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];
 }

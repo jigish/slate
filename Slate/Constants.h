@@ -88,6 +88,8 @@ extern NSString *const SWITCH_ORIENTATION;
 extern NSString *const SWITCH_ORIENTATION_DEFAULT;
 extern NSString *const SWITCH_SECONDS_BETWEEN_REPEAT;
 extern NSString *const SWITCH_SECONDS_BETWEEN_REPEAT_DEFAULT;
+extern NSString *const SWITCH_STOP_REPEAT_AT_EDGE;
+extern NSString *const SWITCH_STOP_REPEAT_AT_EDGE_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;

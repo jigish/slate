@@ -90,6 +90,8 @@ NSString *const SWITCH_ORIENTATION = @"switchOrientation";
 NSString *const SWITCH_ORIENTATION_DEFAULT = @"horizontal";
 NSString *const SWITCH_SECONDS_BETWEEN_REPEAT = @"switchSecondsBetweenRepeat";
 NSString *const SWITCH_SECONDS_BETWEEN_REPEAT_DEFAULT = @"0.1";
+NSString *const SWITCH_STOP_REPEAT_AT_EDGE = @"switchStopRepeatAtEdge";
+NSString *const SWITCH_STOP_REPEAT_AT_EDGE_DEFAULT = @"true";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";

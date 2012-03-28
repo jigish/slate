@@ -187,7 +187,7 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
   SlateLogger(@"Activate Switch Key");
   NSInteger selectedApp = currentApp+1;
   if (key.id == 1000) {
-    selectedApp = currentApp == 0 ? [apps count] - 1 : currentApp - 1;
+    selectedApp = currentApp == 0 ? (isRepeat && [[SlateConfig getInstance] getBoolConfig:SWITCH_STOP_REPEAT_AT_EDGE] ? 0 : [apps count] - 1) : currentApp - 1;
     SlateLogger(@"  Back: %ld",selectedApp);
   } else if (key.id == 1001) {
     if (isRepeat) return;
@@ -234,8 +234,8 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
       }
     }
     return;
-  } else if (selectedApp >= [apps count]){ 
-    selectedApp = 0;
+  } else if (selectedApp >= [apps count]) {
+    selectedApp = isRepeat && [[SlateConfig getInstance] getBoolConfig:SWITCH_STOP_REPEAT_AT_EDGE] ? [apps count] - 1 : 0;
   }
   for (NSInteger switcherId = 0; switcherId < [switchers count]; switcherId++) {
     SlateLogger(@"SELECTING %ld,%ld,%ld",switcherId,currentApp,selectedApp);
