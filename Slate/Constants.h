@@ -74,6 +74,8 @@ extern NSString *const WINDOW_HINTS_TOP_LEFT_X;
 extern NSString *const WINDOW_HINTS_TOP_LEFT_X_DEFAULT;
 extern NSString *const WINDOW_HINTS_TOP_LEFT_Y;
 extern NSString *const WINDOW_HINTS_TOP_LEFT_Y_DEFAULT;
+extern NSString *const WINDOW_HINTS_ORDER;
+extern NSString *const WINDOW_HINTS_ORDER_DEFAULT;
 extern NSString *const SWITCH_ICON_SIZE;
 extern NSString *const SWITCH_ICON_SIZE_DEFAULT;
 extern NSString *const SWITCH_BACKGROUND_COLOR;
@@ -147,6 +149,9 @@ extern NSString *const BACK;
 extern NSString *const QUIT;
 extern NSString *const FORCE_QUIT;
 extern NSString *const HIDE;
+extern NSString *const WINDOW_HINTS_ORDER_NONE;
+extern NSString *const WINDOW_HINTS_ORDER_LEFT_TO_RIGHT;
+extern NSString *const WINDOW_HINTS_ORDER_RIGHT_TO_LEFT;
 
 // Directions and Anchors
 extern NSString *const UP;

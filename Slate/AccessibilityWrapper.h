@@ -52,5 +52,6 @@
 + (void)createSystemWideElement;
 + (BOOL)isAppSelectable:(NSRunningApplication *)app;
 + (BOOL)isAppIgnored:(NSRunningApplication *)app;
++ (AXUIElementRef)applicationForElement:(AXUIElementRef)element;
 
 @end

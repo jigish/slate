@@ -162,23 +162,87 @@
   [hotkeyRefs addObject:[NSValue valueWithPointer:myHotKeyRef]];
 }
 
+CFComparisonResult leftToRightWindows(const void *val1, const void *val2, void *context) {
+  AXUIElementRef w1 = val1;
+  AXUIElementRef w2 = val2;
+  NSPoint w1TL = [AccessibilityWrapper getTopLeftForWindow:w1];
+  NSPoint w2TL = [AccessibilityWrapper getTopLeftForWindow:w2];
+  if (w1TL.x < w2TL.x) {
+    return kCFCompareLessThan;
+  } else if (w1TL.x > w2TL.x) {
+    return kCFCompareGreaterThan;
+  } else {
+    if (w1TL.y < w2TL.y) {
+      return kCFCompareLessThan;
+    } else if (w1TL.y > w2TL.y) {
+      return kCFCompareGreaterThan;
+    }
+  }
+  return kCFCompareEqualTo;
+}
+
+CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *context) {
+  AXUIElementRef w1 = val1;
+  AXUIElementRef w2 = val2;
+  NSPoint w1TL = [AccessibilityWrapper getTopLeftForWindow:w1];
+  NSPoint w2TL = [AccessibilityWrapper getTopLeftForWindow:w2];
+  if (w1TL.x < w2TL.x) {
+    return kCFCompareGreaterThan;
+  } else if (w1TL.x > w2TL.x) {
+    return kCFCompareLessThan;
+  } else {
+    if (w1TL.y < w2TL.y) {
+      return kCFCompareLessThan;
+    } else if (w1TL.y > w2TL.y) {
+      return kCFCompareGreaterThan;
+    }
+  }
+  return kCFCompareEqualTo;
+}
+
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
   if (hideTimer != nil) return YES;
   [(SlateAppDelegate *)[NSApp delegate] setCurrentHintOperation:self];
   ignoreHidden = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
   [self setCurrentHint:0];
   [self setCurrentWindow:[[AccessibilityWrapper alloc] init]];
-  for (NSRunningApplication *app in [RunningApplications getInstance]) {
-    pid_t appPID = [app processIdentifier];
-    SlateLogger(@"I see application '%@' with pid '%d'", [app localizedName], appPID);
-    AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
-    CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:appRef];
-    if (!windowsArr || CFArrayGetCount(windowsArr) == 0) continue;
-    for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
-      NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
+  if ([[[SlateConfig getInstance] getConfig:WINDOW_HINTS_ORDER] isEqualToString:WINDOW_HINTS_ORDER_NONE]) {
+    // normal fast way
+    for (NSRunningApplication *app in [RunningApplications getInstance]) {
+      pid_t appPID = [app processIdentifier];
+      SlateLogger(@"I see application '%@' with pid '%d'", [app localizedName], appPID);
+      AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
+      CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:appRef];
+      if (!windowsArr || CFArrayGetCount(windowsArr) == 0) continue;
+      for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+        NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
+        if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
+        SlateLogger(@"  Hinting Window: %@", title);
+        [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw];
+      }
+    }
+  } else {
+    // custom order
+    CFMutableArrayRef allWindows = CFArrayCreateMutable(kCFAllocatorDefault, 0, NULL);
+    for (NSRunningApplication *app in [RunningApplications getInstance]) {
+      pid_t appPID = [app processIdentifier];
+      SlateLogger(@"I see application '%@' with pid '%d'", [app localizedName], appPID);
+      AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
+      CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:appRef];
+      CFArrayAppendArray(allWindows, windowsArr, CFRangeMake(0, CFArrayGetCount(windowsArr)));
+    }
+    // check which custom order and sort accordingly. if someone was stupid and entered a bad config, do nothing.
+    if ([[[SlateConfig getInstance] getConfig:WINDOW_HINTS_ORDER] isEqualToString:WINDOW_HINTS_ORDER_LEFT_TO_RIGHT]) {
+      CFArraySortValues(allWindows, CFRangeMake(0, CFArrayGetCount(allWindows)), leftToRightWindows, NULL);
+    } else if ([[[SlateConfig getInstance] getConfig:WINDOW_HINTS_ORDER] isEqualToString:WINDOW_HINTS_ORDER_RIGHT_TO_LEFT]) {
+      CFArraySortValues(allWindows, CFRangeMake(0, CFArrayGetCount(allWindows)), rightToLeftWindows, NULL);
+    }
+    for (NSInteger i = 0; i < CFArrayGetCount(allWindows); i++) {
+      NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(allWindows, i)];
       if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
       SlateLogger(@"  Hinting Window: %@", title);
-      [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw];
+      CFTypeRef _window = CFArrayGetValueAtIndex(allWindows, i);
+      [self createHintWindowFor:(AXUIElementRef)_window inApp:[AccessibilityWrapper applicationForElement:(AXUIElementRef)_window] screenWrapper:sw];
     }
   }
 

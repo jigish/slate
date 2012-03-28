@@ -226,8 +226,9 @@ static NSDictionary *unselectableApps = nil;
 }
 
 + (AXUIElementRef)windowUnderPoint:(NSPoint)point {
+  [AccessibilityWrapper createSystemWideElement];
   AXUIElementRef _element;
-  if ((AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), point.x, point.y, &_element) == kAXErrorSuccess) && _element) {
+  if ((AXUIElementCopyElementAtPosition(systemWideElement, point.x, point.y, &_element) == kAXErrorSuccess) && _element) {
     CFTypeRef _role;
     if (AXUIElementCopyAttributeValue(_element, (CFStringRef)NSAccessibilityRoleAttribute, (CFTypeRef *)&_role) == kAXErrorSuccess) {
       if ([(__bridge NSString *)_role isEqualToString:NSAccessibilityWindowRole])
@@ -239,6 +240,10 @@ static NSDictionary *unselectableApps = nil;
   }
   SlateLogger(@"Returning null");
   return NULL;
+}
+
++ (AXUIElementRef)applicationForElement:(AXUIElementRef)element {
+  return AXUIElementCreateApplication([AccessibilityWrapper processIdentifierOfUIElement:element]);
 }
 
 + (void)createSystemWideElement {
