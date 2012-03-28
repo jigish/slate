@@ -7,6 +7,8 @@ Fix Issue #32
 Release version of Switch operation
 Add configs:
   switchOrientation
+  switchSecondsBetweenRepeat
+  switchStopRepeatAtEdge
 
 ----------------- 0.4.19 ----------------
 
