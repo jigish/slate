@@ -1,10 +1,11 @@
-Current Version: 0.4.18
+Current Version: 0.4.19
 
 ----------------- 0.4.19 ----------------
---------------- UNRELEASED --------------
 
-Fix Issue #52, #50
+Fix Issue #50, #51, #52
+Beta version of Switch operation (Issue #32 WIP)
 Change windowHintsTopLeftX and windowHintsTopLeftY to array configs (array of expressions)
+Add windowHintsOrder config
 Add support for cmd+tab and cmd+shift+tab bindings (this completely disables the default mac app switcher)
 Change array config format to use semi-colon as a separator instead of colon. This affects:
   windowHintsFontColor

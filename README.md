@@ -98,17 +98,21 @@ List of allowed configs:
 | `focusCheckWidthMax` | Integer | `100` | If set to anything above focusCheckWidth, the focus option will keep expanding the rectangle used to check directions by focusCheckWidth if it does not find a window until it either finds a window or the width of the rectangle is greater than `focusCheckWidthMax` |
 | `focusPreferSameApp` | Boolean | `true` | When this is `true`, the focus operation will *always* choose a window in the same app to focus if it exists in the check width regardless of intersection size. When this is `false`, focus will treat all application windows the same and choose the largest intersection size |
 | `orderScreensLeftToRight` | Boolean | `true` | When this is `true`, monitors will be ordered from left to right by X coordinate (if two X coordiates are the same, then the lowest Y coordinate will be first). When this is `false`, screens will be ordered according to the internal Mac OS X ordering which changes depending on which screen was plugged in first. If this is `false`, you can force ordering of screens by prefixing the screen ID with `ordered:` |
-| `windowHintsBackgroundColor` | Comma Separated Array of Floats | `50,53,58,0.7` | The background color for Window Hints as an array in the form `Red,Green,Blue,Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `windowHintsBackgroundColor` | Semicolon Separated Array of Floats | `50;53;58;0.9` | The background color for Window Hints as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
 | `windowHintsWidth` | Expression | `100` | The width of the Window Hints ovelay in pixels. Please see the "Expressions" section above more information on expressions. |
 | `windowHintsHeight` | Expression | `100` | The height of the Window Hints overlay in pixels. Please see the "Expressions" section above more information on expressions. |
-| `windowHintsFontColor` | Comma Separated Array of Floats | `255,255,255,1.0` | The font color for Window Hints as an array in the form `Red,Green,Blue,Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `windowHintsFontColor` | Semicolon Separated Array of Floats | `255;255;255;1.0` | The font color for Window Hints as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
 | `windowHintsFontName` | String | `Helvetica` | The name of the Window Hints font |
 | `windowHintsFontSize` | Integer | `40` | The size of the Window Hints font |
 | `windowHintsDuration` | Number | `3` | The number of seconds that Window Hints will display for |
-| `windowHintsRoundedCornerSize` | Integer | `5` | The size of the rounded corner. Set this to `0` if you do not want rounded corners |
+| `windowHintsRoundedCornerSize` | Integer | `5` | The size of the rounded corners of the Window Hints. Set this to `0` if you do not want rounded corners |
 | `windowHintsIgnoreHiddenWindows` | Boolean | `true` | If this is set to `true`, window hints will not show for windows that are hidden. Hints will show for all windows if this is `false`. A window is hidden if the window under the point at the center of where the hint overlay would show is not the window in question. |
-| `windowHintsTopLeftX` | Expression | `0` | The X offset for window hints from the window's top left point (right is positive, left is negative) |
-| `windowHintsTopLeftY` | Expression | `0` | The Y offset for window hints from the window's top left point (down is positive, up is negative) |
+| `windowHintsTopLeftX` | Semicolon Separated Array of Expressions | `(windowSizeX/2)-(windowHintsWidth/2);0` | The X offset for window hints from the window's top left point (right is positive, left is negative). If `windowHintsIgnoreHiddenWindows` is set to `true`, the `hint` operation will try each expression in this array (using the Y coordinate from the same index in `windowHintsTopLeftY`) sequetially to see if it represents a point that is visible. The `hint` operation will display a hint at the first visible point. Note that the number of elements in this array *must* equal the number of elements in `windowHintsTopLeftY` or all `hint` bindings will fail validation. |
+| `windowHintsTopLeftY` | Semicolon Separated Array of Expressions | `(windowSizeY/2)-(windowHintsHeight/2);0` | The Y offset for window hints from the window's top left point (down is positive, up is negative). If `windowHintsIgnoreHiddenWindows` is set to `true`, the `hint` operation will try each expression in this array (using the X coordinate from the same index in `windowHintsTopLeftX`) sequetially to see if it represents a point that is visible. The `hint` operation will display a hint at the first visible point. Note that the number of elements in this array *must* equal the number of elements in `windowHintsTopLeftX` or all `hint` bindings will fail validation. |
+| `switchIconSize` | Number | `100` | \[Beta Version - Use at your own risk!\] The size of the application icons for the `switch` operation |
+| `switchBackgroundColor` | Semicolon Separated Array of Floats | `50;53;58;0.3` | \[Beta Version - Use at your own risk!\] The background color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `switchSelectedColor` | Semicolon Separated Array of Floats | `50;53;58;0.9` | \[Beta Version - Use at your own risk!\] The selected color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `switchRoundedCornerSize` | Integer | `5` | \[Beta Version - Use at your own risk!\] The size of the rounded corners of the `switch` operation. Set this to `0` if you do not want rounded corners |
 
 Example:
 
@@ -202,6 +206,8 @@ modifiers is a comma or semicolon separated list of standard modifier keys. Allo
 * Option/Alt: `alt`
 * Command: `cmd`
 * Shift: `shift`
+
+*NOTE:* If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
 #### Operation ####
 
@@ -388,6 +394,16 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     **Note:** There are *tons* of config options to tweak this.
 
+* \[Beta Version - Use at your own risk!\] A Better Application Switcher: `switch`
+
+*NOTE:* If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
+
+    Example:
+
+        bind tab:cmd switch
+
+    Will disable the default Mac OS X Application switcher and bind the keystroke cmd-tab to a better application switcher.
+
 ### The `source` Directive ###
 
 The source directive follows the following format (tokens may be separated by any number of spaces):
@@ -413,6 +429,8 @@ You can check out my own config [here](https://github.com/jigish/dotfiles/blob/m
 Please send all questions, bug reports, suggestions, or general commentary to [Jigish Patel](mailto:slate.issues@gmail.com) or [create an issue](https://github.com/jigish/slate/issues/new) on github.
 
 # Allowed Keys #
+
+*NOTE:* If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
     '
     ,
