@@ -115,13 +115,11 @@ static EventHandlerRef modifiersEvent;
   [menuActivateSnapshotOperation doOperation];
 }
 
-- (void)runBinding:(NSTimer *)timer {
-  if ([[[SlateConfig getInstance] bindings] objectAtIndex:currentHotKey.id]) {
-    [[[[SlateConfig getInstance] bindings] objectAtIndex:currentHotKey.id] doOperation];
-  }
+- (OSStatus)timerActivateBinding:(NSTimer *)timer {
+  return [self activateBinding:currentHotKey isRepeat:YES];
 }
 
-- (OSStatus)activateBinding:(EventHotKeyID)hkCom {
+- (OSStatus)activateBinding:(EventHotKeyID)hkCom isRepeat:(BOOL)isRepeat {
   HintOperation *hintop = [self currentHintOperation];
   Binding *switchop = [self currentSwitchBinding];
   if (hintop != nil) {
@@ -129,7 +127,20 @@ static EventHandlerRef modifiersEvent;
     return noErr;
   }
   if (switchop != nil) {
-    [(SwitchOperation *)[switchop op] activateSwitchKey:hkCom];
+    [(SwitchOperation *)[switchop op] activateSwitchKey:hkCom isRepeat:isRepeat];
+    @synchronized(timerLock) {
+      if (currentTimer != nil) {
+        [currentTimer invalidate];
+        currentTimer = nil;
+      }
+      // Setup timer to repeat operation
+      currentHotKey = hkCom;
+      currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:SECONDS_BETWEEN_REPEAT]
+                                                      target:selfRef
+                                                    selector:@selector(timerActivateBinding:)
+                                                    userInfo:nil
+                                                     repeats:YES];
+    }
     return noErr;
   }
 
@@ -149,7 +160,7 @@ static EventHandlerRef modifiersEvent;
       InstallEventHandler(GetEventMonitorTarget(), &OnModifiersChangedEvent, 1, &modifiersChangedType, (__bridge void *)self, &modifiersEvent);
     }
     [binding doOperation];
-    if ([binding repeat]) {
+    if ([binding repeat] || [[binding op] isKindOfClass:[SwitchOperation class]]) {
       @synchronized(timerLock) {
         if (currentTimer != nil) {
           [currentTimer invalidate];
@@ -159,7 +170,7 @@ static EventHandlerRef modifiersEvent;
         currentHotKey = hkCom;
         currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:SECONDS_BETWEEN_REPEAT]
                                                         target:selfRef
-                                                      selector:@selector(runBinding:)
+                                                      selector:@selector(timerActivateBinding:)
                                                       userInfo:nil
                                                        repeats:YES];
       }
@@ -169,6 +180,7 @@ static EventHandlerRef modifiersEvent;
 }
 
 // Quartz Event Tap for reserved key bindings (CMD+Tab or CMD+Shift+Tab)
+static BOOL keyUpSeen = YES;
 CGEventRef EatAppSwitcherCallback(CGEventTapProxy proxy, CGEventType type,  CGEventRef event, void *refcon) {
   CGEventFlags flags = CGEventGetFlags(event);
   int64_t keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
@@ -183,13 +195,27 @@ CGEventRef EatAppSwitcherCallback(CGEventTapProxy proxy, CGEventType type,  CGEv
       ((flags & kCGEventFlagMaskNumericPad) != kCGEventFlagMaskNumericPad) &&
       ((flags & kCGEventFlagMaskSecondaryFn) != kCGEventFlagMaskSecondaryFn)) {
     SlateLogger(@"  IS CMD+TAB");
-    SlateAppDelegate *del = (__bridge SlateAppDelegate *)refcon;
-    EventHotKeyID myHotKeyID;
-    NSInteger hotkeyID = ((flags & kCGEventFlagMaskShift) == kCGEventFlagMaskShift) ? [del cmdShiftTabBinding] : [del cmdTabBinding];
-    myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
-    myHotKeyID.id = (UInt32)hotkeyID;
-    [del activateBinding:myHotKeyID];
+    if (keyUpSeen) {
+      SlateAppDelegate *del = (__bridge SlateAppDelegate *)refcon;
+      EventHotKeyID myHotKeyID;
+      NSInteger hotkeyID = ((flags & kCGEventFlagMaskShift) == kCGEventFlagMaskShift) ? [del cmdShiftTabBinding] : [del cmdTabBinding];
+      myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
+      myHotKeyID.id = (UInt32)hotkeyID;
+      [del activateBinding:myHotKeyID isRepeat:NO];
+      keyUpSeen = NO;
+    }
     return NULL;
+  }
+  return event;
+}
+CGEventRef EatAppSwitcherResetCallback(CGEventTapProxy proxy, CGEventType type,  CGEventRef event, void *refcon) {
+  SlateLogger(@"KEY UP");
+  keyUpSeen = YES;
+  @synchronized(timerLock) {
+    if (currentTimer != nil) {
+      [currentTimer invalidate];
+      currentTimer = nil;
+    }
   }
   return event;
 }
@@ -198,7 +224,7 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
   if (![(__bridge id)userData isKindOfClass:[SlateAppDelegate class]]) return noErr;
   EventHotKeyID hkCom;
   GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
-  return [(__bridge SlateAppDelegate *)userData activateBinding:hkCom];;
+  return [(__bridge SlateAppDelegate *)userData activateBinding:hkCom isRepeat:NO];
 }
 
 OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
@@ -228,17 +254,30 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
       RemoveEventHandler(modifiersEvent);
     }
   }
+  @synchronized(timerLock) {
+    if (currentTimer != nil) {
+      [currentTimer invalidate];
+      currentTimer = nil;
+    }
+  }
   return noErr;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   if (cmdTabBinding > 0 || cmdShiftTabBinding > 0) {
-    CFMachPortRef eventTap;
-    CFRunLoopSourceRef runLoopSource;
-    eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, 0, CGEventMaskBit(kCGEventKeyDown), EatAppSwitcherCallback, (__bridge void *)self);
-    runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
-    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
-    CGEventTapEnable(eventTap, true);
+    CFMachPortRef keyDownEventTap;
+    CFRunLoopSourceRef keyDownRunLoopSource;
+    keyDownEventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, 0, CGEventMaskBit(kCGEventKeyDown), EatAppSwitcherCallback, (__bridge void *)self);
+    keyDownRunLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, keyDownEventTap, 0);
+    CFRunLoopAddSource(CFRunLoopGetCurrent(), keyDownRunLoopSource, kCFRunLoopCommonModes);
+    CGEventTapEnable(keyDownEventTap, true);
+
+    CFMachPortRef keyUpEventTap;
+    CFRunLoopSourceRef keyUpRunLoopSource;
+    keyUpEventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, 0, CGEventMaskBit(kCGEventKeyUp), EatAppSwitcherResetCallback, (__bridge void *)self);
+    keyUpRunLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, keyUpEventTap, 0);
+    CFRunLoopAddSource(CFRunLoopGetCurrent(), keyUpRunLoopSource, kCFRunLoopCommonModes);
+    CGEventTapEnable(keyUpEventTap, true);
   }
 }
 

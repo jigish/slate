@@ -37,7 +37,7 @@
 
 @property (assign) UInt32 modifiers;
 
-- (void)activateSwitchKey:(EventHotKeyID)key;
+- (void)activateSwitchKey:(EventHotKeyID)key isRepeat:(BOOL)isRepeat;
 - (BOOL)modifiersChanged:(UInt32)was new:(UInt32)new;
 + (id)switchOperationFromString:(NSString *)hintOperation;
 

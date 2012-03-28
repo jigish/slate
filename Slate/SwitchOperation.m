@@ -77,15 +77,16 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
       if ([optionTokens count] != 2) continue;
       NSString *keyName = [optionTokens objectAtIndex:0];
       NSString *keyValue = [optionTokens objectAtIndex:1];
-      if ([[Binding asciiToCodeDict] objectForKey:keyValue] == nil) continue;
+      NSNumber *keyCode = [[Binding asciiToCodeDict] objectForKey:keyValue];
+      if (keyCode == nil) continue;
       if ([keyName isEqualToString:BACK]) {
-        backKeyCode = [[[Binding asciiToCodeDict] objectForKey:keyValue] integerValue];
+        backKeyCode = [keyCode integerValue];
       } else if ([keyName isEqualToString:QUIT]) {
-        quitKeyCode = [[[Binding asciiToCodeDict] objectForKey:keyValue] integerValue];
+        quitKeyCode = [keyCode integerValue];
       } else if ([keyName isEqualToString:FORCE_QUIT]) {
-        fquitKeyCode = [[[Binding asciiToCodeDict] objectForKey:keyValue] integerValue];
+        fquitKeyCode = [keyCode integerValue];
       } else if ([keyName isEqualToString:HIDE]) {
-        hideKeyCode = [[[Binding asciiToCodeDict] objectForKey:keyValue] integerValue];
+        hideKeyCode = [keyCode integerValue];
       }
     }
     appsToQuit = [NSMutableArray array];
@@ -182,13 +183,14 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
   return YES;
 }
 
-- (void)activateSwitchKey:(EventHotKeyID)key {
+- (void)activateSwitchKey:(EventHotKeyID)key isRepeat:(BOOL)isRepeat {
   SlateLogger(@"Activate Switch Key");
   NSInteger selectedApp = currentApp+1;
   if (key.id == 1000) {
     selectedApp = currentApp == 0 ? [apps count] - 1 : currentApp - 1;
     SlateLogger(@"  Back: %ld",selectedApp);
   } else if (key.id == 1001) {
+    if (isRepeat) return;
     SlateLogger(@"  Quit: %ld",currentApp);
     if ([[appsToForceQuit objectAtIndex:currentApp] boolValue]) {
       [appsToForceQuit replaceObjectAtIndex:currentApp withObject:[NSNumber numberWithBool:NO]];
@@ -202,6 +204,7 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
     }
     return;
   } else if (key.id == 1002) {
+    if (isRepeat) return;
     SlateLogger(@"  Force Quit: %ld",currentApp);
     if ([[appsToQuit objectAtIndex:currentApp] boolValue]) {
       [appsToQuit replaceObjectAtIndex:currentApp withObject:[NSNumber numberWithBool:NO]];
@@ -215,6 +218,7 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
     }
     return;
   } else if (key.id == 1003) {
+    if (isRepeat) return;
     NSRunningApplication *cApp = [apps objectAtIndex:currentApp];
     if ([cApp isHidden]) {
        SlateLogger(@"  UnHide: %ld",currentApp);

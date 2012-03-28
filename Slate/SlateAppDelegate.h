@@ -60,7 +60,8 @@
 - (void)createMenuSnapshotOperations;
 - (IBAction)takeSnapshot;
 - (IBAction)activateSnapshot;
-- (OSStatus)activateBinding:(EventHotKeyID)hkCom;
+- (OSStatus)timerActivateBinding:(NSTimer *)timer;
+- (OSStatus)activateBinding:(EventHotKeyID)hkCom isRepeat:(BOOL)isRepeat;
 
 OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
 OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
