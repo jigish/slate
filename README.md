@@ -4,6 +4,18 @@ Slate is a window management application similar to Divvy and SizeUp (except bet
 
 Slate currently works on Mac OS X 10.6 and above
 
+## Summary of Features ##
+
+* Highly customizable
+* Bind keystrokes to:
+  * move and/or resize windows
+  * directionally focus windows
+  * activate preset layouts
+  * create, delete, and activate snapshots of the current state of windows
+* Set default layouts for different monitor configurations which will activate when that configuration is detected.
+* Window Hints: an intuitive way to change window focus
+* \[Beta Version - Use at your own risk!\] A better, more customizable, application switcher.
+
 ## Credits ##
 
 Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and initial implementation).
