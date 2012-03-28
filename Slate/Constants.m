@@ -86,6 +86,8 @@ NSString *const SWITCH_SELECTED_COLOR = @"switchSelectedColor";
 NSString *const SWITCH_SELECTED_COLOR_DEFAULT = @"50;53;58;0.9";
 NSString *const SWITCH_ROUNDED_CORNER_SIZE = @"switchRoundedCornerSize";
 NSString *const SWITCH_ROUNDED_CORNER_SIZE_DEFAULT = @"5";
+NSString *const SWITCH_ORIENTATION = @"switchOrientation";
+NSString *const SWITCH_ORIENTATION_DEFAULT = @"horizontal";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";
@@ -154,6 +156,8 @@ NSString *const HIDE = @"hide";
 NSString *const WINDOW_HINTS_ORDER_NONE = @"none";
 NSString *const WINDOW_HINTS_ORDER_LEFT_TO_RIGHT = @"leftToRight";
 NSString *const WINDOW_HINTS_ORDER_RIGHT_TO_LEFT = @"rightToLeft";
+NSString *const SWITCH_ORIENTATION_HORIZONTAL = @"horiztonal";
+NSString *const SWITCH_ORIENTATION_VERTICAL = @"vertical";
 
 // Directions and Anchors
 NSString *const UP = @"up";

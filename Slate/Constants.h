@@ -84,6 +84,8 @@ extern NSString *const SWITCH_SELECTED_COLOR;
 extern NSString *const SWITCH_SELECTED_COLOR_DEFAULT;
 extern NSString *const SWITCH_ROUNDED_CORNER_SIZE;
 extern NSString *const SWITCH_ROUNDED_CORNER_SIZE_DEFAULT;
+extern NSString *const SWITCH_ORIENTATION;
+extern NSString *const SWITCH_ORIENTATION_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;
@@ -152,6 +154,8 @@ extern NSString *const HIDE;
 extern NSString *const WINDOW_HINTS_ORDER_NONE;
 extern NSString *const WINDOW_HINTS_ORDER_LEFT_TO_RIGHT;
 extern NSString *const WINDOW_HINTS_ORDER_RIGHT_TO_LEFT;
+extern NSString *const SWITCH_ORIENTATION_HORIZONTAL;
+extern NSString *const SWITCH_ORIENTATION_VERTICAL;
 
 // Directions and Anchors
 extern NSString *const UP;

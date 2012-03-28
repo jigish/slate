@@ -1,5 +1,13 @@
 Current Version: 0.4.19
 
+----------------- 0.5.0 -----------------
+--------------- UNRELEASED --------------
+
+Fix Issue #32
+Release version of Switch operation
+Add configs:
+  switchOrientation
+
 ----------------- 0.4.19 ----------------
 
 Fix Issue #50, #51, #52

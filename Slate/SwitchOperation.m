@@ -115,10 +115,18 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
   float iconSize = [[SlateConfig getInstance] getFloatConfig:SWITCH_ICON_SIZE];
   NSInteger switcherId = 0;
   for (NSScreen *screen in [sw screens]) {
-    NSRect frame = NSMakeRect([screen frame].size.width/2 - ([apps count]*iconSize)/2,
-                              [screen frame].size.height/2 - iconSize/2,
-                              [apps count]*iconSize,
-                              iconSize);
+    NSRect frame;
+    if ([[[SlateConfig getInstance] getConfig:SWITCH_ORIENTATION] isEqualToString:SWITCH_ORIENTATION_VERTICAL]) {
+      frame = NSMakeRect([screen frame].size.width/2 - iconSize/2,
+                         [screen frame].size.height/2 - ([apps count]*iconSize)/2,
+                         iconSize,
+                         [apps count]*iconSize);
+    } else {
+      frame = NSMakeRect([screen frame].size.width/2 - ([apps count]*iconSize)/2,
+                         [screen frame].size.height/2 - iconSize/2,
+                         [apps count]*iconSize,
+                         iconSize);
+    }
     NSWindow *window = [[SwitchWindow alloc] initWithContentRect:frame
                                                        styleMask:NSBorderlessWindowMask
                                                          backing:NSBackingStoreBuffered
@@ -136,7 +144,12 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
     [switchersToViews addObject:[NSMutableArray array]];
     NSInteger i = 0;
     for (NSRunningApplication *app in apps) {
-      SwitchAppView *appView = [[SwitchAppView alloc] initWithFrame:NSMakeRect(i*iconSize, 0, iconSize, iconSize)];
+      SwitchAppView *appView;
+      if ([[[SlateConfig getInstance] getConfig:SWITCH_ORIENTATION] isEqualToString:SWITCH_ORIENTATION_VERTICAL]) {
+        appView = [[SwitchAppView alloc] initWithFrame:NSMakeRect(0, ([apps count] - i - 1)*iconSize, iconSize, iconSize)];
+      } else {
+        appView = [[SwitchAppView alloc] initWithFrame:NSMakeRect(i*iconSize, 0, iconSize, iconSize)];
+      }
       [appView updateApp:app];
       [(NSView *)[[wc window] contentView] addSubview:appView];
       [[switchersToViews objectAtIndex:switcherId] addObject:appView];
