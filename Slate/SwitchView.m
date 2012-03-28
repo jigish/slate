@@ -33,7 +33,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
   NSArray *bgColorArr = [[SlateConfig getInstance] getArrayConfig:SWITCH_BACKGROUND_COLOR];
-  if ([bgColorArr count] < 4) bgColorArr = [SWITCH_BACKGROUND_COLOR_DEFAULT componentsSeparatedByString:COMMA];
+  if ([bgColorArr count] < 4) bgColorArr = [SWITCH_BACKGROUND_COLOR_DEFAULT componentsSeparatedByString:SEMICOLON];
   NSColor *backgroundColor = [NSColor colorWithDeviceRed:[[bgColorArr objectAtIndex:0] floatValue]/255.0
                                                    green:[[bgColorArr objectAtIndex:1] floatValue]/255.0
                                                     blue:[[bgColorArr objectAtIndex:2] floatValue]/255.0
