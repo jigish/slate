@@ -27,5 +27,6 @@
 @property NSMutableArray *apps;
 
 + (RunningApplications *)getInstance;
++ (BOOL)isAppSelectable:(NSRunningApplication *)app;
 
 @end

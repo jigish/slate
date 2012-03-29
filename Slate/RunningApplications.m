@@ -36,6 +36,10 @@ static RunningApplications *_instance = nil;
   }
 }
 
++ (BOOL)isAppSelectable:(NSRunningApplication *)app {
+  return [app activationPolicy] == NSApplicationActivationPolicyRegular;
+}
+
 - (id)init {
   self = [super init];
   if (self) {
@@ -44,7 +48,7 @@ static RunningApplications *_instance = nil;
     NSArray *appsArr = [[NSWorkspace sharedWorkspace] runningApplications];
     NSRunningApplication *currentApp = [NSRunningApplication currentApplication];
     for (NSRunningApplication *app in appsArr) {
-      if ([AccessibilityWrapper isAppSelectable:app]) {
+      if ([RunningApplications isAppSelectable:app]) {
         [apps addObject:app];
         if ([app ownsMenuBar]) {
           currentApp = app;
@@ -68,7 +72,7 @@ static RunningApplications *_instance = nil;
 - (NSRunningApplication *)currentApplication {
   NSArray *appsArr = [[NSWorkspace sharedWorkspace] runningApplications];
   for (NSRunningApplication *app in appsArr) {
-    if ([AccessibilityWrapper isAppSelectable:app]) {
+    if ([RunningApplications isAppSelectable:app]) {
       if ([app ownsMenuBar]) return app;
     }
   }
@@ -91,7 +95,7 @@ static RunningApplications *_instance = nil;
 }
 
 - (void)bringAppToFront:(NSRunningApplication *)app {
-  if ([AccessibilityWrapper isAppIgnored:app]) return;
+  if ([RunningApplications isAppSelectable:app]) return;
   [apps removeObject:app];
   [apps insertObject:app atIndex:0];
   //SlateLogger(@"  New App Order:");

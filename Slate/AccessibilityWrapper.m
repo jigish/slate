@@ -180,20 +180,6 @@ static NSDictionary *unselectableApps = nil;
   }
 }
 
-+ (BOOL)isAppSelectable:(NSRunningApplication *)app {
-  // This is really stupid, but we can check to see if the app is selectable (can have windows) by checking if it has a menu bar
-  [AccessibilityWrapper createSystemWideElement];
-  if ([unselectableApps objectForKey:[app localizedName]] != nil) return NO;
-  AXUIElementRef appRef = AXUIElementCreateApplication([app processIdentifier]);
-  CFTypeRef _menuBar = NULL;
-  AXUIElementCopyAttributeValue(appRef, (CFStringRef)NSAccessibilityMenuBarAttribute, (CFTypeRef *)&_menuBar);
-  return _menuBar != NULL;
-}
-
-+ (BOOL)isAppIgnored:(NSRunningApplication *)app {
-  return [unselectableApps objectForKey:[app localizedName]] != nil;
-}
-
 + (CFArrayRef)windowsInApp:(AXUIElementRef)app {
   [AccessibilityWrapper createSystemWideElement];
   CFArrayRef _windows;
