@@ -95,7 +95,7 @@ static RunningApplications *_instance = nil;
 }
 
 - (void)bringAppToFront:(NSRunningApplication *)app {
-  if ([RunningApplications isAppSelectable:app]) return;
+  if (![RunningApplications isAppSelectable:app]) return;
   [apps removeObject:app];
   [apps insertObject:app atIndex:0];
   //SlateLogger(@"  New App Order:");
