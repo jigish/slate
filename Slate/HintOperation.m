@@ -36,12 +36,14 @@
 
 @synthesize hints, windows, apps, hotkeyRefs, hideTimer, currentWindow, currentHint, hintCharacters;
 
+static const UInt32 ESC_HINT_ID = 10001;
+
 - (id)init {
   self = [super init];
   if (self) {
-    hints = [NSMutableArray array];
-    windows = [NSMutableArray array];
-    apps = [NSMutableArray array];
+    hints = [NSMutableDictionary dictionary];
+    windows = [NSMutableDictionary dictionary];
+    apps = [NSMutableDictionary dictionary];
     hotkeyRefs = [NSMutableArray array];
     hideTimer = nil;
     currentHint = 0;
@@ -64,7 +66,6 @@
   if (currentHint >= [hintCharacters length]) return code;
   code = [hintCharacters substringWithRange:NSMakeRange(currentHint, 1)];
   SlateLogger(@"    GIVING CODE: %@", code);
-  currentHint++;
   return code;
 }
 
@@ -78,6 +79,7 @@
 
 - (void)createHintWindowFor:(AXUIElementRef)windowRef inApp:(AXUIElementRef)appRef screenWrapper:(ScreenWrapper *)sw {
   NSString *hintCode = [self currentHintCode];
+  NSNumber *currentHintNumber = [NSNumber numberWithInteger:currentHint];
   if (hintCode == nil) return;
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:windowRef];
   NSPoint wTL = [aw getCurrentTopLeft];
@@ -123,11 +125,10 @@
     } while (!foundValidLocation && i < [whTLXArr count]);
     if (!foundValidLocation) {
       SlateLogger(@"        No locations visible, do not show hint!");
-      currentHint--; // reset current hint so we can use this code again
       return;
     }
   }
-  if ([hints count] < currentHint) {
+  if ([hints objectForKey:currentHintNumber] == nil) {
     SlateLogger(@"        New Window!");
     NSWindow *window = [[HintWindow alloc] initWithContentRect:frame
                                                      styleMask:NSBorderlessWindowMask
@@ -143,23 +144,24 @@
     [label setText:hintCode];
     [window setContentView:label];
     NSWindowController *wc = [[NSWindowController alloc] initWithWindow:window];
-    [hints addObject:wc];
+    [hints setObject:wc forKey:currentHintNumber];
   } else {
-    NSWindowController *wc = [hints objectAtIndex:(currentHint - 1)];
+    NSWindowController *wc = [hints objectForKey:currentHintNumber];
     [[wc window] setFrame:NSMakeRect(frame.origin.x+screen.frame.origin.x, frame.origin.y+screen.frame.origin.y, frame.size.width, frame.size.height) display:NO];
     [wc showWindow:[wc window]];
   }
-  [windows addObject:[NSValue valueWithPointer:windowRef]];
-  [apps addObject:[NSValue valueWithPointer:appRef]];
+  [windows setObject:[NSValue valueWithPointer:windowRef] forKey:currentHintNumber];
+  [apps setObject:[NSValue valueWithPointer:appRef] forKey:currentHintNumber];
   
   // Register the hotkey
   NSNumber *keyCode = [[Binding asciiToCodeDict] objectForKey:[hintCode lowercaseString]];
   EventHotKeyID myHotKeyID;
   EventHotKeyRef myHotKeyRef;
-  myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",(currentHint - 1)] cStringUsingEncoding:NSASCIIStringEncoding];
-  myHotKeyID.id = (UInt32)(currentHint - 1);
+  myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",currentHint] cStringUsingEncoding:NSASCIIStringEncoding];
+  myHotKeyID.id = (UInt32)currentHint;
   RegisterEventHotKey([keyCode integerValue], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
   [hotkeyRefs addObject:[NSValue valueWithPointer:myHotKeyRef]];
+  currentHint++;
 }
 
 CFComparisonResult leftToRightWindows(const void *val1, const void *val2, void *context) {
@@ -221,8 +223,25 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
         [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw];
       }
     }
+  } else if ([[[SlateConfig getInstance] getConfig:WINDOW_HINTS_ORDER] isEqualToString:WINDOW_HINTS_ORDER_PERSIST]) {
+    // same hint always
+    for (NSRunningApplication *app in [RunningApplications getInstance]) {
+      pid_t appPID = [app processIdentifier];
+      SlateLogger(@"I see application '%@' with pid '%d'", [app localizedName], appPID);
+      AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
+      CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:appRef];
+      if (!windowsArr || CFArrayGetCount(windowsArr) == 0) continue;
+      for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+        NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
+        if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
+        SlateLogger(@"  Hinting Window: %@", title);
+        if ([[RunningApplications getInstance] windowIdForTitle:title] < 0) continue;
+        [self setCurrentHint:[[RunningApplications getInstance] windowIdForTitle:title]];
+        [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw];
+      }
+    }
   } else {
-    // custom order
+    // custom sort order
     CFMutableArrayRef allWindows = CFArrayCreateMutable(kCFAllocatorDefault, 0, NULL);
     for (NSRunningApplication *app in [RunningApplications getInstance]) {
       pid_t appPID = [app processIdentifier];
@@ -251,7 +270,7 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
   EventHotKeyID myHotKeyID;
   EventHotKeyRef myHotKeyRef;
   myHotKeyID.signature = *[@"hotkeyESC" cStringUsingEncoding:NSASCIIStringEncoding];
-  myHotKeyID.id = (UInt32)(currentHint+1);
+  myHotKeyID.id = (UInt32)(ESC_HINT_ID);
   RegisterEventHotKey([keyCode integerValue], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
   [hotkeyRefs addObject:[NSValue valueWithPointer:myHotKeyRef]];
 
@@ -281,7 +300,7 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
   [hotkeyRefs removeAllObjects];
   if ([self hideTimer]) [[self hideTimer] invalidate];
   [self setHideTimer:nil];
-  for (NSWindowController *hint in hints) {
+  for (NSWindowController *hint in [hints allValues]) {
     [hint close];
   }
   [windows removeAllObjects];
@@ -292,19 +311,20 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
 }
 
 - (void)activateHintKey:(NSInteger)hintId {
-  if (hintId == currentHint+1) {
+  if (hintId == ESC_HINT_ID) {
     // escape key
     [self killHints];
     return;
   }
-  if (hintId >= [hints count]) {
+  NSNumber *currentHintNumber = [NSNumber numberWithInteger:hintId];
+  if ([hints objectForKey:currentHintNumber] == nil) {
+    SlateLogger(@"no hint window");
     return;
   }
-  if ([hints objectAtIndex:hintId]) {
-    AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:[[apps objectAtIndex:hintId] pointerValue] window:[[windows objectAtIndex:hintId] pointerValue]];
-    [aw focus];
-  }
+  AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:[[apps objectForKey:currentHintNumber] pointerValue] window:[[windows objectForKey:currentHintNumber] pointerValue]];
+  [aw focus];
   [self killHints];
+  SlateLogger(@"focus fail");
 }
 
 + (id)hintOperationFromString:(NSString *)hintOperation {

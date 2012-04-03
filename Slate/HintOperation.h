@@ -24,9 +24,9 @@
 
 @interface HintOperation : Operation {
 @private
-  NSMutableArray *hints;
-  NSMutableArray *windows;
-  NSMutableArray *apps;
+  NSMutableDictionary *hints;
+  NSMutableDictionary *windows;
+  NSMutableDictionary *apps;
   NSMutableArray *hotkeyRefs;
   NSTimer *hideTimer;
   AccessibilityWrapper *currentWindow;
@@ -35,9 +35,9 @@
   BOOL ignoreHidden;
 }
 
-@property NSMutableArray *hints;
-@property NSMutableArray *windows;
-@property NSMutableArray *apps;
+@property NSMutableDictionary *hints;
+@property NSMutableDictionary *windows;
+@property NSMutableDictionary *apps;
 @property NSMutableArray *hotkeyRefs;
 @property NSTimer *hideTimer;
 @property AccessibilityWrapper *currentWindow;

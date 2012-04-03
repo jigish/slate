@@ -170,6 +170,7 @@ extern NSString *const QUIT;
 extern NSString *const FORCE_QUIT;
 extern NSString *const HIDE;
 extern NSString *const WINDOW_HINTS_ORDER_NONE;
+extern NSString *const WINDOW_HINTS_ORDER_PERSIST;
 extern NSString *const WINDOW_HINTS_ORDER_LEFT_TO_RIGHT;
 extern NSString *const WINDOW_HINTS_ORDER_RIGHT_TO_LEFT;
 extern NSString *const SWITCH_ORIENTATION_HORIZONTAL;
