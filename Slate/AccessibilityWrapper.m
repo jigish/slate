@@ -147,7 +147,7 @@ static NSDictionary *unselectableApps = nil;
   CFTypeRef _window;
   pid_t focusPID = [app processIdentifier];
   AXUIElementCopyAttributeValue(AXUIElementCreateApplication(focusPID), (CFStringRef)NSAccessibilityFocusedWindowAttribute, (CFTypeRef *)&_window);
-  if (_window == NULL) return NO;
+  if (_window == NULL) return [AccessibilityWrapper focusApp:app];
   if (AXUIElementSetAttributeValue((AXUIElementRef)_window, (CFStringRef)NSAccessibilityMainAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
     SlateLogger(@"ERROR: Could not change focus to window");
     return NO;
@@ -187,6 +187,16 @@ static NSDictionary *unselectableApps = nil;
     return _windows;
   }
   return nil;
+}
+
++ (CFArrayRef)windowsInRunningApp:(NSRunningApplication *)app {
+  return [AccessibilityWrapper windowsInApp:AXUIElementCreateApplication([app processIdentifier])];
+}
+
++ (AXUIElementRef)focusedWindowInRunningApp:(NSRunningApplication *)app {
+  CFTypeRef _window;
+  AXUIElementCopyAttributeValue(AXUIElementCreateApplication([app processIdentifier]), (CFStringRef)NSAccessibilityFocusedWindowAttribute, (CFTypeRef *)&_window);
+  return _window;
 }
 
 + (BOOL)isMainWindow:(AXUIElementRef)window {
@@ -255,6 +265,21 @@ static NSDictionary *unselectableApps = nil;
                                                                   @"Dropbox", @"Dropbox",
                                                                   @"loginwindow", @"loginwindow", nil];
   }
+}
+
++ (BOOL)isWindow:(AXUIElementRef)element {
+  CFTypeRef _role;
+  AXUIElementCopyAttributeValue(element, (CFStringRef)NSAccessibilityRoleAttribute, &_role);
+  return [NSAccessibilityWindowRole isEqualToString:(__bridge NSString *)_role];
+}
+
++ (NSString *)getRole:(AXUIElementRef)element {
+  if (element == NULL || element == nil) return nil;
+  CFTypeRef _role;
+  if (AXUIElementCopyAttributeValue(element, (CFStringRef)NSAccessibilityRoleAttribute, &_role) == kAXErrorSuccess) {
+    return (__bridge NSString *)_role;
+  }
+  return nil;
 }
 
 @end

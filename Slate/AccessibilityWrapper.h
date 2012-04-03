@@ -46,11 +46,15 @@
 + (BOOL)focusApp:(NSRunningApplication *)app;
 + (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element;
 + (CFArrayRef)windowsInApp:(AXUIElementRef)app;
++ (CFArrayRef)windowsInRunningApp:(NSRunningApplication *)app;
++ (AXUIElementRef)focusedWindowInRunningApp:(NSRunningApplication *)app;
 + (BOOL)isMainWindow:(AXUIElementRef)window;
 + (NSString *)getTitle:(AXUIElementRef)window;
 + (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window;
 + (AXUIElementRef)windowUnderPoint:(NSPoint)point;
 + (void)createSystemWideElement;
 + (AXUIElementRef)applicationForElement:(AXUIElementRef)element;
++ (BOOL)isWindow:(AXUIElementRef)element;
++ (NSString *)getRole:(AXUIElementRef)element;
 
 @end

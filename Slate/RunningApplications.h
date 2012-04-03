@@ -22,11 +22,27 @@
 
 @interface RunningApplications : NSObject <NSFastEnumeration> {
   NSMutableArray *apps;
+  NSMutableArray *windows;
+  NSMutableDictionary *appToWindows;
+  NSMutableDictionary *titleToWindow;
+  NSInteger nextWindowNumber;
+  NSMutableArray *unusedWindowNumbers;
+  NSMutableDictionary *pidToObserver;
 }
 
 @property NSMutableArray *apps;
+@property NSMutableArray *windows;
+@property NSMutableDictionary *appToWindows;
+@property NSMutableDictionary *titleToWindow;
+@property (assign) NSInteger nextWindowNumber;
+@property NSMutableArray *unusedWindowNumbers;
+@property NSMutableDictionary *pidToObserver;
 
 + (RunningApplications *)getInstance;
 + (BOOL)isAppSelectable:(NSRunningApplication *)app;
+
+- (void)bringWindowToFront:(NSArray *)windowInfo;
+- (void)pruneWindows;
+- (NSInteger)windowIdForTitle:(NSString *)title;
 
 @end
