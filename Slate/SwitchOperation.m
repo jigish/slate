@@ -116,6 +116,7 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
   float iconSize = [[SlateConfig getInstance] getFloatConfig:SWITCH_ICON_SIZE];
   float iconPadding = [[SlateConfig getInstance] getFloatConfig:SWITCH_ICON_PADDING];
   float iconViewSize = iconSize + 2*iconPadding;
+  float selectedPadding = [[SlateConfig getInstance] getFloatConfig:SWITCH_SELECTED_PADDING];
   NSInteger switcherId = 0;
   BOOL showTitle = [[SlateConfig getInstance] getBoolConfig:SWITCH_SHOW_TITLES];
   float titleHeight = 0;
@@ -139,15 +140,15 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
   for (NSScreen *screen in [sw screens]) {
     NSRect frame;
     if ([[[SlateConfig getInstance] getConfig:SWITCH_ORIENTATION] isEqualToString:SWITCH_ORIENTATION_VERTICAL]) {
-      frame = NSMakeRect([screen frame].size.width/2 - (iconViewSize + titleWidth)/2,
-                         [screen frame].size.height/2 - ([apps count]*iconViewSize)/2,
-                         iconViewSize + titleWidth,
-                         [apps count]*iconViewSize);
+      frame = NSMakeRect([screen frame].size.width/2 - (iconViewSize + titleWidth)/2 - selectedPadding,
+                         [screen frame].size.height/2 - ([apps count]*iconViewSize)/2 - selectedPadding,
+                         iconViewSize + titleWidth + selectedPadding*2,
+                         [apps count]*iconViewSize + selectedPadding*2);
     } else {
-      frame = NSMakeRect([screen frame].size.width/2 - ([apps count]*iconViewSize)/2,
-                         [screen frame].size.height/2 - (iconViewSize + titleHeight)/2,
-                         [apps count]*iconViewSize,
-                         iconViewSize + titleHeight);
+      frame = NSMakeRect([screen frame].size.width/2 - ([apps count]*iconViewSize)/2 - selectedPadding,
+                         [screen frame].size.height/2 - (iconViewSize + titleHeight)/2 - selectedPadding,
+                         [apps count]*iconViewSize + selectedPadding*2,
+                         iconViewSize + titleHeight + selectedPadding*2);
     }
     NSWindow *window = [[SwitchWindow alloc] initWithContentRect:frame
                                                        styleMask:NSBorderlessWindowMask
@@ -168,9 +169,9 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
     for (NSRunningApplication *app in apps) {
       SwitchAppView *appView;
       if ([[[SlateConfig getInstance] getConfig:SWITCH_ORIENTATION] isEqualToString:SWITCH_ORIENTATION_VERTICAL]) {
-        appView = [[SwitchAppView alloc] initWithFrame:NSMakeRect(0, ([apps count] - i - 1)*iconViewSize, iconViewSize + titleWidth, iconViewSize)];
+        appView = [[SwitchAppView alloc] initWithFrame:NSMakeRect(selectedPadding, ([apps count] - i - 1)*iconViewSize + selectedPadding, iconViewSize + titleWidth, iconViewSize)];
       } else {
-        appView = [[SwitchAppView alloc] initWithFrame:NSMakeRect(i*iconViewSize, 0, iconViewSize, iconViewSize + titleHeight)];
+        appView = [[SwitchAppView alloc] initWithFrame:NSMakeRect(i*iconViewSize + selectedPadding, selectedPadding, iconViewSize, iconViewSize + titleHeight)];
       }
       [appView updateApp:app];
       [(NSView *)[[wc window] contentView] addSubview:appView];

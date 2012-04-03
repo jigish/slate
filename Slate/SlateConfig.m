@@ -497,6 +497,7 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:SWITCH_FONT_NAME_DEFAULT forKey:SWITCH_FONT_NAME];
   [configDefaults setObject:SWITCH_SHOW_TITLES_DEFAULT forKey:SWITCH_SHOW_TITLES];
   [configDefaults setObject:SWITCH_TYPE_DEFAULT forKey:SWITCH_TYPE];
+  [configDefaults setObject:SWITCH_SELECTED_PADDING_DEFAULT forKey:SWITCH_SELECTED_PADDING];
   [self setConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];
 }

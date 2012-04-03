@@ -106,6 +106,8 @@ NSString *const SWITCH_SHOW_TITLES = @"switchShowTitles";
 NSString *const SWITCH_SHOW_TITLES_DEFAULT = @"false";
 NSString *const SWITCH_TYPE = @"switchType";
 NSString *const SWITCH_TYPE_DEFAULT = @"app";
+NSString *const SWITCH_SELECTED_PADDING = @"switchSelectedPadding";
+NSString *const SWITCH_SELECTED_PADDING_DEFAULT = @"10";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";

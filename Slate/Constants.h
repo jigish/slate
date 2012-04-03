@@ -104,6 +104,8 @@ extern NSString *const SWITCH_SHOW_TITLES;
 extern NSString *const SWITCH_SHOW_TITLES_DEFAULT;
 extern NSString *const SWITCH_TYPE;
 extern NSString *const SWITCH_TYPE_DEFAULT;
+extern NSString *const SWITCH_SELECTED_PADDING;
+extern NSString *const SWITCH_SELECTED_PADDING_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;
