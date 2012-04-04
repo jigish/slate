@@ -144,29 +144,30 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
         [appToWindows setObject:[NSMutableArray array] forKey:appPID];
         AXUIElementRef appRef = AXUIElementCreateApplication([app processIdentifier]);
         CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:appRef];
-        if (!windowsArr || CFArrayGetCount(windowsArr) == 0) continue;
-        SlateLogger(@"      Has Windows: %@", [app localizedName]);
-        for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
-          NSMutableArray *windowInfo = [NSMutableArray array];
-          AXUIElementRef window = CFArrayGetValueAtIndex(windowsArr, i);
-          NSString *title = [AccessibilityWrapper getTitle:window];
-          if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
-          SlateLogger(@"        Title: %@", title);
-          [windowInfo addObject:title];
-          [windowInfo addObject:app];
-          [windowInfo addObject:[NSNumber numberWithInteger:nextWindowNumber]];
-          if ([app ownsMenuBar] && [AccessibilityWrapper isMainWindow:window]) {
-            [windows insertObject:windowInfo atIndex:0];
-            [[appToWindows objectForKey:appPID] insertObject:windowInfo atIndex:0];
-          } else if ([AccessibilityWrapper isMainWindow:window]) {
-            [windows addObject:windowInfo];
-            [[appToWindows objectForKey:appPID] insertObject:windowInfo atIndex:0];
-          } else {
-            [windows addObject:windowInfo];
-            [[appToWindows objectForKey:appPID] addObject:windowInfo];
+        if (windowsArr && CFArrayGetCount(windowsArr) > 0) {
+          SlateLogger(@"      Has Windows: %@", [app localizedName]);
+          for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+            NSMutableArray *windowInfo = [NSMutableArray array];
+            AXUIElementRef window = CFArrayGetValueAtIndex(windowsArr, i);
+            NSString *title = [AccessibilityWrapper getTitle:window];
+            if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
+            SlateLogger(@"        Title: %@", title);
+            [windowInfo addObject:title];
+            [windowInfo addObject:app];
+            [windowInfo addObject:[NSNumber numberWithInteger:nextWindowNumber]];
+            if ([app ownsMenuBar] && [AccessibilityWrapper isMainWindow:window]) {
+              [windows insertObject:windowInfo atIndex:0];
+              [[appToWindows objectForKey:appPID] insertObject:windowInfo atIndex:0];
+            } else if ([AccessibilityWrapper isMainWindow:window]) {
+              [windows addObject:windowInfo];
+              [[appToWindows objectForKey:appPID] insertObject:windowInfo atIndex:0];
+            } else {
+              [windows addObject:windowInfo];
+              [[appToWindows objectForKey:appPID] addObject:windowInfo];
+            }
+            [titleToWindow setObject:windowInfo forKey:title];
+            nextWindowNumber++;
           }
-          [titleToWindow setObject:windowInfo forKey:title];
-          nextWindowNumber++;
         }
         if ([app ownsMenuBar]) {
           currentApp = app;
