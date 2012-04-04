@@ -1,11 +1,10 @@
-Current Version: 0.4.19
+Current Version: 0.5.0
 
 ----------------- 0.5.0 -----------------
---------------- UNRELEASED --------------
 
 Fix Issue #32
 Release version of Switch operation
-Add configs:
+Add/Update configs:
   switchOrientation
   switchSecondsBetweenRepeat
   switchStopRepeatAtEdge
@@ -16,6 +15,12 @@ Add configs:
   switchFontName
   switchShowTitles
   switchType
+  switchSelectedPadding
+  switchSelectedColor -> switchSelectedBackgroundColor
+  switchSelectedBorderColor
+  switchSelectedBorderSize
+  switchRoundedCornerSize
+  windowHintOrder "persist" mode
 
 ----------------- 0.4.19 ----------------
 

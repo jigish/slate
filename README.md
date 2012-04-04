@@ -14,7 +14,7 @@ Slate currently works on Mac OS X 10.6 and above
   * create, delete, and activate snapshots of the current state of windows
 * Set default layouts for different monitor configurations which will activate when that configuration is detected.
 * Window Hints: an intuitive way to change window focus
-* \[Beta Version - Use at your own risk!\] A better, more customizable, application switcher.
+* A better, more customizable, application switcher.
 
 ## Credits ##
 
@@ -121,24 +121,24 @@ List of allowed configs:
 | `windowHintsIgnoreHiddenWindows` | Boolean | Default: `true`. If this is set to `true`, window hints will not show for windows that are hidden. Hints will show for all windows if this is `false`. A window is hidden if the window under the point at the center of where the hint overlay would show is not the window in question. |
 | `windowHintsTopLeftX` | Semicolon Separated Array of Expressions | Default: `(windowSizeX/2)-(windowHintsWidth/2);0`. The X offset for window hints from the window's top left point (right is positive, left is negative). If `windowHintsIgnoreHiddenWindows` is set to `true`, the `hint` operation will try each expression in this array (using the Y coordinate from the same index in `windowHintsTopLeftY`) sequetially to see if it represents a point that is visible. The `hint` operation will display a hint at the first visible point. Note that the number of elements in this array *must* equal the number of elements in `windowHintsTopLeftY` or all `hint` bindings will fail validation. |
 | `windowHintsTopLeftY` | Semicolon Separated Array of Expressions | Default: `(windowSizeY/2)-(windowHintsHeight/2);0`. The Y offset for window hints from the window's top left point (down is positive, up is negative). If `windowHintsIgnoreHiddenWindows` is set to `true`, the `hint` operation will try each expression in this array (using the X coordinate from the same index in `windowHintsTopLeftX`) sequetially to see if it represents a point that is visible. The `hint` operation will display a hint at the first visible point. Note that the number of elements in this array *must* equal the number of elements in `windowHintsTopLeftX` or all `hint` bindings will fail validation. |
-| `windowHintsOrder` | `none`, `leftToRight`, or `rightToLeft` | Default: `none`. Specifies the ordering of windows for Window Hints. If `none`, hints will be seemingly randomly ordered. If `leftToRight`, hints will be ordered from the left of the screen to the right of the screen. If `rightToLeft`, hints will be ordered from the right of the screen to the left of the screen |
-| `switchIconSize` | Number | Default: `100`. \[Beta Version - Use at your own risk!\] The size of the application icons for the `switch` operation |
-| `switchIconPadding` | Number | Default: `5`. \[UNRELEASED Beta Version - Use at your own risk!\] The padding around the application icons for the `switch` operation |
-| `switchBackgroundColor` | Semicolon Separated Array of Floats | Default: `50;53;58;0.3`. \[Beta Version - Use at your own risk!\] The background color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
-| `switchSelectedBackgroundColor` | Semicolon Separated Array of Floats | Default: `50;53;58;0.9`. \[Beta Version - Use at your own risk!\] The selected background color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
-| `switchSelectedBorderColor` | Semicolon Separated Array of Floats | Default: `230;230;230;0.9`. \[Beta Version - Use at your own risk!\] The selected border color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
-| `switchSelectedBorderSize` | Number | Default: `2`. \[Beta Version - Use at your own risk!\] The size of the selected border of the `switch` operation. Set this to `0` if you do not a border |
-| `switchRoundedCornerSize` | Number | Default: `5`. \[Beta Version - Use at your own risk!\] The size of the rounded corners of the `switch` operation. Set this to `0` if you do not want rounded corners |
-| `switchOrientation` | `horiztonal` or `vertical` | Default: `horizontal`. \[UNRELEASED Beta Version - Use at your own risk!\] Which direction to grow the application switcher. |
-| `switchSecondsBetweenRepeat` | Number | Default: `0.1`. \[UNRELEASED Beta Version - Use at your own risk!\] The number of seconds between repeating the forward/back keypresses for the switch operation. |
-| `switchStopRepeatAtEdge` | Boolean | Default: `true`. \[UNRELEASED Beta Version - Use at your own risk!\] If `true`, when holding down the switch operation forward/back keys repeats will trigger until the selected app reaches the end/beginning of the list. If `false`, holding down the switch operation forward/back keys will cycle through the app list without stopping |
-| `switchOnlyFocusMainWindow` | Boolean | Default: `true`. \[UNRELEASED Beta Version - Use at your own risk!\] If `true`, the switch operation will only bring the main window of the selected app forward. If `false`, the switch operation will work similar to the default application switcher and bring all windows of the selected app forward. |
-| `switchShowTitles` | Boolean | Default: `false`. \[UNRELEASED Beta Version - Use at your own risk!\] If `true`, the switch operation will show the title of the items in the list as well. |
-| `switchFontColor` | Semicolon Separated Array of Floats | Default: `255;255;255;1.0`. \[UNRELEASED Beta Version - Use at your own risk!\] The font color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
-| `switchFontName` | String | Default: `Helvetica`. \[UNRELEASED Beta Version - Use at your own risk!\] The name of the `switch` operation title font |
-| `switchFontSize` | Number | Default: `14`. \[UNRELEASED Beta Version - Use at your own risk!\] The size of the `switch` operation font |
-| `switchType` | `app` or `window` | Default: `app`. \[UNRELEASED and UNIMPLEMENTED Beta Version - Use at your own risk!\] If `app`, the `switch` operation will present a list of applications ordered by last focus. If `window` the `switch` operation will present a list of windows ordered by last focus. |
-| `switchSelectedPadding` | Number | Default: `10`. \[UNRELEASED Beta Version - Use at your own risk!\] The size of the padding betweeen the edge of the switch window and the edge of the selected app selected background |
+| `windowHintsOrder` | `none`, `persist`, `leftToRight`, or `rightToLeft` | Default: `persist`. Specifies the ordering of windows for Window Hints. If `none`, hints will be seemingly randomly ordered. If `persist`, hints will be randomly ordered but will remain the same throughout the life of the window. If `leftToRight`, hints will be ordered from the left of the screen to the right of the screen. If `rightToLeft`, hints will be ordered from the right of the screen to the left of the screen |
+| `switchIconSize` | Number | Default: `100`. The size of the application icons for the `switch` operation |
+| `switchIconPadding` | Number | Default: `5`. The padding around the application icons for the `switch` operation |
+| `switchBackgroundColor` | Semicolon Separated Array of Floats | Default: `50;53;58;0.3`. The background color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `switchSelectedBackgroundColor` | Semicolon Separated Array of Floats | Default: `50;53;58;0.9`. The selected background color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `switchSelectedBorderColor` | Semicolon Separated Array of Floats | Default: `230;230;230;0.9`. The selected border color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `switchSelectedBorderSize` | Number | Default: `2`. The size of the selected border of the `switch` operation. Set this to `0` if you do not a border |
+| `switchRoundedCornerSize` | Number | Default: `5`. The size of the rounded corners of the `switch` operation. Set this to `0` if you do not want rounded corners |
+| `switchOrientation` | `horiztonal` or `vertical` | Default: `horizontal`. Which direction to grow the application switcher. |
+| `switchSecondsBetweenRepeat` | Number | Default: `0.1`. The number of seconds between repeating the forward/back keypresses for the switch operation. |
+| `switchStopRepeatAtEdge` | Boolean | Default: `true`. If `true`, when holding down the switch operation forward/back keys repeats will trigger until the selected app reaches the end/beginning of the list. If `false`, holding down the switch operation forward/back keys will cycle through the app list without stopping |
+| `switchOnlyFocusMainWindow` | Boolean | Default: `true`. If `true`, the switch operation will only bring the main window of the selected app forward. If `false`, the switch operation will work similar to the default application switcher and bring all windows of the selected app forward. |
+| `switchShowTitles` | Boolean | Default: `false`. If `true`, the switch operation will show the title of the items in the list as well. |
+| `switchFontColor` | Semicolon Separated Array of Floats | Default: `255;255;255;1.0`. The font color for the `switch` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `switchFontName` | String | Default: `Helvetica`. The name of the `switch` operation title font |
+| `switchFontSize` | Number | Default: `14`. The size of the `switch` operation font |
+| `switchType` | `app` or `window` | Default: `app`. \[UNIMPLEMENTED - coming in 1.1\] If `app`, the `switch` operation will present a list of applications ordered by last focus. If `window` the `switch` operation will present a list of windows ordered by last focus. |
+| `switchSelectedPadding` | Number | Default: `10`. The size of the padding betweeen the edge of the switch window and the edge of the selected app selected background |
 
 Example:
 
@@ -420,7 +420,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     **Note:** There are *tons* of config options to tweak this.
 
-* \[Beta Version - Use at your own risk!\] A Better Application Switcher: `switch`
+* A Better Application Switcher: `switch`
 
 *NOTE:* If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
