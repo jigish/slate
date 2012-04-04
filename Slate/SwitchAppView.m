@@ -154,18 +154,68 @@ static float switchFontHeight = -1;
 
 - (void)drawRect:(NSRect)dirtyRect {
   NSColor *backgroundColor = [NSColor clearColor];
+  NSColor *borderColor = [NSColor clearColor];
   if (selected) {
-    NSArray *bgColorArr = [[SlateConfig getInstance] getArrayConfig:SWITCH_SELECTED_COLOR];
-    if ([bgColorArr count] < 4) bgColorArr = [SWITCH_SELECTED_COLOR_DEFAULT componentsSeparatedByString:SEMICOLON];
+    NSArray *bgColorArr = [[SlateConfig getInstance] getArrayConfig:SWITCH_SELECTED_BACKGROUND_COLOR];
+    if ([bgColorArr count] < 4) bgColorArr = [SWITCH_SELECTED_BACKGROUND_COLOR_DEFAULT componentsSeparatedByString:SEMICOLON];
     backgroundColor = [NSColor colorWithDeviceRed:[[bgColorArr objectAtIndex:0] floatValue]/255.0
                                                      green:[[bgColorArr objectAtIndex:1] floatValue]/255.0
                                                       blue:[[bgColorArr objectAtIndex:2] floatValue]/255.0
                                                      alpha:[[bgColorArr objectAtIndex:3] floatValue]];
+    NSArray *borderColorArr = [[SlateConfig getInstance] getArrayConfig:SWITCH_SELECTED_BORDER_COLOR];
+    if ([borderColorArr count] < 4) bgColorArr = [SWITCH_SELECTED_BORDER_COLOR_DEFAULT componentsSeparatedByString:SEMICOLON];
+    borderColor = [NSColor colorWithDeviceRed:[[borderColorArr objectAtIndex:0] floatValue]/255.0
+                                        green:[[borderColorArr objectAtIndex:1] floatValue]/255.0
+                                         blue:[[borderColorArr objectAtIndex:2] floatValue]/255.0
+                                        alpha:[[borderColorArr objectAtIndex:3] floatValue]];
   }
-  [backgroundColor set];
+  float borderSize = [[SlateConfig getInstance] getFloatConfig:SWITCH_SELECTED_BORDER_SIZE];
   float cornerSize = [[SlateConfig getInstance] getFloatConfig:SWITCH_ROUNDED_CORNER_SIZE];
-  NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
-  [path fill];
+  [[NSGraphicsContext currentContext] saveGraphicsState];
+  [[NSGraphicsContext currentContext] setShouldAntialias:YES];
+  if (borderSize > 0 && selected) {
+    [backgroundColor set];
+    [NSBezierPath setDefaultLineWidth:1.0];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect([self bounds].origin.x+borderSize/2,
+                                                                            [self bounds].origin.y+borderSize/2,
+                                                                            [self bounds].size.width-borderSize,
+                                                                            [self bounds].size.height-borderSize)
+                                                         xRadius:cornerSize
+                                                         yRadius:cornerSize];
+    [path fill];
+    [borderColor set];
+    [NSBezierPath setDefaultLineWidth:borderSize];
+    path = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect([self bounds].origin.x+borderSize/2,
+                                                                            [self bounds].origin.y+borderSize/2,
+                                                                            [self bounds].size.width-borderSize,
+                                                                            [self bounds].size.height-borderSize)
+                                                         xRadius:cornerSize
+                                                         yRadius:cornerSize];
+    [path stroke];
+  } else {
+    [backgroundColor set];
+    [NSBezierPath setDefaultLineWidth:1.0];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
+    [path fill];
+  }
+  /*if (borderSize > 0 && selected) {
+    [borderColor set];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
+    [path fill];
+    [backgroundColor set];
+    path = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect([self bounds].origin.x+borderSize,
+                                                                            [self bounds].origin.y+borderSize,
+                                                                            [self bounds].size.width-borderSize*2,
+                                                                            [self bounds].size.height-borderSize*2)
+                                           xRadius:cornerSize
+                                           yRadius:cornerSize];
+    [path fill];
+  } else {
+    [backgroundColor set];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
+    [path fill];
+  }*/
+  [[NSGraphicsContext currentContext] restoreGraphicsState];
 }
 
 @end

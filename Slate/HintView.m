@@ -67,6 +67,8 @@ static NSFont *hintFont = nil;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
+  [[NSGraphicsContext currentContext] saveGraphicsState];
+  [[NSGraphicsContext currentContext] setShouldAntialias:YES];
   [hintBackgroundColor set];
   float cornerSize = [[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_ROUNDED_CORNER_SIZE];
   NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
@@ -77,6 +79,7 @@ static NSFont *hintFont = nil;
                                                                     NSFontAttributeName,
                                                                     hintFontColor,
                                                                     NSForegroundColorAttributeName, nil]];
+  [[NSGraphicsContext currentContext] restoreGraphicsState];
 }
 
 @end
