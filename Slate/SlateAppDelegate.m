@@ -168,11 +168,13 @@ static EventHandlerRef modifiersEvent;
         }
         // Setup timer to repeat operation
         currentHotKey = hkCom;
-        currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:([[binding op] isKindOfClass:[SwitchOperation class]] ? SWITCH_SECONDS_BETWEEN_REPEAT : SECONDS_BETWEEN_REPEAT)]
-                                                        target:selfRef
-                                                      selector:@selector(timerActivateBinding:)
-                                                      userInfo:nil
-                                                       repeats:YES];
+        if (![[binding op] isKindOfClass:[SwitchOperation class]] || !keyUpSeen) {
+          currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:([[binding op] isKindOfClass:[SwitchOperation class]] ? SWITCH_SECONDS_BETWEEN_REPEAT : SECONDS_BETWEEN_REPEAT)]
+                                                          target:selfRef
+                                                        selector:@selector(timerActivateBinding:)
+                                                        userInfo:nil
+                                                         repeats:YES];
+        }
       }
     }
   }
@@ -196,13 +198,13 @@ CGEventRef EatAppSwitcherCallback(CGEventTapProxy proxy, CGEventType type,  CGEv
       ((flags & kCGEventFlagMaskSecondaryFn) != kCGEventFlagMaskSecondaryFn)) {
     SlateLogger(@"  IS CMD+TAB");
     if (keyUpSeen) {
+      keyUpSeen = NO;
       SlateAppDelegate *del = (__bridge SlateAppDelegate *)refcon;
       EventHotKeyID myHotKeyID;
       NSInteger hotkeyID = ((flags & kCGEventFlagMaskShift) == kCGEventFlagMaskShift) ? [del cmdShiftTabBinding] : [del cmdTabBinding];
       myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
       myHotKeyID.id = (UInt32)hotkeyID;
       [del activateBinding:myHotKeyID isRepeat:NO];
-      keyUpSeen = NO;
     }
     return NULL;
   }
