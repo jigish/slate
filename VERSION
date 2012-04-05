@@ -1,4 +1,8 @@
-Current Version: 0.5.0
+Current Version: 0.5.1
+
+----------------- 0.5.1 -----------------
+
+Fix Issue #56 (unrecognized selector on startup for Mac OS X 10.6)
 
 ----------------- 0.5.0 -----------------
 
