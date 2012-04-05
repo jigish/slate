@@ -155,7 +155,7 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
             [windowInfo addObject:title];
             [windowInfo addObject:app];
             [windowInfo addObject:[NSNumber numberWithInteger:nextWindowNumber]];
-            if ([app ownsMenuBar] && [AccessibilityWrapper isMainWindow:window]) {
+            if ([self isCurrentApplication:app] && [AccessibilityWrapper isMainWindow:window]) {
               [windows insertObject:windowInfo atIndex:0];
               [[appToWindows objectForKey:appPID] insertObject:windowInfo atIndex:0];
             } else if ([AccessibilityWrapper isMainWindow:window]) {
@@ -169,7 +169,7 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
             nextWindowNumber++;
           }
         }
-        if ([app ownsMenuBar]) {
+        if ([self isCurrentApplication:app]) {
           currentApp = app;
         }
         AXError err;
@@ -197,13 +197,24 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
 }
 
 - (NSRunningApplication *)currentApplication {
-  NSArray *appsArr = [[NSWorkspace sharedWorkspace] runningApplications];
-  for (NSRunningApplication *app in appsArr) {
-    if ([RunningApplications isAppSelectable:app]) {
-      if ([app ownsMenuBar]) return app;
+  // ownsMenuBar is 10.7+ only
+  if ([[NSRunningApplication currentApplication] respondsToSelector:@selector(ownsMenuBar)]) {
+    NSArray *appsArr = [[NSWorkspace sharedWorkspace] runningApplications];
+    for (NSRunningApplication *app in appsArr) {
+      if ([RunningApplications isAppSelectable:app]) {
+        if ([app ownsMenuBar]) return app;
+      }
     }
   }
   return [NSRunningApplication currentApplication];
+}
+
+- (BOOL)isCurrentApplication:(NSRunningApplication *)app {
+  // ownsMenuBar is 10.7+ only
+  if ([[NSRunningApplication currentApplication] respondsToSelector:@selector(ownsMenuBar)]) {
+    return [app ownsMenuBar];
+  }
+  return app == [NSRunningApplication currentApplication];
 }
 
 - (void)pruneWindows {
