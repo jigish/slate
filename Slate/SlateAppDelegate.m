@@ -135,11 +135,11 @@ static EventHandlerRef modifiersEvent;
       }
       // Setup timer to repeat operation
       currentHotKey = hkCom;
-      currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:SWITCH_SECONDS_BETWEEN_REPEAT]
+      currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:(isRepeat ? SWITCH_SECONDS_BETWEEN_REPEAT : SWITCH_SECONDS_BEFORE_REPEAT)]
                                                       target:selfRef
                                                     selector:@selector(timerActivateBinding:)
                                                     userInfo:nil
-                                                     repeats:YES];
+                                                     repeats:NO];
     }
     return noErr;
   }
@@ -169,11 +169,13 @@ static EventHandlerRef modifiersEvent;
         // Setup timer to repeat operation
         currentHotKey = hkCom;
         if (![[binding op] isKindOfClass:[SwitchOperation class]] || !keyUpSeen) {
-          currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:([[binding op] isKindOfClass:[SwitchOperation class]] ? SWITCH_SECONDS_BETWEEN_REPEAT : SECONDS_BETWEEN_REPEAT)]
+          currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[SlateConfig getInstance] getDoubleConfig:([[binding op] isKindOfClass:[SwitchOperation class]] ?
+                                                                                                             (isRepeat ? SWITCH_SECONDS_BETWEEN_REPEAT : SWITCH_SECONDS_BEFORE_REPEAT) :
+                                                                                                             (isRepeat ? SECONDS_BETWEEN_REPEAT : SECONDS_BEFORE_REPEAT))]
                                                           target:selfRef
                                                         selector:@selector(timerActivateBinding:)
                                                         userInfo:nil
-                                                         repeats:YES];
+                                                         repeats:NO];
         }
       }
     }

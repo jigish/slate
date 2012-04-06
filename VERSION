@@ -1,4 +1,13 @@
-Current Version: 0.5.1
+Current Version: 0.5.2
+
+----------------- 0.5.2 -----------------
+
+Add Configs:
+  secondsBeforeRepeat
+  switchSecondsBeforeRepeat
+Changed Configs:
+  secondsBetweenRepeat (Default 0.1 - was 0.2)
+  switchSecondsBetweenRepeat (Default 0.05 - was 0.1)
 
 ----------------- 0.5.1 -----------------
 

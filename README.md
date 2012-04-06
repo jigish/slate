@@ -104,7 +104,8 @@ List of allowed configs:
 | `nudgePercentOf` | String | Default: `windowSize`. Will use this value for the nudge percent calculation. Possible values are `windowSize` and `screenSize`. |
 | `resizePercentOf` | String | Default: `windowSize`. Will use this value for the resize percent calculation. Possible values are `windowSize` and `screenSize`. |
 | `repeatOnHoldOps` | String | Default: `resize,nudge`. Comma separated list of operations that should repeat when the hotkey is held. |
-| `secondsBetweenRepeat` | Number | Default: `0.2`. The number of seconds between repeats (for ops in `repeatOnHoldOps`) |
+| `secondsBeforeRepeat` | Number | Default: `0.4`. The number of seconds before repeating starts (for ops in `repeatOnHoldOps`) |
+| `secondsBetweenRepeat` | Number | Default: `0.1`. The number of seconds between repeats (for ops in `repeatOnHoldOps`) |
 | `checkDefaultsOnLoad` | Boolean | Default: `false`. `true` causes the default directives to be checked/triggered after any configuration load |
 | `focusCheckWidth` | Integer | Default: `100`. The width (in pixels) of the rectangle used to check directions in the focus directive. Only used for right, left, up, above, down, and below directions. The larger this is, the futher away focus will check for adjacent windows. Consequently, the larger this is, the more irritatingly stupid focus can be. |
 | `focusCheckWidthMax` | Integer | Default: `100`. If set to anything above focusCheckWidth, the focus option will keep expanding the rectangle used to check directions by focusCheckWidth if it does not find a window until it either finds a window or the width of the rectangle is greater than `focusCheckWidthMax` |
@@ -130,7 +131,8 @@ List of allowed configs:
 | `switchSelectedBorderSize` | Number | Default: `2`. The size of the selected border of the `switch` operation. Set this to `0` if you do not a border |
 | `switchRoundedCornerSize` | Number | Default: `5`. The size of the rounded corners of the `switch` operation. Set this to `0` if you do not want rounded corners |
 | `switchOrientation` | `horiztonal` or `vertical` | Default: `horizontal`. Which direction to grow the application switcher. |
-| `switchSecondsBetweenRepeat` | Number | Default: `0.1`. The number of seconds between repeating the forward/back keypresses for the switch operation. |
+| `switchSecondsBeforeRepeat` | Number | Default: `0.4`. The number of seconds before repeating starts for forward/back keypresses for the switch operation |
+| `switchSecondsBetweenRepeat` | Number | Default: `0.05`. The number of seconds between repeating the forward/back keypresses for the switch operation. |
 | `switchStopRepeatAtEdge` | Boolean | Default: `true`. If `true`, when holding down the switch operation forward/back keys repeats will trigger until the selected app reaches the end/beginning of the list. If `false`, holding down the switch operation forward/back keys will cycle through the app list without stopping |
 | `switchOnlyFocusMainWindow` | Boolean | Default: `true`. If `true`, the switch operation will only bring the main window of the selected app forward. If `false`, the switch operation will work similar to the default application switcher and bring all windows of the selected app forward. |
 | `switchShowTitles` | Boolean | Default: `false`. If `true`, the switch operation will show the title of the items in the list as well. |
