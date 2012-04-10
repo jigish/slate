@@ -306,23 +306,25 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   [appToWindows setObject:[NSMutableArray array] forKey:appPID];
   // add already created windows
   CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:AXUIElementCreateApplication([launchedApp processIdentifier])];
-  for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
-    AXUIElementRef element = CFArrayGetValueAtIndex(windowsArr, i);
-    NSString *title = [AccessibilityWrapper getTitle:element];
-    if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
-    NSMutableArray *windowInfo = [NSMutableArray array];
-    [windowInfo addObject:title];
-    [windowInfo addObject:[NSRunningApplication runningApplicationWithProcessIdentifier:[launchedApp processIdentifier]]];
-    if ([[self unusedWindowNumbers] count] > 0) {
-      [windowInfo addObject:[[self unusedWindowNumbers] objectAtIndex:0]];
-      [[self unusedWindowNumbers] removeObjectAtIndex:0];
-    } else {
-      [windowInfo addObject:[NSNumber numberWithInteger:[self nextWindowNumber]]];
-      [self setNextWindowNumber:[self nextWindowNumber]+1];
+  if (windowsArr != NULL) {
+    for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+      AXUIElementRef element = CFArrayGetValueAtIndex(windowsArr, i);
+      NSString *title = [AccessibilityWrapper getTitle:element];
+      if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
+      NSMutableArray *windowInfo = [NSMutableArray array];
+      [windowInfo addObject:title];
+      [windowInfo addObject:[NSRunningApplication runningApplicationWithProcessIdentifier:[launchedApp processIdentifier]]];
+      if ([[self unusedWindowNumbers] count] > 0) {
+        [windowInfo addObject:[[self unusedWindowNumbers] objectAtIndex:0]];
+        [[self unusedWindowNumbers] removeObjectAtIndex:0];
+      } else {
+        [windowInfo addObject:[NSNumber numberWithInteger:[self nextWindowNumber]]];
+        [self setNextWindowNumber:[self nextWindowNumber]+1];
+      }
+      [[self windows] insertObject:windowInfo atIndex:0];
+      [[self titleToWindow] setObject:windowInfo forKey:title];
+      [[[self appToWindows] objectForKey:[NSNumber numberWithInteger:[launchedApp processIdentifier]]] addObject:windowInfo];
     }
-    [[self windows] insertObject:windowInfo atIndex:0];
-    [[self titleToWindow] setObject:windowInfo forKey:title];
-    [[[self appToWindows] objectForKey:[NSNumber numberWithInteger:[launchedApp processIdentifier]]] addObject:windowInfo];
   }
   AXError err;
   AXUIElementRef sendingApp = AXUIElementCreateApplication([launchedApp processIdentifier]);
