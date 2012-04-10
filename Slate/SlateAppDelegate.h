@@ -55,6 +55,7 @@
 - (IBAction)reconfig;
 - (IBAction)currentWindowInfo;
 - (IBAction)configurationHelper;
+- (IBAction)aboutWindow;
 - (void)loadConfig;
 - (void)registerHotKeys;
 - (void)createMenuSnapshotOperations;

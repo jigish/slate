@@ -115,6 +115,14 @@ static EventHandlerRef modifiersEvent;
   [menuActivateSnapshotOperation doOperation];
 }
 
+- (IBAction)aboutWindow {
+  [NSApp orderFrontStandardAboutPanel:self];
+  NSArray *windows = [NSApp windows];
+  for (NSWindow *window in windows) {
+    [window setLevel:(NSScreenSaverWindowLevel - 1)];
+  }
+}
+
 - (OSStatus)timerActivateBinding:(NSTimer *)timer {
   return [self activateBinding:currentHotKey isRepeat:YES];
 }
@@ -293,16 +301,19 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
   windowInfoController = [[NSWindowController alloc] initWithWindow:windowInfo];
   configHelperController = [[NSWindowController alloc] initWithWindow:configHelper];
 
-  NSMenuItem *takeSnapshotItem = [statusMenu insertItemWithTitle:@"Take Snapshot" action:@selector(takeSnapshot) keyEquivalent:@"" atIndex:1];
+  NSMenuItem *aboutItem = [statusMenu insertItemWithTitle:@"About Slate" action:@selector(aboutWindow) keyEquivalent:@"" atIndex:0];
+  [aboutItem setTarget:self];
+
+  NSMenuItem *takeSnapshotItem = [statusMenu insertItemWithTitle:@"Take Snapshot" action:@selector(takeSnapshot) keyEquivalent:@"" atIndex:3];
   [takeSnapshotItem setTarget:self];
 
-  activateSnapshotItem = [statusMenu insertItemWithTitle:@"Activate Snapshot" action:@selector(activateSnapshot) keyEquivalent:@"" atIndex:2];
+  activateSnapshotItem = [statusMenu insertItemWithTitle:@"Activate Snapshot" action:@selector(activateSnapshot) keyEquivalent:@"" atIndex:4];
   [activateSnapshotItem setTarget:self];
 
-  NSMenuItem *loadConfigItem = [statusMenu insertItemWithTitle:@"Load Config" action:@selector(reconfig) keyEquivalent:@"" atIndex:0];
+  NSMenuItem *loadConfigItem = [statusMenu insertItemWithTitle:@"Load Config" action:@selector(reconfig) keyEquivalent:@"" atIndex:1];
   [loadConfigItem setTarget:self];
 
-  NSMenuItem *windowInfoItem = [statusMenu insertItemWithTitle:@"Current Window Info" action:@selector(currentWindowInfo) keyEquivalent:@"" atIndex:1];
+  NSMenuItem *windowInfoItem = [statusMenu insertItemWithTitle:@"Current Window Info" action:@selector(currentWindowInfo) keyEquivalent:@"" atIndex:3];
   [windowInfoItem setTarget:self];
 
   //NSMenuItem *configInfoItem = [statusMenu insertItemWithTitle:@"Configuration Helper" action:@selector(configurationHelper) keyEquivalent:@"" atIndex:2];
