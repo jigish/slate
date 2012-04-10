@@ -354,7 +354,7 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 
   // Setup App list
   NSArray *rapps = [[RunningApplications getInstance] apps];
-  if ([rapps count] > 0) [AccessibilityWrapper focusApp:[rapps objectAtIndex:0]];
+  if ([rapps count] > 0) [AccessibilityWrapper focusMainWindow:[rapps objectAtIndex:0]];
 
   selfRef = self;
 }
