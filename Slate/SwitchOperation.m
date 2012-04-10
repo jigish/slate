@@ -274,6 +274,7 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
 - (BOOL)modifiersChanged:(UInt32)was new:(UInt32)new {
   if (was != new) {
     [self killSwitchers];
+    if ([[apps objectAtIndex:currentApp] isHidden]) { [[apps objectAtIndex:currentApp] unhide]; }
     if ([[SlateConfig getInstance] getBoolConfig:SWITCH_ONLY_FOCUS_MAIN_WINDOW]) {
       [AccessibilityWrapper focusMainWindow:[apps objectAtIndex:currentApp]];
     } else {
