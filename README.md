@@ -235,7 +235,7 @@ modifiers is a comma or semicolon separated list of standard modifier keys. Allo
 * Command: `cmd`
 * Shift: `shift`
 
-*NOTE:* If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
+**Note:** If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
 #### Operation ####
 
@@ -375,7 +375,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to create a snapshot called `theName`, save that snapshot to disk, and treat it as a stack so you can hit the keystroke multiple times to push snapshots onto the stack.
 
-**Note:** There is a menu option to take a snapshot of the current screen configuration.
+    **Note:** There is a menu option to take a snapshot of the current screen configuration.
 
 * Delete a snapshot: `delete-snapshot name options`
 
@@ -403,7 +403,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to activate the snapshot called `theName` if it exists. This will also delete the snapshot (or pop it off the stack if the snapshot is a stack).
 
-**Note:** There is a menu option to activate the snapshot that you may have created using the menu option.
+    **Note:** There is a menu option to activate the snapshot that you may have created using the menu option.
 
 * Show Window Hints (similar to Link Hints in Vimium except for Windows): `hint characters`
 
@@ -424,7 +424,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
 * A Better Application Switcher: `switch`
 
-*NOTE:* If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
+    **Note:** If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
     Example:
 
@@ -458,7 +458,7 @@ Please send all questions, bug reports, suggestions, or general commentary to [J
 
 # Allowed Keys #
 
-*NOTE:* If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
+**Note:** If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
     '
     ,
