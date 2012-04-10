@@ -1,4 +1,10 @@
-Current Version: 0.5.2
+Current Version: 0.5.3
+
+----------------- 0.5.3 -----------------
+
+Fix Issue #58, #60, #61, #62
+Fixed exception on cmd+shift+tab with default switch operation
+Fixed switch op to properly switch to hidden apps
 
 ----------------- 0.5.2 -----------------
 
