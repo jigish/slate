@@ -63,7 +63,10 @@ static const UInt32 ESC_HINT_ID = 10001;
 
 - (NSString *)currentHintCode {
   NSString *code = nil;
-  if (currentHint >= [hintCharacters length]) return code;
+  if (currentHint >= [hintCharacters length]) {
+    SlateLogger(@"    %ld > %ld, not giving code", currentHint, [hintCharacters length]);
+    return code;
+  }
   code = [hintCharacters substringWithRange:NSMakeRange(currentHint, 1)];
   SlateLogger(@"    GIVING CODE: %@", code);
   return code;
@@ -78,9 +81,13 @@ static const UInt32 ESC_HINT_ID = 10001;
 }
 
 - (void)createHintWindowFor:(AXUIElementRef)windowRef inApp:(AXUIElementRef)appRef screenWrapper:(ScreenWrapper *)sw {
+  SlateLogger(@"    attempting to hint");
   NSString *hintCode = [self currentHintCode];
+  if (hintCode == nil) {
+    SlateLogger(@"    HINTCODE NIL!");
+    return;
+  }
   NSNumber *currentHintNumber = [NSNumber numberWithInteger:currentHint];
-  if (hintCode == nil) return;
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:windowRef];
   NSPoint wTL = [aw getCurrentTopLeft];
   NSSize wSize = [aw getCurrentSize];
@@ -90,7 +97,10 @@ static const UInt32 ESC_HINT_ID = 10001;
   if (screenId < 0) screenId = [sw getScreenIdForPoint:NSMakePoint(wTL.x+wSize.width, wTL.y)];
   if (screenId < 0) screenId = [sw getScreenIdForPoint:NSMakePoint(wTL.x+wSize.width, wTL.y+wSize.height)];
   if (screenId < 0) screenId = [sw getScreenIdForPoint:NSMakePoint(wTL.x, wTL.y+wSize.height)];
-  if (screenId < 0) return;
+  if (screenId < 0)  {
+    SlateLogger(@"    Window is offscreen, not creating hint.");
+    return;
+  }
   NSScreen *screen = [[sw screens] objectAtIndex:screenId];
   // convert top left to screen relative for the NSWindow
   NSPoint tl = [sw convertTopLeftToScreenRelative:wTL screen:screenId];
@@ -151,6 +161,7 @@ static const UInt32 ESC_HINT_ID = 10001;
     NSWindowController *wc = [[NSWindowController alloc] initWithWindow:window];
     [hints setObject:wc forKey:currentHintNumber];
   } else {
+    SlateLogger(@"        Existing Window!");
     NSWindowController *wc = [hints objectForKey:currentHintNumber];
     [[wc window] setFrame:NSMakeRect(frame.origin.x+screen.frame.origin.x, frame.origin.y+screen.frame.origin.y, frame.size.width, frame.size.height) display:NO];
     [wc showWindow:[wc window]];
