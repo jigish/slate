@@ -84,7 +84,12 @@ static const UInt32 ESC_HINT_ID = 10001;
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:windowRef];
   NSPoint wTL = [aw getCurrentTopLeft];
   NSSize wSize = [aw getCurrentSize];
+  // check corners and center to see which screen window is on
   NSInteger screenId = [sw getScreenIdForPoint:wTL];
+  if (screenId < 0) screenId = [sw getScreenIdForPoint:NSMakePoint(wTL.x+wSize.width/2, wTL.y+wSize.height/2)];
+  if (screenId < 0) screenId = [sw getScreenIdForPoint:NSMakePoint(wTL.x+wSize.width, wTL.y)];
+  if (screenId < 0) screenId = [sw getScreenIdForPoint:NSMakePoint(wTL.x+wSize.width, wTL.y+wSize.height)];
+  if (screenId < 0) screenId = [sw getScreenIdForPoint:NSMakePoint(wTL.x, wTL.y+wSize.height)];
   if (screenId < 0) return;
   NSScreen *screen = [[sw screens] objectAtIndex:screenId];
   // convert top left to screen relative for the NSWindow
