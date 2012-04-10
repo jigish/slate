@@ -212,6 +212,7 @@ CGEventRef EatAppSwitcherCallback(CGEventTapProxy proxy, CGEventType type,  CGEv
       SlateAppDelegate *del = (__bridge SlateAppDelegate *)refcon;
       EventHotKeyID myHotKeyID;
       NSInteger hotkeyID = ((flags & kCGEventFlagMaskShift) == kCGEventFlagMaskShift) ? [del cmdShiftTabBinding] : [del cmdTabBinding];
+      if (hotkeyID < 0) return NULL;
       myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
       myHotKeyID.id = (UInt32)hotkeyID;
       [del activateBinding:myHotKeyID isRepeat:NO];
