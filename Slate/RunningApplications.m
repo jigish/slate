@@ -41,6 +41,26 @@ static RunningApplications *_instance = nil;
   return [app activationPolicy] == NSApplicationActivationPolicyRegular;
 }
 
+static void windowCreated(pid_t currPID, AXUIElementRef element, RunningApplications *ref) {
+  SlateLogger(@">> WINDOW CREATED <<");
+  [ref pruneWindows];
+  NSString *title = [AccessibilityWrapper getTitle:element];
+  if (title == nil || [EMPTY isEqualToString:title]) return; // skip empty title windows because they are invisible
+  NSMutableArray *windowInfo = [NSMutableArray array];
+  [windowInfo addObject:title];
+  [windowInfo addObject:[NSRunningApplication runningApplicationWithProcessIdentifier:currPID]];
+  if ([[ref unusedWindowNumbers] count] > 0) {
+    [windowInfo addObject:[[ref unusedWindowNumbers] objectAtIndex:0]];
+    [[ref unusedWindowNumbers] removeObjectAtIndex:0];
+  } else {
+    [windowInfo addObject:[NSNumber numberWithInteger:[ref nextWindowNumber]]];
+    [ref setNextWindowNumber:[ref nextWindowNumber]+1];
+  }
+  [[ref windows] insertObject:windowInfo atIndex:0];
+  [[ref titleToWindow] setObject:windowInfo forKey:title];
+  [[[ref appToWindows] objectForKey:[NSNumber numberWithInteger:currPID]] addObject:windowInfo];
+}
+
 static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStringRef notification, void *refcon) {
   SlateLogger(@">>> %@ for %@", notification, [AccessibilityWrapper getRole:element]);
   if (![AccessibilityWrapper isWindow:element]) return;
@@ -55,6 +75,10 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
     CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:AXUIElementCreateApplication([appPID integerValue])];
     // Remove all windows if app has no windows
     if (!windowsArr || CFArrayGetCount(windowsArr) == 0) return;
+    if (oldWindowsInApp == nil || [oldWindowsInApp count] == 0) {
+      windowCreated(currPID, element, ref);
+      return;
+    }
     for (NSMutableArray *windowInfo in oldWindowsInApp) {
       BOOL found = NO;
       for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
@@ -96,22 +120,7 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   }
 
   // Window created, add to windows
-  [ref pruneWindows];
-  NSString *title = [AccessibilityWrapper getTitle:element];
-  if (title == nil || [EMPTY isEqualToString:title]) return; // skip empty title windows because they are invisible
-  NSMutableArray *windowInfo = [NSMutableArray array];
-  [windowInfo addObject:title];
-  [windowInfo addObject:[NSRunningApplication runningApplicationWithProcessIdentifier:currPID]];
-  if ([[ref unusedWindowNumbers] count] > 0) {
-    [windowInfo addObject:[[ref unusedWindowNumbers] objectAtIndex:0]];
-    [[ref unusedWindowNumbers] removeObjectAtIndex:0];
-  } else {
-    [windowInfo addObject:[NSNumber numberWithInteger:[ref nextWindowNumber]]];
-    [ref setNextWindowNumber:[ref nextWindowNumber]+1];
-  }
-  [[ref windows] insertObject:windowInfo atIndex:0];
-  [[ref titleToWindow] setObject:windowInfo forKey:title];
-  [[[ref appToWindows] objectForKey:[NSNumber numberWithInteger:currPID]] addObject:windowInfo];
+  windowCreated(currPID, element, ref);
 #ifdef DEBUG
   SlateLogger(@"  New Window Order:");
   for (NSArray *windowInfo in [ref windows]) {
@@ -295,6 +304,26 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   if ([[launchedApp localizedName] isEqualToString:@"Slate"]) return;
   NSNumber *appPID = [NSNumber numberWithInteger:[launchedApp processIdentifier]];
   [appToWindows setObject:[NSMutableArray array] forKey:appPID];
+  // add already created windows
+  CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:AXUIElementCreateApplication([launchedApp processIdentifier])];
+  for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+    AXUIElementRef element = CFArrayGetValueAtIndex(windowsArr, i);
+    NSString *title = [AccessibilityWrapper getTitle:element];
+    if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
+    NSMutableArray *windowInfo = [NSMutableArray array];
+    [windowInfo addObject:title];
+    [windowInfo addObject:[NSRunningApplication runningApplicationWithProcessIdentifier:[launchedApp processIdentifier]]];
+    if ([[self unusedWindowNumbers] count] > 0) {
+      [windowInfo addObject:[[self unusedWindowNumbers] objectAtIndex:0]];
+      [[self unusedWindowNumbers] removeObjectAtIndex:0];
+    } else {
+      [windowInfo addObject:[NSNumber numberWithInteger:[self nextWindowNumber]]];
+      [self setNextWindowNumber:[self nextWindowNumber]+1];
+    }
+    [[self windows] insertObject:windowInfo atIndex:0];
+    [[self titleToWindow] setObject:windowInfo forKey:title];
+    [[[self appToWindows] objectForKey:[NSNumber numberWithInteger:[launchedApp processIdentifier]]] addObject:windowInfo];
+  }
   AXError err;
   AXUIElementRef sendingApp = AXUIElementCreateApplication([launchedApp processIdentifier]);
   AXObserverRef observer;
