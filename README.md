@@ -424,13 +424,15 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
 * A Better Application Switcher: `switch`
 
-    **Note:** If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
+    If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
     Example:
 
         bind tab:cmd switch
 
     Will disable the default Mac OS X Application switcher and bind the keystroke cmd-tab to a better application switcher.
+
+     **Note:** There are *tons* of config options to tweak this.
 
 ### The `source` Directive ###
 
