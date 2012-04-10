@@ -444,7 +444,7 @@ For Example:
 
     source ~/.slate.test if_exists
 
-Will append all of the configurations from the file `~/.slate.test` to the current configuration if the file `~/.slate.tests` exists.
+Will append all of the configurations from the file `~/.slate.test` to the current configuration if the file `~/.slate.test` exists.
 
 **Note:** You may use any aliases, layouts, etc that you specify before the source directive in the file you source. Any aliases, layouts, etc specified after cannot be used. Additionally, any aliases, layouts, etc that you specify in the file you source can be used after the source directive.
 
