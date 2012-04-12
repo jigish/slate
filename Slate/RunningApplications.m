@@ -121,12 +121,12 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
 
   // Window created, add to windows
   windowCreated(currPID, element, ref);
-//#ifdef DEBUG
+#ifdef DEBUG
   SlateLogger(@"  New Window Order:");
   for (NSArray *windowInfo in [ref windows]) {
     SlateLogger(@"    [%@] %@ #%@", [[windowInfo objectAtIndex:1] localizedName], [windowInfo objectAtIndex:0], [windowInfo objectAtIndex:2]);
   }
-//#endif
+#endif
   SlateLogger(@">>> END %@ for %@", notification, [AccessibilityWrapper getRole:element]);
 }
 
@@ -262,12 +262,12 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
       }
     }
   }
-//#ifdef DEBUG
+#ifdef DEBUG
   SlateLogger(@"  New Window Order:");
   for (NSArray *windowInfo in windows) {
     SlateLogger(@"    [%@] %@ #%@", [[windowInfo objectAtIndex:1] localizedName], [windowInfo objectAtIndex:0], [windowInfo objectAtIndex:2]);
   }
-//#endif
+#endif
 }
 
 - (void)removeWindow:(NSArray *)windowInfo {
@@ -357,23 +357,23 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   if (![RunningApplications isAppSelectable:app]) return;
   [apps removeObject:app];
   [apps insertObject:app atIndex:0];
-//#ifdef DEBUG
+#ifdef DEBUG
   SlateLogger(@"  New App Order:");
   for (NSRunningApplication *app in apps) {
     SlateLogger(@"    %@", [app localizedName]);
   }
-//#endif
+#endif
 }
 
 - (void)bringWindowToFront:(NSArray *)windowInfo {
   [windows removeObject:windowInfo];
   [windows insertObject:windowInfo atIndex:0];
-//#ifdef DEBUG
+#ifdef DEBUG
   SlateLogger(@"  New Window Order:");
   for (NSArray *windowInfo in windows) {
     SlateLogger(@"    [%@] %@ #%@", [[windowInfo objectAtIndex:1] localizedName], [windowInfo objectAtIndex:0], [windowInfo objectAtIndex:2]);
   }
-//#endif
+#endif
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id *)stackbuf count:(NSUInteger)len {
