@@ -21,10 +21,10 @@
 #ifndef Slate_SlateLogger_h
 #define Slate_SlateLogger_h
 
-#ifdef DEBUG
+//#ifdef DEBUG
 #define SlateLogger(...) NSLog(__VA_ARGS__)
-#else
-#define SlateLogger(...)
-#endif
+//#else
+//#define SlateLogger(...)
+//#endif
 
 #endif
