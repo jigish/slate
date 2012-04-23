@@ -208,6 +208,12 @@ CGEventRef EatAppSwitcherCallback(CGEventTapProxy proxy, CGEventType type,  CGEv
       ((flags & kCGEventFlagMaskSecondaryFn) != kCGEventFlagMaskSecondaryFn)) {
     SlateLogger(@"  IS CMD+TAB");
     if (keyUpSeen) {
+      @synchronized(timerLock) {
+        if (currentTimer != nil) {
+          [currentTimer invalidate];
+          currentTimer = nil;
+        }
+      }
       keyUpSeen = NO;
       SlateAppDelegate *del = (__bridge SlateAppDelegate *)refcon;
       EventHotKeyID myHotKeyID;
@@ -223,17 +229,23 @@ CGEventRef EatAppSwitcherCallback(CGEventTapProxy proxy, CGEventType type,  CGEv
 }
 CGEventRef EatAppSwitcherResetCallback(CGEventTapProxy proxy, CGEventType type,  CGEventRef event, void *refcon) {
   SlateLogger(@"KEY UP");
-  keyUpSeen = YES;
   @synchronized(timerLock) {
     if (currentTimer != nil) {
       [currentTimer invalidate];
       currentTimer = nil;
     }
   }
+  keyUpSeen = YES;
   return event;
 }
 
 OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
+  @synchronized(timerLock) {
+    if (currentTimer != nil) {
+      [currentTimer invalidate];
+      currentTimer = nil;
+    }
+  }
   if (![(__bridge id)userData isKindOfClass:[SlateAppDelegate class]]) return noErr;
   EventHotKeyID hkCom;
   GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
@@ -241,14 +253,8 @@ OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void 
 }
 
 OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
-  if (![(__bridge id)userData isKindOfClass:[SlateAppDelegate class]]) return noErr;
-  if ([(__bridge SlateAppDelegate *)userData currentHintOperation] != nil) return noErr;
-  if ([(__bridge SlateAppDelegate *)userData currentSwitchBinding] != nil) return noErr;
-  EventHotKeyID hkCom;
-  GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hkCom), NULL, &hkCom);
-
   @synchronized(timerLock) {
-    if (currentTimer != nil && hkCom.id == currentHotKey.id) {
+    if (currentTimer != nil) {
       [currentTimer invalidate];
       currentTimer = nil;
     }
@@ -258,6 +264,12 @@ OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEven
 
 OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
   SlateLogger(@"Modifiers changed");
+  @synchronized(timerLock) {
+    if (currentTimer != nil) {
+      [currentTimer invalidate];
+      currentTimer = nil;
+    }
+  }
   Binding *currSwitch = [(__bridge SlateAppDelegate *)userData currentSwitchBinding];
   UInt32 modifiers;
   GetEventParameter(theEvent, kEventParamKeyModifiers, typeUInt32, NULL, sizeof(modifiers), NULL, &modifiers);
@@ -265,12 +277,6 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
     if ([(SwitchOperation *)[currSwitch op] modifiersChanged:[currSwitch modifiers] new:modifiers]) {
       [(__bridge SlateAppDelegate *)userData setCurrentSwitchBinding:nil];
       RemoveEventHandler(modifiersEvent);
-    }
-  }
-  @synchronized(timerLock) {
-    if (currentTimer != nil) {
-      [currentTimer invalidate];
-      currentTimer = nil;
     }
   }
   return noErr;
