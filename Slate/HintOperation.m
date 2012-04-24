@@ -264,7 +264,9 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
       SlateLogger(@"I see application '%@' with pid '%d'", [app localizedName], appPID);
       AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
       CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:appRef];
-      CFArrayAppendArray(allWindows, windowsArr, CFRangeMake(0, CFArrayGetCount(windowsArr)));
+      if (windowsArr != nil && windowsArr != NULL && CFArrayGetCount(windowsArr) > 0) {
+        CFArrayAppendArray(allWindows, windowsArr, CFRangeMake(0, CFArrayGetCount(windowsArr)));
+      }
     }
     // check which custom order and sort accordingly. if someone was stupid and entered a bad config, do nothing.
     if ([[[SlateConfig getInstance] getConfig:WINDOW_HINTS_ORDER] isEqualToString:WINDOW_HINTS_ORDER_LEFT_TO_RIGHT]) {
