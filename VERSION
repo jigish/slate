@@ -1,4 +1,17 @@
-Current Version: 0.5.3
+Current Version: 0.5.6
+
+----------------- 0.5.6 -----------------
+
+Fix Issue #66
+Snapshots are now stored in the Application Support directory
+
+----------------- 0.5.5 -----------------
+
+New Icon
+
+----------------- 0.5.4 -----------------
+
+Fix bad access error
 
 ----------------- 0.5.3 -----------------
 
