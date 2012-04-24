@@ -60,4 +60,6 @@
 - (Snapshot *)popSnapshot:(NSString *)name remove:(BOOL)remove;
 //- (void)processNotification:(id)notification;
 
++ (NSURL *)snapshotsFile;
+
 @end

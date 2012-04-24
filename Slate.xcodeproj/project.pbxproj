@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
+		3B34F39115462323004090BB /* NSFileManager+ApplicationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */; };
 		3B3C41A01501ADC600C1E927 /* HintOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C419F1501ADC600C1E927 /* HintOperation.m */; };
 		3B3C41A31501BE8600C1E927 /* HintWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C41A21501BE8600C1E927 /* HintWindow.m */; };
 		3B3E241013A5F59E00B0D762 /* WindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E240F13A5F59E00B0D762 /* WindowState.m */; };
@@ -74,6 +75,8 @@
 /* Begin PBXFileReference section */
 		3B3335AB14FC1EA900F72638 /* WindowInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowInfoView.h; sourceTree = "<group>"; };
 		3B3335AC14FC1EA900F72638 /* WindowInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowInfoView.m; sourceTree = "<group>"; };
+		3B34F38F15462323004090BB /* NSFileManager+ApplicationSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ApplicationSupport.h"; sourceTree = "<group>"; };
+		3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+ApplicationSupport.m"; sourceTree = "<group>"; };
 		3B3C419E1501ADC600C1E927 /* HintOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HintOperation.h; sourceTree = "<group>"; };
 		3B3C419F1501ADC600C1E927 /* HintOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HintOperation.m; sourceTree = "<group>"; };
 		3B3C41A11501BE8500C1E927 /* HintWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HintWindow.h; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 				3B58153E1502FF350078D568 /* NSColor+Conversions.m */,
 				3BC9E97115005F8F002FD1FA /* NSString+Levenshtein.h */,
 				3BC9E97215005F8F002FD1FA /* NSString+Levenshtein.m */,
+				3B34F38F15462323004090BB /* NSFileManager+ApplicationSupport.h */,
+				3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -557,6 +562,7 @@
 				3B9B3007151BDD960069D95E /* RunningApplications.m in Sources */,
 				3B9B301E151BFC330069D95E /* SwitchAppView.m in Sources */,
 				3B9B3021151C830F0069D95E /* SwitchAppQuittingOverlayView.m in Sources */,
+				3B34F39115462323004090BB /* NSFileManager+ApplicationSupport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +658,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -670,6 +677,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;

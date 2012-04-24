@@ -20,7 +20,7 @@
 
 #import "Constants.h"
 
-NSString *const SNAPSHOTS_FILE = @"~/.slate.snapshots";
+NSString *const SNAPSHOTS_FILE = @"snapshots";
 
 // Directive Keys
 NSString *const BIND = @"bind";

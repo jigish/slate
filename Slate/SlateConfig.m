@@ -30,6 +30,7 @@
 #import "SnapshotList.h"
 #import "JSONKit.h"
 #import "SlateLogger.h"
+#import "NSFileManager+ApplicationSupport.h"
 
 @implementation SlateConfig
 
@@ -327,7 +328,7 @@ static SlateConfig *_instance = nil;
 }
 
 - (BOOL)loadSnapshots {
-  NSString *fileString = [NSString stringWithContentsOfFile:[SNAPSHOTS_FILE stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:nil];
+  NSString *fileString = [NSString stringWithContentsOfURL:[SlateConfig snapshotsFile] encoding:NSUTF8StringEncoding error:nil];
   if (fileString == nil || [fileString isEqualToString:EMPTY])
     return YES;
   id iShouldBeADictionary = [fileString objectFromJSONString];
@@ -419,7 +420,7 @@ static SlateConfig *_instance = nil;
   NSData *jsonData = [snapshotDict JSONData];
   
   // Save NSData to file
-  [jsonData writeToFile:[SNAPSHOTS_FILE stringByExpandingTildeInPath] atomically:YES];
+  [jsonData writeToURL:[SlateConfig snapshotsFile] atomically:YES];
 }
 
 - (void)addSnapshot:(Snapshot *)snapshot name:(NSString *)name saveToDisk:(BOOL)saveToDisk isStack:(BOOL)isStack {
@@ -507,5 +508,15 @@ static SlateConfig *_instance = nil;
   [configs setValuesForKeysWithDictionary:configDefaults];
 }
 
++ (NSURL *)snapshotsFile {
+  NSFileManager *sharedFM = [NSFileManager defaultManager];
+  NSURL *appSupportDir = [sharedFM applicationSupportDirectory];
+  NSURL *snapshotsFile = nil;
+  if (appSupportDir) {
+    snapshotsFile = [appSupportDir URLByAppendingPathComponent:SNAPSHOTS_FILE];
+  }
+  NSLog(@"TEST ------------- %@", [snapshotsFile absoluteString]);
+  return snapshotsFile;
+}
 
 @end
