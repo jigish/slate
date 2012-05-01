@@ -35,6 +35,7 @@
 @synthesize currentHintOperation, currentSwitchBinding, menuSnapshotOperation, menuActivateSnapshotOperation, cmdTabBinding, cmdShiftTabBinding;
 
 static NSObject *timerLock = nil;
+static NSObject *keyUpLock = nil;
 static NSTimer *currentTimer = nil;
 static EventHotKeyID currentHotKey;
 static SlateAppDelegate *selfRef = nil;
@@ -168,7 +169,9 @@ static EventHandlerRef modifiersEvent;
       InstallEventHandler(GetEventMonitorTarget(), &OnModifiersChangedEvent, 1, &modifiersChangedType, (__bridge void *)self, &modifiersEvent);
     }
     [binding doOperation];
-    if ([binding repeat] || [[binding op] isKindOfClass:[SwitchOperation class]]) {
+    if (!(cmdTabBinding > 0 && [[[SlateConfig getInstance] bindings] objectAtIndex:cmdTabBinding] == binding) &&
+        !(cmdShiftTabBinding > 0 && [[[SlateConfig getInstance] bindings] objectAtIndex:cmdShiftTabBinding] == binding) &&
+        ([binding repeat] || [[binding op] isKindOfClass:[SwitchOperation class]])) {
       @synchronized(timerLock) {
         if (currentTimer != nil) {
           [currentTimer invalidate];
@@ -192,51 +195,79 @@ static EventHandlerRef modifiersEvent;
 }
 
 // Quartz Event Tap for reserved key bindings (CMD+Tab or CMD+Shift+Tab)
+static const NSTimeInterval KEY_UP_BUFFER = -0.020;
 static BOOL keyUpSeen = YES;
+static NSDate *keyUpTime = nil;
 CGEventRef EatAppSwitcherCallback(CGEventTapProxy proxy, CGEventType type,  CGEventRef event, void *refcon) {
-  CGEventFlags flags = CGEventGetFlags(event);
-  int64_t keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
-  SlateLogger(@"KEY DOWN - FLAGS: %llu, KEYCODE: %lld", (uint64_t)flags, keyCode);
-  // 48 is tab key code
-  if (keyCode == 48 &&
-      ((flags & kCGEventFlagMaskCommand) == kCGEventFlagMaskCommand) &&
-      ((flags & kCGEventFlagMaskAlternate) != kCGEventFlagMaskAlternate) &&
-      ((flags & kCGEventFlagMaskControl) != kCGEventFlagMaskControl) &&
-      ((flags & kCGEventFlagMaskAlphaShift) != kCGEventFlagMaskAlphaShift) &&
-      ((flags & kCGEventFlagMaskHelp) != kCGEventFlagMaskHelp) &&
-      ((flags & kCGEventFlagMaskNumericPad) != kCGEventFlagMaskNumericPad) &&
-      ((flags & kCGEventFlagMaskSecondaryFn) != kCGEventFlagMaskSecondaryFn)) {
-    SlateLogger(@"  IS CMD+TAB");
-    if (keyUpSeen) {
-      @synchronized(timerLock) {
-        if (currentTimer != nil) {
-          [currentTimer invalidate];
-          currentTimer = nil;
+  @synchronized(keyUpLock) {
+    CGEventFlags flags = CGEventGetFlags(event);
+    int64_t keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
+    SlateLogger(@"KEY DOWN - FLAGS: %llu, KEYCODE: %lld", (uint64_t)flags, keyCode);
+    // 48 is tab key code
+    if (keyCode == 48 &&
+        ((flags & kCGEventFlagMaskCommand) == kCGEventFlagMaskCommand) &&
+        ((flags & kCGEventFlagMaskAlternate) != kCGEventFlagMaskAlternate) &&
+        ((flags & kCGEventFlagMaskControl) != kCGEventFlagMaskControl) &&
+        ((flags & kCGEventFlagMaskAlphaShift) != kCGEventFlagMaskAlphaShift) &&
+        ((flags & kCGEventFlagMaskHelp) != kCGEventFlagMaskHelp) &&
+        ((flags & kCGEventFlagMaskNumericPad) != kCGEventFlagMaskNumericPad) &&
+        ((flags & kCGEventFlagMaskSecondaryFn) != kCGEventFlagMaskSecondaryFn)) {
+      SlateLogger(@"  IS CMD+TAB");
+      if (keyUpSeen) {
+        SlateLogger(@"    KEY UP SEEN: %f", [keyUpTime timeIntervalSinceNow]);
+        if (keyUpTime && [keyUpTime timeIntervalSinceNow] > KEY_UP_BUFFER) {
+          return NULL;
         }
+        @synchronized(timerLock) {
+          if (currentTimer != nil) {
+            [currentTimer invalidate];
+            currentTimer = nil;
+          }
+        }
+        keyUpSeen = NO;
+        keyUpTime = nil;
+        SlateAppDelegate *del = (__bridge SlateAppDelegate *)refcon;
+        EventHotKeyID myHotKeyID;
+        NSInteger hotkeyID = ((flags & kCGEventFlagMaskShift) == kCGEventFlagMaskShift) ? [del cmdShiftTabBinding] : [del cmdTabBinding];
+        if (hotkeyID < 0) return NULL;
+        myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
+        myHotKeyID.id = (UInt32)hotkeyID;
+        [del activateBinding:myHotKeyID isRepeat:NO];
+      } else {
+        SlateLogger(@"    KEY UP NOT SEEN");
+        @synchronized(timerLock) {
+          if (currentTimer != nil) {
+            [currentTimer invalidate];
+            currentTimer = nil;
+          }
+        }
+        SlateAppDelegate *del = (__bridge SlateAppDelegate *)refcon;
+        EventHotKeyID myHotKeyID;
+        NSInteger hotkeyID = ((flags & kCGEventFlagMaskShift) == kCGEventFlagMaskShift) ? [del cmdShiftTabBinding] : [del cmdTabBinding];
+        if (hotkeyID < 0) return NULL;
+        myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
+        myHotKeyID.id = (UInt32)hotkeyID;
+        [del activateBinding:myHotKeyID isRepeat:YES];
       }
-      keyUpSeen = NO;
-      SlateAppDelegate *del = (__bridge SlateAppDelegate *)refcon;
-      EventHotKeyID myHotKeyID;
-      NSInteger hotkeyID = ((flags & kCGEventFlagMaskShift) == kCGEventFlagMaskShift) ? [del cmdShiftTabBinding] : [del cmdTabBinding];
-      if (hotkeyID < 0) return NULL;
-      myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
-      myHotKeyID.id = (UInt32)hotkeyID;
-      [del activateBinding:myHotKeyID isRepeat:NO];
+      return NULL;
     }
-    return NULL;
+    return event;
   }
-  return event;
 }
+
 CGEventRef EatAppSwitcherResetCallback(CGEventTapProxy proxy, CGEventType type,  CGEventRef event, void *refcon) {
-  SlateLogger(@"KEY UP");
-  @synchronized(timerLock) {
-    if (currentTimer != nil) {
-      [currentTimer invalidate];
-      currentTimer = nil;
+  @synchronized(keyUpLock) {
+    SlateLogger(@"KEY UP");
+    @synchronized(timerLock) {
+      if (currentTimer != nil) {
+        [currentTimer invalidate];
+        currentTimer = nil;
+      }
     }
+    keyUpSeen = YES;
+    keyUpTime = [NSDate date];
+    return event;
   }
-  keyUpSeen = YES;
-  return event;
 }
 
 OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
@@ -277,6 +308,7 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
     if ([(SwitchOperation *)[currSwitch op] modifiersChanged:[currSwitch modifiers] new:modifiers]) {
       [(__bridge SlateAppDelegate *)userData setCurrentSwitchBinding:nil];
       RemoveEventHandler(modifiersEvent);
+      keyUpSeen = YES;
     }
   }
   return noErr;
@@ -335,6 +367,10 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
   @synchronized(timerLock) {
     currentTimer = nil;
     timerLock = [[NSObject alloc] init];
+  }
+
+  @synchronized(keyUpLock) {
+    keyUpLock = [[NSObject alloc] init];
   }
 
   // Check if Accessibility API is enabled
