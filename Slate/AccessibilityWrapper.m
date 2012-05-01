@@ -144,30 +144,32 @@ static NSDictionary *unselectableApps = nil;
 }
 
 + (BOOL)focusMainWindow:(NSRunningApplication *)app {
+  BOOL couldFocus = YES;
   CFTypeRef _window;
   pid_t focusPID = [app processIdentifier];
   AXUIElementCopyAttributeValue(AXUIElementCreateApplication(focusPID), (CFStringRef)NSAccessibilityFocusedWindowAttribute, (CFTypeRef *)&_window);
   if (_window == NULL) return [AccessibilityWrapper focusApp:app];
   if (AXUIElementSetAttributeValue((AXUIElementRef)_window, (CFStringRef)NSAccessibilityMainAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
     SlateLogger(@"ERROR: Could not change focus to window");
-    return NO;
+    couldFocus = NO;
   }
   ProcessSerialNumber psn;
   GetProcessForPID(focusPID, &psn);
   SetFrontProcessWithOptions(&psn, kSetFrontProcessFrontWindowOnly);
-  return YES;
+  return couldFocus;
 }
 
 + (BOOL)focusWindow:(AXUIElementRef)window {
+  BOOL couldFocus = YES;
   if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilityMainAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
     SlateLogger(@"ERROR: Could not change focus to window");
-    return NO;
+    couldFocus = NO;
   }
   pid_t focusPID = [AccessibilityWrapper processIdentifierOfUIElement:window];
   ProcessSerialNumber psn;
   GetProcessForPID(focusPID, &psn);
   SetFrontProcessWithOptions(&psn, kSetFrontProcessFrontWindowOnly);
-  return YES;
+  return couldFocus;
 }
 
 + (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element {
