@@ -250,10 +250,15 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
       for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
         NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
         if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
+        if ([[RunningApplications getInstance] windowIdsForTitle:title] == nil) continue;
         SlateLogger(@"  Hinting Window: %@", title);
-        if ([[RunningApplications getInstance] windowIdForTitle:title] < 0) continue;
-        [self setCurrentHint:[[RunningApplications getInstance] windowIdForTitle:title]];
-        [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw];
+        NSArray *possibleHints = [[RunningApplications getInstance] windowIdsForTitle:title];
+        for (NSNumber *possibleHint in possibleHints) {
+          if ([hints objectForKey:possibleHint]) continue;
+          [self setCurrentHint:[possibleHint integerValue]];
+          [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw];
+          break;
+        }
       }
     }
   } else {

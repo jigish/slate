@@ -41,6 +41,10 @@ static RunningApplications *_instance = nil;
   return [app activationPolicy] == NSApplicationActivationPolicyRegular;
 }
 
+// WINDOW INFO:
+//   0 = title
+//   1 = NSRunningApplication
+//   2 = window number
 static void windowCreated(pid_t currPID, AXUIElementRef element, RunningApplications *ref) {
   SlateLogger(@">> WINDOW CREATED <<");
   [ref pruneWindows];
@@ -57,7 +61,11 @@ static void windowCreated(pid_t currPID, AXUIElementRef element, RunningApplicat
     [ref setNextWindowNumber:[ref nextWindowNumber]+1];
   }
   [[ref windows] insertObject:windowInfo atIndex:0];
-  [[ref titleToWindow] setObject:windowInfo forKey:title];
+  if ([[ref titleToWindow] objectForKey:title]) {
+    [[[ref titleToWindow] objectForKey:title] addObject:windowInfo];
+  } else {
+    [[ref titleToWindow] setObject:[NSMutableArray arrayWithObject:windowInfo] forKey:title];
+  }
   [[[ref appToWindows] objectForKey:[NSNumber numberWithInteger:currPID]] addObject:windowInfo];
 }
 
@@ -79,22 +87,60 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
       windowCreated(currPID, element, ref);
       return;
     }
+    // set up title counts
+    NSMutableDictionary *tmpTitleToCount = [NSMutableDictionary dictionary];
     for (NSMutableArray *windowInfo in oldWindowsInApp) {
-      BOOL found = NO;
-      for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
-        AXUIElementRef window = CFArrayGetValueAtIndex(windowsArr, i);
-        if ([[windowInfo objectAtIndex:0] isEqualToString:[AccessibilityWrapper getTitle:window]]) {
-          found = YES;
-        }
+      NSString *title = [windowInfo objectAtIndex:0];
+      if ([tmpTitleToCount objectForKey:title]) {
+        [tmpTitleToCount setObject:[NSNumber numberWithInteger:([[tmpTitleToCount objectForKey:title] integerValue]+1)] forKey:title];
+      } else {
+        [tmpTitleToCount setObject:[NSNumber numberWithInteger:1] forKey:title];
       }
-      if (!found)  {
-        NSString *oldTitle = [windowInfo objectAtIndex:0];
-        [windowInfo removeObjectAtIndex:0];
-        [windowInfo insertObject:[AccessibilityWrapper getTitle:element] atIndex:0];
-        [[ref titleToWindow] removeObjectForKey:oldTitle];
-        [[ref titleToWindow] setObject:windowInfo forKey:[windowInfo objectAtIndex:0]];
-        [ref pruneWindows];
-        return;
+    }
+    // figure out which title is new
+    NSString *newTitle = nil;
+    for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+      AXUIElementRef window = CFArrayGetValueAtIndex(windowsArr, i);
+      NSString *currTitle = [AccessibilityWrapper getTitle:window];
+      NSNumber *currCount = [tmpTitleToCount objectForKey:currTitle];
+      if (currCount == nil || [currCount integerValue] == 0) {
+        newTitle = currTitle;
+      } else {
+        [tmpTitleToCount setObject:[NSNumber numberWithInteger:([currCount integerValue]-1)] forKey:currTitle];
+      }
+    }
+    // figure out which title is old
+    NSString *oldTitle = nil;
+    for (NSString *currTitle in [tmpTitleToCount allKeys]) {
+      NSNumber *currCount = [tmpTitleToCount objectForKey:currTitle];
+      if (currCount != nil && [currCount integerValue] > 0) {
+        oldTitle = currTitle;
+        break;
+      }
+    }
+    // out with the old and in with the new
+    if (oldTitle != nil && newTitle != nil) {
+      for (NSMutableArray *windowInfo in oldWindowsInApp) {
+        if ([[windowInfo objectAtIndex:0] isEqualToString:oldTitle]) {
+          [windowInfo removeObjectAtIndex:0];
+          [windowInfo insertObject:[AccessibilityWrapper getTitle:element] atIndex:0];
+          NSMutableArray *windowsForTitle = [[ref titleToWindow] objectForKey:oldTitle];
+          if (!windowsForTitle || [windowsForTitle count] == 0) continue;
+          if ([windowsForTitle count] == 1) {
+            [[ref titleToWindow] removeObjectForKey:oldTitle];
+          } else {
+            [windowsForTitle removeObject:windowInfo];
+          }
+          windowsForTitle = [[ref titleToWindow] objectForKey:[windowInfo objectAtIndex:0]];
+          if (!windowsForTitle) {
+            [[ref titleToWindow] setObject:[NSMutableArray arrayWithObject:windowInfo] forKey:[windowInfo objectAtIndex:0]];
+          } else {
+            [windowsForTitle insertObject:windowInfo atIndex:0];
+            [[ref titleToWindow] setObject:windowsForTitle forKey:[windowInfo objectAtIndex:0]];
+          }
+          [ref pruneWindows];
+          return;
+        }
       }
     }
     [ref pruneWindows];
@@ -103,30 +149,12 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
 
   // Focus Changed, update windows
   if (CFStringCompare(notification, kAXFocusedWindowChangedNotification, 0) == kCFCompareEqualTo) {
-    NSArray *windows = [[ref windows] copy];
-    for (NSArray *windowInfo in windows) {
-      NSString *title = [windowInfo objectAtIndex:0];
-      pid_t appPID = [[windowInfo objectAtIndex:1] processIdentifier];
-      if (currPID == appPID && [title isEqualToString:[AccessibilityWrapper getTitle:element]]) {
-        [ref bringWindowToFront:windowInfo];
-        [ref pruneWindows];
-        SlateLogger(@">>> ENDED WELL %@ for %@", notification, [AccessibilityWrapper getRole:element]);
-        return;
-      }
-    }
-    SlateLogger(@">>> ENDED BAD %@ for %@", notification, [AccessibilityWrapper getRole:element]);
     [ref pruneWindows];
     return;
   }
 
   // Window created, add to windows
   windowCreated(currPID, element, ref);
-#ifdef DEBUG
-  SlateLogger(@"  New Window Order:");
-  for (NSArray *windowInfo in [ref windows]) {
-    SlateLogger(@"    [%@] %@ #%@", [[windowInfo objectAtIndex:1] localizedName], [windowInfo objectAtIndex:0], [windowInfo objectAtIndex:2]);
-  }
-#endif
   SlateLogger(@">>> END %@ for %@", notification, [AccessibilityWrapper getRole:element]);
 }
 
@@ -174,7 +202,13 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
               [windows addObject:windowInfo];
               [[appToWindows objectForKey:appPID] addObject:windowInfo];
             }
-            [titleToWindow setObject:windowInfo forKey:title];
+            NSMutableArray *windowsForTitle = [titleToWindow objectForKey:title];
+            if (!windowsForTitle) {
+              [titleToWindow setObject:[NSMutableArray arrayWithObject:windowInfo] forKey:title];
+            } else {
+              [windowsForTitle addObject:windowInfo];
+              [titleToWindow setObject:windowsForTitle forKey:title];
+            }
             nextWindowNumber++;
           }
         }
@@ -262,12 +296,6 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
       }
     }
   }
-#ifdef DEBUG
-  SlateLogger(@"  New Window Order:");
-  for (NSArray *windowInfo in windows) {
-    SlateLogger(@"    [%@] %@ #%@", [[windowInfo objectAtIndex:1] localizedName], [windowInfo objectAtIndex:0], [windowInfo objectAtIndex:2]);
-  }
-#endif
 }
 
 - (void)removeWindow:(NSArray *)windowInfo {
@@ -277,7 +305,13 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   if ([appToWindows objectForKey:appPID] != nil) {
     [[appToWindows objectForKey:appPID] removeObject:windowInfo];
   }
-  [titleToWindow removeObjectForKey:[windowInfo objectAtIndex:0]];
+  NSMutableArray *windowsForTitle = [titleToWindow objectForKey:[windowInfo objectAtIndex:0]];
+  if (!windowsForTitle || [windowsForTitle count] <= 1) {
+    [titleToWindow removeObjectForKey:[windowInfo objectAtIndex:0]];
+  } else {
+    [windowsForTitle removeObject:windowInfo];
+    [titleToWindow setObject:windowsForTitle forKey:[windowInfo objectAtIndex:0]];
+  }
 }
 
 - (void)notificationRecieved:(id)notification {
@@ -289,8 +323,6 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   NSRunningApplication *activatedApp = [[notification userInfo] objectForKey:NSWorkspaceApplicationKey];
   if ([[activatedApp localizedName] isEqualToString:@"Slate"]) return;
   [self bringAppToFront:activatedApp];
-  NSArray *windowInfo = [titleToWindow objectForKey:[AccessibilityWrapper getTitle:[AccessibilityWrapper focusedWindowInRunningApp:activatedApp]]];
-  if (windowInfo != nil) [self bringWindowToFront:windowInfo];
   [self pruneWindows];
 }
 
@@ -322,7 +354,13 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
         [self setNextWindowNumber:[self nextWindowNumber]+1];
       }
       [[self windows] insertObject:windowInfo atIndex:0];
-      [[self titleToWindow] setObject:windowInfo forKey:title];
+      NSMutableArray *windowsForTitle = [[self titleToWindow] objectForKey:title];
+      if (!windowsForTitle) {
+        [[self titleToWindow] setObject:[NSMutableArray arrayWithObject:windowInfo] forKey:title];
+      } else {
+        [windowsForTitle addObject:windowInfo];
+        [[self titleToWindow] setObject:windowsForTitle forKey:title];
+      }
       [[[self appToWindows] objectForKey:[NSNumber numberWithInteger:[launchedApp processIdentifier]]] addObject:windowInfo];
     }
   }
@@ -336,8 +374,6 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   CFRunLoopAddSource ([[NSRunLoop currentRunLoop] getCFRunLoop], AXObserverGetRunLoopSource(observer), kCFRunLoopDefaultMode);
   [pidToObserver setObject:[NSValue valueWithPointer:observer] forKey:[NSNumber numberWithInteger:[launchedApp processIdentifier]]];
   [self bringAppToFront:launchedApp];
-  NSArray *windowInfo = [titleToWindow objectForKey:[AccessibilityWrapper getTitle:[AccessibilityWrapper focusedWindowInRunningApp:launchedApp]]];
-  if (windowInfo != nil) [self bringWindowToFront:windowInfo];
   [self pruneWindows];
 }
 
@@ -365,24 +401,18 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
 #endif
 }
 
-- (void)bringWindowToFront:(NSArray *)windowInfo {
-  [windows removeObject:windowInfo];
-  [windows insertObject:windowInfo atIndex:0];
-#ifdef DEBUG
-  SlateLogger(@"  New Window Order:");
-  for (NSArray *windowInfo in windows) {
-    SlateLogger(@"    [%@] %@ #%@", [[windowInfo objectAtIndex:1] localizedName], [windowInfo objectAtIndex:0], [windowInfo objectAtIndex:2]);
-  }
-#endif
-}
-
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id *)stackbuf count:(NSUInteger)len {
   return [apps countByEnumeratingWithState:state objects:stackbuf count:len];
 }
 
-- (NSInteger)windowIdForTitle:(NSString *)title {
-  if ([titleToWindow objectForKey:title] == nil) return -1;
-  return [[[titleToWindow objectForKey:title] objectAtIndex:2] integerValue];
+- (NSArray *)windowIdsForTitle:(NSString *)title {
+  NSArray *windowsForTitle = [titleToWindow objectForKey:title];
+  if (windowsForTitle == nil || [windowsForTitle count] == 0) return nil;
+  NSMutableArray *windowIdsForTitle = [NSMutableArray array];
+  for(NSArray *windowInfo in windowsForTitle) {
+    [windowIdsForTitle addObject:[windowInfo objectAtIndex:2]];
+  }
+  return windowIdsForTitle;
 }
 
 @end
