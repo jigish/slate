@@ -116,6 +116,8 @@ NSString *const SWITCH_TYPE = @"switchType";
 NSString *const SWITCH_TYPE_DEFAULT = @"app";
 NSString *const SWITCH_SELECTED_PADDING = @"switchSelectedPadding";
 NSString *const SWITCH_SELECTED_PADDING_DEFAULT = @"10";
+NSString *const KEYBOARD_LAYOUT = @"keyboardLayout";
+NSString *const KEYBOARD_LAYOUT_DEFAULT = @"qwerty";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";
@@ -187,6 +189,7 @@ NSString *const WINDOW_HINTS_ORDER_LEFT_TO_RIGHT = @"leftToRight";
 NSString *const WINDOW_HINTS_ORDER_RIGHT_TO_LEFT = @"rightToLeft";
 NSString *const SWITCH_ORIENTATION_HORIZONTAL = @"horizontal";
 NSString *const SWITCH_ORIENTATION_VERTICAL = @"vertical";
+NSString *const KEYBOARD_LAYOUT_DVORAK = @"dvorak";
 
 // Directions and Anchors
 NSString *const UP = @"up";

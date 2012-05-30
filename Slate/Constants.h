@@ -114,6 +114,8 @@ extern NSString *const SWITCH_TYPE;
 extern NSString *const SWITCH_TYPE_DEFAULT;
 extern NSString *const SWITCH_SELECTED_PADDING;
 extern NSString *const SWITCH_SELECTED_PADDING_DEFAULT;
+extern NSString *const KEYBOARD_LAYOUT;
+extern NSString *const KEYBOARD_LAYOUT_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;
@@ -185,6 +187,7 @@ extern NSString *const WINDOW_HINTS_ORDER_LEFT_TO_RIGHT;
 extern NSString *const WINDOW_HINTS_ORDER_RIGHT_TO_LEFT;
 extern NSString *const SWITCH_ORIENTATION_HORIZONTAL;
 extern NSString *const SWITCH_ORIENTATION_VERTICAL;
+extern NSString *const KEYBOARD_LAYOUT_DVORAK;
 
 // Directions and Anchors
 extern NSString *const UP;
