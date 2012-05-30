@@ -141,6 +141,7 @@ List of allowed configs:
 | `switchFontSize` | Number | Default: `14`. The size of the `switch` operation font |
 | `switchType` | `app` or `window` | Default: `app`. \[UNIMPLEMENTED - coming in 1.1\] If `app`, the `switch` operation will present a list of applications ordered by last focus. If `window` the `switch` operation will present a list of windows ordered by last focus. |
 | `switchSelectedPadding` | Number | Default: `10`. The size of the padding betweeen the edge of the switch window and the edge of the selected app selected background |
+| `keyboardLayout` | `dvorak` or `qwerty` | Default: `qwerty`. The keyboard layout you are using. |
 
 Example:
 
