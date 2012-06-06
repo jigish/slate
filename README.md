@@ -281,7 +281,9 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
         bind right:ctrl resize +10% +0
 
-    Will bind the keystroke ctrl-rightarrow to increase the width the current window by `10%`
+    Will bind the keystroke ctrl-rightarrow to increase the width the current window by `10%`.
+
+    **Note:** ctrl-rightarrow is used by default in Mac OS X by spaces. Be sure to turn these bindings off if you want to use them in slate
 
 * Push the window to the edge of the screen: `push direction style`
 
