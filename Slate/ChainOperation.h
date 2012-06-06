@@ -24,11 +24,11 @@
 @interface ChainOperation : Operation {
 @private
   NSArray *operations;
-  NSMutableDictionary *__unsafe_unretained currentOp;
+  NSMutableDictionary *currentOp;
 }
 
-@property  NSArray *operations;
-@property (unsafe_unretained) NSMutableDictionary *currentOp;
+@property NSArray *operations;
+@property NSMutableDictionary *currentOp;
 
 - (BOOL)testOperation:(NSInteger)op;
 - (void)afterComplete:(AccessibilityWrapper *)aw opRun:(NSInteger)op ;
