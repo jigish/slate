@@ -222,6 +222,7 @@ extern NSInteger const ANCHOR_BOTTOM_LEFT;
 extern NSInteger const ANCHOR_BOTTOM_RIGHT;
 
 // Seperators and such
+extern unichar const COMMENT_CHARACTER;
 extern NSString *const COMMA;
 extern NSString *const COLON;
 extern NSString *const SEMICOLON;

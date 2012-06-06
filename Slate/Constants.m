@@ -224,6 +224,7 @@ NSInteger const ANCHOR_BOTTOM_LEFT = 2;
 NSInteger const ANCHOR_BOTTOM_RIGHT = 3;
 
 // Seperators and such
+unichar const COMMENT_CHARACTER = '#';
 NSString *const COMMA = @",";
 NSString *const COLON = @":";
 NSString *const SEMICOLON = @";";

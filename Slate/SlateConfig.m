@@ -163,6 +163,7 @@ static SlateConfig *_instance = nil;
   NSEnumerator *e = [lines objectEnumerator];
   NSString *line = [e nextObject];
   while (line) {
+    if ([line length] == 0 || [line characterAtIndex:0] == COMMENT_CHARACTER) { line = [e nextObject]; continue; }
     @try {
       line = [self replaceAliases:line];
     } @catch (NSException *ex) {
