@@ -238,6 +238,8 @@ modifiers is a comma or semicolon separated list of standard modifier keys. Allo
 
 **Note:** If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
+**Note:** Bindings that are used by Mac OS X spaces, expose, and mission control will override Slate bindings. Be sure to turn these bindings off if you want to use them in Slate.
+
 #### Operation ####
 
 Operations define what to actually do to the focused window.
@@ -283,7 +285,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-rightarrow to increase the width the current window by `10%`.
 
-    **Note:** ctrl-rightarrow is used by default in Mac OS X by spaces. Be sure to turn these bindings off if you want to use them in slate
+    **Note:** ctrl-rightarrow is used by default in Mac OS X by spaces. Be sure to turn these bindings off if you want to use them in Slate.
 
 * Push the window to the edge of the screen: `push direction style`
 
