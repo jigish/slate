@@ -109,19 +109,19 @@ static SlateConfig *_instance = nil;
   [self setDefaultLayouts:[[NSMutableArray alloc] init]];
   [self setAliases:[[NSMutableDictionary alloc] init]];
 
-  if (![self append:@"~/.slate"]) {
+  if (![self loadConfigFileWithPath:@"~/.slate"]) {
     SlateLogger(@"  ERROR Could not load ~/.slate");
     NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"Continue"];
     [alert addButtonWithTitle:@"Quit"];
-    [alert addButtonWithTitle:@"Skip"];
-    [alert setMessageText:@"ERROR Could not load ~/.slate"];
-    [alert setInformativeText:@"I dunno. Figure it out."];
+    [alert setMessageText:@"Could not load ~/.slate"];
+    [alert setInformativeText:@"The default configuration will be used. You can find the default .slate file at https://github.com/jigish/slate/blob/master/Slate/default.slate."];
     [alert setAlertStyle:NSWarningAlertStyle];
-    if ([alert runModal] == NSAlertFirstButtonReturn) {
+    if ([alert runModal] == NSAlertSecondButtonReturn) {
       SlateLogger(@"User selected exit");
       [NSApp terminate:nil];
     }
-    return NO;
+    return [self loadConfigFileWithPath:[[NSBundle mainBundle] pathForResource:@"default" ofType:@"slate"]];
   }
   
   if (![self loadSnapshots]) {
@@ -150,15 +150,19 @@ static SlateConfig *_instance = nil;
   return YES;
 }
 
-- (BOOL)append:(NSString *)file {
+- (BOOL)loadConfigFileWithPath:(NSString *)file {
   if (file == nil) return NO;
   NSString *configFile = file;
   if ([file rangeOfString:SLASH].location != 0 && [file rangeOfString:TILDA].location != 0)
     configFile = [NSString stringWithFormat:@"~/%@", file];
   NSString *fileString = [NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:nil];
-  if (fileString == nil)
+  return [self append:fileString];
+}
+
+- (BOOL)append:(NSString *)configString {
+  if (configString == nil)
     return NO;
-  NSArray *lines = [fileString componentsSeparatedByString:@"\n"];
+  NSArray *lines = [configString componentsSeparatedByString:@"\n"];
   
   NSEnumerator *e = [lines objectEnumerator];
   NSString *line = [e nextObject];
@@ -297,7 +301,7 @@ static SlateConfig *_instance = nil;
     } else if ([tokens count] >= 2 && [[tokens objectAtIndex:0] isEqualToString:SOURCE]) {
       // source filename optional:if_exists
       SlateLogger(@"  LoadingS: %@",line);
-      if (![self append:[tokens objectAtIndex:1]]) {
+      if (![self loadConfigFileWithPath:[tokens objectAtIndex:1]]) {
         if ([tokens count] >= 3 && [[tokens objectAtIndex:2] isEqualToString:IF_EXISTS]) {
           SlateLogger(@"   Could not find file '%@' but that's ok. User specified if_exists.",[tokens objectAtIndex:1]);
         } else {

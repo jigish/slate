@@ -42,7 +42,8 @@
 
 + (SlateConfig *)getInstance;
 - (BOOL)load;
-- (BOOL)append:(NSString *)file;
+- (BOOL)loadConfigFileWithPath:(NSString *)file;
+- (BOOL)append:(NSString *)configString;
 - (BOOL)loadSnapshots;
 - (BOOL)getBoolConfig:(NSString *)key;
 - (NSInteger)getIntegerConfig:(NSString *)key;

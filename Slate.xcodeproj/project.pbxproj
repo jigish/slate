@@ -32,6 +32,7 @@
 		3BA7485913B1D0F500CFA792 /* MathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA7485813B1D0F500CFA792 /* MathUtils.m */; };
 		3BADA37213A2C1ED009E21D8 /* AccessibilityWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BADA37113A2C1ED009E21D8 /* AccessibilityWrapper.m */; };
 		3BB5380413AEDA1B0005CFFC /* ScreenState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5380313AEDA190005CFFC /* ScreenState.m */; };
+		3BBD24BA1580206C00940ABF /* default.slate in Resources */ = {isa = PBXBuildFile; fileRef = 3BBD24B91580206C00940ABF /* default.slate */; };
 		3BC9E96F15005925002FD1FA /* ActivateSnapshotOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC9E96E15005925002FD1FA /* ActivateSnapshotOperation.m */; };
 		3BC9E97315005F8F002FD1FA /* NSString+Levenshtein.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC9E97215005F8F002FD1FA /* NSString+Levenshtein.m */; };
 		3BCE40F513B15FF300804615 /* FocusOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE40F413B15FF300804615 /* FocusOperation.m */; };
@@ -124,6 +125,7 @@
 		3BADA37113A2C1ED009E21D8 /* AccessibilityWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AccessibilityWrapper.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3BB5380213AEDA190005CFFC /* ScreenState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenState.h; sourceTree = "<group>"; };
 		3BB5380313AEDA190005CFFC /* ScreenState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenState.m; sourceTree = "<group>"; };
+		3BBD24B91580206C00940ABF /* default.slate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = default.slate; sourceTree = "<group>"; };
 		3BC9E96D15005925002FD1FA /* ActivateSnapshotOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivateSnapshotOperation.h; sourceTree = "<group>"; };
 		3BC9E96E15005925002FD1FA /* ActivateSnapshotOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivateSnapshotOperation.m; sourceTree = "<group>"; };
 		3BC9E97115005F8F002FD1FA /* NSString+Levenshtein.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Levenshtein.h"; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				3BDDA18214FDAA6600829D2A /* SnapshotList.m */,
 				3BDDA17E14FDA55600829D2A /* WindowSnapshot.h */,
 				3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */,
+				3BBD24B91580206C00940ABF /* default.slate */,
 			);
 			name = Config;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				4786D53513882381004554B1 /* ASCIIToCode.plist in Resources */,
 				47850891138BB234005DFB62 /* status.png in Resources */,
 				3B65CF251576CDF10063D298 /* ASCIIToCode_Dvorak.plist in Resources */,
+				3BBD24BA1580206C00940ABF /* default.slate in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
