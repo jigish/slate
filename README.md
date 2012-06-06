@@ -26,7 +26,7 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 build/Release/Slate.app is the packaged application. Throw it wherever you want and run it.
 
-Note: You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices
+**Note:** You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices
 
 ## Configuring Slate ##
 
