@@ -1,4 +1,9 @@
-Current Version: 0.5.10
+Current Version: 0.5.11
+
+----------------- 0.5.11 ----------------
+
+Update Snapshot menu items to persist and not delete
+Added "Launch Slate on Login" menu item
 
 ----------------- 0.5.10 ----------------
 
