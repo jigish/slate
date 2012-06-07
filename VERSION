@@ -1,4 +1,9 @@
-Current Version: 0.5.9
+Current Version: 0.5.10
+
+----------------- 0.5.10 ----------------
+
+Fix Issue #72, #74
+Add a default config if no .slate file exists in ~/ to appease the App Store testers.
 
 ----------------- 0.5.9 -----------------
 
