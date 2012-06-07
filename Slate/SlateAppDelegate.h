@@ -31,6 +31,7 @@
 @private
   IBOutlet NSMenu *statusMenu;
   NSMenuItem *activateSnapshotItem;
+  NSMenuItem *launchOnLoginItem;
   IBOutlet NSWindow *windowInfo;
   IBOutlet NSWindow *configHelper;
   IBOutlet NSTextView *configHelperTextView;
@@ -52,6 +53,7 @@
 @property (assign) NSInteger cmdTabBinding;
 @property (assign) NSInteger cmdShiftTabBinding;
 
+- (IBAction)updateLaunchState;
 - (IBAction)reconfig;
 - (IBAction)currentWindowInfo;
 - (IBAction)configurationHelper;
@@ -63,6 +65,10 @@
 - (IBAction)activateSnapshot;
 - (OSStatus)timerActivateBinding:(NSTimer *)timer;
 - (OSStatus)activateBinding:(EventHotKeyID)hkCom isRepeat:(BOOL)isRepeat;
+- (BOOL)isInLoginItems;
+- (void)addToLoginItems;
+- (void)deleteFromLoginItems;
+- (void)setLaunchOnLoginItemStatus;
 
 OSStatus OnHotKeyEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
 OSStatus OnHotKeyReleasedEvent(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
