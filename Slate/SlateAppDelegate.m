@@ -104,8 +104,8 @@ static EventHandlerRef modifiersEvent;
 }
 
 - (void)createMenuSnapshotOperations {
-  [self setMenuSnapshotOperation:[SnapshotOperation operationFromString:@"snapshot menuSnapshot"]];
-  [self setMenuActivateSnapshotOperation:[ActivateSnapshotOperation operationFromString:@"activate-snapshot menuSnapshot delete"]];
+  [self setMenuSnapshotOperation:[SnapshotOperation operationFromString:@"snapshot menuSnapshot save-to-disk"]];
+  [self setMenuActivateSnapshotOperation:[ActivateSnapshotOperation operationFromString:@"activate-snapshot menuSnapshot"]];
 }
 
 - (IBAction)takeSnapshot {
