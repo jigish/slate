@@ -14,7 +14,7 @@ Slate currently works on Mac OS X 10.6 and above
   * create, delete, and activate snapshots of the current state of windows
 * Set default layouts for different monitor configurations which will activate when that configuration is detected.
 * Window Hints: an intuitive way to change window focus
-* A better, more customizable, application switcher.
+* \[Beta\] A better, more customizable, application switcher.
 
 ## Credits ##
 
@@ -429,7 +429,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     **Note:** There are *tons* of config options to tweak this.
 
-* A Better Application Switcher: `switch`
+* \[Beta\] A Better Application Switcher: `switch`
 
     If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
