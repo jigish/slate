@@ -201,15 +201,15 @@ Will create a layout called `myLayout` with two operations for iTerm and two ope
 
 The `default` directive follows the following format (tokens may be separated by any number of spaces):
 
-    default layout-name screen-configuration
+    default layout-or-snapshot-name screen-configuration
 
 Where:
 
-    layout-name = the name of the layout you want to default to
+    layout-or-snapshot-name = the name of the layout or snapshot you want to default to
     screen-configuration = either "count:NUMBER_OF_SCREENS" or
                                   "resolutions:SEMICOLON_SEPARATED_LIST_OF_RESOLUTIONS"
 
-This directive will cause any screen configuration change (add monitor, remove monitor, screen resolution change) to trigger a search for a default layout. If the screen configuration matches one of the defaults set, the layout matching `layout-name` will be triggered. For example:
+This directive will cause any screen configuration change (add monitor, remove monitor, screen resolution change) to trigger a search for a default layout or snapshot. If the screen configuration matches one of the defaults set, the layout or snapshot matching `layout-or-snapshot-name` will be triggered. For example:
 
     default myLayout count:2
 
