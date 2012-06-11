@@ -31,6 +31,7 @@
 #import "JSONKit.h"
 #import "SlateLogger.h"
 #import "NSFileManager+ApplicationSupport.h"
+#import "ActivateSnapshotOperation.h"
 
 @implementation SlateConfig
 
@@ -365,6 +366,14 @@ static SlateConfig *_instance = nil;
   SlateLogger(@"Notification Name: <%@>", [notification name]);
 }*/
 
+- (void)activateLayoutOrSnapshot:(NSString *)name {
+  if ([layouts objectForKey:name] != nil) {
+    [LayoutOperation activateLayout:name];
+  } else if ([snapshots objectForKey:name] != nil) {
+    [ActivateSnapshotOperation activateSnapshot:name remove:NO];
+  }
+}
+
 - (void)checkDefaults {
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   NSInteger screenCount = [sw getScreenCount];
@@ -376,8 +385,7 @@ static SlateConfig *_instance = nil;
     // Check count
     if ([state type] == TYPE_COUNT && [state count] == screenCount) {
       SlateLogger(@"onScreenChange count found");
-      LayoutOperation *op = [[LayoutOperation alloc] initWithName:[state layout]];
-      [op doOperation];
+      [self activateLayoutOrSnapshot:[state layout]];
       break;
     }
     // Check resolutions
@@ -391,8 +399,8 @@ static SlateConfig *_instance = nil;
         }
       }
       if (isEqual) {
-        LayoutOperation *op = [[LayoutOperation alloc] initWithName:[state layout]];
-        [op doOperation];
+        SlateLogger(@"onScreenChange resolution found");
+        [self activateLayoutOrSnapshot:[state layout]];
         break;
       }
     }

@@ -65,6 +65,14 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
+  return [ActivateSnapshotOperation activateSnapshot:name remove:del];
+}
+
+- (BOOL)testOperation {
+  return YES;
+}
+
++ (BOOL)activateSnapshot:(NSString *)name remove:(BOOL)del {
   Snapshot *snapshot = [[SlateConfig getInstance] popSnapshot:name remove:del];
   if (snapshot == nil) return YES;
   for (NSRunningApplication *app in [RunningApplications getInstance]) {
@@ -97,10 +105,6 @@
       [aw resizeWindow:[bestSnapshot size]];
     }
   }
-  return YES;
-}
-
-- (BOOL)testOperation {
   return YES;
 }
 

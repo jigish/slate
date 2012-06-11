@@ -55,20 +55,45 @@
 
 // Note that the AccessibilityWrapper is never used because layouts use multiple applications
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
+  return [LayoutOperation activateLayout:[self name] screenWrapper:sw];
+}
+
+- (BOOL)testOperation:(Operation *)op {
+  BOOL success = [op testOperation];
+  return success;
+}
+
+- (BOOL)testOperation {
+  BOOL success = YES;
+  Layout *layout = [[[SlateConfig getInstance] layouts] objectForKey:[self name]];
+  if (layout == nil) {
+    @throw([NSException exceptionWithName:@"Unrecognized Layout" reason:[self name] userInfo:nil]);
+  }
+  NSArray *apps = [[layout appStates] allKeys];
+  for (NSInteger i = 0; i < [apps count]; i++) {
+    NSArray *ops = [[layout appStates] objectForKey:[apps objectAtIndex:i]];
+    for (NSInteger op = 0; op < [ops count]; op++) {
+      success = [self testOperation:[ops objectAtIndex:op]] && success;
+    }
+  }
+  return success;
+}
+
++ (BOOL)activateLayout:(NSString *)name screenWrapper:(ScreenWrapper *)sw {
   BOOL success = YES;
   for (NSRunningApplication *app in [RunningApplications getInstance]) {
     NSString *appName = [app localizedName];
     pid_t appPID = [app processIdentifier];
     SlateLogger(@"I see application '%@' with pid '%d'", appName, appPID);
-    Layout *layout = [[[SlateConfig getInstance] layouts] objectForKey:[self name]];
+    Layout *layout = [[[SlateConfig getInstance] layouts] objectForKey:name];
     if (layout == nil) {
-      @throw([NSException exceptionWithName:@"Unrecognized Layout" reason:[self name] userInfo:nil]);
+      @throw([NSException exceptionWithName:@"Unrecognized Layout" reason:name userInfo:nil]);
     }
     NSArray *operations = [[layout appStates] objectForKey:appName];
     if (operations == nil) {
       continue;
     }
-
+    
     // Yes, I am aware that the following blocks are inefficient. Deal with it.
     AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
     CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInApp:appRef];
@@ -142,7 +167,7 @@
       CFArrayAppendArray(windows, windowsArr, CFRangeMake(0, CFArrayGetCount(windowsArr)));
     }
     CFArrayAppendArray(windows, windowsAppend, CFRangeMake(0, CFArrayGetCount(windowsAppend)));
-
+    
     NSInteger failedWindows = 0;
     BOOL appSuccess = YES;
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] repeat]) {
@@ -168,25 +193,9 @@
   return success;
 }
 
-- (BOOL)testOperation:(Operation *)op {
-  BOOL success = [op testOperation];
-  return success;
-}
-
-- (BOOL)testOperation {
-  BOOL success = YES;
-  Layout *layout = [[[SlateConfig getInstance] layouts] objectForKey:[self name]];
-  if (layout == nil) {
-    @throw([NSException exceptionWithName:@"Unrecognized Layout" reason:[self name] userInfo:nil]);
-  }
-  NSArray *apps = [[layout appStates] allKeys];
-  for (NSInteger i = 0; i < [apps count]; i++) {
-    NSArray *ops = [[layout appStates] objectForKey:[apps objectAtIndex:i]];
-    for (NSInteger op = 0; op < [ops count]; op++) {
-      success = [self testOperation:[ops objectAtIndex:op]] && success;
-    }
-  }
-  return success;
++ (BOOL)activateLayout:(NSString *)name {
+  ScreenWrapper *sw = [[ScreenWrapper alloc] init];
+  return [LayoutOperation activateLayout:name screenWrapper:sw];
 }
 
 + (id)layoutOperationFromString:(NSString *)layoutOperation {

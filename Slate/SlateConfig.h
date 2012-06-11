@@ -59,6 +59,7 @@
 - (void)addSnapshot:(Snapshot *)snapshot name:(NSString *)name saveToDisk:(BOOL)saveToDisk isStack:(BOOL)isStack;
 - (void)deleteSnapshot:(NSString *)name pop:(BOOL)pop;
 - (Snapshot *)popSnapshot:(NSString *)name remove:(BOOL)remove;
+- (void)activateLayoutOrSnapshot:(NSString *)name;
 //- (void)processNotification:(id)notification;
 
 + (NSURL *)snapshotsFile;

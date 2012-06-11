@@ -32,6 +32,8 @@
 - (id)initWithName:(NSString *)theName;
 - (BOOL)testOperation:(Operation *)op;
 
++ (BOOL)activateLayout:(NSString *)name;
++ (BOOL)activateLayout:(NSString *)name screenWrapper:(ScreenWrapper *)sw;
 + (id)layoutOperationFromString:(NSString *)layoutOperation;
 
 @end
