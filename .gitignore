@@ -1,5 +1,10 @@
 build/Slate.build
 build/Release/Slate.app.dSYM
+build/debug_paths.json
+build/release_paths.json
+build/Release/*.tar.gz
+build/Release/VERSION
+build/Release/appcast.xml
 Slate.xcodeproj/jigish.mode1v3
 Slate.xcodeproj/jigish.pbxuser
 Slate.xcodeproj/project.xcworkspace/xcuserdata/jigish.xcuserdatad/
