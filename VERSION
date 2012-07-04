@@ -1,4 +1,10 @@
-Current Version: 0.6.0
+Current Version: 1.0.0
+
+----------------- 1.0.0 -----------------
+
+bump version cause I feel like it. From now on users who had a symlink from the git to /Applications should
+  remove the symlink and just download the latest version from the downloads page on github. Sparkle will
+  update you when you need it.
 
 ----------------- 0.6.0 -----------------
 

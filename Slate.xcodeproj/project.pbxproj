@@ -18,8 +18,6 @@
 		3B4CDD00150ACA6800B819E2 /* SwitchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4CDCFF150ACA6800B819E2 /* SwitchOperation.m */; };
 		3B4CDD03150AD68000B819E2 /* SwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4CDD02150AD68000B819E2 /* SwitchView.m */; };
 		3B4CDD06150AD69500B819E2 /* SwitchWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4CDD05150AD69500B819E2 /* SwitchWindow.m */; };
-		3B4D0C3515A368CD00B39242 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B4D0C3415A368CD00B39242 /* Sparkle.framework */; };
-		3B4D0C3715A3692D00B39242 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3B4D0C3415A368CD00B39242 /* Sparkle.framework */; };
 		3B58153C1502FB7D0078D568 /* HintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B58153B1502FB7D0078D568 /* HintView.m */; };
 		3B58153F1502FF350078D568 /* NSColor+Conversions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B58153E1502FF350078D568 /* NSColor+Conversions.m */; };
 		3B65CF251576CDF10063D298 /* ASCIIToCode_Dvorak.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B65CF241576CDF10063D298 /* ASCIIToCode_Dvorak.plist */; };
@@ -28,6 +26,8 @@
 		3B7EB475138F691800EBEC2B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB474138F691800EBEC2B /* Constants.m */; };
 		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
 		3B84A552150552DC006E2194 /* ConfigurationHelperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B84A551150552DC006E2194 /* ConfigurationHelperView.m */; };
+		3B8554D915A5275300858AE0 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B8554D815A5275300858AE0 /* Sparkle.framework */; };
+		3B8554DA15A5278600858AE0 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3B8554D815A5275300858AE0 /* Sparkle.framework */; };
 		3B9B3007151BDD960069D95E /* RunningApplications.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B3006151BDD960069D95E /* RunningApplications.m */; };
 		3B9B301E151BFC330069D95E /* SwitchAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B301D151BFC330069D95E /* SwitchAppView.m */; };
 		3B9B3021151C830F0069D95E /* SwitchAppQuittingOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B3020151C830E0069D95E /* SwitchAppQuittingOverlayView.m */; };
@@ -83,7 +83,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3B4D0C3715A3692D00B39242 /* Sparkle.framework in CopyFiles */,
+				3B8554DA15A5278600858AE0 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,7 +112,6 @@
 		3B4CDD02150AD68000B819E2 /* SwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchView.m; sourceTree = "<group>"; };
 		3B4CDD04150AD69500B819E2 /* SwitchWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchWindow.h; sourceTree = "<group>"; };
 		3B4CDD05150AD69500B819E2 /* SwitchWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchWindow.m; sourceTree = "<group>"; };
-		3B4D0C3415A368CD00B39242 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		3B58153A1502FB7D0078D568 /* HintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HintView.h; sourceTree = "<group>"; };
 		3B58153B1502FB7D0078D568 /* HintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HintView.m; sourceTree = "<group>"; };
 		3B58153D1502FF350078D568 /* NSColor+Conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Conversions.h"; sourceTree = "<group>"; };
@@ -129,6 +128,7 @@
 		3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringTokenizer.m; sourceTree = "<group>"; };
 		3B84A550150552DC006E2194 /* ConfigurationHelperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationHelperView.h; sourceTree = "<group>"; };
 		3B84A551150552DC006E2194 /* ConfigurationHelperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationHelperView.m; sourceTree = "<group>"; };
+		3B8554D815A5275300858AE0 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		3B9B3005151BDD960069D95E /* RunningApplications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningApplications.h; sourceTree = "<group>"; };
 		3B9B3006151BDD960069D95E /* RunningApplications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningApplications.m; sourceTree = "<group>"; };
 		3B9B301C151BFC330069D95E /* SwitchAppView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchAppView.h; sourceTree = "<group>"; };
@@ -204,7 +204,7 @@
 			files = (
 				47C4A2C81384E8B10066B6DE /* Carbon.framework in Frameworks */,
 				47C4A2941384E8890066B6DE /* Cocoa.framework in Frameworks */,
-				3B4D0C3515A368CD00B39242 /* Sparkle.framework in Frameworks */,
+				3B8554D915A5275300858AE0 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,8 +372,8 @@
 		47C4A2921384E8890066B6DE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3B8554D815A5275300858AE0 /* Sparkle.framework */,
 				47C4A2C71384E8B10066B6DE /* Carbon.framework */,
-				3B4D0C3415A368CD00B39242 /* Sparkle.framework */,
 				47C4A2931384E8890066B6DE /* Cocoa.framework */,
 				47C4A2951384E8890066B6DE /* Other Frameworks */,
 			);
