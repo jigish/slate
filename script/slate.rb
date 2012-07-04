@@ -17,7 +17,7 @@ GITHUB_DOWNLOADS_BASE = 'https://github.com/downloads/jigish/slate'
 GITHUB_S3_BUCKET_URL = 'https://github.s3.amazonaws.com'
 AWS_SUCCESS = '201'
 ARCHIVE_MIME_TYPE = 'application/x-gzip'
-ARCHIVE_SIZE_THRESHOLD = 900000
+ARCHIVE_SIZE_THRESHOLD = 800000
 APPCAST_FILENAME = 'appcast.xml'
 APPCAST_MIME_TYPE = 'text/xml'
 APPCAST_SIZE_THRESHOLD = 800
@@ -29,6 +29,13 @@ def log(msg)
   puts msg
 end
 
+def clean
+  Dir.glob("#{BUILD_DIR}/*.json").each { |f| File.delete(f) }
+  Dir.glob("#{RELEASE_DIR}/*.tar.gz").each { |f| File.delete(f) }
+  Dir.glob("#{RELEASE_DIR}/VERSION").each { |f| File.delete(f) }
+  Dir.glob("#{RELEASE_DIR}/*.xml").each { |f| File.delete(f) }
+end
+
 def usage
   log "./#{File.basename(__FILE__)} <task> <options>"
   log "  tasks:"
@@ -38,7 +45,10 @@ def usage
   exit 1
 end
 
-def upload_file(filename, description, mime_type, size_threshold, delete = false)
+def upload_file(dir, filename, description, mime_type, size_threshold, delete = false)
+  curr_dir = Dir.pwd
+
+  Dir.chdir(dir)
   if (delete)
     cmd = "curl -s -u #{GITHUB_USER}:#{GITHUB_PASS} #{GITHUB_API_HOST}#{GITHUB_API_DOWNLOADS_PATH}"
     json = `#{cmd}`
@@ -94,11 +104,17 @@ def upload_file(filename, description, mime_type, size_threshold, delete = false
     log "#{cmd}"
     return -1
   end
+
+  Dir.chdir(curr_dir)
+
   size
 end
 
 def gen
   curr_dir = Dir.pwd
+
+  # Cleanup files from previous build
+  clean
 
   # Build
   Dir.chdir(BASE_DIR)
@@ -108,12 +124,13 @@ def gen
   # Copy
   debug_paths_json = File.read("#{BUILD_DIR}/debug_paths.json")
   debug_paths = JSON.parse(debug_paths_json)
-  FileUtils.rm_rf "#{DEBUG_DIR}/#{APP_FILE}"
-  FileUtils.cp_r "#{debug_paths['products']}/Applications/#{APP_FILE}", "#{DEBUG_DIR}/#{APP_FILE}"
   release_paths_json = File.read("#{BUILD_DIR}/release_paths.json")
   release_paths = JSON.parse(release_paths_json)
-  FileUtils.rm_rf "#{RELEASE_DIR}/#{APP_FILE}"
-  FileUtils.cp_r "#{debug_paths['products']}/Applications/#{APP_FILE}", "#{RELEASE_DIR}/#{APP_FILE}"
+  { DEBUG_DIR => debug_paths['products'], RELEASE_DIR => release_paths['products'] }.each do |to, from|
+    FileUtils.rm_rf "#{to}/#{APP_FILE}"
+    FileUtils.cp_r "#{from}/Applications/#{APP_FILE}", "#{to}/#{APP_FILE}"
+    File.new("#{to}/#{APP_FILE}/Contents/MacOS/#{APP_NAME}").chmod(0755)
+  end
 
   Dir.chdir(curr_dir)
 end
@@ -124,12 +141,12 @@ def pub
   gen
   version = `cat "#{RELEASE_DIR}/#{APP_FILE}/Contents/Info.plist" | grep -A 1 CFBundleVersion | tail -1 | sed "s/<string>\\([0-9]*\\.[0-9]*\\.[0-9]*\\)<\\/string>/\\1/"`.strip
   log "Publishing version #{version} ..."
-  Dir.chdir("#{RELEASE_DIR}")
+  Dir.chdir(RELEASE_DIR)
   filename = "#{version}.tar.gz"
   `tar -czf #{filename} #{APP_FILE}`
 
   # app archive
-  size = upload_file(filename, "Slate v#{version}", ARCHIVE_MIME_TYPE, ARCHIVE_SIZE_THRESHOLD, true)
+  size = upload_file(RELEASE_DIR, filename, "Slate v#{version}", ARCHIVE_MIME_TYPE, ARCHIVE_SIZE_THRESHOLD, true)
   unless size > ARCHIVE_SIZE_THRESHOLD
     Dir.chdir(BEGIN_DIR)
     exit 1
@@ -137,7 +154,7 @@ def pub
 
   # release notes
   FileUtils.cp "#{BASE_DIR}/#{RELEASE_NOTES_FILENAME}", "#{RELEASE_DIR}/#{RELEASE_NOTES_FILENAME}"
-  size = upload_file(RELEASE_NOTES_FILENAME, "Release Notes", RELEASE_NOTES_MIME_TYPE, RELEASE_NOTES_SIZE_THRESHOLD, true)
+  size = upload_file(RELEASE_DIR, RELEASE_NOTES_FILENAME, "Release Notes", RELEASE_NOTES_MIME_TYPE, RELEASE_NOTES_SIZE_THRESHOLD, true)
 
   # appcast
   appcast = <<EOS
@@ -161,7 +178,7 @@ def pub
 </rss>
 EOS
   File.open(APPCAST_FILENAME, 'w') {|f| f.write(appcast) }
-  size = upload_file(APPCAST_FILENAME, 'Slate Appcast for Sparkle', APPCAST_MIME_TYPE, APPCAST_SIZE_THRESHOLD, true)
+  size = upload_file(RELEASE_DIR, APPCAST_FILENAME, 'Slate Appcast for Sparkle', APPCAST_MIME_TYPE, APPCAST_SIZE_THRESHOLD, true)
   unless size > APPCAST_SIZE_THRESHOLD
     Dir.chdir(BEGIN_DIR)
     exit 1
