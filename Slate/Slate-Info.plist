@@ -35,6 +35,6 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>SUFeedURL</key>
-	<string>https://github.com/downloads/jigish/slate/appcast.xml</string>
+	<string>https://slate.ninjamonkeysoftware.com/appcast.xml</string>
 </dict>
 </plist>
