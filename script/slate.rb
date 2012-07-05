@@ -98,7 +98,7 @@ def pub
   version = `cat "#{RELEASE_DIR}/#{APP_FILE}/Contents/Info.plist" | grep -A 1 CFBundleVersion | tail -1 | sed "s/<string>\\([0-9]*\\.[0-9]*\\.[0-9]*\\)<\\/string>/\\1/"`.strip
   log "Publishing version #{version} ..."
   Dir.chdir(RELEASE_DIR)
-  filename = "#{version}.tar.gz"
+  filename = "slate-#{version}.tar.gz"
   `tar -czf #{filename} #{APP_FILE}`
 
   # app archive
