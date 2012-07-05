@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+	<string>1.0.1</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>
@@ -35,6 +35,6 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>SUFeedURL</key>
-	<string>https://slate.ninjamonkeysoftware.com/appcast.xml</string>
+	<string>https://www.ninjamonkeysoftware.com/slate/appcast.xml</string>
 </dict>
 </plist>

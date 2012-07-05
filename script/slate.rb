@@ -13,7 +13,8 @@ DEBUG_DIR = "#{BUILD_DIR}/Debug"
 APP_NAME = "Slate"
 APP_FILE = "#{APP_NAME}.app"
 FTP_HOST = 'www.ninjamonkeysoftware.com'
-WEB_HOST = 'slate.ninjamonkeysoftware.com'
+FTP_DIR = 'slate'
+WEB_HOST = 'www.ninjamonkeysoftware.com/slate'
 ARCHIVE_SIZE_THRESHOLD = 800000
 ARCHIVE_MIME_TYPE = 'application/x-gzip'
 APPCAST_FILENAME = 'appcast.xml'
@@ -102,7 +103,7 @@ def pub
   `tar -czf #{filename} #{APP_FILE}`
 
   # app archive
-  size = upload_file(RELEASE_DIR, 'slate/versions', filename, ARCHIVE_SIZE_THRESHOLD, true)
+  size = upload_file(RELEASE_DIR, "#{FTP_DIR}/versions", filename, ARCHIVE_SIZE_THRESHOLD, true)
   unless size > ARCHIVE_SIZE_THRESHOLD
     Dir.chdir(BEGIN_DIR)
     exit 1
@@ -110,7 +111,7 @@ def pub
 
   # release notes
   FileUtils.cp "#{BASE_DIR}/#{RELEASE_NOTES_FILENAME}", "#{RELEASE_DIR}/#{RELEASE_NOTES_FILENAME}"
-  size = upload_file(RELEASE_DIR, 'slate', RELEASE_NOTES_FILENAME, RELEASE_NOTES_SIZE_THRESHOLD)
+  size = upload_file(RELEASE_DIR, FTP_DIR, RELEASE_NOTES_FILENAME, RELEASE_NOTES_SIZE_THRESHOLD)
   unless size > RELEASE_NOTES_SIZE_THRESHOLD
     Dir.chdir(BEGIN_DIR)
     exit 1
@@ -138,11 +139,15 @@ def pub
 </rss>
 EOS
   File.open(APPCAST_FILENAME, 'w') {|f| f.write(appcast) }
-  size = upload_file(RELEASE_DIR, 'slate', APPCAST_FILENAME, APPCAST_SIZE_THRESHOLD)
+  size = upload_file(RELEASE_DIR, FTP_DIR, APPCAST_FILENAME, APPCAST_SIZE_THRESHOLD)
   unless size > APPCAST_SIZE_THRESHOLD
     Dir.chdir(BEGIN_DIR)
     exit 1
   end
+
+  log ""
+  log "Done. Don't forget to update the latest symlink!"
+  log ""
 
   Dir.chdir(curr_dir)
 end

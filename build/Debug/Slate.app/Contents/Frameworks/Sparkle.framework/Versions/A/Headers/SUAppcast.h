@@ -10,14 +10,11 @@
 #define SUAPPCAST_H
 
 @class SUAppcastItem;
-@interface SUAppcast : NSObject
-{
-@private
+@interface SUAppcast : NSObject {
 	NSArray *items;
 	NSString *userAgentString;
 	id delegate;
-	NSString *downloadFilename;
-	NSURLDownload *download;
+	NSMutableData *incrementalData;
 }
 
 - (void)fetchAppcastFromURL:(NSURL *)url;

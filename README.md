@@ -24,7 +24,7 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 ## Installing Slate ##
 
-You can download the latest Slate.app packaged as a .tar.gz [here](https://slate.ninjamonkeysoftware.com/versions/slate-latest.tar.gz).
+You can download the latest Slate.app packaged as a .tar.gz [here](http://slate.ninjamonkeysoftware.com/versions/slate-latest.tar.gz).
 
 **Note:** You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices
 
