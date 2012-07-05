@@ -102,7 +102,7 @@ def pub
   `tar -czf #{filename} #{APP_FILE}`
 
   # app archive
-  size = upload_file(RELEASE_DIR, 'slate/versions', filename, ARCHIVE_SIZE_THRESHOLD)
+  size = upload_file(RELEASE_DIR, 'slate/versions', filename, ARCHIVE_SIZE_THRESHOLD, true)
   unless size > ARCHIVE_SIZE_THRESHOLD
     Dir.chdir(BEGIN_DIR)
     exit 1
