@@ -21,6 +21,8 @@ APPCAST_FILENAME = 'appcast.xml'
 APPCAST_SIZE_THRESHOLD = 800
 RELEASE_NOTES_FILENAME = 'VERSION'
 RELEASE_NOTES_SIZE_THRESHOLD = 5000
+SPARKLE_FRAMEWORK = 'Sparkle.framework'
+FINISH_INSTALL = 'finish_installation'
 
 def log(msg)
   puts msg
@@ -87,6 +89,7 @@ def gen
     FileUtils.rm_rf "#{to}/#{APP_FILE}"
     FileUtils.cp_r "#{from}/Applications/#{APP_FILE}", "#{to}/#{APP_FILE}"
     File.new("#{to}/#{APP_FILE}/Contents/MacOS/#{APP_NAME}").chmod(0755)
+    File.new("#{to}/#{APP_FILE}/Contents/Frameworks/#{SPARKLE_FRAMEWORK}/Resources/#{FINISH_INSTALL}.app/Contents/MacOS/#{FINISH_INSTALL}").chmod(0755)
   end
 
   Dir.chdir(curr_dir)
