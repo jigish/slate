@@ -26,7 +26,7 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 **NEW Installation Instructions**
 
-You can now download the latest Slate.app packaged as a .tar.gz [here](http://slate.ninjamonkeysoftware.com/versions/slate-latest.tar.gz), extract it and stick `Slate.app` in your `/Applications` folder. Or just run this in your terminal:
+You can now download the latest `Slate.app` packaged as a `.tar.gz` [here](http://slate.ninjamonkeysoftware.com/versions/slate-latest.tar.gz), extract it and stick `Slate.app` in your `/Applications` folder. Or just run this in your terminal:
 
     cd /Applications && wget http://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz && tar -xzf slate-latest.tar.gz && rm slate-latest.tar.gz
 
