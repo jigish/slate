@@ -23,6 +23,7 @@
 @interface NSString (Levenshtein)
 
 - (float) levenshteinDistance: (NSString *) stringB;
+- (float) sequentialDistance: (NSString *) stringB;
 
 - (int) smallestOf: (int) a andOf: (int) b andOf: (int) c;
 

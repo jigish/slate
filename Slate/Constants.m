@@ -118,6 +118,10 @@ NSString *const SWITCH_SELECTED_PADDING = @"switchSelectedPadding";
 NSString *const SWITCH_SELECTED_PADDING_DEFAULT = @"10";
 NSString *const KEYBOARD_LAYOUT = @"keyboardLayout";
 NSString *const KEYBOARD_LAYOUT_DEFAULT = @"qwerty";
+NSString *const SNAPSHOT_TITLE_MATCH = @"snapshotTitleMatch";
+NSString *const SNAPSHOT_TITLE_MATCH_DEFAULT = @"levenshtein";
+NSString *const LEVENSHTEIN = @"levenshtein";
+NSString *const SEQUENTIAL = @"sequential";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";

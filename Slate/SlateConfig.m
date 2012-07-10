@@ -42,6 +42,7 @@
 @synthesize defaultLayouts;
 @synthesize aliases;
 @synthesize snapshots;
+@synthesize appConfigs;
 
 static SlateConfig *_instance = nil;
 
@@ -98,6 +99,14 @@ static SlateConfig *_instance = nil;
 
 - (NSString *)getConfigDefault:(NSString *)key {
   return [configDefaults objectForKey:key];
+}
+
+- (NSString *)getConfig:(NSString *)key app:(NSString *)app {
+  NSMutableDictionary *configsForApp = [appConfigs objectForKey:app];
+  if (configsForApp == nil) return [self getConfigDefault:key];
+  NSString *config = [configsForApp objectForKey:key];
+  if (config == nil) return [self getConfigDefault:key];
+  return config;
 }
 
 - (BOOL)load {
@@ -187,9 +196,11 @@ static SlateConfig *_instance = nil;
     NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
     [StringTokenizer tokenize:line into:tokens];
     if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:CONFIG]) {
-      // config <key> <value>
+      // config <key>[:<app>] <value>
       SlateLogger(@"  LoadingC: %@",line);
-      if ([configs objectForKey:[tokens objectAtIndex:1]] == nil) {
+      NSArray *splitKey = [[tokens objectAtIndex:1] componentsSeparatedByString:@":"];
+      NSString *key = [splitKey count] > 1 ? [splitKey objectAtIndex:0] : [tokens objectAtIndex:1];
+      if ([configs objectForKey:key] == nil) {
         SlateLogger(@"   ERROR Unrecognized config '%@'",[tokens objectAtIndex:1]);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"Quit"];
@@ -202,7 +213,16 @@ static SlateConfig *_instance = nil;
           [NSApp terminate:nil];
         }
       } else {
-        [configs setObject:[tokens objectAtIndex:2] forKey:[tokens objectAtIndex:1]];
+        if ([splitKey count] > 1 && [[splitKey objectAtIndex:1] length] > 2) {
+          NSString *appName = [[splitKey objectAtIndex:1] substringWithRange:NSMakeRange(1, [[splitKey objectAtIndex:1] length] - 2)];
+          SlateLogger(@"    Found App Config for App: '%@' Key: %@", appName, key);
+          NSMutableDictionary *configsForApp = [appConfigs objectForKey:appName];
+          if (configsForApp == nil) { configsForApp = [NSMutableDictionary dictionary]; }
+          [configsForApp setObject:[tokens objectAtIndex:2] forKey:key];
+          [appConfigs setObject:configsForApp forKey:appName];
+        } else {
+          [configs setObject:[tokens objectAtIndex:2] forKey:[tokens objectAtIndex:1]];
+        }
       }
     } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:BIND]) {
       // bind <key:modifiers> <op> <parameters>
@@ -518,7 +538,9 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:SWITCH_TYPE_DEFAULT forKey:SWITCH_TYPE];
   [configDefaults setObject:SWITCH_SELECTED_PADDING_DEFAULT forKey:SWITCH_SELECTED_PADDING];
   [configDefaults setObject:KEYBOARD_LAYOUT_DEFAULT forKey:KEYBOARD_LAYOUT];
+  [configDefaults setObject:SNAPSHOT_TITLE_MATCH_DEFAULT forKey:SNAPSHOT_TITLE_MATCH];
   [self setConfigs:[NSMutableDictionary dictionary]];
+  [self setAppConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];
 }
 

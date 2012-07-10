@@ -90,14 +90,25 @@
       NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
       if ([title isEqualToString:@""]) continue;
       AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windowsArr, i)];
-      // Find best snapshot using levenshtein distance of title
-      float bestDistance = 1000.0;
+      // Find best snapshot
       WindowSnapshot *bestSnapshot = nil;
-      for (WindowSnapshot *ws in windowSnapshots) {
-        float lDistance = [title levenshteinDistance:[ws title]];
-        if (lDistance < bestDistance || bestSnapshot == nil) {
-          bestDistance = lDistance;
-          bestSnapshot = ws;
+      if ([[[SlateConfig getInstance] getConfig:SNAPSHOT_TITLE_MATCH app:appName] isEqualToString:SEQUENTIAL]) {
+        float bestDistance = 0.0;
+        for (WindowSnapshot *ws in windowSnapshots) {
+          float sDistance = [title sequentialDistance:[ws title]];
+          if (sDistance > bestDistance || bestSnapshot == nil) {
+            bestDistance = sDistance;
+            bestSnapshot = ws;
+          }
+        }
+      } else {
+        float bestDistance = 1000.0;
+        for (WindowSnapshot *ws in windowSnapshots) {
+          float lDistance = [title levenshteinDistance:[ws title]];
+          if (lDistance < bestDistance || bestSnapshot == nil) {
+            bestDistance = lDistance;
+            bestSnapshot = ws;
+          }
         }
       }
       if (bestSnapshot == nil) continue;

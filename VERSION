@@ -1,4 +1,8 @@
-Current Version: 1.0.1
+Current Version: 1.0.2
+
+----------------- 1.0.2 -----------------
+
+Fixed Issue #76 - Added config snapshotTitleMatch
 
 ----------------- 1.0.1 -----------------
 

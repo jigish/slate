@@ -34,6 +34,7 @@
 
 @property  NSMutableDictionary *configs;
 @property  NSMutableDictionary *configDefaults;
+@property  NSMutableDictionary *appConfigs; // two layer map
 @property  NSMutableArray *bindings;
 @property  NSMutableDictionary *layouts;
 @property  NSMutableArray *defaultLayouts;
@@ -51,6 +52,7 @@
 - (float)getFloatConfig:(NSString *)key;
 - (NSString *)getConfig:(NSString *)key;
 - (NSString *)getConfigDefault:(NSString *)key;
+- (NSString *)getConfig:(NSString *)key app:(NSString *)app;
 - (NSArray *)getArrayConfig:(NSString *)key;
 - (void)addAlias:(NSString *)line;
 - (NSString *)replaceAliases:(NSString *)line;

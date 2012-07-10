@@ -116,6 +116,10 @@ extern NSString *const SWITCH_SELECTED_PADDING;
 extern NSString *const SWITCH_SELECTED_PADDING_DEFAULT;
 extern NSString *const KEYBOARD_LAYOUT;
 extern NSString *const KEYBOARD_LAYOUT_DEFAULT;
+extern NSString *const SNAPSHOT_TITLE_MATCH;
+extern NSString *const SNAPSHOT_TITLE_MATCH_DEFAULT;
+extern NSString *const LEVENSHTEIN;
+extern NSString *const SEQUENTIAL;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;
