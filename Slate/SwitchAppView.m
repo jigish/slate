@@ -21,7 +21,6 @@
 #import "SwitchAppView.h"
 #import "SlateConfig.h"
 #import "Constants.h"
-#import "NSColor+Conversions.h"
 #import "SwitchAppQuittingOverlayView.h"
 
 @implementation SwitchAppView

@@ -20,7 +20,6 @@
 
 #import "HintView.h"
 #import "Constants.h"
-#import "NSColor+Conversions.h"
 #import "SlateConfig.h"
 
 @implementation HintView

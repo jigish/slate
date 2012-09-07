@@ -39,7 +39,7 @@
   NSMutableArray *resolutions = [NSMutableArray array];
   [sw getScreenResolutionStrings:resolutions];
   for (NSInteger i = 0; i < [resolutions count]; i++) {
-    text = [text stringByAppendingFormat:@"Left To Right ID: %d\n  OS X ID: %d\n  Resolution: %@\n", [sw convertDefaultOrderToLeftToRightOrder:i], i, [resolutions objectAtIndex:i]];
+    text = [text stringByAppendingFormat:@"Left To Right ID: %ld\n  OS X ID: %ld\n  Resolution: %@\n", [sw convertDefaultOrderToLeftToRightOrder:i], i, [resolutions objectAtIndex:i]];
   }
   
   text = [text stringByAppendingString:@"\n----------------- Windows -----------------\n" ];
@@ -63,7 +63,7 @@
       NSInteger badScreenID = [sw getScreenIdForRect:NSMakeRect(badTL.x, badTL.y, size.width, size.height)];
       NSInteger screenID = [sw convertDefaultOrderToLeftToRightOrder:badScreenID];
       NSPoint tl = [sw convertTopLeftToScreenRelative:badTL screen:badScreenID];
-      text = [text stringByAppendingFormat:@"  Window: '%@'\n    Screen ID (Left to Right): %d\n    Size: (%d, %d)\n    Top Left: (screenOriginX+%d, screenOriginY+%d)\n", title, screenID, (NSInteger)size.width, (NSInteger)size.height, (NSInteger)tl.x, (NSInteger)tl.y];
+      text = [text stringByAppendingFormat:@"  Window: '%@'\n    Screen ID (Left to Right): %ld\n    Size: (%ld, %ld)\n    Top Left: (screenOriginX+%ld, screenOriginY+%ld)\n", title, screenID, (NSInteger)size.width, (NSInteger)size.height, (NSInteger)tl.x, (NSInteger)tl.y];
     }
   }
   [self setString:text];

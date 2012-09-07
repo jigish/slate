@@ -19,7 +19,6 @@
 		3B4CDD03150AD68000B819E2 /* SwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4CDD02150AD68000B819E2 /* SwitchView.m */; };
 		3B4CDD06150AD69500B819E2 /* SwitchWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4CDD05150AD69500B819E2 /* SwitchWindow.m */; };
 		3B58153C1502FB7D0078D568 /* HintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B58153B1502FB7D0078D568 /* HintView.m */; };
-		3B58153F1502FF350078D568 /* NSColor+Conversions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B58153E1502FF350078D568 /* NSColor+Conversions.m */; };
 		3B65CF251576CDF10063D298 /* ASCIIToCode_Dvorak.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B65CF241576CDF10063D298 /* ASCIIToCode_Dvorak.plist */; };
 		3B66A56213ADBDFD0015EDD5 /* ScreenWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */; };
 		3B7EB3A7138F3F6800EBEC2B /* ResizeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */; };
@@ -114,8 +113,6 @@
 		3B4CDD05150AD69500B819E2 /* SwitchWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchWindow.m; sourceTree = "<group>"; };
 		3B58153A1502FB7D0078D568 /* HintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HintView.h; sourceTree = "<group>"; };
 		3B58153B1502FB7D0078D568 /* HintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HintView.m; sourceTree = "<group>"; };
-		3B58153D1502FF350078D568 /* NSColor+Conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Conversions.h"; sourceTree = "<group>"; };
-		3B58153E1502FF350078D568 /* NSColor+Conversions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Conversions.m"; sourceTree = "<group>"; };
 		3B58154215054EBD0078D568 /* SlateLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlateLogger.h; sourceTree = "<group>"; };
 		3B65CF241576CDF10063D298 /* ASCIIToCode_Dvorak.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode_Dvorak.plist; sourceTree = "<group>"; };
 		3B66A56013ADBDFD0015EDD5 /* ScreenWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenWrapper.h; sourceTree = "<group>"; };
@@ -229,8 +226,6 @@
 		3BC9E97015005F5F002FD1FA /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				3B58153D1502FF350078D568 /* NSColor+Conversions.h */,
-				3B58153E1502FF350078D568 /* NSColor+Conversions.m */,
 				3BC9E97115005F8F002FD1FA /* NSString+Levenshtein.h */,
 				3BC9E97215005F8F002FD1FA /* NSString+Levenshtein.m */,
 				3B34F38F15462323004090BB /* NSFileManager+ApplicationSupport.h */,
@@ -489,7 +484,7 @@
 		47C4A2861384E8890066B6DE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = 47C4A2891384E8890066B6DE /* Build configuration list for PBXProject "Slate" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -589,7 +584,6 @@
 				3B3C41A01501ADC600C1E927 /* HintOperation.m in Sources */,
 				3B3C41A31501BE8600C1E927 /* HintWindow.m in Sources */,
 				3B58153C1502FB7D0078D568 /* HintView.m in Sources */,
-				3B58153F1502FF350078D568 /* NSColor+Conversions.m in Sources */,
 				3B84A552150552DC006E2194 /* ConfigurationHelperView.m in Sources */,
 				3B4CDD00150ACA6800B819E2 /* SwitchOperation.m in Sources */,
 				3B4CDD03150AD68000B819E2 /* SwitchView.m in Sources */,
@@ -694,6 +688,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -717,6 +712,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -740,6 +736,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Slate.app/Contents/MacOS/Slate";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -764,6 +761,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Slate.app/Contents/MacOS/Slate";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";

@@ -173,9 +173,9 @@ static const UInt32 ESC_HINT_ID = 10001;
   NSNumber *keyCode = [[Binding asciiToCodeDict] objectForKey:[hintCode lowercaseString]];
   EventHotKeyID myHotKeyID;
   EventHotKeyRef myHotKeyRef;
-  myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",currentHint] cStringUsingEncoding:NSASCIIStringEncoding];
+  myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%ld",currentHint] cStringUsingEncoding:NSASCIIStringEncoding];
   myHotKeyID.id = (UInt32)currentHint;
-  RegisterEventHotKey([keyCode integerValue], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
+  RegisterEventHotKey([keyCode unsignedIntValue], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
   [hotkeyRefs addObject:[NSValue valueWithPointer:myHotKeyRef]];
   currentHint++;
 }
@@ -294,7 +294,7 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
   EventHotKeyRef myHotKeyRef;
   myHotKeyID.signature = *[@"hotkeyESC" cStringUsingEncoding:NSASCIIStringEncoding];
   myHotKeyID.id = (UInt32)(ESC_HINT_ID);
-  RegisterEventHotKey([keyCode integerValue], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
+  RegisterEventHotKey([keyCode unsignedIntValue], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
   [hotkeyRefs addObject:[NSValue valueWithPointer:myHotKeyRef]];
 
   // Set the hide timer

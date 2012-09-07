@@ -21,7 +21,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface WindowState : NSObject {
+@interface WindowState : NSObject <NSCopying> {
 @private
   pid_t appPID;
   NSSize size;

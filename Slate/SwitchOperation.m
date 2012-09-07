@@ -49,10 +49,10 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
 - (id)init {
   self = [super init];
   if (self) {
-    backKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_BACK_KEY] integerValue];
-    quitKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_QUIT_KEY] integerValue];
-    fquitKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_FQUIT_KEY] integerValue];
-    hideKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_HIDE_KEY] integerValue];
+    backKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_BACK_KEY] unsignedIntValue];
+    quitKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_QUIT_KEY] unsignedIntValue];
+    fquitKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_FQUIT_KEY] unsignedIntValue];
+    hideKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_HIDE_KEY] unsignedIntValue];
     appsToQuit = [NSMutableArray array];
     appsToForceQuit = [NSMutableArray array];
     apps = nil;
@@ -66,10 +66,10 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
 - (id)initWithOptions:(NSString *)options {
   self = [super init];
   if (self) {
-    backKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_BACK_KEY] integerValue];
-    quitKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_QUIT_KEY] integerValue];
-    fquitKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_FQUIT_KEY] integerValue];
-    hideKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_HIDE_KEY] integerValue];
+    backKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_BACK_KEY] unsignedIntValue];
+    quitKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_QUIT_KEY] unsignedIntValue];
+    fquitKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_FQUIT_KEY] unsignedIntValue];
+    hideKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_HIDE_KEY] unsignedIntValue];
     NSMutableArray *optionsArr = [NSMutableArray array];
     [StringTokenizer tokenize:options into:optionsArr];
     for (NSString *option in optionsArr) {
@@ -80,13 +80,13 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
       NSNumber *keyCode = [[Binding asciiToCodeDict] objectForKey:keyValue];
       if (keyCode == nil) continue;
       if ([keyName isEqualToString:BACK]) {
-        backKeyCode = [keyCode integerValue];
+        backKeyCode = [keyCode unsignedIntValue];
       } else if ([keyName isEqualToString:QUIT]) {
-        quitKeyCode = [keyCode integerValue];
+        quitKeyCode = [keyCode unsignedIntValue];
       } else if ([keyName isEqualToString:FORCE_QUIT]) {
-        fquitKeyCode = [keyCode integerValue];
+        fquitKeyCode = [keyCode unsignedIntValue];
       } else if ([keyName isEqualToString:HIDE]) {
-        hideKeyCode = [keyCode integerValue];
+        hideKeyCode = [keyCode unsignedIntValue];
       }
     }
     appsToQuit = [NSMutableArray array];

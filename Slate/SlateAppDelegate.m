@@ -107,7 +107,7 @@ static EventHandlerRef modifiersEvent;
     }
     EventHotKeyID myHotKeyID;
     EventHotKeyRef myHotKeyRef;
-    myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",i] cStringUsingEncoding:NSASCIIStringEncoding];
+    myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%li",i] cStringUsingEncoding:NSASCIIStringEncoding];
     myHotKeyID.id = (UInt32)i;
     RegisterEventHotKey([binding keyCode], [binding modifiers], myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
     [binding setHotKeyRef:myHotKeyRef];
@@ -242,7 +242,7 @@ CGEventRef EatAppSwitcherCallback(CGEventTapProxy proxy, CGEventType type,  CGEv
         EventHotKeyID myHotKeyID;
         NSInteger hotkeyID = ((flags & kCGEventFlagMaskShift) == kCGEventFlagMaskShift) ? [del cmdShiftTabBinding] : [del cmdTabBinding];
         if (hotkeyID < 0) return NULL;
-        myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
+        myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%li",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
         myHotKeyID.id = (UInt32)hotkeyID;
         [del activateBinding:myHotKeyID isRepeat:NO];
       } else {
@@ -257,7 +257,7 @@ CGEventRef EatAppSwitcherCallback(CGEventTapProxy proxy, CGEventType type,  CGEv
         EventHotKeyID myHotKeyID;
         NSInteger hotkeyID = ((flags & kCGEventFlagMaskShift) == kCGEventFlagMaskShift) ? [del cmdShiftTabBinding] : [del cmdTabBinding];
         if (hotkeyID < 0) return NULL;
-        myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%i",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
+        myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%li",hotkeyID] cStringUsingEncoding:NSASCIIStringEncoding];
         myHotKeyID.id = (UInt32)hotkeyID;
         [del activateBinding:myHotKeyID isRepeat:YES];
       }

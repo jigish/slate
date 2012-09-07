@@ -80,7 +80,7 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
     SlateLogger(@">>> TITLE CHANGED TO %@", [AccessibilityWrapper getTitle:element]);
     NSNumber *appPID = [NSNumber numberWithInteger:[AccessibilityWrapper processIdentifierOfUIElement:element]];
     NSMutableArray *oldWindowsInApp = [[[ref appToWindows] objectForKey:appPID] mutableCopy];
-    CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:AXUIElementCreateApplication([appPID integerValue])];
+    CFArrayRef windowsArr = [AccessibilityWrapper windowsInApp:AXUIElementCreateApplication([appPID intValue])];
     // Remove all windows if app has no windows
     if (!windowsArr || CFArrayGetCount(windowsArr) == 0) return;
     if (oldWindowsInApp == nil || [oldWindowsInApp count] == 0) {
