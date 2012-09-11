@@ -31,6 +31,7 @@
 @synthesize topLeft;
 @synthesize dimensions;
 @synthesize monitor;
+@synthesize screenId;
 
 - (id)init {
   self = [super init];
@@ -63,8 +64,21 @@
       }
     }
     [self setMonitor:mon];
+    [self setScreenId:-1];
   }
 
+  return self;
+}
+
+- (id)initWithTopLeftEP:(ExpressionPoint *)tl dimensionsEP:(ExpressionPoint *)dim screenId:(NSInteger)myScreenId {
+  self = [self init];
+  if (self) {
+    [self setTopLeft:tl];
+    [self setDimensions:dim];
+    [self setScreenId:myScreenId];
+    [self setMonitor:nil];
+  }
+  
   return self;
 }
 
@@ -104,16 +118,20 @@
 
 - (NSPoint)getTopLeftWithCurrentWindowRect:(NSRect)cWindowRect newSize:(NSSize)nSize screenWrapper:(ScreenWrapper *)sw {
   // If monitor does not exist send back the same origin
-  NSInteger screenId = [sw getScreenId:monitor windowRect:cWindowRect];
-  if (![sw screenExists:screenId]) return cWindowRect.origin;
+  if (monitor != nil) {
+    [self setScreenId:[sw getScreenId:monitor windowRect:cWindowRect]];
+  }
+  if (![sw screenExists:[self screenId]]) return cWindowRect.origin;
   NSDictionary *values = [sw getScreenAndWindowValues:screenId window:cWindowRect newSize:nSize];
   return [topLeft getPointWithDict:values];
 }
 
 - (NSSize)getDimensionsWithCurrentWindowRect:(NSRect)cWindowRect screenWrapper:(ScreenWrapper *)sw {
   // If monitor does not exist send back the same size
-  NSInteger screenId = [sw getScreenId:monitor windowRect:cWindowRect];
-  if (![sw screenExists:screenId]) return cWindowRect.size;
+  if (monitor != nil) {
+    [self setScreenId:[sw getScreenId:monitor windowRect:cWindowRect]];
+  }
+  if (![sw screenExists:[self screenId]]) return cWindowRect.size;
   NSDictionary *values = [sw getScreenAndWindowValues:screenId window:cWindowRect newSize:cWindowRect.size];
   return [dimensions getSizeWithDict:values];
 }

@@ -149,6 +149,14 @@ List of allowed configs:
 | `switchSelectedPadding` | Number | Default: `10`. The size of the padding betweeen the edge of the switch window and the edge of the selected app selected background |
 | `keyboardLayout` | `dvorak` or `qwerty` | Default: `qwerty`. The keyboard layout you are using. |
 | `snapshotTitleMatch` | `levenshtein` or `sequential` | Default: `levenshtein`. The algorithm to use when determining if titles match or not for the snapshot operation. If `levenshtein`, the titles with the lowest levenshtein distance will be matched, if sequential, the titles with the maximum common prefix length will be matched. Note that this will change the algorithm for **all** apps. If you would like to change the algorithm for only one app use `snapshotTitleMatch:'APP_NAME'` for example to change the algorithm for only iTerm, use the following directive: `config snapshotTitleMatch:'iTerm' sequential`. |
+| `gridBackgroundColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The background color
+for the `grid` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `gridRoundedCornerSize` | Number | Default: `5`. The size of the rounded corners of the `grid` operation's background. Set this to `0` if you do not want rounded corners |
+| `gridCellBackgroundColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The background color
+for the `grid` operation's cells as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `gridCellSelectedColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The selected color
+for the `grid` operation's cells as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `gridCellRoundedCornerSize` | Number | Default: `5`. The size of the rounded corners of the `grid` operation's cells. Set this to `0` if you do not want rounded corners |
 
 Example:
 
@@ -433,6 +441,22 @@ Some operations allow you to specify a screen. Here are the list of possible val
     Will bind the keystroke ctrl-1 to show Window Hints using the letters `Q`, `W`, `E`, `R`, `T`, `Y`, `U`, `I`, `O`, and `P`.  This will show an overlay in the top-left corner of every window on screen containing one of those letters. While the overlays are showing, if one of those letters is pressed, the corresponding window will be focused. If there are more than 10 windows, some windows will not get hints. Pressing ESC will dismiss the hints.
 
     **Note:** There are *tons* of config options to tweak this.
+
+* Show a Grid to one-off resize and move windows: `grid options`
+
+        options is a whitespace separated list of:
+          padding:<integer> = the padding between cells
+          screenRef:width,height = width and height are integers specifying the width and height of the grid
+                                   (number of cells, not absolute size). screenRef is either the screenID or
+                                   screen resolution (widthxheight)
+
+    Example:
+
+        bind 1:ctrl grid padding:5 1680x1050:16,9 1050x1680:9,16
+
+    Will bind the keystroke ctrl-1 to show Grids on each screen. The default width and height are 12. This will set the padding between the cells to be 5. Also, this will change the width and height of the grid on the monitor with the resolution 1680x1050 to 16 and 9 respectively. For the monitor with the resolution 1050x1680, it will set the width to 9 and height to 16. If you have multiple monitors, the Grid that is on the same screen as your mouse pointer will be focused. If you want to use a grid on a different monitor you **must** click it first and then click+drag.
+
+    **Note:** There are a bunch of config options to tweak how this looks.
 
 * \[Beta\] A Better Application Switcher: `switch`
 

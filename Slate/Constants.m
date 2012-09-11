@@ -122,6 +122,16 @@ NSString *const SNAPSHOT_TITLE_MATCH = @"snapshotTitleMatch";
 NSString *const SNAPSHOT_TITLE_MATCH_DEFAULT = @"levenshtein";
 NSString *const LEVENSHTEIN = @"levenshtein";
 NSString *const SEQUENTIAL = @"sequential";
+NSString *const GRID_BACKGROUND_COLOR = @"gridBackgroundColor";
+NSString *const GRID_BACKGROUND_COLOR_DEFAULT = @"75;77;81;1.0";
+NSString *const GRID_ROUNDED_CORNER_SIZE = @"gridRoundedCornerSize";
+NSString *const GRID_ROUNDED_CORNER_SIZE_DEFAULT = @"5";
+NSString *const GRID_CELL_BACKGROUND_COLOR = @"gridCellBackgroundColor";
+NSString *const GRID_CELL_BACKGROUND_COLOR_DEFAULT = @"100;106;116;0.8";
+NSString *const GRID_CELL_SELECTED_COLOR = @"gridCellSelectedColor";
+NSString *const GRID_CELL_SELECTED_COLOR_DEFAULT = @"50;53;58;0.8";
+NSString *const GRID_CELL_ROUNDED_CORNER_SIZE = @"gridCellRoundedCornerSize";
+NSString *const GRID_CELL_ROUNDED_CORNER_SIZE_DEFAULT = @"5";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";
@@ -165,6 +175,7 @@ NSString *const ACTIVATE_SNAPSHOT = @"activate-snapshot";
 NSString *const DELETE_SNAPSHOT = @"delete-snapshot";
 NSString *const HINT = @"hint";
 NSString *const SWITCH = @"switch";
+NSString *const GRID = @"grid";
 
 // Parameters and Options
 NSString *const CENTER = @"center";
@@ -194,6 +205,7 @@ NSString *const WINDOW_HINTS_ORDER_RIGHT_TO_LEFT = @"rightToLeft";
 NSString *const SWITCH_ORIENTATION_HORIZONTAL = @"horizontal";
 NSString *const SWITCH_ORIENTATION_VERTICAL = @"vertical";
 NSString *const KEYBOARD_LAYOUT_DVORAK = @"dvorak";
+NSString *const PADDING = @"padding";
 
 // Directions and Anchors
 NSString *const UP = @"up";

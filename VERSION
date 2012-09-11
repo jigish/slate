@@ -1,4 +1,15 @@
-Current Version: 1.0.2
+Current Version: 1.0.3
+
+----------------- 1.0.3 -----------------
+
+Upgrade Xcode project
+Add Grid Operation! Bind a key to open a grid that you can use to one-off resize a window
+Added the following configs for grid:
+  gridBackgroundColor
+  gridRoundedCornerSize
+  gridCellBackgroundColor
+  gridCellSelectedColor
+  gridCellRoundedCornerSize
 
 ----------------- 1.0.2 -----------------
 

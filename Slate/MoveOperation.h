@@ -28,13 +28,16 @@
   ExpressionPoint *topLeft;
   ExpressionPoint *dimensions;
   NSString *monitor;
+  NSInteger screenId;
 }
 
-@property  ExpressionPoint *topLeft;
-@property  ExpressionPoint *dimensions;
-@property  NSString *monitor;
+@property ExpressionPoint *topLeft;
+@property ExpressionPoint *dimensions;
+@property NSString *monitor;
+@property NSInteger screenId;
 
 - (id)initWithTopLeft:(NSString *)tl dimensions:(NSString *)dim monitor:(NSString *)mon;
+- (id)initWithTopLeftEP:(ExpressionPoint *)tl dimensionsEP:(ExpressionPoint *)dim screenId:(NSInteger)myScreenId;
 - (NSPoint)getTopLeftWithCurrentWindowRect:(NSRect)cWindowRect newSize:(NSSize)nSize screenWrapper:(ScreenWrapper *)sw;
 - (NSSize)getDimensionsWithCurrentWindowRect:(NSRect)cWindowRect screenWrapper:(ScreenWrapper *)sw;
 

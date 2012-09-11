@@ -32,6 +32,7 @@
 #import "Constants.h"
 #import "SlateLogger.h"
 #import "SwitchOperation.h"
+#import "GridOperation.h"
 
 @implementation Operation
 
@@ -89,6 +90,8 @@
     operation = [HintOperation hintOperationFromString:opString];
   } else if ([op isEqualToString:SWITCH]) {
     operation = [SwitchOperation switchOperationFromString:opString];
+  } else if ([op isEqualToString:GRID]) {
+    operation = [GridOperation gridOperationFromString:opString];
   } else {
     SlateLogger(@"ERROR: Unrecognized operation '%@'", opString);
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);

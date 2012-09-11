@@ -29,10 +29,11 @@
 #import "ActivateSnapshotOperation.h"
 #import "SwitchOperation.h"
 #import "RunningApplications.h"
+#import "GridOperation.h"
 
 @implementation SlateAppDelegate
 
-@synthesize currentHintOperation, currentSwitchBinding, menuSnapshotOperation, menuActivateSnapshotOperation, cmdTabBinding, cmdShiftTabBinding;
+@synthesize currentHintOperation, currentGridOperation, currentSwitchBinding, menuSnapshotOperation, menuActivateSnapshotOperation, cmdTabBinding, cmdShiftTabBinding;
 
 static NSObject *timerLock = nil;
 static NSObject *keyUpLock = nil;
@@ -142,9 +143,14 @@ static EventHandlerRef modifiersEvent;
 
 - (OSStatus)activateBinding:(EventHotKeyID)hkCom isRepeat:(BOOL)isRepeat {
   HintOperation *hintop = [self currentHintOperation];
+  GridOperation *gridop = [self currentGridOperation];
   Binding *switchop = [self currentSwitchBinding];
   if (hintop != nil) {
     [hintop activateHintKey:hkCom.id];
+    return noErr;
+  }
+  if (gridop != nil) {
+    [gridop activateGridKey:hkCom.id];
     return noErr;
   }
   if (switchop != nil) {
@@ -164,7 +170,7 @@ static EventHandlerRef modifiersEvent;
     }
     return noErr;
   }
-
+  if (hkCom.id >= [[[SlateConfig getInstance] bindings] count]) { return noErr; }
   Binding *binding = [[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id];
   if (binding) {
     SlateLogger(@"Running Operation %@", [[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id]);
@@ -353,6 +359,7 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
   cmdTabBinding = -1;
   cmdShiftTabBinding = -1;
   currentHintOperation = nil;
+  currentGridOperation = nil;
 
   windowInfoController = [[NSWindowController alloc] initWithWindow:windowInfo];
   configHelperController = [[NSWindowController alloc] initWithWindow:configHelper];

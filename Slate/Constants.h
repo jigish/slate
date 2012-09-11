@@ -120,6 +120,16 @@ extern NSString *const SNAPSHOT_TITLE_MATCH;
 extern NSString *const SNAPSHOT_TITLE_MATCH_DEFAULT;
 extern NSString *const LEVENSHTEIN;
 extern NSString *const SEQUENTIAL;
+extern NSString *const GRID_BACKGROUND_COLOR;
+extern NSString *const GRID_BACKGROUND_COLOR_DEFAULT;
+extern NSString *const GRID_ROUNDED_CORNER_SIZE;
+extern NSString *const GRID_ROUNDED_CORNER_SIZE_DEFAULT;
+extern NSString *const GRID_CELL_BACKGROUND_COLOR;
+extern NSString *const GRID_CELL_BACKGROUND_COLOR_DEFAULT;
+extern NSString *const GRID_CELL_SELECTED_COLOR;
+extern NSString *const GRID_CELL_SELECTED_COLOR_DEFAULT;
+extern NSString *const GRID_CELL_ROUNDED_CORNER_SIZE;
+extern NSString *const GRID_CELL_ROUNDED_CORNER_SIZE_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;
@@ -163,6 +173,7 @@ extern NSString *const ACTIVATE_SNAPSHOT;
 extern NSString *const DELETE_SNAPSHOT;
 extern NSString *const HINT;
 extern NSString *const SWITCH;
+extern NSString *const GRID;
 
 // Parameters and Options
 extern NSString *const CENTER;
@@ -192,6 +203,7 @@ extern NSString *const WINDOW_HINTS_ORDER_RIGHT_TO_LEFT;
 extern NSString *const SWITCH_ORIENTATION_HORIZONTAL;
 extern NSString *const SWITCH_ORIENTATION_VERTICAL;
 extern NSString *const KEYBOARD_LAYOUT_DVORAK;
+extern NSString *const PADDING;
 
 // Directions and Anchors
 extern NSString *const UP;

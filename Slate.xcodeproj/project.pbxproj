@@ -44,6 +44,10 @@
 		3BDDA18014FDA55600829D2A /* WindowSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */; };
 		3BDDA18314FDAA6600829D2A /* SnapshotList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA18214FDAA6600829D2A /* SnapshotList.m */; };
 		3BF39E1214FDB16F0083E9C4 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF39E1114FDB16F0083E9C4 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3BFC8A6A15FAAD9D00B16139 /* GridOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A6915FAAD9D00B16139 /* GridOperation.m */; };
+		3BFC8A6D15FABC9700B16139 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A6C15FABC9600B16139 /* GridView.m */; };
+		3BFC8A7015FABCBE00B16139 /* GridWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A6F15FABCBD00B16139 /* GridWindow.m */; };
+		3BFC8A7315FE5CD700B16139 /* GridCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A7215FE5CD700B16139 /* GridCellView.m */; };
 		4747E1EF13877C160005180C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4747E1EE13877C150005180C /* icon.icns */; };
 		47850891138BB234005DFB62 /* status.png in Resources */ = {isa = PBXBuildFile; fileRef = 47850890138BB234005DFB62 /* status.png */; };
 		4786D53513882381004554B1 /* ASCIIToCode.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4786D53413882381004554B1 /* ASCIIToCode.plist */; };
@@ -159,6 +163,14 @@
 		3BDDA18214FDAA6600829D2A /* SnapshotList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapshotList.m; sourceTree = "<group>"; };
 		3BF39E1014FDB16F0083E9C4 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		3BF39E1114FDB16F0083E9C4 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSONKit.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3BFC8A6815FAAD9D00B16139 /* GridOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridOperation.h; sourceTree = "<group>"; };
+		3BFC8A6915FAAD9D00B16139 /* GridOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridOperation.m; sourceTree = "<group>"; };
+		3BFC8A6B15FABC9600B16139 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
+		3BFC8A6C15FABC9600B16139 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
+		3BFC8A6E15FABCBD00B16139 /* GridWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridWindow.h; sourceTree = "<group>"; };
+		3BFC8A6F15FABCBD00B16139 /* GridWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridWindow.m; sourceTree = "<group>"; };
+		3BFC8A7115FE5CD600B16139 /* GridCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridCellView.h; sourceTree = "<group>"; };
+		3BFC8A7215FE5CD700B16139 /* GridCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCellView.m; sourceTree = "<group>"; };
 		4747E1EE13877C150005180C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Slate/icon.icns; sourceTree = "<group>"; };
 		47850890138BB234005DFB62 /* status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = status.png; path = Slate/status.png; sourceTree = "<group>"; };
 		4786D53413882381004554B1 /* ASCIIToCode.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode.plist; sourceTree = "<group>"; };
@@ -286,6 +298,14 @@
 				3BD8191C14FDC0CE003D63BC /* DeleteSnapshotOperation.m */,
 				3BCE40F313B15FF300804615 /* FocusOperation.h */,
 				3BCE40F413B15FF300804615 /* FocusOperation.m */,
+				3BFC8A7115FE5CD600B16139 /* GridCellView.h */,
+				3BFC8A7215FE5CD700B16139 /* GridCellView.m */,
+				3BFC8A6815FAAD9D00B16139 /* GridOperation.h */,
+				3BFC8A6915FAAD9D00B16139 /* GridOperation.m */,
+				3BFC8A6B15FABC9600B16139 /* GridView.h */,
+				3BFC8A6C15FABC9600B16139 /* GridView.m */,
+				3BFC8A6E15FABCBD00B16139 /* GridWindow.h */,
+				3BFC8A6F15FABCBD00B16139 /* GridWindow.m */,
 				3B3C419E1501ADC600C1E927 /* HintOperation.h */,
 				3B3C419F1501ADC600C1E927 /* HintOperation.m */,
 				3B58153A1502FB7D0078D568 /* HintView.h */,
@@ -592,6 +612,10 @@
 				3B9B301E151BFC330069D95E /* SwitchAppView.m in Sources */,
 				3B9B3021151C830F0069D95E /* SwitchAppQuittingOverlayView.m in Sources */,
 				3B34F39115462323004090BB /* NSFileManager+ApplicationSupport.m in Sources */,
+				3BFC8A6A15FAAD9D00B16139 /* GridOperation.m in Sources */,
+				3BFC8A6D15FABC9700B16139 /* GridView.m in Sources */,
+				3BFC8A7015FABCBE00B16139 /* GridWindow.m in Sources */,
+				3BFC8A7315FE5CD700B16139 /* GridCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

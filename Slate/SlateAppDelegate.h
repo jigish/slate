@@ -26,6 +26,7 @@
 @class ActivateSnapshotOperation;
 @class HintOperation;
 @class Binding;
+@class GridOperation;
 
 @interface SlateAppDelegate : NSObject <NSApplicationDelegate> {
 @private
@@ -39,6 +40,7 @@
   NSWindowController *windowInfoController;
   NSWindowController *configHelperController;
   HintOperation *currentHintOperation;
+  GridOperation *currentGridOperation;
   Binding *currentSwitchBinding;
   SnapshotOperation *menuSnapshotOperation;
   ActivateSnapshotOperation *menuActivateSnapshotOperation;
@@ -47,6 +49,7 @@
 }
 
 @property HintOperation *currentHintOperation;
+@property GridOperation *currentGridOperation;
 @property Binding *currentSwitchBinding;
 @property SnapshotOperation *menuSnapshotOperation;
 @property ActivateSnapshotOperation *menuActivateSnapshotOperation;
