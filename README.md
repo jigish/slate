@@ -149,13 +149,10 @@ List of allowed configs:
 | `switchSelectedPadding` | Number | Default: `10`. The size of the padding betweeen the edge of the switch window and the edge of the selected app selected background |
 | `keyboardLayout` | `dvorak` or `qwerty` | Default: `qwerty`. The keyboard layout you are using. |
 | `snapshotTitleMatch` | `levenshtein` or `sequential` | Default: `levenshtein`. The algorithm to use when determining if titles match or not for the snapshot operation. If `levenshtein`, the titles with the lowest levenshtein distance will be matched, if sequential, the titles with the maximum common prefix length will be matched. Note that this will change the algorithm for **all** apps. If you would like to change the algorithm for only one app use `snapshotTitleMatch:'APP_NAME'` for example to change the algorithm for only iTerm, use the following directive: `config snapshotTitleMatch:'iTerm' sequential`. |
-| `gridBackgroundColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The background color
-for the `grid` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `gridBackgroundColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The background color for the `grid` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
 | `gridRoundedCornerSize` | Number | Default: `5`. The size of the rounded corners of the `grid` operation's background. Set this to `0` if you do not want rounded corners |
-| `gridCellBackgroundColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The background color
-for the `grid` operation's cells as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
-| `gridCellSelectedColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The selected color
-for the `grid` operation's cells as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `gridCellBackgroundColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The background color for the `grid` operation's cells as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
+| `gridCellSelectedColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The selected color for the `grid` operation's cells as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
 | `gridCellRoundedCornerSize` | Number | Default: `5`. The size of the rounded corners of the `grid` operation's cells. Set this to `0` if you do not want rounded corners |
 
 Example:
