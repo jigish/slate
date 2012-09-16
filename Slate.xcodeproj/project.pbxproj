@@ -67,6 +67,7 @@
 		47C4A2D11384F3E10066B6DE /* Operation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D01384F3E10066B6DE /* Operation.m */; };
 		47C4A2D41384F4A60066B6DE /* MoveOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D31384F4A60066B6DE /* MoveOperation.m */; };
 		47C4A2D71384F5DE0066B6DE /* ExpressionPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D61384F5DE0066B6DE /* ExpressionPoint.m */; };
+		B3D087D0160577FB008A7FC6 /* statusTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B3D087CF160577FB008A7FC6 /* statusTemplate.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -204,6 +205,7 @@
 		47C4A2D31384F4A60066B6DE /* MoveOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MoveOperation.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		47C4A2D51384F5DD0066B6DE /* ExpressionPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionPoint.h; sourceTree = "<group>"; };
 		47C4A2D61384F5DE0066B6DE /* ExpressionPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpressionPoint.m; sourceTree = "<group>"; };
+		B3D087CF160577FB008A7FC6 /* statusTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = statusTemplate.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +260,7 @@
 		4747E1F013877D260005180C /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				B3D087CF160577FB008A7FC6 /* statusTemplate.pdf */,
 				47850890138BB234005DFB62 /* status.png */,
 				4747E1EE13877C150005180C /* icon.icns */,
 			);
@@ -537,6 +540,7 @@
 				47850891138BB234005DFB62 /* status.png in Resources */,
 				3B65CF251576CDF10063D298 /* ASCIIToCode_Dvorak.plist in Resources */,
 				3BBD24BA1580206C00940ABF /* default.slate in Resources */,
+				B3D087D0160577FB008A7FC6 /* statusTemplate.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
