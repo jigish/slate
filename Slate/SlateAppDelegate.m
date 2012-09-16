@@ -388,7 +388,7 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 
   statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: NSVariableStatusItemLength];
   [statusItem setMenu:statusMenu];
-  [statusItem setImage:[NSImage imageNamed:@"status"]];
+  [statusItem setImage:[NSImage imageNamed:@"statusTemplate"]];
   [statusItem setHighlightMode:YES];
 
   // Ensure no timer exists
