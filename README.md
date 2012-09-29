@@ -1,6 +1,6 @@
 # About Slate #
 
-Slate is a window management application similar to Divvy and SizeUp (except better and free!). Originally written to replace them due to some limitations in how each work, it attemps to overcome them by simply being extremely configurable. As a result, it may be a bit daunting to get configured, but once it is done, the benifit is huge.
+Slate is a window management application similar to Divvy and SizeUp (except better and free!). Originally written to replace them due to some limitations in how each work, it attemps to overcome them by simply being extremely configurable. As a result, it may be a bit daunting to get configured, but once it is done, the benefit is huge.
 
 Slate currently works on Mac OS X 10.6 and above
 
