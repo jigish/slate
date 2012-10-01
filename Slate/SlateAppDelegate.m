@@ -407,7 +407,7 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
     [alert addButtonWithTitle:@"Quit"];
     [alert addButtonWithTitle:@"Skip"];
     [alert setMessageText:[NSString stringWithFormat:@"ERROR Access for assistive devices is not enabled. Please enable it."]];
-    [alert setInformativeText:[NSString stringWithFormat:@"Settings > Universal Access > Enable access for assistive devices."]];
+    [alert setInformativeText:[NSString stringWithFormat:@"System Preferences > Accessibility > \"Enable access for assistive devices\"."]];
     [alert setAlertStyle:NSWarningAlertStyle];
     if ([alert runModal] == NSAlertFirstButtonReturn) {
       SlateLogger(@"User selected exit");
