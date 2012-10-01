@@ -47,6 +47,8 @@ Configuration is split into the following directives:
 * `bind` (for key bindings)
 * `source` (to load configs from another file)
 
+**Note:** `#` is the comment character. Anything after a `#` will be ignored.
+
 ###Expressions###
 
 Some directives allow parameters that can be expressions. The following strings will be replaced with the appropriate values when using expressions:

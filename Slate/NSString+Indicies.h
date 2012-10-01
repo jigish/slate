@@ -1,8 +1,8 @@
 //
-//  SlateTests.m
+//  NSString+Indicies.h
 //  Slate
 //
-//  Created by Jigish Patel on 5/18/11.
+//  Created by Jigish Patel on 10/1/12.
 //  Copyright 2011 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -18,28 +18,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
-#import "SlateTests.h"
+#import <Foundation/Foundation.h>
 
+@interface NSString (Indicies)
 
-@implementation SlateTests
-
-- (void)setUp
-{
-    [super setUp];
-    
-    // Set-up code here.
-}
-
-- (void)tearDown
-{
-    // Tear-down code here.
-    
-    [super tearDown];
-}
-
-- (void)testExample
-{
-    STAssertTrue(true, @"Unit tests are not implemented yet in SlateTests");
-}
+- (NSInteger)indexOfString:(NSString *)str;
+- (NSInteger)indexOfChar:(const unichar)c;
 
 @end

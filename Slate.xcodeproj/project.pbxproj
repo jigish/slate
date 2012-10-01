@@ -27,6 +27,8 @@
 		3B84A552150552DC006E2194 /* ConfigurationHelperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B84A551150552DC006E2194 /* ConfigurationHelperView.m */; };
 		3B8554D915A5275300858AE0 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B8554D815A5275300858AE0 /* Sparkle.framework */; };
 		3B8554DA15A5278600858AE0 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3B8554D815A5275300858AE0 /* Sparkle.framework */; };
+		3B8B5523161A1E5C00E21A6C /* NSString+Indicies.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B5522161A1E5C00E21A6C /* NSString+Indicies.m */; };
+		3B8B5527161A1FDF00E21A6C /* TestNSString+Indicies.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B5526161A1FDF00E21A6C /* TestNSString+Indicies.m */; };
 		3B9B3007151BDD960069D95E /* RunningApplications.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B3006151BDD960069D95E /* RunningApplications.m */; };
 		3B9B301E151BFC330069D95E /* SwitchAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B301D151BFC330069D95E /* SwitchAppView.m */; };
 		3B9B3021151C830F0069D95E /* SwitchAppQuittingOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B3020151C830E0069D95E /* SwitchAppQuittingOverlayView.m */; };
@@ -131,6 +133,10 @@
 		3B84A550150552DC006E2194 /* ConfigurationHelperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationHelperView.h; sourceTree = "<group>"; };
 		3B84A551150552DC006E2194 /* ConfigurationHelperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationHelperView.m; sourceTree = "<group>"; };
 		3B8554D815A5275300858AE0 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		3B8B5521161A1E5C00E21A6C /* NSString+Indicies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Indicies.h"; sourceTree = "<group>"; };
+		3B8B5522161A1E5C00E21A6C /* NSString+Indicies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Indicies.m"; sourceTree = "<group>"; };
+		3B8B5525161A1FDF00E21A6C /* TestNSString+Indicies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestNSString+Indicies.h"; sourceTree = "<group>"; };
+		3B8B5526161A1FDF00E21A6C /* TestNSString+Indicies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestNSString+Indicies.m"; sourceTree = "<group>"; };
 		3B9B3005151BDD960069D95E /* RunningApplications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningApplications.h; sourceTree = "<group>"; };
 		3B9B3006151BDD960069D95E /* RunningApplications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningApplications.m; sourceTree = "<group>"; };
 		3B9B301C151BFC330069D95E /* SwitchAppView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchAppView.h; sourceTree = "<group>"; };
@@ -237,6 +243,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		3B8B5524161A1FC600E21A6C /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				3B8B5525161A1FDF00E21A6C /* TestNSString+Indicies.h */,
+				3B8B5526161A1FDF00E21A6C /* TestNSString+Indicies.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		3BC9E97015005F5F002FD1FA /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +259,8 @@
 				3BC9E97215005F8F002FD1FA /* NSString+Levenshtein.m */,
 				3B34F38F15462323004090BB /* NSFileManager+ApplicationSupport.h */,
 				3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */,
+				3B8B5521161A1E5C00E21A6C /* NSString+Indicies.h */,
+				3B8B5522161A1E5C00E21A6C /* NSString+Indicies.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -444,6 +461,7 @@
 		47C4A2B41384E8890066B6DE /* SlateTests */ = {
 			isa = PBXGroup;
 			children = (
+				3B8B5524161A1FC600E21A6C /* Categories */,
 				47C4A2BB1384E8890066B6DE /* SlateTests.h */,
 				47C4A2BD1384E8890066B6DE /* SlateTests.m */,
 				47C4A2B51384E8890066B6DE /* Supporting Files */,
@@ -620,6 +638,7 @@
 				3BFC8A6D15FABC9700B16139 /* GridView.m in Sources */,
 				3BFC8A7015FABCBE00B16139 /* GridWindow.m in Sources */,
 				3BFC8A7315FE5CD700B16139 /* GridCellView.m in Sources */,
+				3B8B5523161A1E5C00E21A6C /* NSString+Indicies.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +647,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47C4A2BE1384E8890066B6DE /* SlateTests.m in Sources */,
+				3B8B5527161A1FDF00E21A6C /* TestNSString+Indicies.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

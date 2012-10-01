@@ -31,6 +31,7 @@
 #import "JSONKit.h"
 #import "SlateLogger.h"
 #import "NSFileManager+ApplicationSupport.h"
+#import "NSString+Indicies.h"
 #import "ActivateSnapshotOperation.h"
 
 @implementation SlateConfig
@@ -169,6 +170,15 @@ static SlateConfig *_instance = nil;
   return [self append:fileString];
 }
 
+- (NSString *)stripComments:(NSString *)line {
+  if (line == nil || [line length] == 0 || [line characterAtIndex:0] == COMMENT_CHARACTER) {
+    return nil;
+  }
+  NSInteger idx = [line indexOfChar:COMMENT_CHARACTER];
+  if (idx < 0) { return line; }
+  return [line substringToIndex:idx];
+}
+
 - (BOOL)append:(NSString *)configString {
   if (configString == nil)
     return NO;
@@ -177,7 +187,8 @@ static SlateConfig *_instance = nil;
   NSEnumerator *e = [lines objectEnumerator];
   NSString *line = [e nextObject];
   while (line) {
-    if ([line length] == 0 || [line characterAtIndex:0] == COMMENT_CHARACTER) { line = [e nextObject]; continue; }
+    line = [self stripComments:line];
+    if (line == nil || [line length] == 0) { line = [e nextObject]; continue; }
     @try {
       line = [self replaceAliases:line];
     } @catch (NSException *ex) {
