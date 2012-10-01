@@ -6,12 +6,16 @@ require 'net/ftp'
 
 BEGIN_DIR = Dir.pwd
 SCRIPT_DIR = File.expand_path(File.dirname(__FILE__))
-BASE_DIR = "#{SCRIPT_DIR}/../"
-BUILD_DIR = "#{BASE_DIR}/build"
-RELEASE_DIR = "#{BUILD_DIR}/Release"
-DEBUG_DIR = "#{BUILD_DIR}/Debug"
+BASE_DIR = File.join(SCRIPT_DIR, "..")
+BUILD_DIR = File.join(BASE_DIR, "build")
+RELEASE_DIR = File.join(BUILD_DIR, "Release")
+DEBUG_DIR = File.join(BUILD_DIR, "Debug")
 APP_NAME = "Slate"
 APP_FILE = "#{APP_NAME}.app"
+DMG_FILE = "#{APP_NAME}.dmg"
+DMG_SIZE_THRESHOLD = 1000000
+DMG_ICON = File.join(BASE_DIR, APP_NAME, 'icon.icns')
+DMG_BACKGROUND = File.join(BUILD_DIR, 'dmg_background.png')
 FTP_HOST = 'www.ninjamonkeysoftware.com'
 FTP_DIR = 'slate'
 WEB_HOST = 'www.ninjamonkeysoftware.com/slate'
@@ -23,6 +27,12 @@ RELEASE_NOTES_FILENAME = 'VERSION'
 RELEASE_NOTES_SIZE_THRESHOLD = 5000
 SPARKLE_FRAMEWORK = 'Sparkle.framework'
 FINISH_INSTALL = 'finish_installation'
+CREATE_DMG = File.join(SCRIPT_DIR, "create-dmg", "create-dmg")
+DMG_STAGING_DIR = File.join(BUILD_DIR, "dmg_staging")
+README_MD_NAME = "README.md"
+README_MD = File.join(BASE_DIR, README_MD_NAME)
+README_HTML_NAME = "README.html"
+README_HTML = File.join(DMG_STAGING_DIR, README_HTML_NAME)
 
 def log(msg)
   puts msg
@@ -41,6 +51,7 @@ def usage
   log "  tasks:"
   log "    gen : generate the release"
   log "    pub : publish the release (required parameter: <github user>:<github pass>"
+  log "    dmg : create the dmg"
   Dir.chdir(BEGIN_DIR)
   exit 1
 end
@@ -68,6 +79,31 @@ def upload_file(from_dir, to_dir, filename, size_threshold, binary = false)
   size
 end
 
+def htmlify
+  FileUtils.cp README_MD, README_HTML
+end
+
+def dmgify
+  curr_dir = Dir.pwd
+
+  log "DMGifying..."
+  Dir.chdir(BASE_DIR)
+
+  # Copy things to staging dir
+  FileUtils.rm_rf(DMG_STAGING_DIR) if File.directory?(DMG_STAGING_DIR)
+  Dir.mkdir(DMG_STAGING_DIR)
+  FileUtils.cp_r File.join(RELEASE_DIR, APP_FILE), File.join(DMG_STAGING_DIR, APP_FILE)
+
+  FileUtils.rm_rf(File.join(RELEASE_DIR, DMG_FILE));
+  `#{CREATE_DMG} --volname #{APP_NAME} --volicon #{DMG_ICON} --icon #{APP_NAME} 10 0 --icon #{README_HTML_NAME} 360 0 --app-drop-link 185 0 --background #{DMG_BACKGROUND} #{File.join(RELEASE_DIR, DMG_FILE)} #{DMG_STAGING_DIR}`
+
+  FileUtils.rm_rf(DMG_STAGING_DIR)
+
+  log "DMGified."
+
+  Dir.chdir(curr_dir)
+end
+
 def gen
   curr_dir = Dir.pwd
 
@@ -81,16 +117,18 @@ def gen
   `CC="" xcodebuild -scheme "Slate" clean archive`
 
   # Copy
-  debug_paths_json = File.read("#{BUILD_DIR}/debug_paths.json")
+  debug_paths_json = File.read(File.join(BUILD_DIR, "debug_paths.json"))
   debug_paths = JSON.parse(debug_paths_json)
-  release_paths_json = File.read("#{BUILD_DIR}/release_paths.json")
+  release_paths_json = File.read(File.join(BUILD_DIR, "release_paths.json"))
   release_paths = JSON.parse(release_paths_json)
   { DEBUG_DIR => debug_paths['products'], RELEASE_DIR => release_paths['products'] }.each do |to, from|
-    FileUtils.rm_rf "#{to}/#{APP_FILE}"
-    FileUtils.cp_r "#{from}/Applications/#{APP_FILE}", "#{to}/#{APP_FILE}"
-    File.new("#{to}/#{APP_FILE}/Contents/MacOS/#{APP_NAME}").chmod(0755)
-    File.new("#{to}/#{APP_FILE}/Contents/Frameworks/#{SPARKLE_FRAMEWORK}/Resources/#{FINISH_INSTALL}.app/Contents/MacOS/#{FINISH_INSTALL}").chmod(0755)
+    FileUtils.rm_rf File.join(to, APP_FILE)
+    FileUtils.cp_r File.join(from, "Applications", APP_FILE), File.join(to, APP_FILE)
+    File.new(File.join(to, APP_FILE, "Contents", "MacOS", APP_NAME)).chmod(0755)
+    File.new(File.join(to, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Resources", "#{FINISH_INSTALL}.app", "Contents", "MacOS", FINISH_INSTALL)).chmod(0755)
   end
+
+  dmgify
 
   Dir.chdir(curr_dir)
 end
@@ -99,21 +137,21 @@ def pub
   curr_dir = Dir.pwd
 
   gen
-  version = `cat "#{RELEASE_DIR}/#{APP_FILE}/Contents/Info.plist" | grep -A 1 CFBundleVersion | tail -1 | sed "s/<string>\\([0-9]*\\.[0-9]*\\.[0-9]*\\)<\\/string>/\\1/"`.strip
+  version = `cat "#{File.join(RELEASE_DIR, APP_FILE, "Contents", "Info.plist")}" | grep -A 1 CFBundleVersion | tail -1 | sed "s/<string>\\([0-9]*\\.[0-9]*\\.[0-9]*\\)<\\/string>/\\1/"`.strip
   log "Publishing version #{version} ..."
   Dir.chdir(RELEASE_DIR)
   filename = "slate-#{version}.tar.gz"
   `tar -czf #{filename} #{APP_FILE}`
 
   # app archive
-  size = upload_file(RELEASE_DIR, "#{FTP_DIR}/versions", filename, ARCHIVE_SIZE_THRESHOLD, true)
+  size = upload_file(RELEASE_DIR, File.join(FTP_DIR, "versions"), filename, ARCHIVE_SIZE_THRESHOLD, true)
   unless size > ARCHIVE_SIZE_THRESHOLD
     Dir.chdir(BEGIN_DIR)
     exit 1
   end
 
   # release notes
-  FileUtils.cp "#{BASE_DIR}/#{RELEASE_NOTES_FILENAME}", "#{RELEASE_DIR}/#{RELEASE_NOTES_FILENAME}"
+  FileUtils.cp File.join(BASE_DIR, RELEASE_NOTES_FILENAME), File.join(RELEASE_DIR, RELEASE_NOTES_FILENAME)
   size = upload_file(RELEASE_DIR, FTP_DIR, RELEASE_NOTES_FILENAME, RELEASE_NOTES_SIZE_THRESHOLD)
   unless size > RELEASE_NOTES_SIZE_THRESHOLD
     Dir.chdir(BEGIN_DIR)
@@ -148,6 +186,13 @@ EOS
     exit 1
   end
 
+  # DMG
+  size = upload_file(RELEASE_DIR, FTP_DIR, DMG_FILE, DMG_SIZE_THRESHOLD)
+  unless size > DMG_SIZE_THRESHOLD
+    Dir.chdir(BEGIN_DIR)
+    exit 1
+  end
+
   log ""
   log "Done. Don't forget to update the latest symlink!"
   log ""
@@ -168,6 +213,8 @@ elsif (ARGV[0] == 'pub')
     FTP_USER, FTP_PASS = ARGV[1].split(':')
     pub
   end
+elsif (ARGV[0] == 'dmg')
+  dmgify
 else
   usage
 end
