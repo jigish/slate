@@ -30,7 +30,7 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 ### Direct Download ###
 
-* [`.dmg`](http://slate.ninjamonkeysoftware.com/versions/Slate.dmg)
+* [`.dmg`](http://slate.ninjamonkeysoftware.com/Slate.dmg)
 * [`.tar.gz`](http://slate.ninjamonkeysoftware.com/versions/slate-latest.tar.gz)
 
 ### Terminal ###
