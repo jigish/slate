@@ -31,8 +31,8 @@ CREATE_DMG = File.join(SCRIPT_DIR, "create-dmg", "create-dmg")
 DMG_STAGING_DIR = File.join(BUILD_DIR, "dmg_staging")
 README_MD_NAME = "README.md"
 README_MD = File.join(BASE_DIR, README_MD_NAME)
-README_HTML_NAME = "README.html"
-README_HTML = File.join(DMG_STAGING_DIR, README_HTML_NAME)
+README_TXT_NAME = "README.txt"
+README_TXT = File.join(DMG_STAGING_DIR, README_TXT_NAME)
 
 def log(msg)
   puts msg
@@ -79,10 +79,6 @@ def upload_file(from_dir, to_dir, filename, size_threshold, binary = false)
   size
 end
 
-def htmlify
-  FileUtils.cp README_MD, README_HTML
-end
-
 def dmgify
   curr_dir = Dir.pwd
 
@@ -93,9 +89,10 @@ def dmgify
   FileUtils.rm_rf(DMG_STAGING_DIR) if File.directory?(DMG_STAGING_DIR)
   Dir.mkdir(DMG_STAGING_DIR)
   FileUtils.cp_r File.join(RELEASE_DIR, APP_FILE), File.join(DMG_STAGING_DIR, APP_FILE)
+  File.open(README_TXT, 'w') { |f| f.write("Please visit http://github.com/jigish/slate") }
 
   FileUtils.rm_rf(File.join(RELEASE_DIR, DMG_FILE));
-  `#{CREATE_DMG} --volname #{APP_NAME} --volicon #{DMG_ICON} --icon #{APP_NAME} 10 0 --icon #{README_HTML_NAME} 360 0 --app-drop-link 185 0 --background #{DMG_BACKGROUND} #{File.join(RELEASE_DIR, DMG_FILE)} #{DMG_STAGING_DIR}`
+  `#{CREATE_DMG} --volname #{APP_NAME} --volicon #{DMG_ICON} --icon #{APP_NAME} 10 0 --icon #{README_TXT_NAME} 360 0 --app-drop-link 185 0 --background #{DMG_BACKGROUND} #{File.join(RELEASE_DIR, DMG_FILE)} #{DMG_STAGING_DIR}`
 
   FileUtils.rm_rf(DMG_STAGING_DIR)
 
