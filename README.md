@@ -26,11 +26,18 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 **NEW Installation Instructions**
 
-You can now download the latest `Slate.app` packaged as a `.tar.gz` [here](http://slate.ninjamonkeysoftware.com/versions/slate-latest.tar.gz), extract it and stick `Slate.app` in your `/Applications` folder. Or just run this in your terminal:
+**Note:** You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices
+
+### Direct Download ###
+
+* [`.dmg`](http://slate.ninjamonkeysoftware.com/versions/Slate.dmg)
+* [`.tar.gz`](http://slate.ninjamonkeysoftware.com/versions/slate-latest.tar.gz)
+
+### Terminal ###
+
+Just run this in your terminal:
 
     cd /Applications && curl http://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz > slate-latest.tar.gz && tar -xzf slate-latest.tar.gz && rm slate-latest.tar.gz
-
-**Note:** You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices
 
 ## Configuring Slate ##
 
