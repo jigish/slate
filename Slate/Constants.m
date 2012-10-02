@@ -257,6 +257,7 @@ NSString *const X = @"x";
 NSString *const Y = @"y";
 NSString *const WIDTH = @"width";
 NSString *const HEIGHT = @"height";
+NSString *const WHITESPACE = @" \t";
 
 // Screen constants
 NSString *const REF_CURRENT_SCREEN = @"-1";

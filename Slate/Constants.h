@@ -255,6 +255,7 @@ extern NSString *const X;
 extern NSString *const Y;
 extern NSString *const WIDTH;
 extern NSString *const HEIGHT;
+extern NSString *const WHITESPACE;
 
 // Screen constants
 extern NSString *const REF_CURRENT_SCREEN;

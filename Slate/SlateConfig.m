@@ -171,12 +171,14 @@ static SlateConfig *_instance = nil;
 }
 
 - (NSString *)stripComments:(NSString *)line {
-  if (line == nil || [line length] == 0 || [line characterAtIndex:0] == COMMENT_CHARACTER) {
+  if (line == nil) { return nil; }
+  NSString *theLine = [line stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:WHITESPACE]];
+  if ([theLine length] == 0 || [theLine characterAtIndex:0] == COMMENT_CHARACTER) {
     return nil;
   }
-  NSInteger idx = [line indexOfChar:COMMENT_CHARACTER];
-  if (idx < 0) { return line; }
-  return [line substringToIndex:idx];
+  NSInteger idx = [theLine indexOfChar:COMMENT_CHARACTER];
+  if (idx < 0) { return theLine; }
+  return [[theLine substringToIndex:idx] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:WHITESPACE]];
 }
 
 - (BOOL)append:(NSString *)configString {
