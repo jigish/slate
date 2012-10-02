@@ -191,7 +191,7 @@ EOS
   end
 
   log ""
-  log "Done. Don't forget to update the latest symlink!"
+  log "Done. Don't forget to update the latest symlink and Slate.dmg!"
   log ""
 
   Dir.chdir(curr_dir)
