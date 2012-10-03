@@ -89,6 +89,8 @@ def dmgify
   FileUtils.rm_rf(DMG_STAGING_DIR) if File.directory?(DMG_STAGING_DIR)
   Dir.mkdir(DMG_STAGING_DIR)
   FileUtils.cp_r File.join(RELEASE_DIR, APP_FILE), File.join(DMG_STAGING_DIR, APP_FILE)
+  File.new(File.join(DMG_STAGING_DIR, APP_FILE, "Contents", "MacOS", APP_NAME)).chmod(0755)
+  File.new(File.join(DMG_STAGING_DIR, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Resources", "#{FINISH_INSTALL}.app", "Contents", "MacOS", FINISH_INSTALL)).chmod(0755)
   File.open(README_TXT, 'w') { |f| f.write("Please visit http://github.com/jigish/slate") }
 
   FileUtils.rm_rf(File.join(RELEASE_DIR, DMG_FILE));
