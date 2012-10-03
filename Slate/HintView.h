@@ -23,8 +23,10 @@
 @interface HintView : NSView {
 @private
   NSString *text;
+  NSImage *icon;
 }
 
 @property NSString *text;
+@property NSImage *icon;
 
 @end
