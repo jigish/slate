@@ -126,7 +126,7 @@ static SlateConfig *_instance = nil;
     [alert addButtonWithTitle:@"Continue"];
     [alert addButtonWithTitle:@"Quit"];
     [alert setMessageText:@"Could not load ~/.slate"];
-    [alert setInformativeText:@"The default configuration will be used. You can find the default .slate file at https://github.com/jigish/slate/blob/master/Slate/default.slate."];
+    [alert setInformativeText:@"The default configuration will be used. You can find the default .slate file at https://github.com/jigish/slate/blob/master/Slate/default.slate"];
     [alert setAlertStyle:NSWarningAlertStyle];
     if ([alert runModal] == NSAlertSecondButtonReturn) {
       SlateLogger(@"User selected exit");
