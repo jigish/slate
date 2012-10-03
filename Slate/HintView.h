@@ -26,6 +26,8 @@
   NSImage *icon;
 }
 
+- (void)setIconFromAppRef:(AXUIElementRef)appRef;
+
 @property NSString *text;
 @property NSImage *icon;
 

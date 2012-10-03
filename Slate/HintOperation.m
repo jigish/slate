@@ -83,7 +83,7 @@ static const UInt32 ESC_HINT_ID = 10001;
 // the nsApp parameter is used to retrieve the icon if necessary.
 // if it is nil and the icon is needed, the NSRunningApplication will be retrieved via process ID
 // from the appRef.
-- (void)createHintWindowFor:(AXUIElementRef)windowRef inApp:(AXUIElementRef)appRef screenWrapper:(ScreenWrapper *)sw nsApp:(NSRunningApplication*)app {
+- (void)createHintWindowFor:(AXUIElementRef)windowRef inApp:(AXUIElementRef)appRef screenWrapper:(ScreenWrapper *)sw {
   SlateLogger(@"    attempting to hint");
   NSString *hintCode = [self currentHintCode];
   if (hintCode == nil) {
@@ -160,15 +160,7 @@ static const UInt32 ESC_HINT_ID = 10001;
     [window setLevel:(NSScreenSaverWindowLevel - 1)];
     HintView *label = [[HintView alloc] initWithFrame:frame];
     [label setText:hintCode];
-    if ([[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_SHOW_ICONS]) {
-      // if it wasn't specified, get it from the accessibility reference
-      if (app == nil) {
-        pid_t pid;
-        AXUIElementGetPid(appRef, &pid);
-        app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
-      }
-      [label setIcon:[app icon]];
-    }
+    [label setIconFromAppRef:appRef];
     [window setContentView:label];
     NSWindowController *wc = [[NSWindowController alloc] initWithWindow:window];
     [hints setObject:wc forKey:currentHintNumber];
@@ -176,6 +168,8 @@ static const UInt32 ESC_HINT_ID = 10001;
     SlateLogger(@"        Existing Window!");
     NSWindowController *wc = [hints objectForKey:currentHintNumber];
     [[wc window] setFrame:NSMakeRect(frame.origin.x+screen.frame.origin.x, frame.origin.y+screen.frame.origin.y, frame.size.width, frame.size.height) display:NO];
+    HintView *label = (HintView*)[[wc window] contentView];
+    [label setIconFromAppRef:appRef];
     [wc showWindow:[wc window]];
   }
   [windows setObject:[NSValue valueWithPointer:windowRef] forKey:currentHintNumber];
@@ -248,7 +242,7 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
         NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
         if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
         SlateLogger(@"  Hinting Window: %@", title);
-        [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw nsApp:app];
+        [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw];
       }
     }
   } else if ([[[SlateConfig getInstance] getConfig:WINDOW_HINTS_ORDER] isEqualToString:WINDOW_HINTS_ORDER_PERSIST]) {
@@ -268,7 +262,7 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
         for (NSNumber *possibleHint in possibleHints) {
           if ([hints objectForKey:possibleHint]) continue;
           [self setCurrentHint:[possibleHint integerValue]];
-          [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw nsApp:app];
+          [self createHintWindowFor:CFArrayGetValueAtIndex(windowsArr, i) inApp:appRef screenWrapper:sw];
           break;
         }
       }
@@ -296,7 +290,7 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
       if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
       SlateLogger(@"  Hinting Window: %@", title);
       CFTypeRef _window = CFArrayGetValueAtIndex(allWindows, i);
-      [self createHintWindowFor:(AXUIElementRef)_window inApp:[AccessibilityWrapper applicationForElement:(AXUIElementRef)_window] screenWrapper:sw nsApp:nil];
+      [self createHintWindowFor:(AXUIElementRef)_window inApp:[AccessibilityWrapper applicationForElement:(AXUIElementRef)_window] screenWrapper:sw];
     }
   }
 

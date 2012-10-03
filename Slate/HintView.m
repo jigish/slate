@@ -59,6 +59,15 @@ static NSFont *hintFont = nil;
   return self;
 }
 
+- (void)setIconFromAppRef:(AXUIElementRef)appRef {
+  if ([[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_SHOW_ICONS]) {
+    pid_t pid;
+    AXUIElementGetPid(appRef, &pid);
+    NSRunningApplication *app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
+    [self setIcon:[app icon]];
+  }
+}
+
 - (void)drawCenteredText:(NSString *)string bounds:(NSRect)rect attributes:(NSDictionary *)attributes {
   NSSize size = [string sizeWithAttributes:attributes];
   NSPoint origin = NSMakePoint(rect.origin.x + (rect.size.width - size.width) / 2,
