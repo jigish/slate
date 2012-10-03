@@ -186,7 +186,7 @@ EOS
   end
 
   # DMG
-  size = upload_file(RELEASE_DIR, FTP_DIR, DMG_FILE, DMG_SIZE_THRESHOLD)
+  size = upload_file(RELEASE_DIR, FTP_DIR, DMG_FILE, DMG_SIZE_THRESHOLD, true)
   unless size > DMG_SIZE_THRESHOLD
     Dir.chdir(BEGIN_DIR)
     exit 1
