@@ -80,6 +80,8 @@ extern NSString *const WINDOW_HINTS_ORDER;
 extern NSString *const WINDOW_HINTS_ORDER_DEFAULT;
 extern NSString *const WINDOW_HINTS_SHOW_ICONS;
 extern NSString *const WINDOW_HINTS_SHOW_ICONS_DEFAULT;
+extern NSString *const WINDOW_HINTS_SPREAD;
+extern NSString *const WINDOW_HINTS_SPREAD_DEFAULT;
 extern NSString *const SWITCH_ICON_SIZE;
 extern NSString *const SWITCH_ICON_SIZE_DEFAULT;
 extern NSString *const SWITCH_ICON_PADDING;

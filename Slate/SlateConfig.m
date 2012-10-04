@@ -533,6 +533,7 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:WINDOW_HINTS_TOP_LEFT_Y_DEFAULT forKey:WINDOW_HINTS_TOP_LEFT_Y];
   [configDefaults setObject:WINDOW_HINTS_ORDER_DEFAULT forKey:WINDOW_HINTS_ORDER];
   [configDefaults setObject:WINDOW_HINTS_SHOW_ICONS_DEFAULT forKey:WINDOW_HINTS_SHOW_ICONS];
+  [configDefaults setObject:WINDOW_HINTS_SPREAD_DEFAULT forKey:WINDOW_HINTS_SPREAD];
   [configDefaults setObject:SWITCH_ICON_SIZE_DEFAULT forKey:SWITCH_ICON_SIZE];
   [configDefaults setObject:SWITCH_ICON_PADDING_DEFAULT forKey:SWITCH_ICON_PADDING];
   [configDefaults setObject:SWITCH_BACKGROUND_COLOR_DEFAULT forKey:SWITCH_BACKGROUND_COLOR];
