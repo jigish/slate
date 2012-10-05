@@ -404,14 +404,16 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
   // Check if Accessibility API is enabled
   if (!AXAPIEnabled()) {
     NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"Quit"];
-    [alert addButtonWithTitle:@"Skip"];
-    [alert setMessageText:[NSString stringWithFormat:@"ERROR Access for assistive devices is not enabled. Please enable it."]];
-    [alert setInformativeText:[NSString stringWithFormat:@"System Preferences > Accessibility > \"Enable access for assistive devices\"."]];
-    [alert setAlertStyle:NSWarningAlertStyle];
+    [alert addButtonWithTitle:@"Yes"];
+    [alert addButtonWithTitle:@"No"];
+    [alert setMessageText:[NSString stringWithFormat:@"Slate requires \"Access for assistive devices\" to be enabled. Would you like to enable it?"]];
+    [alert setInformativeText:[NSString stringWithFormat:@"You may be prompted for your administrator password."]];
+    [alert setAlertStyle:NSCriticalAlertStyle];
     if ([alert runModal] == NSAlertFirstButtonReturn) {
-      SlateLogger(@"User selected exit");
-      [NSApp terminate:nil];
+      SlateLogger(@"User wants to enable Access for assistive devices");
+      NSDictionary* errorDictionary;
+      NSAppleScript* applescript = [[NSAppleScript alloc] initWithSource:@"tell application \"System Events\" to set UI elements enabled to true"];
+      [applescript executeAndReturnError:&errorDictionary];
     }
   }
 
