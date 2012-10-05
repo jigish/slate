@@ -386,7 +386,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
         bind 1:ctrl focus above
 
-    Will bind the keystroke ctrl-1 to focus the window Slate finds to be above the currently focused window. (minimized and hidden windows are ignored and a couple global configuration options set using the `config` directive exist to tweak this).
+    Will bind the keystroke ctrl-1 to focus the window Slate finds to be above the currently focused window. Minimized and hidden windows are ignored. A couple global configuration options set using the `config` directive exist to tweak this.
 
 * Create a snapshot of your current window locations: `snapshot name options`
 
