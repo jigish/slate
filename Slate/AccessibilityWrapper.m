@@ -130,7 +130,15 @@ static NSDictionary *unselectableApps = nil;
 }
 
 - (BOOL)focus {
-  return [AccessibilityWrapper focusWindow:window];
+  return [AccessibilityWrapper focusWindow:[self window]];
+}
+
+- (BOOL)isMinimizedOrHidden {
+  return [AccessibilityWrapper isWindowMinimizedOrHidden:[self window] inApp:[self app]];
+}
+
+- (NSString *)getTitle {
+  return [AccessibilityWrapper getTitle:[self window]];
 }
 
 + (BOOL)focusApp:(NSRunningApplication *)app {
@@ -221,13 +229,13 @@ static NSDictionary *unselectableApps = nil;
   return @"";
 }
 
-+ (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window {
++ (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window inApp:(AXUIElementRef)app {
   [AccessibilityWrapper createSystemWideElement];
   CFTypeRef _isMinimized;
   CFTypeRef _isHidden;
   BOOL isMinimized = NO;
   BOOL isHidden = NO;
-  if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityHiddenAttribute, (CFTypeRef *)&_isHidden) == kAXErrorSuccess) {
+  if (AXUIElementCopyAttributeValue(app, (CFStringRef)NSAccessibilityHiddenAttribute, (CFTypeRef *)&_isHidden) == kAXErrorSuccess) {
     NSNumber *isHiddenNum = (__bridge NSNumber *) _isHidden;
     isHidden = [isHiddenNum boolValue];
   }

@@ -98,12 +98,12 @@
       for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
 
-        if ([AccessibilityWrapper isWindowMinimizedOrHidden:[aw window]]) {
+        if ([aw isMinimizedOrHidden]) {
           SlateLogger(@" Window is minimized, skipping");
           continue;
         }
 
-        NSString *wTitle = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windows, i)];
+        NSString *wTitle = [aw getTitle];
         if ([wTitle isEqualToString:@""]){
           SlateLogger(@" Title is empty, skipping");
           continue; // Chrome and Finder have invisible windows for some reason

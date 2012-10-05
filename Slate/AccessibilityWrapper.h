@@ -41,6 +41,8 @@
 - (BOOL)moveWindow:(NSPoint)thePoint;
 - (BOOL)resizeWindow:(NSSize)theSize;
 - (BOOL)focus;
+- (BOOL)isMinimizedOrHidden;
+- (NSString *)getTitle;
 + (BOOL)focusWindow:(AXUIElementRef)window;
 + (BOOL)focusMainWindow:(NSRunningApplication *)app;
 + (BOOL)focusApp:(NSRunningApplication *)app;
@@ -50,7 +52,7 @@
 + (AXUIElementRef)focusedWindowInRunningApp:(NSRunningApplication *)app;
 + (BOOL)isMainWindow:(AXUIElementRef)window;
 + (NSString *)getTitle:(AXUIElementRef)window;
-+ (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window;
++ (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window inApp:(AXUIElementRef)app;
 + (AXUIElementRef)windowUnderPoint:(NSPoint)point;
 + (void)createSystemWideElement;
 + (AXUIElementRef)applicationForElement:(AXUIElementRef)element;
