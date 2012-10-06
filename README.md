@@ -392,15 +392,20 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-l to activate the layout called `myLayout`
 
-* Focus a window from any application in a direction: `focus direction`
+* Focus a window in a direction or from an application: `focus direction|app`
 
         direction = right|left|up|above|down|below|behind
+        app = an app name surrounded by quotes
 
     Example:
 
         bind 1:ctrl focus above
 
-    Will bind the keystroke ctrl-1 to focus the window Slate finds to be above the currently focused window. Minimized and hidden windows are ignored. A couple global configuration options set using the `config` directive exist to tweak this. Also, up and above are the same. Down and below are also the same.
+    Will bind the keystroke ctrl-1 to focus the window Slate finds to be above the currently focused window (from any application). Minimized and hidden windows are ignored. A couple global configuration options set using the `config` directive exist to tweak this. Also, up and above are the same. Down and below are also the same.
+
+        bind 1:ctrl focus 'iTerm'
+
+    Will bind the keystroke ctrl-1 to focus the main window of the application iTerm. The main window is the last focused window of that application.
 
 * Create a snapshot of your current window locations: `snapshot name options`
 

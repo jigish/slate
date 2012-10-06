@@ -28,28 +28,34 @@
 
 @implementation FocusOperation
 
-@synthesize direction;
+@synthesize direction, app;
 
 - (id)init {
   self = [super init];
   return self;
 }
 
-- (id)initWithDirection:(NSString *)d {
+- (id)initWithDirectionOrApp:(NSString *)s {
   self = [super init];
   if (self) {
-    if ([d isEqualToString:UP] || [d isEqualToString:ABOVE]) {
+    [self setDirection:DIRECTION_UNKNOWN];
+    [self setApp:nil];
+    if ([s length] <= 1) {
+      // fail
+    } else if ([s isEqualToString:UP] || [s isEqualToString:ABOVE]) {
       [self setDirection:DIRECTION_UP];
-    } else if ([d isEqualToString:DOWN] || [d isEqualToString:BELOW]) {
+    } else if ([s isEqualToString:DOWN] || [s isEqualToString:BELOW]) {
       [self setDirection:DIRECTION_DOWN];
-    } else if ([d isEqualToString:LEFT]) {
+    } else if ([s isEqualToString:LEFT]) {
       [self setDirection:DIRECTION_LEFT];
-    } else if ([d isEqualToString:RIGHT]) {
+    } else if ([s isEqualToString:RIGHT]) {
       [self setDirection:DIRECTION_RIGHT];
-    } else if ([d isEqualToString:BEHIND]) {
+    } else if ([s isEqualToString:BEHIND]) {
       [self setDirection:DIRECTION_BEHIND];
-    } else {
-      [self setDirection:DIRECTION_UNKNOWN];
+    } else if ([[NSCharacterSet characterSetWithCharactersInString:QUOTES] characterIsMember:[s characterAtIndex:0]] &&
+               [[NSCharacterSet characterSetWithCharactersInString:QUOTES] characterIsMember:[s characterAtIndex:([s length] - 1)]]) {
+      // App name
+      [self setApp:[s substringWithRange:NSMakeRange(1, [s length]-2)]];
     }
   }
   return self;
@@ -64,6 +70,21 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
+  // App case
+  if ([self app] != nil) {
+    for (NSRunningApplication *runningApp in [RunningApplications getInstance]) {
+      if ([[self app] isEqualToString:[runningApp localizedName]]) {
+        // Match!
+        if ([AccessibilityWrapper focusMainWindow:runningApp]) {
+          return YES;
+        }
+        return NO;
+      }
+    }
+    return NO;
+  }
+
+  // Direction case
   AccessibilityWrapper *caAW = [[AccessibilityWrapper alloc] init];
   if (![caAW inited]) return NO;
   NSPoint cwTL = [caAW getCurrentTopLeft];
@@ -87,9 +108,9 @@
     AXUIElementRef appToFocus;
     BOOL foundFocus = NO;
     BOOL foundFocusInSameApp = NO;
-    for (NSRunningApplication *app in [RunningApplications getInstance]) {
-      pid_t appPID = [app processIdentifier];
-      SlateLogger(@"I see application '%@' with pid '%d'", [app localizedName], appPID);
+    for (NSRunningApplication *runningApp in [RunningApplications getInstance]) {
+      pid_t appPID = [runningApp processIdentifier];
+      SlateLogger(@"I see application '%@' with pid '%d'", [runningApp localizedName], appPID);
 
       AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
       CFArrayRef windows = [AccessibilityWrapper windowsInApp:appRef];
@@ -111,7 +132,7 @@
 
         NSPoint wTL = [aw getCurrentTopLeft];
         NSSize wSize = [aw getCurrentSize];
-        SlateLogger(@" Checking window in %@ in direction %i with rect: (%f,%f %f,%f), title: [%@]",[app localizedName],(int)direction,wTL.x,wTL.y,wSize.width,wSize.height,wTitle);
+        SlateLogger(@" Checking window in %@ in direction %i with rect: (%f,%f %f,%f), title: [%@]",[runningApp localizedName],(int)direction,wTL.x,wTL.y,wSize.width,wSize.height,wTitle);
         NSRect windowRect = NSMakeRect(wTL.x, wTL.y, wSize.width, wSize.height);
 
         if ([wTitle isEqualToString:cwTitle] && NSEqualRects(windowRect, cwRect) && NSEqualPoints(wTL, cwTL)) {
@@ -136,7 +157,7 @@
             foundFocus = YES;
           }
         } else if ([MathUtils isRect:intersection biggerThan:biggestIntersection]) {
-          SlateLogger(@"  Found window in %@ in direction %i (intersection: %f,%f %f,%f)",[app localizedName],(int)direction,intersection.origin.x,intersection.origin.y,intersection.size.width,intersection.size.height);
+          SlateLogger(@"  Found window in %@ in direction %i (intersection: %f,%f %f,%f)",[runningApp localizedName],(int)direction,intersection.origin.x,intersection.origin.y,intersection.size.width,intersection.size.height);
           appToFocus = appRef;
           windowToFocus = CFArrayGetValueAtIndex(windows, i);
           biggestIntersection = intersection;
@@ -161,7 +182,7 @@
 }
 
 - (BOOL)testOperation {
-  if (direction == DIRECTION_UNKNOWN)
+  if ([self direction] == DIRECTION_UNKNOWN && [self app] == nil)
     @throw [NSException exceptionWithName:@"Unknown Direction" reason:@"direction" userInfo:nil];
   return YES;
 }
@@ -176,7 +197,7 @@
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Focus operations require the following format: 'focus direction'", focusOperation] userInfo:nil]);
   }
   
-  Operation *op = [[FocusOperation alloc] initWithDirection:[tokens objectAtIndex:1]];
+  Operation *op = [[FocusOperation alloc] initWithDirectionOrApp:[tokens objectAtIndex:1]];
   return op;
 }
 
