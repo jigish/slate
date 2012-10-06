@@ -372,10 +372,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
         opAndParamsX = any of the above operation strings (except chain and grid. hint must be last if present)
         separator = | or >. | will cause the next operation to be performed on the window focused at the time of
-                    execution of that operation, > will cause the next operation to be performed on the previous
-                    window focused. If multiple operations have happened since a new window has been focused it
-                    will still do the previously focused window. If there isn't a previously focused window it will
-                    just do the operation on the currently focused window.
+                    execution of that operation, > will cause the next operation to be performed on the window
+                    focused at the start of the > chain.
 
     Example:
 
