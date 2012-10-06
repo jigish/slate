@@ -42,6 +42,7 @@
 @property  NSMutableDictionary *snapshots;
 
 + (SlateConfig *)getInstance;
++ (NSAlert *)warningAlertWithKeyEquivalents:(NSArray *)titles;
 - (BOOL)load;
 - (BOOL)loadConfigFileWithPath:(NSString *)file;
 - (BOOL)append:(NSString *)configString;
