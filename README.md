@@ -368,7 +368,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to push up on the first press, then push right on the second press, then push down on the third press, the push left on the fourth press and rotate back to pushing up on the fifth press (etc).
 
-* Activate multiple operations in one binding: `sequence opAndParams1 separator opAndParams 2 ...`
+* Activate a sequence of operations in one binding: `sequence opAndParams1 separator opAndParams 2 ...`
 
         opAndParamsX = any of the above operation strings (except chain and grid. hint must be last if present)
         separator = | or >. | will cause the next operation to be performed on the window focused at the time of execution of that operation, > will cause the next operation to be performed on the previous window focused. If multiple operations have happened since a new window has been focused it will still do the previously focused window. If there isn't a previously focused window it will just do the operation on the currently focused window.
