@@ -110,6 +110,15 @@ static SlateConfig *_instance = nil;
   return config;
 }
 
++ (NSAlert *)warningAlertWithKeyEquivalents:(NSArray *)titles {
+  NSAlert *alert = [[NSAlert alloc] init];
+  [alert setAlertStyle:NSWarningAlertStyle];
+  for (NSString *title in titles) {
+    [[alert addButtonWithTitle:title] setKeyEquivalent:[[title substringToIndex: 1] lowercaseString]];
+  }
+  return alert;
+}
+
 - (BOOL)load {
   SlateLogger(@"Loading config...");
 
@@ -122,12 +131,9 @@ static SlateConfig *_instance = nil;
 
   if (![self loadConfigFileWithPath:@"~/.slate"]) {
     SlateLogger(@"  ERROR Could not load ~/.slate");
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"Continue"];
-    [alert addButtonWithTitle:@"Quit"];
+    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Continue", @"Quit", nil]];
     [alert setMessageText:@"Could not load ~/.slate"];
     [alert setInformativeText:@"The default configuration will be used. You can find the default .slate file at https://github.com/jigish/slate/blob/master/Slate/default.slate"];
-    [alert setAlertStyle:NSWarningAlertStyle];
     if ([alert runModal] == NSAlertSecondButtonReturn) {
       SlateLogger(@"User selected exit");
       [NSApp terminate:nil];
@@ -137,12 +143,9 @@ static SlateConfig *_instance = nil;
   
   if (![self loadSnapshots]) {
     SlateLogger(@"  ERROR Could not load %@", SNAPSHOTS_FILE);
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"Quit"];
-    [alert addButtonWithTitle:@"Skip"];
+    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
     [alert setMessageText:[NSString stringWithFormat:@"ERROR Could not load %@", SNAPSHOTS_FILE]];
     [alert setInformativeText:[NSString stringWithFormat:@"I dunno. Figure it out. Maybe try deleting %@", SNAPSHOTS_FILE]];
-    [alert setAlertStyle:NSWarningAlertStyle];
     if ([alert runModal] == NSAlertFirstButtonReturn) {
       SlateLogger(@"User selected exit");
       [NSApp terminate:nil];
@@ -195,12 +198,9 @@ static SlateConfig *_instance = nil;
       line = [self replaceAliases:line];
     } @catch (NSException *ex) {
       SlateLogger(@"   ERROR %@",[ex name]);
-      NSAlert *alert = [[NSAlert alloc] init];
-      [alert addButtonWithTitle:@"Quit"];
-      [alert addButtonWithTitle:@"Skip"];
+      NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
       [alert setMessageText:[ex name]];
       [alert setInformativeText:[ex reason]];
-      [alert setAlertStyle:NSWarningAlertStyle];
       if ([alert runModal] == NSAlertFirstButtonReturn) {
         SlateLogger(@"User selected exit");
         [NSApp terminate:nil];
@@ -215,12 +215,9 @@ static SlateConfig *_instance = nil;
       NSString *key = [splitKey count] > 1 ? [splitKey objectAtIndex:0] : [tokens objectAtIndex:1];
       if ([configs objectForKey:key] == nil) {
         SlateLogger(@"   ERROR Unrecognized config '%@'",[tokens objectAtIndex:1]);
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"Quit"];
-        [alert addButtonWithTitle:@"Skip"];
+        NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
         [alert setMessageText:[NSString stringWithFormat:@"Unrecognized Config '%@'",[tokens objectAtIndex:1]]];
         [alert setInformativeText:line];
-        [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal] == NSAlertFirstButtonReturn) {
           SlateLogger(@"User selected exit");
           [NSApp terminate:nil];
@@ -245,12 +242,9 @@ static SlateConfig *_instance = nil;
         [bindings addObject:bind];
       } @catch (NSException *ex) {
         SlateLogger(@"   ERROR %@",[ex name]);
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"Quit"];
-        [alert addButtonWithTitle:@"Skip"];
+        NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
         [alert setMessageText:[ex name]];
         [alert setInformativeText:[ex reason]];
-        [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal] == NSAlertFirstButtonReturn) {
           SlateLogger(@"User selected exit");
           [NSApp terminate:nil];
@@ -270,12 +264,9 @@ static SlateConfig *_instance = nil;
         }
       } @catch (NSException *ex) {
         SlateLogger(@"   ERROR %@",[ex name]);
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"Quit"];
-        [alert addButtonWithTitle:@"Skip"];
+        NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
         [alert setMessageText:[ex name]];
         [alert setInformativeText:[ex reason]];
-        [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal] == NSAlertFirstButtonReturn) {
           SlateLogger(@"User selected exit");
           [NSApp terminate:nil];
@@ -287,12 +278,9 @@ static SlateConfig *_instance = nil;
         ScreenState *state = [[ScreenState alloc] initWithString:line];
         if (state == nil) {
           SlateLogger(@"   ERROR Loading default layout");
-          NSAlert *alert = [[NSAlert alloc] init];
-          [alert addButtonWithTitle:@"Quit"];
-          [alert addButtonWithTitle:@"Skip"];
+          NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
           [alert setMessageText:@"Error loading default layout"];
           [alert setInformativeText:line];
-          [alert setAlertStyle:NSWarningAlertStyle];
           if ([alert runModal] == NSAlertFirstButtonReturn) {
             SlateLogger(@"User selected exit");
             [NSApp terminate:nil];
@@ -303,12 +291,9 @@ static SlateConfig *_instance = nil;
         }
       } @catch (NSException *ex) {
         SlateLogger(@"   ERROR %@",[ex name]);
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"Quit"];
-        [alert addButtonWithTitle:@"Skip"];
+        NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
         [alert setMessageText:[ex name]];
         [alert setInformativeText:[ex reason]];
-        [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal] == NSAlertFirstButtonReturn) {
           SlateLogger(@"User selected exit");
           [NSApp terminate:nil];
@@ -321,12 +306,9 @@ static SlateConfig *_instance = nil;
         SlateLogger(@"  LoadingL: %@",line);
       } @catch (NSException *ex) {
         SlateLogger(@"   ERROR %@",[ex name]);
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"Quit"];
-        [alert addButtonWithTitle:@"Skip"];
+        NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
         [alert setMessageText:[ex name]];
         [alert setInformativeText:[ex reason]];
-        [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal] == NSAlertFirstButtonReturn) {
           SlateLogger(@"User selected exit");
           [NSApp terminate:nil];
@@ -340,12 +322,9 @@ static SlateConfig *_instance = nil;
           SlateLogger(@"   Could not find file '%@' but that's ok. User specified if_exists.",[tokens objectAtIndex:1]);
         } else {
           SlateLogger(@"   ERROR Sourcing file '%@'",[tokens objectAtIndex:1]);
-          NSAlert *alert = [[NSAlert alloc] init];
-          [alert addButtonWithTitle:@"Quit"];
-          [alert addButtonWithTitle:@"Skip"];
+          NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
           [alert setMessageText:[NSString stringWithFormat:@"ERROR Sourcing file '%@'",[tokens objectAtIndex:1]]];
           [alert setInformativeText:@"I dunno. Figure it out."];
-          [alert setAlertStyle:NSWarningAlertStyle];
           if ([alert runModal] == NSAlertFirstButtonReturn) {
             SlateLogger(@"User selected exit");
             [NSApp terminate:nil];

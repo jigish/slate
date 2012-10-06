@@ -403,12 +403,9 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 
   // Check if Accessibility API is enabled
   if (!AXAPIEnabled()) {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"Quit"];
-    [alert addButtonWithTitle:@"Skip"];
+    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
     [alert setMessageText:[NSString stringWithFormat:@"ERROR Access for assistive devices is not enabled. Please enable it."]];
     [alert setInformativeText:[NSString stringWithFormat:@"Settings > Universal Access > Enable access for assistive devices."]];
-    [alert setAlertStyle:NSWarningAlertStyle];
     if ([alert runModal] == NSAlertFirstButtonReturn) {
       SlateLogger(@"User selected exit");
       [NSApp terminate:nil];
