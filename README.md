@@ -360,13 +360,25 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
 * Chain multiple operations to one binding: `chain opAndParams1 | opAndParams2 ...`
 
-        opAndParamsX = any of the above operation strings
+        opAndParamsX = any operation string (except sequence, hint and grid)
 
     Example:
 
         bind 1:ctrl chain push up | push right | push down | push left
 
     Will bind the keystroke ctrl-1 to push up on the first press, then push right on the second press, then push down on the third press, the push left on the fourth press and rotate back to pushing up on the fifth press (etc).
+
+* Activate multiple operations in one binding: `sequence opAndParams1 separator opAndParams 2 ...`
+
+        opAndParamsX = any of the above operation strings (except chain and grid. hint must be last if present)
+        separator = | or >. | will cause the next operation to be performed on the window focused at the time of execution of that operation, > will cause the next operation to be performed on the previous window focused. If multiple operations have happened since a new window has been focused it will still do the previously focused window. If there isn't a previously focused window it will just do the operation on the currently focused window.
+
+    Example:
+
+        bind 1:ctrl sequence focus right > push left | push right
+
+    Will bind the keystroke ctrl-1 to first focus the window to the right, then push the previously focused window to the left, then push the newly focused window to the right. Obviously Hint will ignore `>` and `|` and just display because it doesn't care which window was focused.
+
 
 * Activate a layout: `layout name`
 

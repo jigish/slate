@@ -45,6 +45,7 @@
 		3BDDA17D14FDA50C00829D2A /* Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17C14FDA50C00829D2A /* Snapshot.m */; };
 		3BDDA18014FDA55600829D2A /* WindowSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */; };
 		3BDDA18314FDAA6600829D2A /* SnapshotList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA18214FDAA6600829D2A /* SnapshotList.m */; };
+		3BE702B3161F9D5000260716 /* SequenceOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE702B2161F9D5000260716 /* SequenceOperation.m */; };
 		3BF39E1214FDB16F0083E9C4 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF39E1114FDB16F0083E9C4 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3BFC8A6A15FAAD9D00B16139 /* GridOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A6915FAAD9D00B16139 /* GridOperation.m */; };
 		3BFC8A6D15FABC9700B16139 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A6C15FABC9600B16139 /* GridView.m */; };
@@ -168,6 +169,8 @@
 		3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowSnapshot.m; sourceTree = "<group>"; };
 		3BDDA18114FDAA6600829D2A /* SnapshotList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapshotList.h; sourceTree = "<group>"; };
 		3BDDA18214FDAA6600829D2A /* SnapshotList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapshotList.m; sourceTree = "<group>"; };
+		3BE702B1161F9D5000260716 /* SequenceOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequenceOperation.h; sourceTree = "<group>"; };
+		3BE702B2161F9D5000260716 /* SequenceOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequenceOperation.m; sourceTree = "<group>"; };
 		3BF39E1014FDB16F0083E9C4 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		3BF39E1114FDB16F0083E9C4 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSONKit.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3BFC8A6815FAAD9D00B16139 /* GridOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridOperation.h; sourceTree = "<group>"; };
@@ -340,6 +343,8 @@
 				47C4A2D01384F3E10066B6DE /* Operation.m */,
 				3B7EB3A5138F3F6800EBEC2B /* ResizeOperation.h */,
 				3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */,
+				3BE702B1161F9D5000260716 /* SequenceOperation.h */,
+				3BE702B2161F9D5000260716 /* SequenceOperation.m */,
 				3BDDA17814FD95E200829D2A /* SnapshotOperation.h */,
 				3BDDA17914FD95E200829D2A /* SnapshotOperation.m */,
 				3B9B301F151C830E0069D95E /* SwitchAppQuittingOverlayView.h */,
@@ -639,6 +644,7 @@
 				3BFC8A7015FABCBE00B16139 /* GridWindow.m in Sources */,
 				3BFC8A7315FE5CD700B16139 /* GridCellView.m in Sources */,
 				3B8B5523161A1E5C00E21A6C /* NSString+Indicies.m in Sources */,
+				3BE702B3161F9D5000260716 /* SequenceOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

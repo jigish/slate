@@ -174,6 +174,7 @@ extern NSString *const DELETE_SNAPSHOT;
 extern NSString *const HINT;
 extern NSString *const SWITCH;
 extern NSString *const GRID;
+extern NSString *const SEQUENCE;
 
 // Parameters and Options
 extern NSString *const CENTER;
@@ -247,6 +248,7 @@ extern NSString *const PLUS;
 extern NSString *const PERCENT;
 extern NSString *const EMPTY;
 extern NSString *const PIPE;
+extern NSString *const GREATER_THAN;
 extern NSString *const QUOTES;
 extern NSString *const EQUALS;
 extern NSString *const TILDA;

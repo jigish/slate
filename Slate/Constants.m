@@ -176,6 +176,7 @@ NSString *const DELETE_SNAPSHOT = @"delete-snapshot";
 NSString *const HINT = @"hint";
 NSString *const SWITCH = @"switch";
 NSString *const GRID = @"grid";
+NSString *const SEQUENCE = @"sequence";
 
 // Parameters and Options
 NSString *const CENTER = @"center";
@@ -249,6 +250,7 @@ NSString *const PLUS = @"+";
 NSString *const PERCENT = @"%";
 NSString *const EMPTY = @"";
 NSString *const PIPE = @" | ";
+NSString *const GREATER_THAN = @" > ";
 NSString *const QUOTES = @"'\"";
 NSString *const EQUALS = @"=";
 NSString *const TILDA = @"~";
