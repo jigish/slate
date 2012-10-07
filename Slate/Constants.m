@@ -212,6 +212,7 @@ NSString *const SWITCH_ORIENTATION_VERTICAL = @"vertical";
 NSString *const KEYBOARD_LAYOUT_DVORAK = @"dvorak";
 NSString *const PADDING = @"padding";
 NSString *const CURRENT = @"current";
+NSString *const ALL_BUT = @"all-but";
 
 // Directions and Anchors
 NSString *const UP = @"up";

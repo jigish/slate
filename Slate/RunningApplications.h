@@ -42,6 +42,7 @@
 
 + (RunningApplications *)getInstance;
 + (BOOL)isAppSelectable:(NSRunningApplication *)app;
++ (NSRunningApplication *)focusedApp;
 
 - (void)pruneWindows;
 - (NSArray *)windowIdsForTitle:(NSString *)title;

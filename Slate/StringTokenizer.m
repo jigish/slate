@@ -114,4 +114,12 @@
   }
 }
 
++ (NSString *)removeQuotes:(NSString *)s quoteChars:(NSCharacterSet *)quoteChars {
+  if ([StringTokenizer isQuoteChar:[s characterAtIndex:0] quoteChars:quoteChars] &&
+      [StringTokenizer isQuoteChar:[s characterAtIndex:([s length] - 1)] quoteChars:quoteChars]) {
+    return [s substringWithRange:NSMakeRange(1, [s length]-2)];
+  }
+  return s;
+}
+
 @end

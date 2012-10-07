@@ -45,31 +45,43 @@
   return success;
 }
 
+- (void)applyVisibilityToApp:(NSRunningApplication *)app {
+  if ([self type] == VisibilityOperationTypeShow) {
+    [app unhide];
+  } else if ([self type] == VisibilityOperationTypeHide) {
+    [app hide];
+  } else if ([self type] == VisibilityOperationTypeToggle) {
+    if ([app isHidden]) {
+      [app unhide];
+    } else {
+      [app hide];
+    }
+  }
+}
+
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
   for (NSString *appName in [self apps]) {
     NSRunningApplication *app = nil;
     if ([CURRENT isEqualToString:appName]) {
-      NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
-      if ([sharedWorkspace respondsToSelector:@selector(frontmostApplication)]) {
-        app = [sharedWorkspace frontmostApplication];
-      } else {
-        AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
-        app = [NSRunningApplication runningApplicationWithProcessIdentifier:[aw processIdentifier]];
+      app = [RunningApplications focusedApp];
+    } else if ([ALL isEqualToString:appName]) {
+      // run through ALL THE APPS
+      for (NSRunningApplication *theApp in [RunningApplications getInstance]) {
+        [self applyVisibilityToApp:theApp];
       }
+      continue;
+    } else if ([appName hasPrefix:ALL_BUT]) {
+      NSString *skipApp = [StringTokenizer removeQuotes:[appName stringByReplacingOccurrencesOfString:ALL_BUT withString:EMPTY] quoteChars:[NSCharacterSet characterSetWithCharactersInString:QUOTES]];
+      // run through ALL THE APPS
+      for (NSRunningApplication *theApp in [RunningApplications getInstance]) {
+        if ([skipApp isEqualToString:[theApp localizedName]]) continue;
+        [self applyVisibilityToApp:theApp];
+      }
+      continue;
     } else {
       app = [[[RunningApplications getInstance] appNameToApp] objectForKey:appName];
     }
-    if ([self type] == VisibilityOperationTypeShow) {
-      [app unhide];
-    } else if ([self type] == VisibilityOperationTypeHide) {
-      [app hide];
-    } else if ([self type] == VisibilityOperationTypeToggle) {
-      if ([app isHidden]) {
-        [app unhide];
-      } else {
-        [app hide];
-      }
-    }
+    [self applyVisibilityToApp:app];
   }
   return YES;
 }
@@ -104,13 +116,7 @@
   NSArray *appsArrayWithQuotes = [appsStr componentsSeparatedByString:COMMA];
   NSMutableArray *appsArray = [NSMutableArray array];
   for (NSString *appWithQuotes in appsArrayWithQuotes) {
-    if ([[NSCharacterSet characterSetWithCharactersInString:QUOTES] characterIsMember:[appWithQuotes characterAtIndex:0]] &&
-        [[NSCharacterSet characterSetWithCharactersInString:QUOTES] characterIsMember:[appWithQuotes characterAtIndex:([appWithQuotes length] - 1)]]) {
-      // App name
-      [appsArray addObject:[appWithQuotes substringWithRange:NSMakeRange(1, [appWithQuotes length]-2)]];
-    } else {
-      [appsArray addObject:appWithQuotes];
-    }
+    [appsArray addObject:[StringTokenizer removeQuotes:appWithQuotes quoteChars:[NSCharacterSet characterSetWithCharactersInString:QUOTES]]];
   }
 
   Operation *op = [[VisibilityOperation alloc] initWithType:theType apps:appsArray];

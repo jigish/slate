@@ -213,6 +213,7 @@ extern NSString *const SWITCH_ORIENTATION_VERTICAL;
 extern NSString *const KEYBOARD_LAYOUT_DVORAK;
 extern NSString *const PADDING;
 extern NSString *const CURRENT;
+extern NSString *const ALL_BUT;
 
 // Directions and Anchors
 extern NSString *const UP;

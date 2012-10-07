@@ -28,6 +28,7 @@
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array;
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens;
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens quoteChars:(NSCharacterSet *)quotes;
-+ (void)firstToken:(NSString *)s into:(NSMutableString *)token ;
++ (void)firstToken:(NSString *)s into:(NSMutableString *)token;
++ (NSString *)removeQuotes:(NSString *)s quoteChars:(NSCharacterSet *)quoteChars;
 
 @end

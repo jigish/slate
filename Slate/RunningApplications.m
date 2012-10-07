@@ -69,6 +69,16 @@ static void windowCreated(pid_t currPID, AXUIElementRef element, RunningApplicat
   [[[ref appToWindows] objectForKey:[NSNumber numberWithInteger:currPID]] addObject:windowInfo];
 }
 
++ (NSRunningApplication *)focusedApp {
+  NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
+  if ([sharedWorkspace respondsToSelector:@selector(frontmostApplication)]) {
+    return [sharedWorkspace frontmostApplication];
+  } else {
+    AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
+    return [NSRunningApplication runningApplicationWithProcessIdentifier:[aw processIdentifier]];
+  }
+}
+
 static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStringRef notification, void *refcon) {
   SlateLogger(@">>> %@ for %@", notification, [AccessibilityWrapper getRole:element]);
   if (![AccessibilityWrapper isWindow:element]) return;

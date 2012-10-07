@@ -37,6 +37,7 @@ typedef enum {
 @property NSArray *apps;
 
 - (id)initWithType:(VisibilityOperationType)theType apps:(NSArray *)theApps;
+- (void)applyVisibilityToApp:(NSRunningApplication *)app;
 
 + (id)visibilityOperationFromString:(NSString *)visibilityOperation;
 
