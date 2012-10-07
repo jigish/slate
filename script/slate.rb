@@ -33,6 +33,7 @@ README_MD_NAME = "README.md"
 README_MD = File.join(BASE_DIR, README_MD_NAME)
 README_TXT_NAME = "README.txt"
 README_TXT = File.join(DMG_STAGING_DIR, README_TXT_NAME)
+LATEST_FILENAME = 'slate-latest.tar.gz'
 
 def log(msg)
   puts msg
@@ -148,6 +149,13 @@ def pub
     Dir.chdir(BEGIN_DIR)
     exit 1
   end
+  FileUtils.cp File.join(RELEASE_DIR, filename), File.join(RELEASE_DIR, LATEST_FILENAME)
+  size = upload_file(RELEASE_DIR, File.join(FTP_DIR, "versions"), LATEST_FILENAME, ARCHIVE_SIZE_THRESHOLD, true)
+  unless size > ARCHIVE_SIZE_THRESHOLD
+    Dir.chdir(BEGIN_DIR)
+    exit 1
+  end
+  FileUtils.rm File.join(RELEASE_DIR, LATEST_FILENAME)
 
   # release notes
   FileUtils.cp File.join(BASE_DIR, RELEASE_NOTES_FILENAME), File.join(RELEASE_DIR, RELEASE_NOTES_FILENAME)
@@ -193,7 +201,7 @@ EOS
   end
 
   log ""
-  log "Done. Don't forget to update the latest symlink and Slate.dmg!"
+  log "Done."
   log ""
 
   Dir.chdir(curr_dir)
