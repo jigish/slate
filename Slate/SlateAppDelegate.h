@@ -46,6 +46,10 @@
   ActivateSnapshotOperation *menuActivateSnapshotOperation;
   NSInteger cmdTabBinding;
   NSInteger cmdShiftTabBinding;
+  NSMutableDictionary *modalHotKeyRefs;
+  NSMutableDictionary *modalIdToKey;
+  NSNumber *currentModalKey;
+  NSMutableArray *currentModalHotKeyRefs;
 }
 
 @property HintOperation *currentHintOperation;
@@ -55,6 +59,11 @@
 @property ActivateSnapshotOperation *menuActivateSnapshotOperation;
 @property (assign) NSInteger cmdTabBinding;
 @property (assign) NSInteger cmdShiftTabBinding;
+@property NSMutableDictionary *modalHotKeyRefs;
+@property NSMutableDictionary *modalIdToKey;
+@property NSNumber *currentModalKey;
+@property NSMutableArray *currentModalHotKeyRefs;
+
 
 - (IBAction)updateLaunchState;
 - (IBAction)reconfig;
@@ -67,6 +76,7 @@
 - (IBAction)takeSnapshot;
 - (IBAction)activateSnapshot;
 - (OSStatus)timerActivateBinding:(NSTimer *)timer;
+- (void)resetModalKey;
 - (OSStatus)activateBinding:(EventHotKeyID)hkCom isRepeat:(BOOL)isRepeat;
 - (BOOL)isInLoginItems;
 - (void)addToLoginItems;

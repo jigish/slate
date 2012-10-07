@@ -241,17 +241,18 @@ Will trigger `myLayout2` anytime the screen configuration changes to have exactl
 
 ### The `bind` Directive ###
 
-The `bind` directive follows the following format (tokens may be separated by any number of spaces):
+The `bind` directive follows one of the following formats (tokens may be separated by any number of spaces):
 
     bind key:modifiers operation parameter+
+    bind key:modal-key operation parameter+
 
 #### Key ####
 
-key is a reference to a key on the keyboard. See Allowed Keys for a complete list. For example: the `s` key would simply be `s` while the `1` key on the number pad would be `pad1`.
+`key` is a reference to a key on the keyboard. See Allowed Keys for a complete list. For example: the `s` key would simply be `s` while the `1` key on the number pad would be `pad1`.
 
 #### Modifiers ####
 
-modifiers is a comma or semicolon separated list of standard modifier keys. Allowed modifiers are:
+`modifiers` is a comma or semicolon separated list of standard modifier keys. Allowed modifiers are:
 
 * Control: `ctrl`
 * Option/Alt: `alt`
@@ -261,6 +262,10 @@ modifiers is a comma or semicolon separated list of standard modifier keys. Allo
 **Note:** If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
 **Note:** Bindings that are used by Mac OS X spaces, expose, and mission control will override Slate bindings. Be sure to turn these bindings off if you want to use them in Slate.
+
+#### Modal Key ####
+
+`modal-key` is any one of the Allowed Keys. If using a `modal-key`, pressing that key will cause the Slate menu bar icon to change indicating modal mode is activated. then clicking `key` will activate the binding. Modal mode will remain active until `key` has been pressed or `modal-key` is pressed again. You may specify multiple bindings with the same `modal-key` as long as `key` is different.
 
 #### Operation ####
 

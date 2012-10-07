@@ -39,6 +39,7 @@
 @synthesize configs;
 @synthesize configDefaults;
 @synthesize bindings;
+@synthesize modalBindings;
 @synthesize layouts;
 @synthesize defaultLayouts;
 @synthesize aliases;
@@ -59,11 +60,12 @@ static SlateConfig *_instance = nil;
   self = [super init];
   if (self) {
     [self setupDefaultConfigs];
-    [self setBindings:[[NSMutableArray alloc] initWithCapacity:10]];
-    [self setLayouts:[[NSMutableDictionary alloc] init]];
-    [self setDefaultLayouts:[[NSMutableArray alloc] init]];
-    [self setAliases:[[NSMutableDictionary alloc] init]];
-    [self setSnapshots:[[NSMutableDictionary alloc] init]];
+    [self setBindings:[NSMutableArray arrayWithCapacity:10]];
+    [self setModalBindings:[NSMutableDictionary dictionary]];
+    [self setLayouts:[NSMutableDictionary dictionary]];
+    [self setDefaultLayouts:[NSMutableArray array]];
+    [self setAliases:[NSMutableDictionary dictionary]];
+    [self setSnapshots:[NSMutableDictionary dictionary]];
 
     // Listen for screen change notifications
     NSNotificationCenter *nc = [NSDistributedNotificationCenter defaultCenter];
@@ -235,11 +237,18 @@ static SlateConfig *_instance = nil;
         }
       }
     } else if ([tokens count] >= 3 && [[tokens objectAtIndex:0] isEqualToString:BIND]) {
-      // bind <key:modifiers> <op> <parameters>
+      // bind <key:modifiers|modal-key> <op> <parameters>
       @try {
-        Binding *bind = [[Binding alloc] initWithString:line];
         SlateLogger(@"  LoadingB: %@",line);
-        [bindings addObject:bind];
+        Binding *bind = [[Binding alloc] initWithString:line];
+        if ([bind modalKey] != nil) {
+          NSMutableArray *theBindings = [modalBindings objectForKey:[bind modalKey]];
+          if (theBindings == nil) theBindings = [NSMutableArray array];
+          [theBindings addObject:bind];
+          [modalBindings setObject:theBindings forKey:[bind modalKey]];
+        } else {
+          [bindings addObject:bind];
+        }
       } @catch (NSException *ex) {
         SlateLogger(@"   ERROR %@",[ex name]);
         NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];

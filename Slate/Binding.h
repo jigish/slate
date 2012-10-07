@@ -28,6 +28,7 @@
   Operation *op;
   UInt32 keyCode;
   UInt32 modifiers;
+  NSNumber *modalKey;
   EventHotKeyRef hotKeyRef;
   BOOL repeat;
 }
@@ -35,6 +36,7 @@
 @property  Operation *op;
 @property (assign) UInt32 keyCode;
 @property (assign) UInt32 modifiers;
+@property NSNumber *modalKey;
 @property (assign) EventHotKeyRef hotKeyRef;
 @property (assign) BOOL repeat;
 

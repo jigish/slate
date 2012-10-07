@@ -26,20 +26,22 @@
   NSMutableDictionary *configs;
   NSMutableDictionary *configDefaults;
   NSMutableArray *bindings;
+  NSMutableDictionary *modalBindings;
   NSMutableDictionary *layouts;
   NSMutableArray *defaultLayouts;
   NSMutableDictionary *aliases;
   NSMutableDictionary *snapshots;
 }
 
-@property  NSMutableDictionary *configs;
-@property  NSMutableDictionary *configDefaults;
-@property  NSMutableDictionary *appConfigs; // two layer map
-@property  NSMutableArray *bindings;
-@property  NSMutableDictionary *layouts;
-@property  NSMutableArray *defaultLayouts;
-@property  NSMutableDictionary *aliases;
-@property  NSMutableDictionary *snapshots;
+@property NSMutableDictionary *configs;
+@property NSMutableDictionary *configDefaults;
+@property NSMutableDictionary *appConfigs; // two layer map
+@property NSMutableArray *bindings;
+@property NSMutableDictionary *modalBindings;
+@property NSMutableDictionary *layouts;
+@property NSMutableArray *defaultLayouts;
+@property NSMutableDictionary *aliases;
+@property NSMutableDictionary *snapshots;
 
 + (SlateConfig *)getInstance;
 + (NSAlert *)warningAlertWithKeyEquivalents:(NSArray *)titles;

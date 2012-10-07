@@ -20,6 +20,9 @@
 
 extern NSString *const SNAPSHOTS_FILE;
 
+#define MODAL_BEGIN_ID 20000;
+#define CURRENT_MODAL_BEGIN_ID 30000;
+
 // Directive Keys
 extern NSString *const BIND;
 extern NSString *const CONFIG;

@@ -33,7 +33,7 @@
 
 @implementation SlateAppDelegate
 
-@synthesize currentHintOperation, currentGridOperation, currentSwitchBinding, menuSnapshotOperation, menuActivateSnapshotOperation, cmdTabBinding, cmdShiftTabBinding;
+@synthesize currentHintOperation, currentGridOperation, currentSwitchBinding, menuSnapshotOperation, menuActivateSnapshotOperation, cmdTabBinding, cmdShiftTabBinding, modalHotKeyRefs, modalIdToKey, currentModalKey, currentModalHotKeyRefs;
 
 static NSObject *timerLock = nil;
 static NSObject *keyUpLock = nil;
@@ -99,6 +99,7 @@ static EventHandlerRef modifiersEvent;
   NSArray *bindings = [[SlateConfig getInstance] bindings];
   for (NSInteger i = 0; i < [bindings count]; i++) {
     Binding *binding = [bindings objectAtIndex:i];
+    SlateLogger(@"REGISTERING KEY: %u, MODIFIERS: %u", [binding keyCode], [binding modifiers]);
     if ([binding keyCode] == 48 && [binding modifiers] == cmdKey) {
       cmdTabBinding = i;
       SlateLogger(@"Found CMD+Tab binding!");
@@ -112,6 +113,20 @@ static EventHandlerRef modifiersEvent;
     myHotKeyID.id = (UInt32)i;
     RegisterEventHotKey([binding keyCode], [binding modifiers], myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
     [binding setHotKeyRef:myHotKeyRef];
+  }
+
+  NSArray *modalKeys = [[[SlateConfig getInstance] modalBindings] allKeys];
+  NSInteger i = MODAL_BEGIN_ID;
+  for (NSNumber *modalKey in modalKeys) {
+    SlateLogger(@"REGISTERING MODAL KEY: %@", modalKey);
+    EventHotKeyID myHotKeyID;
+    EventHotKeyRef myHotKeyRef;
+    myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%li",i] cStringUsingEncoding:NSASCIIStringEncoding];
+    myHotKeyID.id = (UInt32)i;
+    RegisterEventHotKey([modalKey unsignedIntValue], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
+    [[self modalHotKeyRefs] setObject:[NSValue valueWithPointer:myHotKeyRef] forKey:modalKey];
+    [[self modalIdToKey] setObject:modalKey forKey:[NSNumber numberWithInteger:i]];
+    i++;
   }
   SlateLogger(@"HotKeys registered.");
 }
@@ -141,7 +156,19 @@ static EventHandlerRef modifiersEvent;
   return [self activateBinding:currentHotKey isRepeat:YES];
 }
 
+- (void)resetModalKey {
+  // clear out bindings
+  for (NSValue *hotKeyRef in [self currentModalHotKeyRefs]) {
+    UnregisterEventHotKey([hotKeyRef pointerValue]);
+  }
+  // reset status image
+  [statusItem setImage:[NSImage imageNamed:@"status"]];
+  currentModalKey = nil;
+}
+
 - (OSStatus)activateBinding:(EventHotKeyID)hkCom isRepeat:(BOOL)isRepeat {
+  SlateLogger(@"ACTIVATING BINDING: %u", hkCom.id);
+  // check if there is a currently open binding
   HintOperation *hintop = [self currentHintOperation];
   GridOperation *gridop = [self currentGridOperation];
   Binding *switchop = [self currentSwitchBinding];
@@ -170,7 +197,49 @@ static EventHandlerRef modifiersEvent;
     }
     return noErr;
   }
-  if (hkCom.id >= [[[SlateConfig getInstance] bindings] count]) { return noErr; }
+
+  // check modal stuffs
+  NSNumber *hkId = [NSNumber numberWithInteger:hkCom.id];
+  NSNumber *modalKey = [[self modalIdToKey] objectForKey:hkId];
+  if (modalKey != nil) {
+    if (currentModalKey != nil && [modalKey isEqualToNumber:currentModalKey]) {
+      [self resetModalKey];
+      return noErr;
+    } else if (currentModalKey == nil) {
+      SlateLogger(@"FOUND MODAL KEY BINDING, REGISTERING!");
+      // register all these bindings
+      [[self currentModalHotKeyRefs] removeAllObjects];
+      NSArray *modalOperations = [[[SlateConfig getInstance] modalBindings] objectForKey:modalKey];
+      NSInteger i = CURRENT_MODAL_BEGIN_ID;
+      for (Binding *binding in modalOperations) {
+        EventHotKeyID myHotKeyID;
+        EventHotKeyRef myHotKeyRef;
+        myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%li",i] cStringUsingEncoding:NSASCIIStringEncoding];
+        myHotKeyID.id = (UInt32)i;
+        RegisterEventHotKey([binding keyCode], [binding modifiers], myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
+        [binding setHotKeyRef:myHotKeyRef];
+        [[self currentModalHotKeyRefs] addObject:[NSValue valueWithPointer:myHotKeyRef]];
+        i++;
+      }
+      [self setCurrentModalKey:modalKey];
+      // change status image
+      [statusItem setImage:[NSImage imageNamed:@"statusActive"]];
+      return noErr;
+    }
+  }
+
+  if (hkCom.id >= [[[SlateConfig getInstance] bindings] count]) {
+    if (currentModalKey != nil) {
+      NSInteger potentialId = hkCom.id - CURRENT_MODAL_BEGIN_ID;
+      if (potentialId >= 0 && potentialId < [[[[SlateConfig getInstance] modalBindings] objectForKey:currentModalKey] count]) {
+        [[[[[SlateConfig getInstance] modalBindings] objectForKey:currentModalKey] objectAtIndex:potentialId] doOperation];
+        // clear out bindings
+        [self resetModalKey];
+      }
+    }
+    return noErr;
+  }
+  
   Binding *binding = [[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id];
   if (binding) {
     SlateLogger(@"Running Operation %@", [[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id]);
@@ -361,6 +430,10 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
   currentHintOperation = nil;
   currentGridOperation = nil;
 
+  [self setModalHotKeyRefs:[NSMutableDictionary dictionary]];
+  [self setModalIdToKey:[NSMutableDictionary dictionary]];
+  [self setCurrentModalHotKeyRefs:[NSMutableArray array]];
+
   windowInfoController = [[NSWindowController alloc] initWithWindow:windowInfo];
   configHelperController = [[NSWindowController alloc] initWithWindow:configHelper];
 
@@ -388,7 +461,7 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 
   statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: NSVariableStatusItemLength];
   [statusItem setMenu:statusMenu];
-  [statusItem setImage:[NSImage imageNamed:@"statusTemplate"]];
+  [statusItem setImage:[NSImage imageNamed:@"status"]];
   [statusItem setHighlightMode:YES];
 
   // Ensure no timer exists

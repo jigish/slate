@@ -4,6 +4,7 @@ Current Version: 1.0.7
 
 Implement Issue #117 (focus an application)
 Implement Issue #103 (layoutFocusOnActivate config)
+Implement Issue #100 (modal commands)
 Merged Pull Request #115
 
 ----------------- 1.0.6 -----------------

@@ -31,6 +31,7 @@
 @synthesize op;
 @synthesize keyCode;
 @synthesize modifiers;
+@synthesize modalKey;
 @synthesize hotKeyRef;
 @synthesize repeat;
 
@@ -48,7 +49,7 @@ static NSDictionary *dictionary = nil;
 - (id)initWithString:(NSString *)binding {
   self = [self init];
   if (self) {
-    // bind <key:modifiers> <op> <parameters>
+    // bind <key:modifiers|modal-key> <op> <parameters>
     NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
     [StringTokenizer tokenize:binding into:tokens maxTokens:3];
     if ([tokens count] <=2) {
@@ -59,24 +60,32 @@ static NSDictionary *dictionary = nil;
     if ([keyAndModifiers count] >= 1) {
       [self setKeyCode:(UInt32)[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] integerValue]];
       [self setModifiers:0];
+      [self setModalKey:nil];
       if ([keyAndModifiers count] >= 2) {
-        NSArray *modifiersArray = [[keyAndModifiers objectAtIndex:1] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@",;"]];
-        NSEnumerator *modEnum = [modifiersArray objectEnumerator];
-        NSString *mod = [modEnum nextObject];
-        while (mod) {
-          if ([mod isEqualToString:CONTROL]) {
-            modifiers += controlKey;
-          } else if ([mod isEqualToString:OPTION]) {
-            modifiers += optionKey;
-          } else if ([mod isEqualToString:COMMAND]) {
-            modifiers += cmdKey;
-          } else if ([mod isEqualToString:SHIFT]) {
-            modifiers += shiftKey;
-          } else {
-            SlateLogger(@"ERROR: Unrecognized modifier '%@'", mod);
-            @throw([NSException exceptionWithName:@"Unrecognized Modifier" reason:[NSString stringWithFormat:@"Unrecognized modifier '%@' in '%@'", mod, binding] userInfo:nil]);
+        NSNumber *theModalKey = [[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:1]];
+        if (theModalKey != nil) {
+          // modal case
+          [self setModalKey:theModalKey];
+        } else {
+          // normal case
+          NSArray *modifiersArray = [[keyAndModifiers objectAtIndex:1] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@",;"]];
+          NSEnumerator *modEnum = [modifiersArray objectEnumerator];
+          NSString *mod = [modEnum nextObject];
+          while (mod) {
+            if ([mod isEqualToString:CONTROL]) {
+              modifiers += controlKey;
+            } else if ([mod isEqualToString:OPTION]) {
+              modifiers += optionKey;
+            } else if ([mod isEqualToString:COMMAND]) {
+              modifiers += cmdKey;
+            } else if ([mod isEqualToString:SHIFT]) {
+              modifiers += shiftKey;
+            } else {
+              SlateLogger(@"ERROR: Unrecognized modifier '%@'", mod);
+              @throw([NSException exceptionWithName:@"Unrecognized Modifier" reason:[NSString stringWithFormat:@"Unrecognized modifier '%@' in '%@'", mod, binding] userInfo:nil]);
+            }
+            mod = [modEnum nextObject];
           }
-          mod = [modEnum nextObject];
         }
       }
     }
