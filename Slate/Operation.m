@@ -34,6 +34,7 @@
 #import "SwitchOperation.h"
 #import "GridOperation.h"
 #import "SequenceOperation.h"
+#import "VisibilityOperation.h"
 
 @implementation Operation
 
@@ -95,6 +96,8 @@
     operation = [GridOperation gridOperationFromString:opString];
   } else if ([op isEqualToString:SEQUENCE]) {
     operation = [SequenceOperation sequenceOperationFromString:opString];
+  } else if ([op isEqualToString:TOGGLE] || [op isEqualToString:SHOW] || [op isEqualToString:HIDE]) {
+    operation = [VisibilityOperation visibilityOperationFromString:opString];
   } else {
     SlateLogger(@"ERROR: Unrecognized operation '%@'", opString);
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);

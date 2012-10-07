@@ -364,6 +364,40 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to move the window to the top-left corner and resize it to 1/4 of the screen
 
+* Hide one or more applications: `hide applications`
+
+        applications = a comma separated list of application names. Individual application names must be
+                     surrounded by quotes.
+
+    Example:
+
+        bind 1:ctrl hide 'iTerm','Google Chrome'
+
+    Will bind the keystroke ctrl-1 to hide iTerm and Google Chrome.
+
+* Show one or more applications: `show applications`
+
+        applications = a comma separated list of application names. Individual application names must be
+                     surrounded by quotes.
+
+    Example:
+
+        bind 1:ctrl show 'iTerm','Google Chrome'
+
+    Will bind the keystroke ctrl-1 to show (unhide) iTerm and Google Chrome.
+
+* Toggle one or more applications: `toggle applications`
+
+        applications = a comma separated list of application names. Individual application names must be
+                     surrounded by quotes.
+
+    Example:
+
+        bind 1:ctrl toggle 'iTerm','Google Chrome'
+
+    Will bind the keystroke ctrl-1 to toggle iTerm and Google Chrome. Toggle meaning if the individual
+    application is currently hidden it will be shown and if it is currently shown it will be hidden.
+
 * Chain multiple operations to one binding: `chain opAndParams1 | opAndParams2 ...`
 
         opAndParamsX = any operation string (except sequence, hint and grid)

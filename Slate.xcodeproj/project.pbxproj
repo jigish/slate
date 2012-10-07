@@ -48,6 +48,7 @@
 		3BE702B3161F9D5000260716 /* SequenceOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE702B2161F9D5000260716 /* SequenceOperation.m */; };
 		3BF39E1214FDB16F0083E9C4 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF39E1114FDB16F0083E9C4 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3BF57C9B1621686900C0F89B /* statusActive.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3BF57C9A1621686900C0F89B /* statusActive.pdf */; };
+		3BF57C9E16216C2200C0F89B /* VisibilityOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF57C9D16216C2200C0F89B /* VisibilityOperation.m */; };
 		3BFC8A6A15FAAD9D00B16139 /* GridOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A6915FAAD9D00B16139 /* GridOperation.m */; };
 		3BFC8A6D15FABC9700B16139 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A6C15FABC9600B16139 /* GridView.m */; };
 		3BFC8A7015FABCBE00B16139 /* GridWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A6F15FABCBD00B16139 /* GridWindow.m */; };
@@ -174,6 +175,8 @@
 		3BF39E1014FDB16F0083E9C4 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		3BF39E1114FDB16F0083E9C4 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSONKit.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3BF57C9A1621686900C0F89B /* statusActive.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = statusActive.pdf; path = Slate/statusActive.pdf; sourceTree = "<group>"; };
+		3BF57C9C16216C2200C0F89B /* VisibilityOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibilityOperation.h; sourceTree = "<group>"; };
+		3BF57C9D16216C2200C0F89B /* VisibilityOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisibilityOperation.m; sourceTree = "<group>"; };
 		3BFC8A6815FAAD9D00B16139 /* GridOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridOperation.h; sourceTree = "<group>"; };
 		3BFC8A6915FAAD9D00B16139 /* GridOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridOperation.m; sourceTree = "<group>"; };
 		3BFC8A6B15FABC9600B16139 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
@@ -357,6 +360,8 @@
 				3B4CDD02150AD68000B819E2 /* SwitchView.m */,
 				3B4CDD04150AD69500B819E2 /* SwitchWindow.h */,
 				3B4CDD05150AD69500B819E2 /* SwitchWindow.m */,
+				3BF57C9C16216C2200C0F89B /* VisibilityOperation.h */,
+				3BF57C9D16216C2200C0F89B /* VisibilityOperation.m */,
 			);
 			name = Operation;
 			sourceTree = "<group>";
@@ -645,6 +650,7 @@
 				3BFC8A7315FE5CD700B16139 /* GridCellView.m in Sources */,
 				3B8B5523161A1E5C00E21A6C /* NSString+Indicies.m in Sources */,
 				3BE702B3161F9D5000260716 /* SequenceOperation.m in Sources */,
+				3BF57C9E16216C2200C0F89B /* VisibilityOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
