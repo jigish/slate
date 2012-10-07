@@ -367,7 +367,13 @@ Some operations allow you to specify a screen. Here are the list of possible val
 * Hide one or more applications: `hide applications`
 
         applications = a comma separated list of application names. Individual application names must be
-                       surrounded by quotes. You can also specify 'current' as the application name.
+                       surrounded by quotes. You can also specify `current`, `all`, or `all-but:` for the
+                       Application name (no quotes). `current` will apply to the currently focused
+                       application, `all` will apply to all open applications and `all-but:'APP_NAME'` will
+                       apply to all open applications except `APP_NAME`. Note that when trying to hide `all`
+                       it will not work as intended because OS X will not allow every visible app to be
+                       hidden. Hiding `all` will hide all apps but OS X will auto-show one of the apps that
+                       were hidden.
 
     Example:
 
@@ -378,7 +384,10 @@ Some operations allow you to specify a screen. Here are the list of possible val
 * Show one or more applications: `show applications`
 
         applications = a comma separated list of application names. Individual application names must be
-                       surrounded by quotes. You can also specify 'current' as the application name.
+                       surrounded by quotes. You can also specify `current`, `all`, or `all-but:` for the
+                       Application name (no quotes). `current` will apply to the currently focused
+                       application, `all` will apply to all open applications and `all-but:'APP_NAME'` will
+                       apply to all open applications except `APP_NAME`.
 
     Example:
 
@@ -389,7 +398,13 @@ Some operations allow you to specify a screen. Here are the list of possible val
 * Toggle one or more applications: `toggle applications`
 
         applications = a comma separated list of application names. Individual application names must be
-                       surrounded by quotes. You can also specify 'current' as the application name.
+                       surrounded by quotes. You can also specify `current`, `all`, or `all-but:` for the
+                       Application name (no quotes). `current` will apply to the currently focused
+                       application, `all` will apply to all open applications and `all-but:'APP_NAME'` will
+                       apply to all open applications except `APP_NAME`. Note that when trying to toggle `all`
+                       it will may not work as intended because OS X will not allow every visible app to be
+                       hidden. If at any point during the toggling all apps become hidden, OS X will auto-show
+                       one of the apps that were hidden.
 
     Example:
 
