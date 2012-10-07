@@ -73,6 +73,9 @@
     } else if ([appName hasPrefix:ALL_BUT]) {
       NSString *skipApp = [StringTokenizer removeQuotes:[appName stringByReplacingOccurrencesOfString:ALL_BUT withString:EMPTY] quoteChars:[NSCharacterSet characterSetWithCharactersInString:QUOTES]];
       // run through ALL THE APPS
+      if ([skipApp isEqualToString:CURRENT]) {
+        skipApp = [[RunningApplications focusedApp] localizedName];
+      }
       for (NSRunningApplication *theApp in [RunningApplications getInstance]) {
         if ([skipApp isEqualToString:[theApp localizedName]]) continue;
         [self applyVisibilityToApp:theApp];
