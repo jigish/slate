@@ -141,6 +141,10 @@ static NSDictionary *unselectableApps = nil;
   return [AccessibilityWrapper getTitle:[self window]];
 }
 
+- (pid_t)processIdentifier {
+  return [AccessibilityWrapper processIdentifierOfUIElement:[self app]];
+}
+
 + (BOOL)focusApp:(NSRunningApplication *)app {
   SlateLogger(@"Focusing app: '%@'", [app localizedName]);
   AXUIElementRef appRef = AXUIElementCreateApplication([app processIdentifier]);

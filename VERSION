@@ -1,6 +1,10 @@
-Current Version: 1.0.7
+Current Version: 1.0.8
 
------------------ 1.0.7  -----------------
+----------------- 1.0.8 -----------------
+
+Add ability to hide, show and toggle the current app
+
+----------------- 1.0.7 -----------------
 
 Implement Issue #118 (hide, show, and toggle operations)
 Implement Issue #117 (focus an application)

@@ -43,6 +43,7 @@
 - (BOOL)focus;
 - (BOOL)isMinimizedOrHidden;
 - (NSString *)getTitle;
+- (pid_t)processIdentifier;
 + (BOOL)focusWindow:(AXUIElementRef)window;
 + (BOOL)focusMainWindow:(NSRunningApplication *)app;
 + (BOOL)focusApp:(NSRunningApplication *)app;

@@ -367,7 +367,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 * Hide one or more applications: `hide applications`
 
         applications = a comma separated list of application names. Individual application names must be
-                       surrounded by quotes.
+                       surrounded by quotes. You can also specify 'current' as the application name.
 
     Example:
 
@@ -378,7 +378,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 * Show one or more applications: `show applications`
 
         applications = a comma separated list of application names. Individual application names must be
-                       surrounded by quotes.
+                       surrounded by quotes. You can also specify 'current' as the application name.
 
     Example:
 
@@ -389,7 +389,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 * Toggle one or more applications: `toggle applications`
 
         applications = a comma separated list of application names. Individual application names must be
-                       surrounded by quotes.
+                       surrounded by quotes. You can also specify 'current' as the application name.
 
     Example:
 
@@ -397,6 +397,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to toggle iTerm and Google Chrome. Toggle meaning if the individual
     application is currently hidden it will be shown and if it is currently shown it will be hidden.
+
+    **Note:** If you specify current in this toggle operation it will not toggle properly because after the current application is hidden, it is no longer the current application anymore.
 
 * Chain multiple operations to one binding: `chain opAndParams1 | opAndParams2 ...`
 

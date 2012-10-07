@@ -47,7 +47,18 @@
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
   for (NSString *appName in [self apps]) {
-    NSRunningApplication *app = [[[RunningApplications getInstance] appNameToApp] objectForKey:appName];
+    NSRunningApplication *app = nil;
+    if ([CURRENT isEqualToString:appName]) {
+      NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
+      if ([sharedWorkspace respondsToSelector:@selector(frontmostApplication)]) {
+        app = [sharedWorkspace frontmostApplication];
+      } else {
+        AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
+        app = [NSRunningApplication runningApplicationWithProcessIdentifier:[aw processIdentifier]];
+      }
+    } else {
+      app = [[[RunningApplications getInstance] appNameToApp] objectForKey:appName];
+    }
     if ([self type] == VisibilityOperationTypeShow) {
       [app unhide];
     } else if ([self type] == VisibilityOperationTypeHide) {
