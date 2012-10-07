@@ -80,20 +80,34 @@
 }
 
 + (BOOL)activateLayout:(NSString *)name screenWrapper:(ScreenWrapper *)sw {
+  Layout *layout = [[[SlateConfig getInstance] layouts] objectForKey:name];
+  if (layout == nil) {
+    @throw([NSException exceptionWithName:@"Unrecognized Layout" reason:name userInfo:nil]);
+  }
+
   BOOL success = YES;
-  for (NSRunningApplication *app in [RunningApplications getInstance]) {
+
+  id appsArray = nil;
+  if ([[SlateConfig getInstance] getBoolConfig:LAYOUT_FOCUS_ON_ACTIVATE]) {
+    appsArray = [NSMutableArray array];
+    for (NSString *appName in [layout appOrder]) {
+      NSRunningApplication *appToAdd = [[[RunningApplications getInstance] appNameToApp] objectForKey:appName];
+      if (appToAdd != nil) [appsArray addObject:appToAdd];
+    }
+  } else {
+    appsArray = [RunningApplications getInstance];
+  }
+
+  for (NSRunningApplication *app in appsArray) {
     NSString *appName = [app localizedName];
     pid_t appPID = [app processIdentifier];
     SlateLogger(@"I see application '%@' with pid '%d'", appName, appPID);
-    Layout *layout = [[[SlateConfig getInstance] layouts] objectForKey:name];
-    if (layout == nil) {
-      @throw([NSException exceptionWithName:@"Unrecognized Layout" reason:name userInfo:nil]);
-    }
+
     NSArray *operations = [[layout appStates] objectForKey:appName];
     if (operations == nil) {
       continue;
     }
-    
+
     // Yes, I am aware that the following blocks are inefficient. Deal with it.
     AXUIElementRef appRef = AXUIElementCreateApplication(appPID);
     CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInApp:appRef];
@@ -174,6 +188,7 @@
       for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
         appSuccess = [[operations objectAtIndex:((i-failedWindows) % [operations count])] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
+        if ([[SlateConfig getInstance] getBoolConfig:LAYOUT_FOCUS_ON_ACTIVATE]) { [aw focus]; }
         if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
           failedWindows++;
       }
@@ -181,6 +196,7 @@
       for (NSInteger i = 0; i < CFArrayGetCount(windows) && i-failedWindows < [operations count]; i++) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
         appSuccess = [[operations objectAtIndex:(i-failedWindows)] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
+        if ([[SlateConfig getInstance] getBoolConfig:LAYOUT_FOCUS_ON_ACTIVATE]) { [aw focus]; }
         if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
           failedWindows++;
       }

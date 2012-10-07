@@ -22,6 +22,7 @@
 
 @interface RunningApplications : NSObject <NSFastEnumeration> {
   NSMutableArray *apps;
+  NSMutableDictionary *appNameToApp;
   NSMutableArray *windows;
   NSMutableDictionary *appToWindows;
   NSMutableDictionary *titleToWindow;
@@ -31,6 +32,7 @@
 }
 
 @property NSMutableArray *apps;
+@property NSMutableDictionary *appNameToApp;
 @property NSMutableArray *windows;
 @property NSMutableDictionary *appToWindows;
 @property NSMutableDictionary *titleToWindow;

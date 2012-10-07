@@ -130,6 +130,8 @@ extern NSString *const GRID_CELL_SELECTED_COLOR;
 extern NSString *const GRID_CELL_SELECTED_COLOR_DEFAULT;
 extern NSString *const GRID_CELL_ROUNDED_CORNER_SIZE;
 extern NSString *const GRID_CELL_ROUNDED_CORNER_SIZE_DEFAULT;
+extern NSString *const LAYOUT_FOCUS_ON_ACTIVATE;
+extern NSString *const LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;

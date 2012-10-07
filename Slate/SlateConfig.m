@@ -536,6 +536,7 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:GRID_CELL_BACKGROUND_COLOR_DEFAULT forKey:GRID_CELL_BACKGROUND_COLOR];
   [configDefaults setObject:GRID_CELL_SELECTED_COLOR_DEFAULT forKey:GRID_CELL_SELECTED_COLOR];
   [configDefaults setObject:GRID_CELL_ROUNDED_CORNER_SIZE_DEFAULT forKey:GRID_CELL_ROUNDED_CORNER_SIZE];
+  [configDefaults setObject:LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT forKey:LAYOUT_FOCUS_ON_ACTIVATE];
   [self setConfigs:[NSMutableDictionary dictionary]];
   [self setAppConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];

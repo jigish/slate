@@ -25,7 +25,7 @@
 
 @implementation RunningApplications
 
-@synthesize apps, windows, appToWindows, titleToWindow, unusedWindowNumbers, nextWindowNumber, pidToObserver;
+@synthesize apps, appNameToApp, windows, appToWindows, titleToWindow, unusedWindowNumbers, nextWindowNumber, pidToObserver;
 
 static RunningApplications *_instance = nil;
 
@@ -164,6 +164,7 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
     unusedWindowNumbers = [NSMutableArray array];
     nextWindowNumber = 0;
     apps = [NSMutableArray array];
+    appNameToApp = [NSMutableDictionary dictionary];
     windows = [NSMutableArray array];
     appToWindows = [NSMutableDictionary dictionary];
     pidToObserver = [NSMutableDictionary dictionary];
@@ -175,6 +176,7 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
       if ([RunningApplications isAppSelectable:app]) {
         SlateLogger(@"  Selectable: %@", [app localizedName]);
         [apps addObject:app];
+        [appNameToApp setObject:app forKey:[app localizedName]];
         SlateLogger(@"    I see application '%@'", [app localizedName]);
         // check for windows
         NSNumber *appPID = [NSNumber numberWithInteger:[app processIdentifier]];
@@ -381,6 +383,7 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   SlateLogger(@"Killed: %@", [notification name]);
   NSRunningApplication *app = [[notification userInfo] objectForKey:NSWorkspaceApplicationKey];
   [apps removeObject:app];
+  [appNameToApp removeObjectForKey:[app localizedName]];
   NSNumber *appPID = [NSNumber numberWithInteger:[app processIdentifier]];
   [appToWindows removeObjectForKey:appPID];
   AXObserverRemoveNotification([[pidToObserver objectForKey:[NSNumber numberWithInteger:[app processIdentifier]]] pointerValue], AXUIElementCreateApplication([app processIdentifier]), kAXWindowCreatedNotification);

@@ -132,6 +132,8 @@ NSString *const GRID_CELL_SELECTED_COLOR = @"gridCellSelectedColor";
 NSString *const GRID_CELL_SELECTED_COLOR_DEFAULT = @"50;53;58;0.8";
 NSString *const GRID_CELL_ROUNDED_CORNER_SIZE = @"gridCellRoundedCornerSize";
 NSString *const GRID_CELL_ROUNDED_CORNER_SIZE_DEFAULT = @"5";
+NSString *const LAYOUT_FOCUS_ON_ACTIVATE = @"layoutFocusOnActivate";
+NSString *const LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT = @"false";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";

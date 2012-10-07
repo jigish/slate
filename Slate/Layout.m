@@ -30,12 +30,14 @@
 @synthesize name;
 @synthesize appStates;
 @synthesize appOptions;
+@synthesize appOrder;
 
 - (id)init {
   self = [super init];
   if (self) {
-    appStates = [[NSMutableDictionary alloc] init];
-    appOptions = [[NSMutableDictionary alloc] init];
+    appStates = [NSMutableDictionary dictionary];
+    appOptions = [NSMutableDictionary dictionary];
+    appOrder = [NSMutableArray array];
   }
   return self;
 }
@@ -60,6 +62,9 @@
 
   NSArray *appNameAndOptions = [[tokens objectAtIndex:2] componentsSeparatedByString:COLON];
   NSString *appName = [appNameAndOptions objectAtIndex:0];
+  if ([appOptions objectForKey:appName] != nil) [appOrder removeObject:appName];
+  [appOrder addObject:appName];
+
   if ([appNameAndOptions count] > 1) {
     NSString *options = [appNameAndOptions objectAtIndex:1];
     ApplicationOptions *appOpts = [[ApplicationOptions alloc] init];

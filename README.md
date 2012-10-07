@@ -163,6 +163,7 @@ List of allowed configs:
 | `gridCellBackgroundColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The background color for the `grid` operation's cells as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
 | `gridCellSelectedColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The selected color for the `grid` operation's cells as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
 | `gridCellRoundedCornerSize` | Number | Default: `5`. The size of the rounded corners of the `grid` operation's cells. Set this to `0` if you do not want rounded corners |
+| `layoutFocusOnActivate` | Boolean | Default: `false`. If true, activating a layout will focus all windows touched by the layout. The order in which they will be focused is the order in which the Applications occur in the slate file. Thus, the last Application configured in the slate file will be the foremost application after the layout is triggered. If set to false, activating a layout will not focus any of the windows touched. Thus the foremost application after the layout is triggered will be the foremost application before the layout was triggered. |
 
 Example:
 

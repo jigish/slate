@@ -3,6 +3,7 @@ Current Version: 1.0.7
 ----------------- 1.0.7 (not released) -----------------
 
 Implement Issue #117 (focus an application)
+Implement Issue #103 (layoutFocusOnActivate config)
 Merged Pull Request #115
 
 ----------------- 1.0.6 -----------------

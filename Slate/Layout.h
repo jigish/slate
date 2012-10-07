@@ -26,11 +26,13 @@
   NSString *name;
   NSMutableDictionary *appStates;
   NSMutableDictionary *appOptions;
+  NSMutableArray *appOrder;
 }
 
 @property (copy) NSString *name;
-@property  NSMutableDictionary *appStates;
-@property  NSMutableDictionary *appOptions;
+@property NSMutableDictionary *appStates;
+@property NSMutableDictionary *appOptions;
+@property NSMutableArray *appOrder;
 
 - (id)initWithString:(NSString *)layout;
 - (void)addWithString:(NSString *)layout;
