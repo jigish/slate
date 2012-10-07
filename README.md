@@ -367,7 +367,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 * Hide one or more applications: `hide applications`
 
         applications = a comma separated list of application names. Individual application names must be
-                     surrounded by quotes.
+                       surrounded by quotes.
 
     Example:
 
@@ -378,7 +378,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 * Show one or more applications: `show applications`
 
         applications = a comma separated list of application names. Individual application names must be
-                     surrounded by quotes.
+                       surrounded by quotes.
 
     Example:
 
@@ -389,7 +389,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 * Toggle one or more applications: `toggle applications`
 
         applications = a comma separated list of application names. Individual application names must be
-                     surrounded by quotes.
+                       surrounded by quotes.
 
     Example:
 
