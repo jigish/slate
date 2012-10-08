@@ -24,7 +24,7 @@
 
 @implementation HintView
 
-@synthesize text;
+@synthesize text,icon;
 
 static NSColor *hintBackgroundColor = nil;
 static NSColor *hintFontColor = nil;
@@ -34,6 +34,7 @@ static NSFont *hintFont = nil;
   self = [super initWithFrame:frame];
   if (self) {
     [self setWantsLayer:YES];
+    [self setIcon:nil];
     if (hintBackgroundColor == nil) {
       NSArray *bgColorArr = [[SlateConfig getInstance] getArrayConfig:WINDOW_HINTS_BACKGROUND_COLOR];
       if ([bgColorArr count] < 4) bgColorArr = [WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT componentsSeparatedByString:SEMICOLON];
@@ -58,6 +59,15 @@ static NSFont *hintFont = nil;
   return self;
 }
 
+- (void)setIconFromAppRef:(AXUIElementRef)appRef {
+  if ([[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_SHOW_ICONS]) {
+    pid_t pid;
+    AXUIElementGetPid(appRef, &pid);
+    NSRunningApplication *app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
+    [self setIcon:[app icon]];
+  }
+}
+
 - (void)drawCenteredText:(NSString *)string bounds:(NSRect)rect attributes:(NSDictionary *)attributes {
   NSSize size = [string sizeWithAttributes:attributes];
   NSPoint origin = NSMakePoint(rect.origin.x + (rect.size.width - size.width) / 2,
@@ -68,10 +78,16 @@ static NSFont *hintFont = nil;
 - (void)drawRect:(NSRect)dirtyRect {
   [[NSGraphicsContext currentContext] saveGraphicsState];
   [[NSGraphicsContext currentContext] setShouldAntialias:YES];
-  [hintBackgroundColor set];
-  float cornerSize = [[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_ROUNDED_CORNER_SIZE];
-  NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
-  [path fill];
+  // draw icon if specified otherwise the rounded rect
+  if(icon != nil) {
+    [icon drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeCopy fraction:[hintBackgroundColor alphaComponent]];
+  } else {
+    [hintBackgroundColor set];
+    float cornerSize = [[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_ROUNDED_CORNER_SIZE];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
+    [path fill];
+  }
+  // draw hint letter
   [self drawCenteredText:text
                   bounds:self.bounds
               attributes:[NSDictionary dictionaryWithObjectsAndKeys:hintFont,

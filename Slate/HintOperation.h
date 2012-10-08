@@ -28,16 +28,23 @@
   NSMutableDictionary *windows;
   NSMutableDictionary *apps;
   NSMutableArray *hotkeyRefs;
+  NSMutableArray *frames;
   NSTimer *hideTimer;
   AccessibilityWrapper *currentWindow;
   NSInteger currentHint;
   NSString *hintCharacters;
   BOOL ignoreHidden;
+  
+  BOOL spreadOnCollision;
+  NSUInteger spreadSearchWidth;
+  NSUInteger spreadSearchHeight;
+  NSUInteger spreadPadding;
 }
 
 @property NSMutableDictionary *hints;
 @property NSMutableDictionary *windows;
 @property NSMutableDictionary *apps;
+@property NSMutableArray *frames;
 @property NSMutableArray *hotkeyRefs;
 @property NSTimer *hideTimer;
 @property AccessibilityWrapper *currentWindow;
@@ -47,6 +54,7 @@
 - (id)initWithCharacters:(NSString *)characters;
 - (void)killHints;
 - (void)activateHintKey:(NSInteger)hintId;
+- (BOOL)collidesWithExistingHint:(NSPoint)origin;
 
 + (id)hintOperationFromString:(NSString *)hintOperation;
 
