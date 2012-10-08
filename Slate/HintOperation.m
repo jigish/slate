@@ -34,7 +34,7 @@
 
 @implementation HintOperation
 
-@synthesize hints, windows, apps, hotkeyRefs, hideTimer, currentWindow, currentHint, hintCharacters;
+@synthesize hints, windows, apps, hotkeyRefs, frames, hideTimer, currentWindow, currentHint, hintCharacters;
 
 static const UInt32 ESC_HINT_ID = 10001;
 
@@ -45,10 +45,17 @@ static const UInt32 ESC_HINT_ID = 10001;
     windows = [NSMutableDictionary dictionary];
     apps = [NSMutableDictionary dictionary];
     hotkeyRefs = [NSMutableArray array];
+    frames = [NSMutableArray arrayWithCapacity:7];
     hideTimer = nil;
     currentHint = 0;
     [self setHintCharacters:HINT_CHARACTERS];
     ignoreHidden = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
+    
+    spreadOnCollision = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_SPREAD];
+    spreadPadding = [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_SPREAD_PADDING];
+    spreadSearchHeight = [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_SPREAD_SEARCH_HEIGHT];
+    spreadSearchWidth = [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_SPREAD_SEARCH_WIDTH];
+    
   }
   return self;
 }
@@ -80,6 +87,9 @@ static const UInt32 ESC_HINT_ID = 10001;
   return success;
 }
 
+// the nsApp parameter is used to retrieve the icon if necessary.
+// if it is nil and the icon is needed, the NSRunningApplication will be retrieved via process ID
+// from the appRef.
 - (void)createHintWindowFor:(AXUIElementRef)windowRef inApp:(AXUIElementRef)appRef screenWrapper:(ScreenWrapper *)sw {
   SlateLogger(@"    attempting to hint");
   NSString *hintCode = [self currentHintCode];
@@ -143,6 +153,16 @@ static const UInt32 ESC_HINT_ID = 10001;
       return;
     }
   }
+  
+  if (spreadOnCollision) {
+    // if it collides, spread it down
+    while ([self collidesWithExistingHint:frame.origin]) {
+      frame = NSMakeRect(frame.origin.x, frame.origin.y - whHeight - spreadPadding,
+                         frame.size.width, frame.size.height);
+    }
+    [frames addObject:[NSValue valueWithRect:frame]];
+  }
+  
   if ([hints objectForKey:currentHintNumber] == nil) {
     SlateLogger(@"        New Window!");
     NSWindow *window = [[HintWindow alloc] initWithContentRect:frame
@@ -157,6 +177,7 @@ static const UInt32 ESC_HINT_ID = 10001;
     [window setLevel:(NSScreenSaverWindowLevel - 1)];
     HintView *label = [[HintView alloc] initWithFrame:frame];
     [label setText:hintCode];
+    [label setIconFromAppRef:appRef];
     [window setContentView:label];
     NSWindowController *wc = [[NSWindowController alloc] initWithWindow:window];
     [hints setObject:wc forKey:currentHintNumber];
@@ -164,6 +185,8 @@ static const UInt32 ESC_HINT_ID = 10001;
     SlateLogger(@"        Existing Window!");
     NSWindowController *wc = [hints objectForKey:currentHintNumber];
     [[wc window] setFrame:NSMakeRect(frame.origin.x+screen.frame.origin.x, frame.origin.y+screen.frame.origin.y, frame.size.width, frame.size.height) display:NO];
+    HintView *label = (HintView*)[[wc window] contentView];
+    [label setIconFromAppRef:appRef];
     [wc showWindow:[wc window]];
   }
   [windows setObject:[NSValue valueWithPointer:windowRef] forKey:currentHintNumber];
@@ -178,6 +201,20 @@ static const UInt32 ESC_HINT_ID = 10001;
   RegisterEventHotKey([keyCode unsignedIntValue], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
   [hotkeyRefs addObject:[NSValue valueWithPointer:myHotKeyRef]];
   currentHint++;
+}
+
+// check if the origin of this hint is in
+- (BOOL)collidesWithExistingHint:(NSPoint)origin {
+  for (NSValue *rectVal in frames) {
+    NSPoint other = [rectVal rectValue].origin;
+    // make a rect of the search width and height centered on the origin of the other point
+    NSRect otherRect = NSMakeRect(other.x - spreadSearchWidth/2, other.y - spreadSearchHeight/2,
+                                  spreadSearchWidth, spreadSearchHeight);
+    if(NSPointInRect(origin, otherRect)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 CFComparisonResult leftToRightWindows(const void *val1, const void *val2, void *context) {
@@ -223,6 +260,7 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
   [(SlateAppDelegate *)[NSApp delegate] setCurrentHintOperation:self];
   ignoreHidden = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
   [self setCurrentHint:0];
+  [frames removeAllObjects];
   [self setCurrentWindow:[[AccessibilityWrapper alloc] init]];
   if ([[[SlateConfig getInstance] getConfig:WINDOW_HINTS_ORDER] isEqualToString:WINDOW_HINTS_ORDER_NONE]) {
     // normal fast way
