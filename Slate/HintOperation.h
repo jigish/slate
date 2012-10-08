@@ -34,7 +34,11 @@
   NSInteger currentHint;
   NSString *hintCharacters;
   BOOL ignoreHidden;
+  
   BOOL spreadOnCollision;
+  NSUInteger spreadSearchWidth;
+  NSUInteger spreadSearchHeight;
+  NSUInteger spreadPadding;
 }
 
 @property NSMutableDictionary *hints;

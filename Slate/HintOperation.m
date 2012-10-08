@@ -38,10 +38,6 @@
 
 static const UInt32 ESC_HINT_ID = 10001;
 
-#define HINT_SPREAD_PADDING 20
-#define SPREAD_SEARCH_WIDTH 40
-#define SPREAD_SEARCH_HEIGHT 40
-
 - (id)init {
   self = [super init];
   if (self) {
@@ -54,7 +50,12 @@ static const UInt32 ESC_HINT_ID = 10001;
     currentHint = 0;
     [self setHintCharacters:HINT_CHARACTERS];
     ignoreHidden = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
+    
     spreadOnCollision = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_SPREAD];
+    spreadPadding = [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_SPREAD_PADDING];
+    spreadSearchHeight = [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_SPREAD_SEARCH_HEIGHT];
+    spreadSearchWidth = [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_SPREAD_SEARCH_WIDTH];
+    
   }
   return self;
 }
@@ -156,7 +157,7 @@ static const UInt32 ESC_HINT_ID = 10001;
   if (spreadOnCollision) {
     // if it collides, spread it down
     while ([self collidesWithExistingHint:frame.origin]) {
-      frame = NSMakeRect(frame.origin.x, frame.origin.y - whHeight - HINT_SPREAD_PADDING,
+      frame = NSMakeRect(frame.origin.x, frame.origin.y - whHeight - spreadPadding,
                          frame.size.width, frame.size.height);
     }
     [frames addObject:[NSValue valueWithRect:frame]];
@@ -207,8 +208,8 @@ static const UInt32 ESC_HINT_ID = 10001;
   for (NSValue *rectVal in frames) {
     NSPoint other = [rectVal rectValue].origin;
     // make a rect of the search width and height centered on the origin of the other point
-    NSRect otherRect = NSMakeRect(other.x - SPREAD_SEARCH_WIDTH/2, other.y - SPREAD_SEARCH_HEIGHT/2,
-                                  SPREAD_SEARCH_WIDTH, SPREAD_SEARCH_HEIGHT);
+    NSRect otherRect = NSMakeRect(other.x - spreadSearchWidth/2, other.y - spreadSearchHeight/2,
+                                  spreadSearchWidth, spreadSearchHeight);
     if(NSPointInRect(origin, otherRect)) {
       return true;
     }
