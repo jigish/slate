@@ -91,6 +91,7 @@ def dmgify
   Dir.mkdir(DMG_STAGING_DIR)
   FileUtils.cp_r File.join(RELEASE_DIR, APP_FILE), File.join(DMG_STAGING_DIR, APP_FILE)
   File.new(File.join(DMG_STAGING_DIR, APP_FILE, "Contents", "MacOS", APP_NAME)).chmod(0755)
+  File.new(File.join(DMG_STAGING_DIR, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Sparkle")).chmod(0755)
   File.new(File.join(DMG_STAGING_DIR, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Resources", "#{FINISH_INSTALL}.app", "Contents", "MacOS", FINISH_INSTALL)).chmod(0755)
   File.open(README_TXT, 'w') { |f| f.write("Please visit http://github.com/jigish/slate") }
 
@@ -125,6 +126,7 @@ def gen
     FileUtils.rm_rf File.join(to, APP_FILE)
     FileUtils.cp_r File.join(from, "Applications", APP_FILE), File.join(to, APP_FILE)
     File.new(File.join(to, APP_FILE, "Contents", "MacOS", APP_NAME)).chmod(0755)
+    File.new(File.join(DMG_STAGING_DIR, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Sparkle")).chmod(0755)
     File.new(File.join(to, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Resources", "#{FINISH_INSTALL}.app", "Contents", "MacOS", FINISH_INSTALL)).chmod(0755)
   end
 
