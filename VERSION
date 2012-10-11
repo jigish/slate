@@ -1,5 +1,10 @@
 Current Version: 1.0.10
 
+----------------- 1.0.11 (not released) ----------------
+
+Implement Issue #131
+"Load Config" is now "Relaunch and Load Config" to maintain a clean Slate (get it!?)
+
 ----------------- 1.0.10 ----------------
 
 Merge Pull Request #111 (hint icons and associated configs)

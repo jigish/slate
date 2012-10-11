@@ -545,6 +545,14 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     **Note:** There are a bunch of config options to tweak how this looks.
 
+* Relaunch Slate: `relaunch`
+
+    Example:
+
+        bind 1:ctrl relaunch
+
+    Will bind the keystroke ctrl-1 to relaunch Slate. This will also reload the `.slate` file from scratch.
+
 * \[Beta\] A Better Application Switcher: `switch`
 
     If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
