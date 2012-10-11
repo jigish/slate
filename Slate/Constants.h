@@ -190,6 +190,10 @@ extern NSString *const HINT;
 extern NSString *const SWITCH;
 extern NSString *const GRID;
 extern NSString *const SEQUENCE;
+extern NSString *const HIDE;
+extern NSString *const SHOW;
+extern NSString *const TOGGLE;
+extern NSString *const RELAUNCH;
 
 // Parameters and Options
 extern NSString *const CENTER;
@@ -211,9 +215,6 @@ extern NSString *const DELETE;
 extern NSString *const BACK;
 extern NSString *const QUIT;
 extern NSString *const FORCE_QUIT;
-extern NSString *const SHOW;
-extern NSString *const HIDE;
-extern NSString *const TOGGLE;
 extern NSString *const WINDOW_HINTS_ORDER_NONE;
 extern NSString *const WINDOW_HINTS_ORDER_PERSIST;
 extern NSString *const WINDOW_HINTS_ORDER_LEFT_TO_RIGHT;

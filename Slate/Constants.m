@@ -189,6 +189,10 @@ NSString *const HINT = @"hint";
 NSString *const SWITCH = @"switch";
 NSString *const GRID = @"grid";
 NSString *const SEQUENCE = @"sequence";
+NSString *const HIDE = @"hide";
+NSString *const SHOW = @"show";
+NSString *const TOGGLE = @"toggle";
+NSString *const RELAUNCH = @"relaunch";
 
 // Parameters and Options
 NSString *const CENTER = @"center";
@@ -210,9 +214,6 @@ NSString *const DELETE = @"delete";
 NSString *const BACK = @"back";
 NSString *const QUIT = @"quit";
 NSString *const FORCE_QUIT = @"force-quit";
-NSString *const HIDE = @"hide";
-NSString *const SHOW = @"show";
-NSString *const TOGGLE = @"toggle";
 NSString *const WINDOW_HINTS_ORDER_NONE = @"none";
 NSString *const WINDOW_HINTS_ORDER_PERSIST = @"persist";
 NSString *const WINDOW_HINTS_ORDER_LEFT_TO_RIGHT = @"leftToRight";

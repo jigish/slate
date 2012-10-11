@@ -25,6 +25,7 @@
 		3B7EB475138F691800EBEC2B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB474138F691800EBEC2B /* Constants.m */; };
 		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
 		3B84A552150552DC006E2194 /* ConfigurationHelperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B84A551150552DC006E2194 /* ConfigurationHelperView.m */; };
+		3B883A0D1627725200FF3D8C /* RelaunchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B883A0C1627725200FF3D8C /* RelaunchOperation.m */; };
 		3B8B5523161A1E5C00E21A6C /* NSString+Indicies.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B5522161A1E5C00E21A6C /* NSString+Indicies.m */; };
 		3B8B5527161A1FDF00E21A6C /* TestNSString+Indicies.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B5526161A1FDF00E21A6C /* TestNSString+Indicies.m */; };
 		3B9B3007151BDD960069D95E /* RunningApplications.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B3006151BDD960069D95E /* RunningApplications.m */; };
@@ -134,6 +135,8 @@
 		3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringTokenizer.m; sourceTree = "<group>"; };
 		3B84A550150552DC006E2194 /* ConfigurationHelperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationHelperView.h; sourceTree = "<group>"; };
 		3B84A551150552DC006E2194 /* ConfigurationHelperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationHelperView.m; sourceTree = "<group>"; };
+		3B883A0B1627725200FF3D8C /* RelaunchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelaunchOperation.h; sourceTree = "<group>"; };
+		3B883A0C1627725200FF3D8C /* RelaunchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelaunchOperation.m; sourceTree = "<group>"; };
 		3B8B5521161A1E5C00E21A6C /* NSString+Indicies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Indicies.h"; sourceTree = "<group>"; };
 		3B8B5522161A1E5C00E21A6C /* NSString+Indicies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Indicies.m"; sourceTree = "<group>"; };
 		3B8B5525161A1FDF00E21A6C /* TestNSString+Indicies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestNSString+Indicies.h"; sourceTree = "<group>"; };
@@ -344,6 +347,8 @@
 				47C4A2D31384F4A60066B6DE /* MoveOperation.m */,
 				47C4A2CF1384F3E10066B6DE /* Operation.h */,
 				47C4A2D01384F3E10066B6DE /* Operation.m */,
+				3B883A0B1627725200FF3D8C /* RelaunchOperation.h */,
+				3B883A0C1627725200FF3D8C /* RelaunchOperation.m */,
 				3B7EB3A5138F3F6800EBEC2B /* ResizeOperation.h */,
 				3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */,
 				3BE702B1161F9D5000260716 /* SequenceOperation.h */,
@@ -651,6 +656,7 @@
 				3B8B5523161A1E5C00E21A6C /* NSString+Indicies.m in Sources */,
 				3BE702B3161F9D5000260716 /* SequenceOperation.m in Sources */,
 				3BF57C9E16216C2200C0F89B /* VisibilityOperation.m in Sources */,
+				3B883A0D1627725200FF3D8C /* RelaunchOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
