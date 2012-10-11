@@ -66,7 +66,7 @@
 
 
 - (IBAction)updateLaunchState;
-- (IBAction)reconfig;
+- (IBAction)relaunch;
 - (IBAction)currentWindowInfo;
 - (IBAction)configurationHelper;
 - (IBAction)aboutWindow;
