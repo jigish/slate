@@ -30,6 +30,7 @@
 #import "SwitchOperation.h"
 #import "RunningApplications.h"
 #import "GridOperation.h"
+#import <Sparkle/SUUpdater.h>
 
 @implementation SlateAppDelegate
 
@@ -54,15 +55,17 @@ static EventHandlerRef modifiersEvent;
   }
 }
 
-- (IBAction)reconfig {
-  NSArray *bindings = [[SlateConfig getInstance] bindings];
-  for (NSInteger i = 0; i < [bindings count]; i++) {
-    Binding *binding = [bindings objectAtIndex:i];
-    UnregisterEventHotKey([binding hotKeyRef]);
-  }
-
-  [self loadConfig];
-  [self registerHotKeys];
+- (IBAction)relaunch {
+  NSString *launcherSource = [[NSBundle bundleForClass:[SUUpdater class]]  pathForResource:@"relaunch" ofType:@""];
+  NSString *launcherTarget = [NSTemporaryDirectory() stringByAppendingPathComponent:[launcherSource lastPathComponent]];
+  NSString *appPath = [[NSBundle mainBundle] bundlePath];
+  NSString *processID = [NSString stringWithFormat:@"%d", [[NSProcessInfo processInfo] processIdentifier]];
+  
+  [[NSFileManager defaultManager] removeItemAtPath:launcherTarget error:NULL];
+  [[NSFileManager defaultManager] copyItemAtPath:launcherSource toPath:launcherTarget error:NULL];
+  
+  [NSTask launchedTaskWithLaunchPath:launcherTarget arguments:[NSArray arrayWithObjects:appPath, processID, nil]];
+  [NSApp terminate:self];
 }
 
 - (IBAction)currentWindowInfo {
@@ -446,7 +449,7 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
   activateSnapshotItem = [statusMenu insertItemWithTitle:@"Activate Snapshot" action:@selector(activateSnapshot) keyEquivalent:@"" atIndex:4];
   [activateSnapshotItem setTarget:self];
 
-  NSMenuItem *loadConfigItem = [statusMenu insertItemWithTitle:@"Load Config" action:@selector(reconfig) keyEquivalent:@"" atIndex:1];
+  NSMenuItem *loadConfigItem = [statusMenu insertItemWithTitle:@"Relaunch and Load Config" action:@selector(relaunch) keyEquivalent:@"" atIndex:1];
   [loadConfigItem setTarget:self];
 
   launchOnLoginItem = [statusMenu insertItemWithTitle:@"Launch Slate on Login" action:@selector(updateLaunchState) keyEquivalent:@"" atIndex:2];
