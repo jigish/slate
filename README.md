@@ -90,7 +90,6 @@ In addition to the variables above, expressions can be used with the following f
     max        e.g. max({1,3,5}) = 5
     average    e.g. average({1,2,3,4}) = 2.5
     median     e.g. median({1,2,3,10,15}) = 3
-    mode       e.g. mode({1,3,4,3,5}) = 3
     stddev     e.g. stddev({1,2,3,4,5}) = 1.4142135623730951
     sqrt       e.g. sqrt(9) = 3.0
     log        e.g. log(100) = 2.0

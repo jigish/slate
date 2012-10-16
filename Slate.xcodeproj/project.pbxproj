@@ -33,6 +33,7 @@
 		3B9B3021151C830F0069D95E /* SwitchAppQuittingOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B3020151C830E0069D95E /* SwitchAppQuittingOverlayView.m */; };
 		3BA1BA58162DD3630026774E /* TestNSString+Levenshtein.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1BA57162DD3630026774E /* TestNSString+Levenshtein.m */; };
 		3BA1BA5C162DD7190026774E /* TestMathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1BA5B162DD7190026774E /* TestMathUtils.m */; };
+		3BA1BA62162DDFEF0026774E /* TestExpressionPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1BA61162DDFEF0026774E /* TestExpressionPoint.m */; };
 		3BA7485913B1D0F500CFA792 /* MathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA7485813B1D0F500CFA792 /* MathUtils.m */; };
 		3BA85C9A16276DAB00FAAF0B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BA85C9916276DAB00FAAF0B /* Sparkle.framework */; };
 		3BA85C9B16276E9E00FAAF0B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BA85C9916276DAB00FAAF0B /* Sparkle.framework */; };
@@ -153,6 +154,8 @@
 		3BA1BA57162DD3630026774E /* TestNSString+Levenshtein.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestNSString+Levenshtein.m"; sourceTree = "<group>"; };
 		3BA1BA5A162DD7190026774E /* TestMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestMathUtils.h; sourceTree = "<group>"; };
 		3BA1BA5B162DD7190026774E /* TestMathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestMathUtils.m; sourceTree = "<group>"; };
+		3BA1BA60162DDFEF0026774E /* TestExpressionPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestExpressionPoint.h; sourceTree = "<group>"; };
+		3BA1BA61162DDFEF0026774E /* TestExpressionPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestExpressionPoint.m; sourceTree = "<group>"; };
 		3BA7485713B1D0F500CFA792 /* MathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		3BA7485813B1D0F500CFA792 /* MathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MathUtils.m; sourceTree = "<group>"; };
 		3BA85C9916276DAB00FAAF0B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
@@ -272,6 +275,8 @@
 		3BA1BA59162DD6F20026774E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3BA1BA60162DDFEF0026774E /* TestExpressionPoint.h */,
+				3BA1BA61162DDFEF0026774E /* TestExpressionPoint.m */,
 				3BA1BA5A162DD7190026774E /* TestMathUtils.h */,
 				3BA1BA5B162DD7190026774E /* TestMathUtils.m */,
 			);
@@ -686,6 +691,7 @@
 				3B8B5527161A1FDF00E21A6C /* TestNSString+Indicies.m in Sources */,
 				3BA1BA58162DD3630026774E /* TestNSString+Levenshtein.m in Sources */,
 				3BA1BA5C162DD7190026774E /* TestMathUtils.m in Sources */,
+				3BA1BA62162DDFEF0026774E /* TestExpressionPoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
