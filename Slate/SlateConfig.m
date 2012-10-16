@@ -242,10 +242,10 @@ static SlateConfig *_instance = nil;
         SlateLogger(@"  LoadingB: %@",line);
         Binding *bind = [[Binding alloc] initWithString:line];
         if ([bind modalKey] != nil) {
-          NSMutableArray *theBindings = [modalBindings objectForKey:[bind modalKey]];
+          NSMutableArray *theBindings = [modalBindings objectForKey:[bind modalHashKey]];
           if (theBindings == nil) theBindings = [NSMutableArray array];
           [theBindings addObject:bind];
-          [modalBindings setObject:theBindings forKey:[bind modalKey]];
+          [modalBindings setObject:theBindings forKey:[bind modalHashKey]];
         } else {
           [bindings addObject:bind];
         }

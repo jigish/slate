@@ -43,5 +43,7 @@
 + (NSDictionary *)asciiToCodeDict;
 - (id)initWithString:(NSString *)binding;
 - (BOOL)doOperation;
+- (NSString *)modalHashKey;
++ (NSArray *)modalHashKeyToKeyAndModifiers:(NSString *)modalHashKey;
 
 @end

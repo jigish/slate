@@ -64,7 +64,7 @@ static NSDictionary *dictionary = nil;
       if ([keyAndModifiers count] >= 2) {
         NSNumber *theModalKey = [[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:1]];
         if (theModalKey != nil) {
-          // modal case
+          // modal no modifier case
           [self setModalKey:theModalKey];
         } else {
           // normal case
@@ -72,6 +72,7 @@ static NSDictionary *dictionary = nil;
           NSEnumerator *modEnum = [modifiersArray objectEnumerator];
           NSString *mod = [modEnum nextObject];
           while (mod) {
+            theModalKey = [[Binding asciiToCodeDict] objectForKey:mod];
             if ([mod isEqualToString:CONTROL]) {
               modifiers += controlKey;
             } else if ([mod isEqualToString:OPTION]) {
@@ -80,6 +81,8 @@ static NSDictionary *dictionary = nil;
               modifiers += cmdKey;
             } else if ([mod isEqualToString:SHIFT]) {
               modifiers += shiftKey;
+            } else if (theModalKey != nil) { // modal key with modifiers
+              [self setModalKey:theModalKey];
             } else {
               SlateLogger(@"ERROR: Unrecognized modifier '%@'", mod);
               @throw([NSException exceptionWithName:@"Unrecognized Modifier" reason:[NSString stringWithFormat:@"Unrecognized modifier '%@' in '%@'", mod, binding] userInfo:nil]);
@@ -124,6 +127,21 @@ static NSDictionary *dictionary = nil;
 
 - (BOOL)doOperation {
   return [op doOperation];
+}
+
+- (NSString *)modalHashKey {
+  if ([self modalKey] == nil) {
+    return nil;
+  }
+  return [NSString stringWithFormat:@"%@%@%u", [self modalKey], PLUS, [self modifiers]];
+}
+
++ (NSArray *)modalHashKeyToKeyAndModifiers:(NSString *)modalHashKey {
+  NSArray *modalKeyArr = [modalHashKey componentsSeparatedByString:PLUS];
+  NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
+  NSNumber *theKey = [nf numberFromString:[modalKeyArr objectAtIndex:0]];
+  NSNumber *theModifiers = [nf numberFromString:[modalKeyArr objectAtIndex:1]];
+  return [NSArray arrayWithObjects:theKey, theModifiers, nil];
 }
 
 - (void)dealloc {

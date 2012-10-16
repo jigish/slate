@@ -120,15 +120,17 @@ static EventHandlerRef modifiersEvent;
 
   NSArray *modalKeys = [[[SlateConfig getInstance] modalBindings] allKeys];
   NSInteger i = MODAL_BEGIN_ID;
-  for (NSNumber *modalKey in modalKeys) {
-    SlateLogger(@"REGISTERING MODAL KEY: %@", modalKey);
+  for (NSString *modalHashKey in modalKeys) {
+    SlateLogger(@"REGISTERING MODAL KEY: %@", modalHashKey);
+    NSArray *modalKeyArr = [Binding modalHashKeyToKeyAndModifiers:modalHashKey];
+    if (modalKeyArr == nil) continue;
     EventHotKeyID myHotKeyID;
     EventHotKeyRef myHotKeyRef;
     myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%li",i] cStringUsingEncoding:NSASCIIStringEncoding];
     myHotKeyID.id = (UInt32)i;
-    RegisterEventHotKey([modalKey unsignedIntValue], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
-    [[self modalHotKeyRefs] setObject:[NSValue valueWithPointer:myHotKeyRef] forKey:modalKey];
-    [[self modalIdToKey] setObject:modalKey forKey:[NSNumber numberWithInteger:i]];
+    RegisterEventHotKey([[modalKeyArr objectAtIndex:0] unsignedIntValue], [[modalKeyArr objectAtIndex:1] unsignedIntValue], myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
+    [[self modalHotKeyRefs] setObject:[NSValue valueWithPointer:myHotKeyRef] forKey:modalHashKey];
+    [[self modalIdToKey] setObject:modalHashKey forKey:[NSNumber numberWithInteger:i]];
     i++;
   }
   SlateLogger(@"HotKeys registered.");
@@ -203,9 +205,9 @@ static EventHandlerRef modifiersEvent;
 
   // check modal stuffs
   NSNumber *hkId = [NSNumber numberWithInteger:hkCom.id];
-  NSNumber *modalKey = [[self modalIdToKey] objectForKey:hkId];
+  NSString *modalKey = [[self modalIdToKey] objectForKey:hkId];
   if (modalKey != nil) {
-    if (currentModalKey != nil && [modalKey isEqualToNumber:currentModalKey]) {
+    if (currentModalKey != nil && [modalKey isEqualToString:currentModalKey]) {
       [self resetModalKey];
       return noErr;
     } else if (currentModalKey == nil) {
@@ -219,7 +221,7 @@ static EventHandlerRef modifiersEvent;
         EventHotKeyRef myHotKeyRef;
         myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%li",i] cStringUsingEncoding:NSASCIIStringEncoding];
         myHotKeyID.id = (UInt32)i;
-        RegisterEventHotKey([binding keyCode], [binding modifiers], myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
+        RegisterEventHotKey([binding keyCode], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
         [binding setHotKeyRef:myHotKeyRef];
         [[self currentModalHotKeyRefs] addObject:[NSValue valueWithPointer:myHotKeyRef]];
         i++;

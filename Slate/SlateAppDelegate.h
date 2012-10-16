@@ -48,7 +48,7 @@
   NSInteger cmdShiftTabBinding;
   NSMutableDictionary *modalHotKeyRefs;
   NSMutableDictionary *modalIdToKey;
-  NSNumber *currentModalKey;
+  NSString *currentModalKey;
   NSMutableArray *currentModalHotKeyRefs;
 }
 
@@ -61,7 +61,7 @@
 @property (assign) NSInteger cmdShiftTabBinding;
 @property NSMutableDictionary *modalHotKeyRefs;
 @property NSMutableDictionary *modalIdToKey;
-@property NSNumber *currentModalKey;
+@property NSString *currentModalKey;
 @property NSMutableArray *currentModalHotKeyRefs;
 
 
