@@ -32,6 +32,7 @@
 		3B9B301E151BFC330069D95E /* SwitchAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B301D151BFC330069D95E /* SwitchAppView.m */; };
 		3B9B3021151C830F0069D95E /* SwitchAppQuittingOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B3020151C830E0069D95E /* SwitchAppQuittingOverlayView.m */; };
 		3BA1BA58162DD3630026774E /* TestNSString+Levenshtein.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1BA57162DD3630026774E /* TestNSString+Levenshtein.m */; };
+		3BA1BA5C162DD7190026774E /* TestMathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1BA5B162DD7190026774E /* TestMathUtils.m */; };
 		3BA7485913B1D0F500CFA792 /* MathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA7485813B1D0F500CFA792 /* MathUtils.m */; };
 		3BA85C9A16276DAB00FAAF0B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BA85C9916276DAB00FAAF0B /* Sparkle.framework */; };
 		3BA85C9B16276E9E00FAAF0B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BA85C9916276DAB00FAAF0B /* Sparkle.framework */; };
@@ -150,6 +151,8 @@
 		3B9B3020151C830E0069D95E /* SwitchAppQuittingOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchAppQuittingOverlayView.m; sourceTree = "<group>"; };
 		3BA1BA56162DD3630026774E /* TestNSString+Levenshtein.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestNSString+Levenshtein.h"; sourceTree = "<group>"; };
 		3BA1BA57162DD3630026774E /* TestNSString+Levenshtein.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestNSString+Levenshtein.m"; sourceTree = "<group>"; };
+		3BA1BA5A162DD7190026774E /* TestMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestMathUtils.h; sourceTree = "<group>"; };
+		3BA1BA5B162DD7190026774E /* TestMathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestMathUtils.m; sourceTree = "<group>"; };
 		3BA7485713B1D0F500CFA792 /* MathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		3BA7485813B1D0F500CFA792 /* MathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MathUtils.m; sourceTree = "<group>"; };
 		3BA85C9916276DAB00FAAF0B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
@@ -264,6 +267,15 @@
 				3BA1BA57162DD3630026774E /* TestNSString+Levenshtein.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		3BA1BA59162DD6F20026774E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				3BA1BA5A162DD7190026774E /* TestMathUtils.h */,
+				3BA1BA5B162DD7190026774E /* TestMathUtils.m */,
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 		3BC9E97015005F5F002FD1FA /* Categories */ = {
@@ -482,6 +494,7 @@
 			isa = PBXGroup;
 			children = (
 				3B8B5524161A1FC600E21A6C /* Categories */,
+				3BA1BA59162DD6F20026774E /* Common */,
 				47C4A2BB1384E8890066B6DE /* SlateTests.h */,
 				47C4A2BD1384E8890066B6DE /* SlateTests.m */,
 				47C4A2B51384E8890066B6DE /* Supporting Files */,
@@ -672,6 +685,7 @@
 				47C4A2BE1384E8890066B6DE /* SlateTests.m in Sources */,
 				3B8B5527161A1FDF00E21A6C /* TestNSString+Indicies.m in Sources */,
 				3BA1BA58162DD3630026774E /* TestNSString+Levenshtein.m in Sources */,
+				3BA1BA5C162DD7190026774E /* TestMathUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
