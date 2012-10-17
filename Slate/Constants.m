@@ -158,6 +158,8 @@ NSString *const CONTROL = @"ctrl";
 NSString *const COMMAND = @"cmd";
 NSString *const OPTION = @"alt";
 NSString *const SHIFT = @"shift";
+NSString *const FUNCTION = @"fn";
+UInt32 const FUNCTION_KEY = 0x800000;
 
 // Expression Keys
 NSString *const SCREEN_ORIGIN_X = @"screenOriginX";

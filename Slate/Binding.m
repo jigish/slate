@@ -81,6 +81,8 @@ static NSDictionary *dictionary = nil;
               modifiers += cmdKey;
             } else if ([mod isEqualToString:SHIFT]) {
               modifiers += shiftKey;
+            } else if ([mod isEqualToString:FUNCTION]) {
+              modifiers += FUNCTION_KEY;
             } else if (theModalKey != nil) { // modal key with modifiers
               [self setModalKey:theModalKey];
             } else {

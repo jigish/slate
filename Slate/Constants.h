@@ -159,6 +159,8 @@ extern NSString *const CONTROL;
 extern NSString *const COMMAND;
 extern NSString *const OPTION;
 extern NSString *const SHIFT;
+extern NSString *const FUNCTION;
+extern UInt32 const FUNCTION_KEY;
 
 // Expression Keys
 extern NSString *const SCREEN_ORIGIN_X;
