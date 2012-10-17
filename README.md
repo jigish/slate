@@ -369,6 +369,21 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to move the window to the top-left corner and resize it to 1/4 of the screen
 
+* Execute a shell command: `shell options 'command'`
+
+        command = (required) the command to run. note that it is a quoted string.
+        options = (optional) a space separated list of:
+                   wait  - block slate until the shell command exits. Useful when using shell commands in a
+                           sequence binding
+                   path: - the inital working directory to use when starting the command. For example
+                           path:~/code would set the inital working directory to ~/code
+
+    Example:
+
+        bind 1:ctrl wait path:~/code '/opt/local/bin/mvim'
+
+    Will bind the keystroke ctrl-1 to run the command `/opt/local/bin/mvim` with the current working directory of `~/code`. Slate will also block until the command is done.
+
 * Hide one or more applications: `hide applications`
 
         applications = a comma separated list of application names. Individual application names must be
