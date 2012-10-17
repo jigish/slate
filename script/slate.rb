@@ -26,7 +26,7 @@ APPCAST_SIZE_THRESHOLD = 800
 RELEASE_NOTES_FILENAME = 'VERSION'
 RELEASE_NOTES_SIZE_THRESHOLD = 5000
 SPARKLE_FRAMEWORK = 'Sparkle.framework'
-FINISH_INSTALL = 'finish_installation'
+RELAUNCH = 'relaunch'
 CREATE_DMG = File.join(SCRIPT_DIR, "create-dmg", "create-dmg")
 DMG_STAGING_DIR = File.join(BUILD_DIR, "dmg_staging")
 README_MD_NAME = "README.md"
@@ -92,7 +92,7 @@ def dmgify
   FileUtils.cp_r File.join(RELEASE_DIR, APP_FILE), File.join(DMG_STAGING_DIR, APP_FILE)
   File.new(File.join(DMG_STAGING_DIR, APP_FILE, "Contents", "MacOS", APP_NAME)).chmod(0755)
   File.new(File.join(DMG_STAGING_DIR, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Sparkle")).chmod(0755)
-  File.new(File.join(DMG_STAGING_DIR, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Resources", "#{FINISH_INSTALL}.app", "Contents", "MacOS", FINISH_INSTALL)).chmod(0755)
+  File.new(File.join(DMG_STAGING_DIR, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Resources", RELAUNCH)).chmod(0755)
   File.open(README_TXT, 'w') { |f| f.write("Please visit http://github.com/jigish/slate") }
 
   FileUtils.rm_rf(File.join(RELEASE_DIR, DMG_FILE));
@@ -126,8 +126,8 @@ def gen
     FileUtils.rm_rf File.join(to, APP_FILE)
     FileUtils.cp_r File.join(from, "Applications", APP_FILE), File.join(to, APP_FILE)
     File.new(File.join(to, APP_FILE, "Contents", "MacOS", APP_NAME)).chmod(0755)
-    File.new(File.join(DMG_STAGING_DIR, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Sparkle")).chmod(0755)
-    File.new(File.join(to, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Resources", "#{FINISH_INSTALL}.app", "Contents", "MacOS", FINISH_INSTALL)).chmod(0755)
+    File.new(File.join(to, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Sparkle")).chmod(0755)
+    File.new(File.join(to, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Resources", RELAUNCH)).chmod(0755)
   end
 
   dmgify
