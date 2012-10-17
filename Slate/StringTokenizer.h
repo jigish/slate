@@ -26,6 +26,7 @@
 + (BOOL)isSpaceChar:(unichar)c;
 + (BOOL)isQuoteChar:(unichar)c quoteChars:(NSCharacterSet *)quoteChars;
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array;
++ (void)tokenize:(NSString *)s into:(NSMutableArray *)array quoteChars:(NSCharacterSet *)quotes;
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens;
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens quoteChars:(NSCharacterSet *)quotes;
 + (void)firstToken:(NSString *)s into:(NSMutableString *)token;

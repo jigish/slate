@@ -195,6 +195,7 @@ NSString *const HIDE = @"hide";
 NSString *const SHOW = @"show";
 NSString *const TOGGLE = @"toggle";
 NSString *const RELAUNCH = @"relaunch";
+NSString *const SHELL = @"shell";
 
 // Parameters and Options
 NSString *const CENTER = @"center";
@@ -226,6 +227,8 @@ NSString *const KEYBOARD_LAYOUT_DVORAK = @"dvorak";
 NSString *const PADDING = @"padding";
 NSString *const CURRENT = @"current";
 NSString *const ALL_BUT = @"all-but:";
+NSString *const WAIT = @"wait";
+NSString *const PATH = @"path:";
 
 // Directions and Anchors
 NSString *const UP = @"up";

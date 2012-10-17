@@ -48,6 +48,28 @@
   }
 }
 
++ (void)tokenize:(NSString *)s into:(NSMutableArray *)array quoteChars:(NSCharacterSet *)quotes {
+  NSMutableString *token = [[NSMutableString alloc] initWithCapacity:10];
+  BOOL quoteSeen = NO;
+  for (NSInteger i = 0; i < [s length]; i++) {
+    if ([self isSpaceChar:[s characterAtIndex:i]]) {
+      if (![token isEqualToString:@""] && !quoteSeen) {
+        [array addObject:[NSString stringWithString:token]];
+        token = [[NSMutableString alloc] initWithCapacity:10];
+      } else if (quoteSeen) {
+        [token appendFormat:@"%C", [s characterAtIndex:i]];
+      }
+    } else if ([self isQuoteChar:[s characterAtIndex:i] quoteChars:quotes]) {
+      quoteSeen = !quoteSeen;
+    } else {
+      [token appendFormat:@"%C", [s characterAtIndex:i]];
+    }
+  }
+  if (![[NSString stringWithString:token] isEqualToString:@""]) {
+    [array addObject:[NSString stringWithString:token]];
+  }
+}
+
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array maxTokens:(NSInteger)maxTokens {
   if (maxTokens <=1) {
     [array addObject:s];

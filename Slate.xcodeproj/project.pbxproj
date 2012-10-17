@@ -35,6 +35,9 @@
 		3BA1BA5C162DD7190026774E /* TestMathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1BA5B162DD7190026774E /* TestMathUtils.m */; };
 		3BA1BA62162DDFEF0026774E /* TestExpressionPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1BA61162DDFEF0026774E /* TestExpressionPoint.m */; };
 		3BA1BA65162E01A30026774E /* TestStringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1BA64162E01A20026774E /* TestStringTokenizer.m */; };
+		3BA1BA68162F3E530026774E /* ShellOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1BA67162F3E530026774E /* ShellOperation.m */; };
+		3BA1BA6B162F4CFF0026774E /* ShellUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1BA6A162F4CFF0026774E /* ShellUtils.m */; };
+		3BA1BA6E162F51760026774E /* TestShellUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1BA6D162F51760026774E /* TestShellUtils.m */; };
 		3BA7485913B1D0F500CFA792 /* MathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA7485813B1D0F500CFA792 /* MathUtils.m */; };
 		3BA85C9A16276DAB00FAAF0B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BA85C9916276DAB00FAAF0B /* Sparkle.framework */; };
 		3BA85C9B16276E9E00FAAF0B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BA85C9916276DAB00FAAF0B /* Sparkle.framework */; };
@@ -159,6 +162,12 @@
 		3BA1BA61162DDFEF0026774E /* TestExpressionPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestExpressionPoint.m; sourceTree = "<group>"; };
 		3BA1BA63162E01A20026774E /* TestStringTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestStringTokenizer.h; sourceTree = "<group>"; };
 		3BA1BA64162E01A20026774E /* TestStringTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestStringTokenizer.m; sourceTree = "<group>"; };
+		3BA1BA66162F3E530026774E /* ShellOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShellOperation.h; sourceTree = "<group>"; };
+		3BA1BA67162F3E530026774E /* ShellOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShellOperation.m; sourceTree = "<group>"; };
+		3BA1BA69162F4CFE0026774E /* ShellUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShellUtils.h; sourceTree = "<group>"; };
+		3BA1BA6A162F4CFF0026774E /* ShellUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShellUtils.m; sourceTree = "<group>"; };
+		3BA1BA6C162F51760026774E /* TestShellUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestShellUtils.h; sourceTree = "<group>"; };
+		3BA1BA6D162F51760026774E /* TestShellUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestShellUtils.m; sourceTree = "<group>"; };
 		3BA7485713B1D0F500CFA792 /* MathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		3BA7485813B1D0F500CFA792 /* MathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MathUtils.m; sourceTree = "<group>"; };
 		3BA85C9916276DAB00FAAF0B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
@@ -282,6 +291,8 @@
 				3BA1BA61162DDFEF0026774E /* TestExpressionPoint.m */,
 				3BA1BA5A162DD7190026774E /* TestMathUtils.h */,
 				3BA1BA5B162DD7190026774E /* TestMathUtils.m */,
+				3BA1BA6C162F51760026774E /* TestShellUtils.h */,
+				3BA1BA6D162F51760026774E /* TestShellUtils.m */,
 				3BA1BA63162E01A20026774E /* TestStringTokenizer.h */,
 				3BA1BA64162E01A20026774E /* TestStringTokenizer.m */,
 			);
@@ -380,6 +391,8 @@
 				3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */,
 				3BE702B1161F9D5000260716 /* SequenceOperation.h */,
 				3BE702B2161F9D5000260716 /* SequenceOperation.m */,
+				3BA1BA66162F3E530026774E /* ShellOperation.h */,
+				3BA1BA67162F3E530026774E /* ShellOperation.m */,
 				3BDDA17814FD95E200829D2A /* SnapshotOperation.h */,
 				3BDDA17914FD95E200829D2A /* SnapshotOperation.m */,
 				3B9B301F151C830E0069D95E /* SwitchAppQuittingOverlayView.h */,
@@ -417,6 +430,8 @@
 				3BB5380313AEDA190005CFFC /* ScreenState.m */,
 				3B66A56013ADBDFD0015EDD5 /* ScreenWrapper.h */,
 				3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */,
+				3BA1BA69162F4CFE0026774E /* ShellUtils.h */,
+				3BA1BA6A162F4CFF0026774E /* ShellUtils.m */,
 				3B58154215054EBD0078D568 /* SlateLogger.h */,
 				3B7EB4CA138F72D900EBEC2B /* StringTokenizer.h */,
 				3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */,
@@ -685,6 +700,8 @@
 				3BE702B3161F9D5000260716 /* SequenceOperation.m in Sources */,
 				3BF57C9E16216C2200C0F89B /* VisibilityOperation.m in Sources */,
 				3B883A0D1627725200FF3D8C /* RelaunchOperation.m in Sources */,
+				3BA1BA68162F3E530026774E /* ShellOperation.m in Sources */,
+				3BA1BA6B162F4CFF0026774E /* ShellUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -698,6 +715,7 @@
 				3BA1BA5C162DD7190026774E /* TestMathUtils.m in Sources */,
 				3BA1BA62162DDFEF0026774E /* TestExpressionPoint.m in Sources */,
 				3BA1BA65162E01A30026774E /* TestStringTokenizer.m in Sources */,
+				3BA1BA6E162F51760026774E /* TestShellUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

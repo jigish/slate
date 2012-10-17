@@ -36,6 +36,7 @@
 #import "SequenceOperation.h"
 #import "VisibilityOperation.h"
 #import "RelaunchOperation.h"
+#import "ShellOperation.h"
 
 @implementation Operation
 
@@ -101,6 +102,8 @@
     operation = [VisibilityOperation visibilityOperationFromString:opString];
   } else if ([op isEqualToString:RELAUNCH]) {
     operation = [RelaunchOperation relaunchOperationFromString:opString];
+  } else if ([op isEqualToString:SHELL]) {
+    operation = [ShellOperation shellOperationFromString:opString];
   } else {
     SlateLogger(@"ERROR: Unrecognized operation '%@'", opString);
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);

@@ -196,6 +196,7 @@ extern NSString *const HIDE;
 extern NSString *const SHOW;
 extern NSString *const TOGGLE;
 extern NSString *const RELAUNCH;
+extern NSString *const SHELL;
 
 // Parameters and Options
 extern NSString *const CENTER;
@@ -227,6 +228,8 @@ extern NSString *const KEYBOARD_LAYOUT_DVORAK;
 extern NSString *const PADDING;
 extern NSString *const CURRENT;
 extern NSString *const ALL_BUT;
+extern NSString *const WAIT;
+extern NSString *const PATH;
 
 // Directions and Anchors
 extern NSString *const UP;
