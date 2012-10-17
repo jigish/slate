@@ -1,6 +1,6 @@
-Current Version: 1.0.10
+Current Version: 1.0.11
 
------------------ 1.0.11 (not released) ----------------
+----------------- 1.0.11 ----------------
 
 Implement Issue #131 - better load config
 Implement Issue #125 - modal key with modifiers
