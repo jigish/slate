@@ -1,6 +1,6 @@
-Current Version: 1.0.11
+Current Version: 1.0.12
 
------------------ 1.0.12 (not yet released) ----------------
+----------------- 1.0.12 ----------------
 
 Implement Issue #121 - enable fn as modifier
 Partially implement issue #85 - added shell operation
