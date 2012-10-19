@@ -262,7 +262,7 @@ The `bind` directive follows one of the following formats (tokens may be separat
 * Option/Alt: `alt`
 * Command: `cmd`
 * Shift: `shift`
-* Function: `fn`
+* Function: `fn` (currently does not work with arrow keys)
 
 **Note:** If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
