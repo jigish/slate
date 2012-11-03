@@ -83,6 +83,8 @@ extern NSString *const WINDOW_HINTS_ORDER;
 extern NSString *const WINDOW_HINTS_ORDER_DEFAULT;
 extern NSString *const WINDOW_HINTS_SHOW_ICONS;
 extern NSString *const WINDOW_HINTS_SHOW_ICONS_DEFAULT;
+extern NSString *const WINDOW_HINTS_ICON_ALPHA;
+extern NSString *const WINDOW_HINTS_ICON_ALPHA_DEFAULT;
 extern NSString *const WINDOW_HINTS_SPREAD;
 extern NSString *const WINDOW_HINTS_SPREAD_DEFAULT;
 extern NSString *const WINDOW_HINTS_SPREAD_SEARCH_WIDTH;
