@@ -50,12 +50,12 @@ static const UInt32 ESC_HINT_ID = 10001;
     currentHint = 0;
     [self setHintCharacters:HINT_CHARACTERS];
     ignoreHidden = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
-    
+
     spreadOnCollision = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_SPREAD];
     spreadPadding = [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_SPREAD_PADDING];
     spreadSearchHeight = [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_SPREAD_SEARCH_HEIGHT];
     spreadSearchWidth = [[SlateConfig getInstance] getIntegerConfig:WINDOW_HINTS_SPREAD_SEARCH_WIDTH];
-    
+
   }
   return self;
 }
@@ -153,7 +153,7 @@ static const UInt32 ESC_HINT_ID = 10001;
       return;
     }
   }
-  
+
   if (spreadOnCollision) {
     // if it collides, spread it down
     while ([self collidesWithExistingHint:frame.origin]) {
@@ -162,7 +162,7 @@ static const UInt32 ESC_HINT_ID = 10001;
     }
     [frames addObject:[NSValue valueWithRect:frame]];
   }
-  
+
   if ([hints objectForKey:currentHintNumber] == nil) {
     SlateLogger(@"        New Window!");
     NSWindow *window = [[HintWindow alloc] initWithContentRect:frame
@@ -191,7 +191,7 @@ static const UInt32 ESC_HINT_ID = 10001;
   }
   [windows setObject:[NSValue valueWithPointer:windowRef] forKey:currentHintNumber];
   [apps setObject:[NSValue valueWithPointer:appRef] forKey:currentHintNumber];
-  
+
   // Register the hotkey
   NSNumber *keyCode = [[Binding asciiToCodeDict] objectForKey:[hintCode lowercaseString]];
   EventHotKeyID myHotKeyID;

@@ -148,7 +148,7 @@
   NSPoint mouseLoc;
   NSPoint initialMouseLoc = [self convertPoint:[theEvent locationInWindow] fromView:nil];
   NSRect activeRect;
-  
+
   while (keepOn) {
     theEvent = [[self window] nextEventMatchingMask: NSLeftMouseUpMask |
                 NSLeftMouseDraggedMask];
@@ -175,9 +175,9 @@
         /* Ignore any other kind of event. */
         break;
     }
-    
+
   };
-  
+
   return;
 }
 

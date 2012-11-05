@@ -78,7 +78,7 @@
     [self setScreenId:myScreenId];
     [self setMonitor:nil];
   }
-  
+
   return self;
 }
 
@@ -140,12 +140,12 @@
   // move <topLeft> <dimensions> <optional:monitor>
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:moveOperation into:tokens];
-  
+
   if ([tokens count] < 3) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", moveOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Move operations require the following format: 'move topLeftX;topLeftY width;height [optional:screemNumber]'", moveOperation] userInfo:nil]);
   }
-  
+
   Operation *op = nil;
   op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
   return op;
@@ -155,12 +155,12 @@
   // push <top|bottom|up|down|left|right> <optional:none|center|bar|bar-resize:expression> <optional:monitor (must specify previous option to specify monitor)>
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:pushOperation into:tokens];
-  
+
   if ([tokens count] < 2) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", pushOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Push operations require the following format: 'push direction [optional:style]'", pushOperation] userInfo:nil]);
   }
-  
+
   NSString *direction = [tokens objectAtIndex:1];
   NSString *dimensions = @"windowSizeX;windowSizeY";
   NSString *topLeft = nil;
@@ -244,12 +244,12 @@
   // nudge x y
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:nudgeOperation into:tokens];
-  
+
   if ([tokens count] < 2) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", nudgeOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Nudge operations require the following format: 'nudge x y'", nudgeOperation] userInfo:nil]);
   }
-  
+
   NSString *tlX = WINDOW_TOP_LEFT_X;
   NSString *x = [tokens objectAtIndex:1];
   NSString *nudgePercentOf = [[SlateConfig getInstance] getConfig:NUDGE_PERCENT_OF];
@@ -260,7 +260,7 @@
     // Hard Nudge
     tlX = [tlX stringByAppendingString:x];
   }
-  
+
   NSString *tlY = WINDOW_TOP_LEFT_Y;
   NSString *y = [tokens objectAtIndex:2];
   if ([y hasSuffix:PERCENT]) {
@@ -278,12 +278,12 @@
   // throw <monitor> <optional:style (default is noresize)>
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:throwOperation into:tokens];
-  
+
   if ([tokens count] < 2) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", throwOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Throw operations require the following format: 'throw screen [optional:style]'", throwOperation] userInfo:nil]);
   }
-  
+
   NSString *tl = @"screenOriginX;screenOriginY";
   NSString *dim = @"windowSizeX;windowSizeY";
   if ([tokens count] >= 3) {
@@ -309,23 +309,23 @@
   // corner <top-left|top-right|bottom-left|bottom-right> <optional:resize:expression> <optional:monitor>
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:cornerOperation into:tokens];
-  
+
   if ([tokens count] < 2) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", cornerOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Corner operations require the following format: 'corner direction [optional:style]'", cornerOperation] userInfo:nil]);
   }
-  
+
   NSString *tl = nil;
   NSString *dim = @"windowSizeX;windowSizeY";
   NSString *direction = [tokens objectAtIndex:1];
-  
+
   if ([tokens count] >= 3) {
     NSString *style = [tokens objectAtIndex:2];
     if ([style hasPrefix:RESIZE_WITH_VALUE]) {
       dim = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
     }
   }
-  
+
   if ([direction isEqualToString:TOP_LEFT]) {
     tl = @"screenOriginX;screenOriginY";
   } else if ([direction isEqualToString:TOP_RIGHT]) {
@@ -338,7 +338,7 @@
     SlateLogger(@"ERROR: Unrecognized corner '%@'", direction);
     @throw([NSException exceptionWithName:@"Unrecognized Corner" reason:[NSString stringWithFormat:@"Unrecognized corner '%@' in '%@'", direction, cornerOperation] userInfo:nil]);
   }
-  
+
   Operation *op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
   return op;
 }
