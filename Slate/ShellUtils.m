@@ -59,8 +59,7 @@
 }
 
 + (NSTask *)run:(NSString *)command args:(NSArray *)args wait:(BOOL)wait path:(NSString *)path {
-  NSTask *task;
-  task = [[NSTask alloc] init];
+  NSTask *task = [[NSTask alloc] init];
   [task setLaunchPath:command];
   [task setArguments:args];
   if (path != nil) [task setCurrentDirectoryPath:path];

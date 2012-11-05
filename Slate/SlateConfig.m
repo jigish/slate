@@ -29,10 +29,13 @@
 #import "Snapshot.h"
 #import "SnapshotList.h"
 #import "JSONKit.h"
+#import "ShellUtils.h"
 #import "SlateLogger.h"
 #import "NSFileManager+ApplicationSupport.h"
 #import "NSString+Indicies.h"
 #import "ActivateSnapshotOperation.h"
+
+#include <sys/stat.h>
 
 @implementation SlateConfig
 
@@ -142,7 +145,7 @@ static SlateConfig *_instance = nil;
     }
     return [self loadConfigFileWithPath:[[NSBundle mainBundle] pathForResource:@"default" ofType:@"slate"]];
   }
-  
+
   if (![self loadSnapshots]) {
     SlateLogger(@"  ERROR Could not load %@", SNAPSHOTS_FILE);
     NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
@@ -169,9 +172,20 @@ static SlateConfig *_instance = nil;
 - (BOOL)loadConfigFileWithPath:(NSString *)file {
   if (file == nil) return NO;
   NSString *configFile = file;
+  NSString *fileString;
+  struct stat _stat;
   if ([file rangeOfString:SLASH].location != 0 && [file rangeOfString:TILDA].location != 0)
-    configFile = [NSString stringWithFormat:@"~/%@", file];
-  NSString *fileString = [NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:nil];
+    configFile = [[NSString stringWithFormat:@"~/%@", file] stringByExpandingTildeInPath];
+
+  int ret = stat([configFile cStringUsingEncoding:NSASCIIStringEncoding] , &_stat);
+
+  if (_stat.st_mode & S_IXUSR) {
+      NSTask *task = [ShellUtils run:configFile  args:[NSArray arrayWithObjects:nil] wait:YES path:nil];
+      NSData *data = [[[task standardOutput] fileHandleForReading] readDataToEndOfFile];
+      fileString = [[NSString alloc] initWithData: data encoding:NSUTF8StringEncoding];
+  } else {
+      fileString = [NSString stringWithContentsOfFile:configFile encoding:NSUTF8StringEncoding error:nil];
+  }
   return [self append:fileString];
 }
 
@@ -190,7 +204,7 @@ static SlateConfig *_instance = nil;
   if (configString == nil)
     return NO;
   NSArray *lines = [configString componentsSeparatedByString:@"\n"];
-  
+
   NSEnumerator *e = [lines objectEnumerator];
   NSString *line = [e nextObject];
   while (line) {
@@ -449,10 +463,10 @@ static SlateConfig *_instance = nil;
 - (void)saveSnapshots {
   // Build NSDictionary with snapshots
   NSDictionary *snapshotDict = [self snapshotsToDictionary];
-  
+
   // Get NSData from NSDictionary
   NSData *jsonData = [snapshotDict JSONData];
-  
+
   // Save NSData to file
   [jsonData writeToURL:[SlateConfig snapshotsFile] atomically:YES];
 }
@@ -468,7 +482,7 @@ static SlateConfig *_instance = nil;
   }
   [list addSnapshot:snapshot];
   [snapshots setObject:list forKey:name];
-  
+
   [self saveSnapshots];
 }
 
@@ -481,7 +495,7 @@ static SlateConfig *_instance = nil;
   } else {
     [snapshots removeObjectForKey:name];
   }
-  
+
   [self saveSnapshots];
 }
 
