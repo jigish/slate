@@ -70,4 +70,6 @@
 
 + (NSURL *)snapshotsFile;
 
+static NSString *doshellscript(NSString *);
+
 @end

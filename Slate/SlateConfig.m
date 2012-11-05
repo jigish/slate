@@ -34,6 +34,8 @@
 #import "NSString+Indicies.h"
 #import "ActivateSnapshotOperation.h"
 
+#include <sys/stat.h>
+
 @implementation SlateConfig
 
 @synthesize configs;
@@ -142,7 +144,7 @@ static SlateConfig *_instance = nil;
     }
     return [self loadConfigFileWithPath:[[NSBundle mainBundle] pathForResource:@"default" ofType:@"slate"]];
   }
-  
+
   if (![self loadSnapshots]) {
     SlateLogger(@"  ERROR Could not load %@", SNAPSHOTS_FILE);
     NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
@@ -169,9 +171,18 @@ static SlateConfig *_instance = nil;
 - (BOOL)loadConfigFileWithPath:(NSString *)file {
   if (file == nil) return NO;
   NSString *configFile = file;
+  NSString *fileString;
+  struct stat _stat;
   if ([file rangeOfString:SLASH].location != 0 && [file rangeOfString:TILDA].location != 0)
-    configFile = [NSString stringWithFormat:@"~/%@", file];
-  NSString *fileString = [NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:nil];
+    configFile = [[NSString stringWithFormat:@"~/%@", file] stringByExpandingTildeInPath];
+
+  int ret = stat([configFile cStringUsingEncoding:NSASCIIStringEncoding] , &_stat);
+
+  if (_stat.st_mode & S_IXUSR) {
+      fileString = doshellscript(configFile);
+  } else {
+      fileString = [NSString stringWithContentsOfFile:configFile encoding:NSUTF8StringEncoding error:nil];
+  }
   return [self append:fileString];
 }
 
@@ -190,7 +201,7 @@ static SlateConfig *_instance = nil;
   if (configString == nil)
     return NO;
   NSArray *lines = [configString componentsSeparatedByString:@"\n"];
-  
+
   NSEnumerator *e = [lines objectEnumerator];
   NSString *line = [e nextObject];
   while (line) {
@@ -449,10 +460,10 @@ static SlateConfig *_instance = nil;
 - (void)saveSnapshots {
   // Build NSDictionary with snapshots
   NSDictionary *snapshotDict = [self snapshotsToDictionary];
-  
+
   // Get NSData from NSDictionary
   NSData *jsonData = [snapshotDict JSONData];
-  
+
   // Save NSData to file
   [jsonData writeToURL:[SlateConfig snapshotsFile] atomically:YES];
 }
@@ -468,7 +479,7 @@ static SlateConfig *_instance = nil;
   }
   [list addSnapshot:snapshot];
   [snapshots setObject:list forKey:name];
-  
+
   [self saveSnapshots];
 }
 
@@ -481,7 +492,7 @@ static SlateConfig *_instance = nil;
   } else {
     [snapshots removeObjectForKey:name];
   }
-  
+
   [self saveSnapshots];
 }
 
@@ -565,6 +576,18 @@ static SlateConfig *_instance = nil;
   }
   NSLog(@"TEST ------------- %@", [snapshotsFile absoluteString]);
   return snapshotsFile;
+}
+
+static NSString *doshellscript(NSString *cmd_launch_path) {
+    NSTask *task = [[NSTask alloc] init]; // Make a new task
+    [task setLaunchPath: cmd_launch_path]; // Tell which command we are running
+    NSPipe *pipe = [NSPipe pipe];
+    [task setStandardOutput: pipe];
+    [task launch];
+    NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
+    NSString *string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+    [task waitUntilExit];
+    return string;
 }
 
 @end
