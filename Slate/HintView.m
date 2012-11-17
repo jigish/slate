@@ -29,6 +29,7 @@
 static NSColor *hintBackgroundColor = nil;
 static NSColor *hintFontColor = nil;
 static NSFont *hintFont = nil;
+static float hintIconAlpha = -1.0;
 
 - (id)initWithFrame:(NSRect)frame {
   self = [super initWithFrame:frame];
@@ -55,6 +56,9 @@ static NSFont *hintFont = nil;
       hintFont = [NSFont fontWithName:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_FONT_NAME]
                                  size:[[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_FONT_SIZE]];
     }
+    if (hintIconAlpha < 0.0) {
+      hintIconAlpha = [[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_ICON_ALPHA];
+    }
   }
   return self;
 }
@@ -78,15 +82,18 @@ static NSFont *hintFont = nil;
 - (void)drawRect:(NSRect)dirtyRect {
   [[NSGraphicsContext currentContext] saveGraphicsState];
   [[NSGraphicsContext currentContext] setShouldAntialias:YES];
-  // draw icon if specified otherwise the rounded rect
-  if(icon != nil) {
-    [icon drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeCopy fraction:[hintBackgroundColor alphaComponent]];
-  } else {
-    [hintBackgroundColor set];
-    float cornerSize = [[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_ROUNDED_CORNER_SIZE];
-    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
-    [path fill];
+
+  // draw the rounded rect
+  [hintBackgroundColor set];
+  float cornerSize = [[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_ROUNDED_CORNER_SIZE];
+  NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
+  [path fill];
+
+  // draw the icon on top of the rounded rect, if specified
+  if (icon != nil) {
+    [icon drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:hintIconAlpha];
   }
+
   // draw hint letter
   [self drawCenteredText:text
                   bounds:self.bounds
