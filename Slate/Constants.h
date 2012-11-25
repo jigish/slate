@@ -227,6 +227,7 @@ extern NSString *const WINDOW_HINTS_ORDER_RIGHT_TO_LEFT;
 extern NSString *const SWITCH_ORIENTATION_HORIZONTAL;
 extern NSString *const SWITCH_ORIENTATION_VERTICAL;
 extern NSString *const KEYBOARD_LAYOUT_DVORAK;
+extern NSString *const KEYBOARD_LAYOUT_COLEMAK;
 extern NSString *const PADDING;
 extern NSString *const CURRENT;
 extern NSString *const ALL_BUT;
