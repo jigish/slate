@@ -153,11 +153,16 @@ static NSDictionary *dictionary = nil;
 // This returns a dictionary containing mappings from ASCII to keyCode
 + (NSDictionary *)asciiToCodeDict {
   if (dictionary == nil) {
-    if ([KEYBOARD_LAYOUT_DVORAK isEqualToString:[[SlateConfig getInstance] getConfig:KEYBOARD_LAYOUT]]) {
-      dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ASCIIToCode_Dvorak" ofType:@"plist"]];
+    NSString *configLayout = [[SlateConfig getInstance] getConfig:KEYBOARD_LAYOUT];
+    NSString *filename;
+    if ([configLayout isEqualToString:KEYBOARD_LAYOUT_DVORAK]) {
+      filename = @"ASCIIToCode_Dvorak";
+    } else if ([configLayout isEqualToString:KEYBOARD_LAYOUT_COLEMAK]) {
+      filename = @"ASCIIToCode_Colemak";
     } else {
-      dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ASCIIToCode" ofType:@"plist"]];
+      filename = @"ASCIIToCode";
     }
+    dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:filename ofType:@"plist"]];
   }
   return dictionary;
 }
