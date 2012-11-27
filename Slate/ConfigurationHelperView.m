@@ -152,15 +152,15 @@
     SlateLogger(@"IN CONFIG");
     [self showConfigUI];
   } else if ([str isEqualToString:ALIAS]) {
-    
+
   } else if ([str isEqualToString:LAYOUT]) {
-    
+
   } else if ([str isEqualToString:DEFAULT]) {
-    
+
   } else if ([str isEqualToString:BIND]) {
-    
+
   } else if ([str isEqualToString:SOURCE]) {
-    
+
   } else if ([str isEqualToString:EMPTY]) {
     // do nothing
   }
@@ -174,7 +174,7 @@
 - (void)saveConfig {
   // Update SlateConfig
 
-  
+
 
   // Save to file
 }

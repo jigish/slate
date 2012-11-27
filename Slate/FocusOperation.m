@@ -191,12 +191,12 @@
   // focus direction
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:focusOperation into:tokens maxTokens:2];
-  
+
   if ([tokens count] < 2) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", focusOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Focus operations require the following format: 'focus direction'", focusOperation] userInfo:nil]);
   }
-  
+
   Operation *op = [[FocusOperation alloc] initWithDirectionOrApp:[tokens objectAtIndex:1]];
   return op;
 }

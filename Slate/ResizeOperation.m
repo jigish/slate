@@ -116,7 +116,7 @@
 - (NSInteger)resizeStringToInt:(NSString *)resize withValue:(NSInteger) val {
   NSInteger sign = [resize hasPrefix:MINUS] ? -1 : 1;
   NSString *magnitude = [resize stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:EMPTY];
-  
+
   if ([magnitude hasSuffix:PERCENT]) {
     magnitude = [magnitude stringByReplacingOccurrencesOfString:PERCENT withString:EMPTY];
     return (sign * val * [magnitude integerValue] / 100);
@@ -148,12 +148,12 @@
   // resize <x> <y> <optional:anchor>
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:resizeOperation into:tokens];
-  
+
   if ([tokens count] < 3) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", resizeOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Resize operations require the following format: 'resize resizeX resizeY [optional:anchor]'", resizeOperation] userInfo:nil]);
   }
-  
+
   NSString *anchor = TOP_LEFT;
   if ([tokens count] >= 4) {
     anchor = [tokens objectAtIndex:3];

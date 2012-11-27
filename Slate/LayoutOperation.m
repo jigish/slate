@@ -181,7 +181,7 @@
       CFArrayAppendArray(windows, windowsArr, CFRangeMake(0, CFArrayGetCount(windowsArr)));
     }
     CFArrayAppendArray(windows, windowsAppend, CFRangeMake(0, CFArrayGetCount(windowsAppend)));
-    
+
     NSInteger failedWindows = 0;
     BOOL appSuccess = YES;
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] repeat]) {
@@ -218,12 +218,12 @@
   // layout <name>
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:layoutOperation into:tokens maxTokens:2];
-  
+
   if ([tokens count] < 2) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", layoutOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Layout operations require the following format: 'layout <name>'", layoutOperation] userInfo:nil]);
   }
-  
+
   Operation *op = [[LayoutOperation alloc] initWithName:[tokens objectAtIndex:1]];
   return op;
 }

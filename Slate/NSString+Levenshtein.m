@@ -29,11 +29,11 @@
   [stringB stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
   stringA = [stringA lowercaseString];
   stringB = [stringB lowercaseString];
-  
+
   // Step 1
   int k, i, j, cost, * d, distance;
   NSUInteger n = [stringA length];
-  NSUInteger m = [stringB length];	
+  NSUInteger m = [stringB length];
   if( n++ != 0 && m++ != 0 ) {
     d = malloc( sizeof(int) * m * n );
     // Step 2
@@ -45,7 +45,7 @@
     for( i = 1; i < n; i++ )
       for( j = 1; j < m; j++ ) {
         // Step 5
-        if( [stringA characterAtIndex: i-1] == 
+        if( [stringA characterAtIndex: i-1] ==
            [stringB characterAtIndex: j-1] )
           cost = 0;
         else

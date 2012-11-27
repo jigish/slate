@@ -38,7 +38,7 @@
     pipe = [NSPipe pipe];
     [task setStandardOutput:pipe];
     [task setStandardInput:[NSPipe pipe]];
-  
+
     NSFileHandle *file;
     file = [pipe fileHandleForReading];
 
@@ -64,15 +64,15 @@
   [task setLaunchPath:command];
   [task setArguments:args];
   if (path != nil) [task setCurrentDirectoryPath:path];
-  
+
   NSPipe *pipe;
   pipe = [NSPipe pipe];
   [task setStandardOutput:pipe];
   [task setStandardInput:[NSPipe pipe]];
-  
+
   NSFileHandle *file;
   file = [pipe fileHandleForReading];
-  
+
   [task launch];
   if (wait) [task waitUntilExit];
   return task;

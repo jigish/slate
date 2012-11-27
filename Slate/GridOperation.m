@@ -157,12 +157,12 @@ static const UInt32 ESC_GRID_ID = 10002;
   // grid padding:<padding> <screenNumber or resolution>:<width>,<height> ...
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:gridOperation into:tokens];
-  
+
   if ([tokens count] < 1) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", gridOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Grid operations require the following format: 'grid <screenNumber or resolution>:<width>,<height> ...'", gridOperation] userInfo:nil]);
   }
-  
+
   NSMutableDictionary *screenConfigs = [NSMutableDictionary dictionary];
   NSInteger padding = 2;
   if ([tokens count] > 1) {
@@ -183,7 +183,7 @@ static const UInt32 ESC_GRID_ID = 10002;
       [screenConfigs setObject:screenConfig forKey:key];
     }
   }
-  
+
   Operation *op = [[GridOperation alloc] initWithScreenConfigs:screenConfigs padding:padding];
   return op;
 }

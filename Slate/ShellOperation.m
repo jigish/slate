@@ -60,12 +60,12 @@
   // shell [wait] 'command'
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:shellOperation into:tokens quoteChars:[NSCharacterSet characterSetWithCharactersInString:QUOTES]];
-  
+
   if ([tokens count] < 2) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", shellOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Shell operations require the following format: shell [wait] 'command'", shellOperation] userInfo:nil]);
   }
-  
+
   BOOL waitForExit = NO;
   NSString *currentPath = nil;
   for (NSInteger i = 1; i < [tokens count] - 1; i++) {
@@ -90,7 +90,7 @@
   for (NSInteger i = 1; i < [commandAndArgsTokens count]; i++) {
     [args addObject:[commandAndArgsTokens objectAtIndex:i]];
   }
-  
+
   Operation *op = [[ShellOperation alloc] initWithCommand:command args:args waitForExit:waitForExit currentPath:currentPath];
   return op;
 
