@@ -226,6 +226,7 @@ NSString *const WINDOW_HINTS_ORDER_RIGHT_TO_LEFT = @"rightToLeft";
 NSString *const SWITCH_ORIENTATION_HORIZONTAL = @"horizontal";
 NSString *const SWITCH_ORIENTATION_VERTICAL = @"vertical";
 NSString *const KEYBOARD_LAYOUT_DVORAK = @"dvorak";
+NSString *const KEYBOARD_LAYOUT_COLEMAK = @"colemak";
 NSString *const PADDING = @"padding";
 NSString *const CURRENT = @"current";
 NSString *const ALL_BUT = @"all-but:";
