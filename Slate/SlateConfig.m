@@ -71,6 +71,9 @@ static SlateConfig *_instance = nil;
     NSNotificationCenter *nc = [NSDistributedNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(onScreenChange:) name:NOTIFICATION_SCREEN_CHANGE object:nil];
     [nc addObserver:self selector:@selector(onScreenChange:) name:NOTIFICATION_SCREEN_CHANGE_LION object:nil];
+    
+    // Listen for screen change notifications with Quartz
+    CGDisplayRegisterReconfigurationCallback(onDisplayReconfiguration, (__bridge void *)(self));
     //[nc addObserver:self selector:@selector(processNotification:) name:nil object:nil];
   }
   return self;
@@ -569,3 +572,8 @@ static SlateConfig *_instance = nil;
 }
 
 @end
+
+void onDisplayReconfiguration (CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
+    NSLog(@"onDisplayReconfiguration");
+    [(__bridge id)userInfo onScreenChange:nil];
+}

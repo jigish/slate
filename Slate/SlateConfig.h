@@ -71,3 +71,5 @@
 + (NSURL *)snapshotsFile;
 
 @end
+
+void onDisplayReconfiguration (CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo);
