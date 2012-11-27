@@ -40,12 +40,12 @@
 
 - (id)initWithArray:(NSArray *)opArray {
   self = [self init];
-  
+
   if (self) {
     [self setCurrentOp:[[NSMutableDictionary alloc] initWithCapacity:10]];
     [self setOperations:opArray];
   }
-  
+
   return self;
 }
 
@@ -112,12 +112,12 @@
   // chain op[ | op]+
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:chainOperation into:tokens maxTokens:2];
-  
+
   if ([tokens count] < 2) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", chainOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Chain operations require the following format: 'chain op[|op]+'", chainOperation] userInfo:nil]);
   }
-  
+
   NSString *opsString = [tokens objectAtIndex:1];
   NSArray *ops = [opsString componentsSeparatedByString:PIPE];
   NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
@@ -130,7 +130,7 @@
       @throw([NSException exceptionWithName:@"Invalid Operation in Chain" reason:[NSString stringWithFormat:@"Invalid operation '%@' in chain.", [ops objectAtIndex:i]] userInfo:nil]);
     }
   }
-  
+
   Operation *op = [[ChainOperation alloc] initWithArray:opArray];
   return op;
 }

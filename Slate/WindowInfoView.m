@@ -41,7 +41,7 @@
   for (NSInteger i = 0; i < [resolutions count]; i++) {
     text = [text stringByAppendingFormat:@"Left To Right ID: %ld\n  OS X ID: %ld\n  Resolution: %@\n", [sw convertDefaultOrderToLeftToRightOrder:i], i, [resolutions objectAtIndex:i]];
   }
-  
+
   text = [text stringByAppendingString:@"\n----------------- Windows -----------------\n" ];
   for (NSRunningApplication *app in [RunningApplications getInstance]) {
     NSString *appName = [app localizedName];

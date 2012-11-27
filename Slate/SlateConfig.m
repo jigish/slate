@@ -142,7 +142,7 @@ static SlateConfig *_instance = nil;
     }
     return [self loadConfigFileWithPath:[[NSBundle mainBundle] pathForResource:@"default" ofType:@"slate"]];
   }
-  
+
   if (![self loadSnapshots]) {
     SlateLogger(@"  ERROR Could not load %@", SNAPSHOTS_FILE);
     NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
@@ -190,7 +190,7 @@ static SlateConfig *_instance = nil;
   if (configString == nil)
     return NO;
   NSArray *lines = [configString componentsSeparatedByString:@"\n"];
-  
+
   NSEnumerator *e = [lines objectEnumerator];
   NSString *line = [e nextObject];
   while (line) {
@@ -449,10 +449,10 @@ static SlateConfig *_instance = nil;
 - (void)saveSnapshots {
   // Build NSDictionary with snapshots
   NSDictionary *snapshotDict = [self snapshotsToDictionary];
-  
+
   // Get NSData from NSDictionary
   NSData *jsonData = [snapshotDict JSONData];
-  
+
   // Save NSData to file
   [jsonData writeToURL:[SlateConfig snapshotsFile] atomically:YES];
 }
@@ -468,7 +468,7 @@ static SlateConfig *_instance = nil;
   }
   [list addSnapshot:snapshot];
   [snapshots setObject:list forKey:name];
-  
+
   [self saveSnapshots];
 }
 
@@ -481,7 +481,7 @@ static SlateConfig *_instance = nil;
   } else {
     [snapshots removeObjectForKey:name];
   }
-  
+
   [self saveSnapshots];
 }
 

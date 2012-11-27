@@ -7,23 +7,23 @@
 
 /*
  Copyright (c) 2011, John Engelhart
- 
+
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  * Redistributions of source code must retain the above copyright
  notice, this list of conditions and the following disclaimer.
- 
+
  * Redistributions in binary form must reproduce the above copyright
  notice, this list of conditions and the following disclaimer in the
  documentation and/or other materials provided with the distribution.
- 
+
  * Neither the name of the Zang Industries nor the names of its
  contributors may be used to endorse or promote products derived from
  this software without specific prior written permission.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -39,13 +39,13 @@
 
 /*
  Copyright 2011 John Engelhart
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -67,11 +67,11 @@
 #import <Foundation/NSObjCRuntime.h>
 #import <Foundation/NSString.h>
 #endif // __OBJC__
- 
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-  
+
 
 // For Mac OS X < 10.5.
 #ifndef   NSINTEGER_DEFINED
@@ -100,7 +100,7 @@ typedef unsigned int   NSUInteger;
 #else
 #define JK_DEPRECATED_ATTRIBUTE
 #endif
-  
+
 #define JSONKIT_VERSION_MAJOR 1
 #define JSONKIT_VERSION_MINOR 4
 
@@ -197,7 +197,7 @@ typedef struct JKParseState JKParseState; // Opaque internal, private type.
 ////////////
 #pragma mark Serializing methods
 ////////////
-  
+
 @interface NSString (JSONKitSerializing)
 // Convenience methods for those that need to serialize the receiving NSString (i.e., instead of having to serialize a NSArray with a single NSString, you can "serialize to JSON" just the NSString).
 // Normally, a string that is serialized to JSON has quotation marks surrounding it, which you may or may not want when serializing a single string, and can be controlled with includeQuotes:
@@ -238,7 +238,7 @@ typedef struct JKParseState JKParseState; // Opaque internal, private type.
 - (NSData *)JSONDataWithOptions:(JKSerializeOptionFlags)serializeOptions serializeUnsupportedClassesUsingBlock:(id(^)(id object))block error:(NSError **)error;
 - (NSString *)JSONStringWithOptions:(JKSerializeOptionFlags)serializeOptions serializeUnsupportedClassesUsingBlock:(id(^)(id object))block error:(NSError **)error;
 @end
-  
+
 #endif
 
 

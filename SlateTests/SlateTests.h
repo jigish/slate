@@ -23,7 +23,7 @@
 
 @interface SlateTests : SenTestCase {
 @private
-    
+
 }
 
 @end

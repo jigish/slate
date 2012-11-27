@@ -60,10 +60,10 @@ static EventHandlerRef modifiersEvent;
   NSString *launcherTarget = [NSTemporaryDirectory() stringByAppendingPathComponent:[launcherSource lastPathComponent]];
   NSString *appPath = [[NSBundle mainBundle] bundlePath];
   NSString *processID = [NSString stringWithFormat:@"%d", [[NSProcessInfo processInfo] processIdentifier]];
-  
+
   [[NSFileManager defaultManager] removeItemAtPath:launcherTarget error:NULL];
   [[NSFileManager defaultManager] copyItemAtPath:launcherSource toPath:launcherTarget error:NULL];
-  
+
   [NSTask launchedTaskWithLaunchPath:launcherTarget arguments:[NSArray arrayWithObjects:appPath, processID, nil]];
   [NSApp terminate:self];
 }
@@ -244,7 +244,7 @@ static EventHandlerRef modifiersEvent;
     }
     return noErr;
   }
-  
+
   Binding *binding = [[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id];
   if (binding) {
     SlateLogger(@"Running Operation %@", [[[SlateConfig getInstance] bindings] objectAtIndex:hkCom.id]);

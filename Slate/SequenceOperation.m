@@ -75,12 +75,12 @@
   // sequence op[ (\||>) op]+
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:sequenceOperation into:tokens maxTokens:2];
-  
+
   if ([tokens count] < 2) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", sequenceOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Sequence operations require the following format: 'chain op [(\\||>) op]+'", sequenceOperation] userInfo:nil]);
   }
-  
+
   NSString *opsString = [tokens objectAtIndex:1];
   NSArray *ops = [opsString componentsSeparatedByString:PIPE];
   NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
@@ -98,7 +98,7 @@
     }
     [opArray addObject:sameWindowOpArray];
   }
-  
+
   Operation *op = [[SequenceOperation alloc] initWithArray:opArray];
   return op;
 }
