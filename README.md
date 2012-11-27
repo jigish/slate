@@ -600,6 +600,10 @@ Will append all of the configurations from the file `~/.slate.test` to the curre
 
 You can check out my own config [here](https://github.com/jigish/dotfiles/blob/master/slate).
 
+### Useful Stuff ###
+
+- [kvs](https://github.com/kvs) has created a [Sublime Text 2](http://www.sublimetext.com/2) preference for `.slate` files [here](https://github.com/kvs/ST2Slate).
+
 # Contact #
 
 Please send all questions, bug reports, suggestions, or general commentary to [Jigish Patel](mailto:slate.issues@gmail.com) or [create an issue](https://github.com/jigish/slate/issues/new) on github.
