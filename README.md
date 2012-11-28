@@ -162,12 +162,14 @@ List of allowed configs:
 | `switchSelectedPadding` | Number | Default: `10`. The size of the padding betweeen the edge of the switch window and the edge of the selected app selected background |
 | `keyboardLayout` | `dvorak`, `colemak` or `qwerty` | Default: `qwerty`. The keyboard layout you are using. |
 | `snapshotTitleMatch` | `levenshtein` or `sequential` | Default: `levenshtein`. The algorithm to use when determining if titles match or not for the snapshot operation. If `levenshtein`, the titles with the lowest levenshtein distance will be matched, if sequential, the titles with the maximum common prefix length will be matched. Note that this will change the algorithm for **all** apps. If you would like to change the algorithm for only one app use `snapshotTitleMatch:'APP_NAME'` for example to change the algorithm for only iTerm, use the following directive: `config snapshotTitleMatch:'iTerm' sequential`. |
+| `snapshotMaxStackSize` | Integer | Default: `0`. The size of the stack to keep when creating snapshots using the `stack` option. If <= 0, the size of the stack will be unlimited. |
 | `gridBackgroundColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The background color for the `grid` operation as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
 | `gridRoundedCornerSize` | Number | Default: `5`. The size of the rounded corners of the `grid` operation's background. Set this to `0` if you do not want rounded corners |
 | `gridCellBackgroundColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The background color for the `grid` operation's cells as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
 | `gridCellSelectedColor` | Semicolon Separated Array of Floats | Default: `75;77;81;1.0`. The selected color for the `grid` operation's cells as an array in the form `Red;Green;Blue;Alpha` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0` |
 | `gridCellRoundedCornerSize` | Number | Default: `5`. The size of the rounded corners of the `grid` operation's cells. Set this to `0` if you do not want rounded corners |
 | `layoutFocusOnActivate` | Boolean | Default: `false`. If true, activating a layout will focus all windows touched by the layout. The order in which they will be focused is the order in which the Applications occur in the slate file. Thus, the last Application configured in the slate file will be the foremost application after the layout is triggered. If set to false, activating a layout will not focus any of the windows touched. Thus the foremost application after the layout is triggered will be the foremost application before the layout was triggered. |
+| `undoMaxStackSize` | Integer | Default: `10`. The size of the stack to keep when creating undo snapshots. If <= 0, the size of the stack will be unlimited. This is effectively the number of times you can use the `undo` binding to undo Slate operations. |
 
 Example:
 
@@ -567,6 +569,14 @@ Some operations allow you to specify a screen. Here are the list of possible val
         bind 1:ctrl relaunch
 
     Will bind the keystroke ctrl-1 to relaunch Slate. This will also reload the `.slate` file from scratch.
+
+* Undo an Operation: `undo`
+
+    Example
+
+        bind 1:ctrl undo
+
+    Will bind the keystroke ctrl-1 to undo the last binding that was triggered. By default you can undo up to the last 10 commands. This can be changed using the `undoMaxStackSize` config. Also, you can only undo movement-based operations. Focus-related operations will not undo.
 
 * \[Beta\] A Better Application Switcher: `switch`
 

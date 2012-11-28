@@ -19,6 +19,7 @@
 		3B4CDD03150AD68000B819E2 /* SwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4CDD02150AD68000B819E2 /* SwitchView.m */; };
 		3B4CDD06150AD69500B819E2 /* SwitchWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4CDD05150AD69500B819E2 /* SwitchWindow.m */; };
 		3B58153C1502FB7D0078D568 /* HintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B58153B1502FB7D0078D568 /* HintView.m */; };
+		3B5B1B7C1665871E00D5B1B5 /* UndoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B1B7B1665871D00D5B1B5 /* UndoOperation.m */; };
 		3B65CF251576CDF10063D298 /* ASCIIToCode_Dvorak.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B65CF241576CDF10063D298 /* ASCIIToCode_Dvorak.plist */; };
 		3B66A56213ADBDFD0015EDD5 /* ScreenWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */; };
 		3B7EB3A7138F3F6800EBEC2B /* ResizeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */; };
@@ -132,6 +133,8 @@
 		3B58153A1502FB7D0078D568 /* HintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HintView.h; sourceTree = "<group>"; };
 		3B58153B1502FB7D0078D568 /* HintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HintView.m; sourceTree = "<group>"; };
 		3B58154215054EBD0078D568 /* SlateLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlateLogger.h; sourceTree = "<group>"; };
+		3B5B1B7A1665871D00D5B1B5 /* UndoOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UndoOperation.h; sourceTree = "<group>"; };
+		3B5B1B7B1665871D00D5B1B5 /* UndoOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UndoOperation.m; sourceTree = "<group>"; };
 		3B65CF241576CDF10063D298 /* ASCIIToCode_Dvorak.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode_Dvorak.plist; sourceTree = "<group>"; };
 		3B66A56013ADBDFD0015EDD5 /* ScreenWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenWrapper.h; sourceTree = "<group>"; };
 		3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenWrapper.m; sourceTree = "<group>"; };
@@ -407,6 +410,8 @@
 				3B4CDD02150AD68000B819E2 /* SwitchView.m */,
 				3B4CDD04150AD69500B819E2 /* SwitchWindow.h */,
 				3B4CDD05150AD69500B819E2 /* SwitchWindow.m */,
+				3B5B1B7A1665871D00D5B1B5 /* UndoOperation.h */,
+				3B5B1B7B1665871D00D5B1B5 /* UndoOperation.m */,
 				3BF57C9C16216C2200C0F89B /* VisibilityOperation.h */,
 				3BF57C9D16216C2200C0F89B /* VisibilityOperation.m */,
 			);
@@ -706,6 +711,7 @@
 				3B883A0D1627725200FF3D8C /* RelaunchOperation.m in Sources */,
 				3BA1BA68162F3E530026774E /* ShellOperation.m in Sources */,
 				3BA1BA6B162F4CFF0026774E /* ShellUtils.m in Sources */,
+				3B5B1B7C1665871E00D5B1B5 /* UndoOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

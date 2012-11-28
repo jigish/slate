@@ -350,6 +350,10 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
   return [whTLXArr count] == [whTLYArr count] && [whTLXArr count] > 0;
 }
 
+- (BOOL)shouldTakeUndoSnapshot {
+  return NO;
+}
+
 - (void)killHints {
   [self killHints:NO];
 }

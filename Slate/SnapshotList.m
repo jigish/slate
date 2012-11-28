@@ -21,10 +21,11 @@
 #import "SnapshotList.h"
 #import "Snapshot.h"
 #import "Constants.h"
+#import "SlateConfig.h"
 
 @implementation SnapshotList
 
-@synthesize snapshots, name, saveToDisk, isStack;
+@synthesize snapshots, name, saveToDisk, isStack, stackSize;
 
 - (id)init {
   self = [super init];
@@ -40,6 +41,18 @@
     [self setName:theName];
     saveToDisk = theSaveToDisk;
     isStack = theIsStack;
+    stackSize = [[SlateConfig getInstance] getIntegerConfig:SNAPSHOT_MAX_STACK_SIZE]; // 0 means unlimited
+  }
+  return self;
+}
+
+- (id)initWithName:(NSString *)theName saveToDisk:(BOOL)theSaveToDisk isStack:(BOOL)theIsStack stackSize:(NSUInteger)theStackSize  {
+  self = [self init];
+  if (self) {
+    [self setName:theName];
+    saveToDisk = theSaveToDisk;
+    isStack = theIsStack;
+    stackSize = theStackSize;
   }
   return self;
 }
@@ -47,6 +60,9 @@
 - (void)addSnapshot:(Snapshot *)snapshot {
   if (isStack) {
     [snapshots addObject:snapshot];
+    while (stackSize > 0 && [snapshots count] > stackSize) {
+      [snapshots removeObjectAtIndex:0];
+    }
   } else {
     [snapshots removeAllObjects];
     [snapshots addObject:snapshot];

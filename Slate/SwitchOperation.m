@@ -205,6 +205,10 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
   return YES;
 }
 
+- (BOOL)shouldTakeUndoSnapshot {
+  return NO;
+}
+
 - (void)activateSwitchKey:(EventHotKeyID)key isRepeat:(BOOL)isRepeat {
   SlateLogger(@"Activate Switch Key");
   NSInteger selectedApp = currentApp+1;

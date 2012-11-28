@@ -457,7 +457,7 @@ static SlateConfig *_instance = nil;
   [jsonData writeToURL:[SlateConfig snapshotsFile] atomically:YES];
 }
 
-- (void)addSnapshot:(Snapshot *)snapshot name:(NSString *)name saveToDisk:(BOOL)saveToDisk isStack:(BOOL)isStack {
+- (void)addSnapshot:(Snapshot *)snapshot name:(NSString *)name saveToDisk:(BOOL)saveToDisk isStack:(BOOL)isStack stackSize:(NSUInteger)stackSize {
   SnapshotList *list = [snapshots objectForKey:name];
   if (list == nil) {
     list = [[SnapshotList alloc] initWithName:name saveToDisk:saveToDisk isStack:isStack];
@@ -552,6 +552,8 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:GRID_CELL_SELECTED_COLOR_DEFAULT forKey:GRID_CELL_SELECTED_COLOR];
   [configDefaults setObject:GRID_CELL_ROUNDED_CORNER_SIZE_DEFAULT forKey:GRID_CELL_ROUNDED_CORNER_SIZE];
   [configDefaults setObject:LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT forKey:LAYOUT_FOCUS_ON_ACTIVATE];
+  [configDefaults setObject:SNAPSHOT_MAX_STACK_SIZE_DEFAULT forKey:SNAPSHOT_MAX_STACK_SIZE];
+  [configDefaults setObject:UNDO_MAX_STACK_SIZE_DEFAULT forKey:UNDO_MAX_STACK_SIZE];
   [self setConfigs:[NSMutableDictionary dictionary]];
   [self setAppConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];

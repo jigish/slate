@@ -34,7 +34,9 @@
 
 @implementation SlateAppDelegate
 
-@synthesize currentHintOperation, currentGridOperation, currentSwitchBinding, menuSnapshotOperation, menuActivateSnapshotOperation, cmdTabBinding, cmdShiftTabBinding, modalHotKeyRefs, modalIdToKey, currentModalKey, currentModalHotKeyRefs;
+@synthesize currentHintOperation, currentGridOperation, currentSwitchBinding, menuSnapshotOperation;
+@synthesize menuActivateSnapshotOperation, cmdTabBinding, cmdShiftTabBinding, modalHotKeyRefs, modalIdToKey;
+@synthesize currentModalKey, currentModalHotKeyRefs, undoSnapshotOperation;
 
 static NSObject *timerLock = nil;
 static NSObject *keyUpLock = nil;
@@ -136,9 +138,12 @@ static EventHandlerRef modifiersEvent;
   SlateLogger(@"HotKeys registered.");
 }
 
-- (void)createMenuSnapshotOperations {
-  [self setMenuSnapshotOperation:[SnapshotOperation operationFromString:@"snapshot menuSnapshot save-to-disk"]];
-  [self setMenuActivateSnapshotOperation:[ActivateSnapshotOperation operationFromString:@"activate-snapshot menuSnapshot"]];
+- (void)createSnapshotOperations {
+  SnapshotOperation *undoSnapOp = [SnapshotOperation operationFromString:[NSString stringWithFormat:@"snapshot %@ save-to-disk;stack", UNDO_SNAPSHOT]];
+  [undoSnapOp setStackSize:[[SlateConfig getInstance] getIntegerConfig:UNDO_MAX_STACK_SIZE]];
+  [self setUndoSnapshotOperation:undoSnapOp];
+  [self setMenuSnapshotOperation:[SnapshotOperation operationFromString:[NSString stringWithFormat:@"snapshot %@ save-to-disk", MENU_SNAPSHOT]]];
+  [self setMenuActivateSnapshotOperation:[ActivateSnapshotOperation operationFromString:[NSString stringWithFormat:@"activate-snapshot %@", MENU_SNAPSHOT]]];
 }
 
 - (IBAction)takeSnapshot {
@@ -504,7 +509,7 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
   // Register Hot Keys
   [self registerHotKeys];
 
-  [self createMenuSnapshotOperations];
+  [self createSnapshotOperations];
 
   // Setup App list
   NSArray *rapps = [[RunningApplications getInstance] apps];

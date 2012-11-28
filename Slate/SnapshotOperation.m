@@ -29,13 +29,14 @@
 
 @implementation SnapshotOperation
 
-@synthesize name, saveToDisk, isStack;
+@synthesize name, saveToDisk, isStack, stackSize;
 
 - (id)init {
   self = [super init];
   if (self) {
     saveToDisk = NO;
     isStack = NO;
+    stackSize = [[SlateConfig getInstance] getIntegerConfig:SNAPSHOT_MAX_STACK_SIZE];
   }
   return self;
 }
@@ -43,6 +44,7 @@
 - (id)initWithName:(NSString *)theName options:(NSString *)options {
   self = [self init];
   if (self) {
+    [self setStackSize:[[SlateConfig getInstance] getIntegerConfig:SNAPSHOT_MAX_STACK_SIZE]];
     [self setName:theName];
     if (options) {
       NSArray *optionsTokens = [options componentsSeparatedByString:SEMICOLON];
@@ -86,7 +88,7 @@
       [snapshot addWindow:[[WindowSnapshot alloc] initWithAppName:appName title:title topLeft:tl size:size] app:appName];
     }
   }
-  [[SlateConfig getInstance] addSnapshot:snapshot name:name saveToDisk:saveToDisk isStack:isStack];
+  [[SlateConfig getInstance] addSnapshot:snapshot name:name saveToDisk:saveToDisk isStack:isStack stackSize:stackSize];
   return YES;
 }
 

@@ -37,6 +37,7 @@
 #import "VisibilityOperation.h"
 #import "RelaunchOperation.h"
 #import "ShellOperation.h"
+#import "UndoOperation.h"
 
 @implementation Operation
 
@@ -58,6 +59,10 @@
 }
 
 - (BOOL)testOperation {
+  return YES;
+}
+
+- (BOOL)shouldTakeUndoSnapshot {
   return YES;
 }
 
@@ -104,6 +109,8 @@
     operation = [RelaunchOperation relaunchOperationFromString:opString];
   } else if ([op isEqualToString:SHELL]) {
     operation = [ShellOperation shellOperationFromString:opString];
+  } else if ([op isEqualToString:UNDO]) {
+    operation = [UndoOperation undoOperationFromString:opString];
   } else {
     SlateLogger(@"ERROR: Unrecognized operation '%@'", opString);
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);

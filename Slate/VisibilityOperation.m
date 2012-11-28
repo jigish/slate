@@ -95,6 +95,10 @@
   return YES;
 }
 
+- (BOOL)shouldTakeUndoSnapshot {
+  return NO;
+}
+
 + (id)visibilityOperationFromString:(NSString *)visibilityOperation {
   // hide|show|toggle apps
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];

@@ -1,8 +1,8 @@
 //
-//  SnapshotList.h
+//  UndoOperation.m
 //  Slate
 //
-//  Created by Jigish Patel on 2/28/12.
+//  Created by Jigish Patel on 11/27/12.
 //  Copyright 2012 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -18,29 +18,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
-#import <Foundation/Foundation.h>
+#import "UndoOperation.h"
+#import "Constants.h"
 
-@class Snapshot;
+@implementation UndoOperation
 
-@interface SnapshotList : NSObject {
-@private
-  NSMutableArray *snapshots;
-  NSString *name;
-  BOOL saveToDisk;
-  BOOL isStack;
-  NSInteger stackSize;
+- (BOOL)shouldTakeUndoSnapshot {
+  return NO;
 }
 
-@property  NSMutableArray *snapshots;
-@property  NSString *name;
-@property (assign) BOOL saveToDisk;
-@property (assign) BOOL isStack;
-@property (assign) NSInteger stackSize;
-
-- (id)initWithName:(NSString *)theName saveToDisk:(BOOL)theSaveToDisk isStack:(BOOL)theIsStack;
-- (void)addSnapshot:(Snapshot *)snapshot;
-- (Snapshot *)popSnapshot:(BOOL)remove;
-- (NSDictionary *)toDictionary;
-+ (SnapshotList *)snapshotListFromDictionary:(NSDictionary *)dict;
++ (id)undoOperationFromString:(NSString *)undoOperation {
+  // undo
+  Operation *op = [[UndoOperation alloc] initWithName:UNDO_SNAPSHOT options:DELETE];
+  return op;
+}
 
 @end

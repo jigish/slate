@@ -61,7 +61,7 @@
 - (NSString *)replaceAliases:(NSString *)line;
 - (void)onScreenChange:(id)notification;
 - (void)setupDefaultConfigs;
-- (void)addSnapshot:(Snapshot *)snapshot name:(NSString *)name saveToDisk:(BOOL)saveToDisk isStack:(BOOL)isStack;
+- (void)addSnapshot:(Snapshot *)snapshot name:(NSString *)name saveToDisk:(BOOL)saveToDisk isStack:(BOOL)isStack stackSize:(NSUInteger)stackSize;
 - (void)deleteSnapshot:(NSString *)name pop:(BOOL)pop;
 - (Snapshot *)popSnapshot:(NSString *)name remove:(BOOL)remove;
 - (void)activateLayoutOrSnapshot:(NSString *)name;

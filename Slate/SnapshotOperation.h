@@ -25,11 +25,13 @@
   NSString *name;
   BOOL saveToDisk;
   BOOL isStack;
+  NSInteger stackSize;
 }
 
 @property  NSString *name;
 @property (assign) BOOL saveToDisk;
 @property (assign) BOOL isStack;
+@property (assign) NSInteger stackSize;
 
 - (id)initWithName:(NSString *)theName options:(NSString *)options;
 

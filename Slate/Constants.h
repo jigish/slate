@@ -135,6 +135,10 @@ extern NSString *const SNAPSHOT_TITLE_MATCH;
 extern NSString *const SNAPSHOT_TITLE_MATCH_DEFAULT;
 extern NSString *const LEVENSHTEIN;
 extern NSString *const SEQUENTIAL;
+extern NSString *const SNAPSHOT_MAX_STACK_SIZE;
+extern NSString *const SNAPSHOT_MAX_STACK_SIZE_DEFAULT;
+extern NSString *const UNDO_MAX_STACK_SIZE;
+extern NSString *const UNDO_MAX_STACK_SIZE_DEFAULT;
 extern NSString *const GRID_BACKGROUND_COLOR;
 extern NSString *const GRID_BACKGROUND_COLOR_DEFAULT;
 extern NSString *const GRID_ROUNDED_CORNER_SIZE;
@@ -199,6 +203,7 @@ extern NSString *const SHOW;
 extern NSString *const TOGGLE;
 extern NSString *const RELAUNCH;
 extern NSString *const SHELL;
+extern NSString *const UNDO;
 
 // Parameters and Options
 extern NSString *const CENTER;
@@ -310,3 +315,7 @@ extern NSString *const FINDER;
 extern NSInteger const HINT_X_PADDING;
 extern NSString *const HINT_CHARACTERS;
 extern NSInteger const MAIN_MENU_HEIGHT;
+
+// Internal Snapshots
+extern NSString *const MENU_SNAPSHOT;
+extern NSString *const UNDO_SNAPSHOT;

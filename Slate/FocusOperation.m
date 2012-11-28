@@ -187,6 +187,10 @@
   return YES;
 }
 
+- (BOOL)shouldTakeUndoSnapshot {
+  return NO;
+}
+
 + (id)focusOperationFromString:(NSString *)focusOperation {
   // focus direction
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];

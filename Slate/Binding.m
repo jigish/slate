@@ -25,6 +25,8 @@
 #import "SlateLogger.h"
 #import "Operation.h"
 #import "SwitchOperation.h"
+#import "SlateAppDelegate.h"
+#import "SnapshotOperation.h"
 
 @implementation Binding
 
@@ -128,6 +130,9 @@ static NSDictionary *dictionary = nil;
 }
 
 - (BOOL)doOperation {
+  if ([op shouldTakeUndoSnapshot]) {
+    [[(SlateAppDelegate *)[NSApp delegate] undoSnapshotOperation] doOperation];
+  }
   return [op doOperation];
 }
 

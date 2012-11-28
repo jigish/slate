@@ -28,6 +28,7 @@
 - (BOOL)doOperation;
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;
 - (BOOL)testOperation;
+- (BOOL)shouldTakeUndoSnapshot;
 
 + (id)operationFromString:(NSString *)opString;
 

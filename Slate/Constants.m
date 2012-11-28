@@ -134,6 +134,10 @@ NSString *const SNAPSHOT_TITLE_MATCH = @"snapshotTitleMatch";
 NSString *const SNAPSHOT_TITLE_MATCH_DEFAULT = @"levenshtein";
 NSString *const LEVENSHTEIN = @"levenshtein";
 NSString *const SEQUENTIAL = @"sequential";
+NSString *const SNAPSHOT_MAX_STACK_SIZE = @"snapshotMaxStackSize";
+NSString *const SNAPSHOT_MAX_STACK_SIZE_DEFAULT = @"0";
+NSString *const UNDO_MAX_STACK_SIZE = @"undoMaxStackSize";
+NSString *const UNDO_MAX_STACK_SIZE_DEFAULT = @"10";
 NSString *const GRID_BACKGROUND_COLOR = @"gridBackgroundColor";
 NSString *const GRID_BACKGROUND_COLOR_DEFAULT = @"75;77;81;1.0";
 NSString *const GRID_ROUNDED_CORNER_SIZE = @"gridRoundedCornerSize";
@@ -198,6 +202,7 @@ NSString *const SHOW = @"show";
 NSString *const TOGGLE = @"toggle";
 NSString *const RELAUNCH = @"relaunch";
 NSString *const SHELL = @"shell";
+NSString *const UNDO = @"undo";
 
 // Parameters and Options
 NSString *const CENTER = @"center";
@@ -309,3 +314,7 @@ NSString *const FINDER = @"Finder";
 NSInteger const HINT_X_PADDING = 4;
 NSString *const HINT_CHARACTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 NSInteger const MAIN_MENU_HEIGHT = 22;
+
+// Internal Snapshots
+NSString *const MENU_SNAPSHOT = @"menuSnapshot"; // need to change this name.
+NSString *const UNDO_SNAPSHOT = @"_internal_UndoSnapshot";

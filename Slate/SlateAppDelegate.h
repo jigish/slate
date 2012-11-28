@@ -43,6 +43,7 @@
   GridOperation *currentGridOperation;
   Binding *currentSwitchBinding;
   SnapshotOperation *menuSnapshotOperation;
+  SnapshotOperation *undoSnapshotOperation;
   ActivateSnapshotOperation *menuActivateSnapshotOperation;
   NSInteger cmdTabBinding;
   NSInteger cmdShiftTabBinding;
@@ -56,6 +57,7 @@
 @property GridOperation *currentGridOperation;
 @property Binding *currentSwitchBinding;
 @property SnapshotOperation *menuSnapshotOperation;
+@property SnapshotOperation *undoSnapshotOperation;
 @property ActivateSnapshotOperation *menuActivateSnapshotOperation;
 @property (assign) NSInteger cmdTabBinding;
 @property (assign) NSInteger cmdShiftTabBinding;
@@ -72,7 +74,7 @@
 - (IBAction)aboutWindow;
 - (void)loadConfig;
 - (void)registerHotKeys;
-- (void)createMenuSnapshotOperations;
+- (void)createSnapshotOperations;
 - (IBAction)takeSnapshot;
 - (IBAction)activateSnapshot;
 - (OSStatus)timerActivateBinding:(NSTimer *)timer;
