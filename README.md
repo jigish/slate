@@ -613,6 +613,7 @@ You can check out my own config [here](https://github.com/jigish/dotfiles/blob/m
 ### Useful Stuff ###
 
 - [kvs](https://github.com/kvs) has created a [Sublime Text 2](http://www.sublimetext.com/2) preference for `.slate` files [here](https://github.com/kvs/ST2Slate).
+- [trishume](https://github.com/trishume) has done a really nice writeup on getting started with Slate [here](http://thume.ca/howto/2012/11/19/using-slate/)
 
 # Contact #
 
