@@ -37,7 +37,7 @@
 
 @synthesize currentHintOperation, currentGridOperation, currentSwitchBinding, menuSnapshotOperation;
 @synthesize menuActivateSnapshotOperation, cmdTabBinding, cmdShiftTabBinding, modalHotKeyRefs, modalIdToKey;
-@synthesize currentModalKey, currentModalHotKeyRefs, undoSnapshotOperation, undoDeleteSnapshotOperation;
+@synthesize currentModalKey, currentModalHotKeyRefs, undoSnapshotOperation, undoDeleteSnapshotOperation, hasUndoOperation;
 
 static NSObject *timerLock = nil;
 static NSObject *keyUpLock = nil;
@@ -87,6 +87,7 @@ static EventHandlerRef modifiersEvent;
 }
 
 - (void)loadConfig {
+  [self setHasUndoOperation:NO];
   [[SlateConfig getInstance] load];
 }
 

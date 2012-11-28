@@ -53,6 +53,7 @@
   NSMutableDictionary *modalIdToKey;
   NSString *currentModalKey;
   NSMutableArray *currentModalHotKeyRefs;
+  BOOL hasUndoOperation;
 }
 
 @property HintOperation *currentHintOperation;
@@ -68,6 +69,7 @@
 @property NSMutableDictionary *modalIdToKey;
 @property NSString *currentModalKey;
 @property NSMutableArray *currentModalHotKeyRefs;
+@property (assign) BOOL hasUndoOperation;
 
 
 - (IBAction)updateLaunchState;

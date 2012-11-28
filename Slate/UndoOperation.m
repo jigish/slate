@@ -20,11 +20,13 @@
 
 #import "UndoOperation.h"
 #import "Constants.h"
+#import "SlateAppDelegate.h"
 
 @implementation UndoOperation
 
 + (id)undoOperationFromString:(NSString *)undoOperation {
   // undo
+  [(SlateAppDelegate *)[NSApp delegate] setHasUndoOperation:YES];
   Operation *op = [[UndoOperation alloc] initWithName:UNDO_SNAPSHOT options:DELETE];
   return op;
 }

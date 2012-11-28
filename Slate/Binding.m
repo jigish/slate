@@ -130,7 +130,7 @@ static NSDictionary *dictionary = nil;
 }
 
 - (BOOL)doOperation {
-  if ([op shouldTakeUndoSnapshot]) {
+  if ([(SlateAppDelegate *)[NSApp delegate] hasUndoOperation] && [op shouldTakeUndoSnapshot]) {
     [[(SlateAppDelegate *)[NSApp delegate] undoSnapshotOperation] doOperation];
   }
   return [op doOperation];
