@@ -139,6 +139,8 @@ extern NSString *const SNAPSHOT_MAX_STACK_SIZE;
 extern NSString *const SNAPSHOT_MAX_STACK_SIZE_DEFAULT;
 extern NSString *const UNDO_MAX_STACK_SIZE;
 extern NSString *const UNDO_MAX_STACK_SIZE_DEFAULT;
+extern NSString *const UNDO_OPS;
+extern NSString *const UNDO_OPS_DEFAULT;
 extern NSString *const GRID_BACKGROUND_COLOR;
 extern NSString *const GRID_BACKGROUND_COLOR_DEFAULT;
 extern NSString *const GRID_ROUNDED_CORNER_SIZE;

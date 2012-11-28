@@ -554,6 +554,7 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT forKey:LAYOUT_FOCUS_ON_ACTIVATE];
   [configDefaults setObject:SNAPSHOT_MAX_STACK_SIZE_DEFAULT forKey:SNAPSHOT_MAX_STACK_SIZE];
   [configDefaults setObject:UNDO_MAX_STACK_SIZE_DEFAULT forKey:UNDO_MAX_STACK_SIZE];
+  [configDefaults setObject:UNDO_OPS_DEFAULT forKey:UNDO_OPS];
   [self setConfigs:[NSMutableDictionary dictionary]];
   [self setAppConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];

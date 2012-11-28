@@ -27,6 +27,7 @@
 #import "SnapshotList.h"
 #import "SnapshotOperation.h"
 #import "ActivateSnapshotOperation.h"
+#import "DeleteSnapshotOperation.h"
 #import "SwitchOperation.h"
 #import "RunningApplications.h"
 #import "GridOperation.h"
@@ -36,7 +37,7 @@
 
 @synthesize currentHintOperation, currentGridOperation, currentSwitchBinding, menuSnapshotOperation;
 @synthesize menuActivateSnapshotOperation, cmdTabBinding, cmdShiftTabBinding, modalHotKeyRefs, modalIdToKey;
-@synthesize currentModalKey, currentModalHotKeyRefs, undoSnapshotOperation;
+@synthesize currentModalKey, currentModalHotKeyRefs, undoSnapshotOperation, undoDeleteSnapshotOperation;
 
 static NSObject *timerLock = nil;
 static NSObject *keyUpLock = nil;
@@ -142,8 +143,10 @@ static EventHandlerRef modifiersEvent;
   SnapshotOperation *undoSnapOp = [SnapshotOperation operationFromString:[NSString stringWithFormat:@"snapshot %@ save-to-disk;stack", UNDO_SNAPSHOT]];
   [undoSnapOp setStackSize:[[SlateConfig getInstance] getIntegerConfig:UNDO_MAX_STACK_SIZE]];
   [self setUndoSnapshotOperation:undoSnapOp];
+  [self setUndoDeleteSnapshotOperation:[DeleteSnapshotOperation operationFromString:[NSString stringWithFormat:@"delete-snapshot %@ all", UNDO_SNAPSHOT]]];
   [self setMenuSnapshotOperation:[SnapshotOperation operationFromString:[NSString stringWithFormat:@"snapshot %@ save-to-disk", MENU_SNAPSHOT]]];
   [self setMenuActivateSnapshotOperation:[ActivateSnapshotOperation operationFromString:[NSString stringWithFormat:@"activate-snapshot %@", MENU_SNAPSHOT]]];
+  [[self undoDeleteSnapshotOperation] doOperation];
 }
 
 - (IBAction)takeSnapshot {

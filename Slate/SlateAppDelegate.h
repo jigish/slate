@@ -24,6 +24,7 @@
 @class SwitchOperation;
 @class SnapshotOperation;
 @class ActivateSnapshotOperation;
+@class DeleteSnapshotOperation;
 @class HintOperation;
 @class Binding;
 @class GridOperation;
@@ -45,6 +46,7 @@
   SnapshotOperation *menuSnapshotOperation;
   SnapshotOperation *undoSnapshotOperation;
   ActivateSnapshotOperation *menuActivateSnapshotOperation;
+  DeleteSnapshotOperation *undoDeleteSnapshotOperation;
   NSInteger cmdTabBinding;
   NSInteger cmdShiftTabBinding;
   NSMutableDictionary *modalHotKeyRefs;
@@ -59,6 +61,7 @@
 @property SnapshotOperation *menuSnapshotOperation;
 @property SnapshotOperation *undoSnapshotOperation;
 @property ActivateSnapshotOperation *menuActivateSnapshotOperation;
+@property DeleteSnapshotOperation *undoDeleteSnapshotOperation;
 @property (assign) NSInteger cmdTabBinding;
 @property (assign) NSInteger cmdShiftTabBinding;
 @property NSMutableDictionary *modalHotKeyRefs;

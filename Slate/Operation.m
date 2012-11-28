@@ -38,12 +38,16 @@
 #import "RelaunchOperation.h"
 #import "ShellOperation.h"
 #import "UndoOperation.h"
+#import "SlateConfig.h"
 
 @implementation Operation
+
+@synthesize opName;
 
 - (id)init {
   self = [super init];
   if (self) {
+    [self setOpName:nil];
   }
 
   return self;
@@ -63,7 +67,7 @@
 }
 
 - (BOOL)shouldTakeUndoSnapshot {
-  return YES;
+  return [[[SlateConfig getInstance] getConfig:UNDO_OPS] rangeOfString:[self opName]].location != NSNotFound;
 }
 
 + (id)operationFromString:(NSString *)opString {
@@ -115,6 +119,7 @@
     SlateLogger(@"ERROR: Unrecognized operation '%@'", opString);
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);
   }
+  if (operation != nil) { [operation setOpName:op]; }
   return operation;
 }
 

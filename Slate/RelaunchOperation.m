@@ -46,10 +46,6 @@
   return YES;
 }
 
-- (BOOL)shouldTakeUndoSnapshot {
-  return NO;
-}
-
 + (id)relaunchOperationFromString:(NSString *)unused {
   Operation *op = [[RelaunchOperation alloc] init];
   return op;

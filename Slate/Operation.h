@@ -23,7 +23,11 @@
 #import "ScreenWrapper.h"
 
 
-@interface Operation : NSObject {}
+@interface Operation : NSObject {
+  NSString *opName;
+}
+
+@property NSString *opName;
 
 - (BOOL)doOperation;
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;

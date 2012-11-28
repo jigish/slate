@@ -170,6 +170,7 @@ List of allowed configs:
 | `gridCellRoundedCornerSize` | Number | Default: `5`. The size of the rounded corners of the `grid` operation's cells. Set this to `0` if you do not want rounded corners |
 | `layoutFocusOnActivate` | Boolean | Default: `false`. If true, activating a layout will focus all windows touched by the layout. The order in which they will be focused is the order in which the Applications occur in the slate file. Thus, the last Application configured in the slate file will be the foremost application after the layout is triggered. If set to false, activating a layout will not focus any of the windows touched. Thus the foremost application after the layout is triggered will be the foremost application before the layout was triggered. |
 | `undoMaxStackSize` | Integer | Default: `10`. The size of the stack to keep when creating undo snapshots. If <= 0, the size of the stack will be unlimited. This is effectively the number of times you can use the `undo` binding to undo Slate operations. |
+| `undoOps` | String | Default: `activate-snapshot,chain,grid,layout,move,resize,sequence,shell`. The list of undoable operations. Any operation in this list will take a snapshot before activation to allow undoing it. This may decrease performance. Snapshots will only be taken if an undo operation exists in your config. |
 
 Example:
 

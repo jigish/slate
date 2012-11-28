@@ -69,10 +69,6 @@
   return YES;
 }
 
-- (BOOL)shouldTakeUndoSnapshot {
-  return NO;
-}
-
 + (id)deleteSnapshotOperationFromString:(NSString *)deleteSnapshotOperation {
   // delete-snapshot name options
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];

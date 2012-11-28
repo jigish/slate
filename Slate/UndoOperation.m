@@ -23,10 +23,6 @@
 
 @implementation UndoOperation
 
-- (BOOL)shouldTakeUndoSnapshot {
-  return NO;
-}
-
 + (id)undoOperationFromString:(NSString *)undoOperation {
   // undo
   Operation *op = [[UndoOperation alloc] initWithName:UNDO_SNAPSHOT options:DELETE];
