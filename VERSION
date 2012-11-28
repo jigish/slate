@@ -1,4 +1,11 @@
-Current Version: 1.0.12
+Current Version: 1.0.13
+
+----------------- 1.0.13 ----------------
+
+Implement Issue #165 - undo operation
+Merge Pull Request #146
+Merge Pull Request #143 (windowHintsIconAlpha)
+Merge Pull request #161 (Colemak Support)
 
 ----------------- 1.0.12 ----------------
 
