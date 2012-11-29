@@ -37,7 +37,7 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 Just run this in your terminal:
 
-    cd /Applications && curl http://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz > slate-latest.tar.gz && tar -xzf slate-latest.tar.gz && rm slate-latest.tar.gz
+    cd /Applications && curl http://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
 
 ## Configuring Slate ##
 
