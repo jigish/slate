@@ -1,6 +1,6 @@
-Current Version: 1.0.13
+Current Version: 1.0.14
 
------------------ 1.0.14 (not yet released) ----------------
+----------------- 1.0.14 ----------------
 
 Implement Issue #171 - undoOps config
 Implement Issue #179 - allow BEFORE and AFTER operations for layout
