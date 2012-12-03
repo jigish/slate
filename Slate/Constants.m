@@ -239,6 +239,8 @@ NSString *const CURRENT = @"current";
 NSString *const ALL_BUT = @"all-but:";
 NSString *const WAIT = @"wait";
 NSString *const PATH = @"path:";
+NSString *const APP_NAME_BEFORE = @"BEFORE";
+NSString *const APP_NAME_AFTER = @"AFTER";
 
 // Directions and Anchors
 NSString *const UP = @"up";

@@ -1,5 +1,10 @@
 Current Version: 1.0.13
 
+----------------- 1.0.14 (not yet released) ----------------
+
+Implement Issue #171 - undoOps config
+Implement Issue #179 - allow BEFORE and AFTER operations for layout
+
 ----------------- 1.0.13 ----------------
 
 Implement Issue #165 - undo operation

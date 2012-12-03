@@ -240,6 +240,8 @@ extern NSString *const CURRENT;
 extern NSString *const ALL_BUT;
 extern NSString *const WAIT;
 extern NSString *const PATH;
+extern NSString *const APP_NAME_BEFORE;
+extern NSString *const APP_NAME_AFTER;
 
 // Directions and Anchors
 extern NSString *const UP;

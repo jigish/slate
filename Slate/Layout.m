@@ -31,6 +31,7 @@
 @synthesize appStates;
 @synthesize appOptions;
 @synthesize appOrder;
+@synthesize before, after;
 
 - (id)init {
   self = [super init];
@@ -38,6 +39,8 @@
     appStates = [NSMutableDictionary dictionary];
     appOptions = [NSMutableDictionary dictionary];
     appOrder = [NSMutableArray array];
+    before = [NSMutableArray array];
+    after = [NSMutableArray array];
   }
   return self;
 }
@@ -62,47 +65,67 @@
 
   NSArray *appNameAndOptions = [[tokens objectAtIndex:2] componentsSeparatedByString:COLON];
   NSString *appName = [appNameAndOptions objectAtIndex:0];
-  if ([appOptions objectForKey:appName] != nil) [appOrder removeObject:appName];
-  [appOrder addObject:appName];
+  if ([APP_NAME_BEFORE isEqualToString:appName]) {
+    NSString *opsString = [tokens objectAtIndex:3];
+    Operation *op = [Operation operationFromString:opsString];
+    if (op != nil) {
+      [before addObject:op];
+    } else {
+      SlateLogger(@"ERROR: Invalid Operation in before: '%@'", opsString);
+      @throw([NSException exceptionWithName:@"Invalid Operation in before" reason:[NSString stringWithFormat:@"Invalid operation '%@' in chain.", opsString] userInfo:nil]);
+    }
+  } else if([APP_NAME_AFTER isEqualToString:appName]) {
+    NSString *opsString = [tokens objectAtIndex:3];
+    Operation *op = [Operation operationFromString:opsString];
+    if (op != nil) {
+      [after addObject:op];
+    } else {
+      SlateLogger(@"ERROR: Invalid Operation in after: '%@'", opsString);
+      @throw([NSException exceptionWithName:@"Invalid Operation in after" reason:[NSString stringWithFormat:@"Invalid operation '%@' in chain.", opsString] userInfo:nil]);
+    }
+  } else {
+    if ([appOptions objectForKey:appName] != nil) [appOrder removeObject:appName];
+    [appOrder addObject:appName];
 
-  if ([appNameAndOptions count] > 1) {
-    NSString *options = [appNameAndOptions objectAtIndex:1];
-    ApplicationOptions *appOpts = [[ApplicationOptions alloc] init];
-    NSArray *optArr = [options componentsSeparatedByString:COMMA];
-    for (NSInteger i = 0; i < [optArr count]; i++) {
-      NSString *option = [optArr objectAtIndex:i];
-      if ([option isEqualToString:IGNORE_FAIL]) {
-        [appOpts setIgnoreFail:YES];
-      } else if ([option isEqualToString:REPEAT]) {
-        [appOpts setRepeat:YES];
-      } else if ([option isEqualToString:MAIN_FIRST]) {
-        [appOpts setMainFirst:YES];
-      } else if ([option isEqualToString:MAIN_LAST]) {
-        [appOpts setMainLast:YES];
-      } else if ([option isEqualToString:SORT_TITLE]) {
-        [appOpts setSortTitle:YES];
-      } else if ([option rangeOfString:TITLE_ORDER].length > 0) {
-        [appOpts setTitleOrder:[[[option componentsSeparatedByString:EQUALS] objectAtIndex:1] componentsSeparatedByString:SEMICOLON]];
+    if ([appNameAndOptions count] > 1) {
+      NSString *options = [appNameAndOptions objectAtIndex:1];
+      ApplicationOptions *appOpts = [[ApplicationOptions alloc] init];
+      NSArray *optArr = [options componentsSeparatedByString:COMMA];
+      for (NSInteger i = 0; i < [optArr count]; i++) {
+        NSString *option = [optArr objectAtIndex:i];
+        if ([option isEqualToString:IGNORE_FAIL]) {
+          [appOpts setIgnoreFail:YES];
+        } else if ([option isEqualToString:REPEAT]) {
+          [appOpts setRepeat:YES];
+        } else if ([option isEqualToString:MAIN_FIRST]) {
+          [appOpts setMainFirst:YES];
+        } else if ([option isEqualToString:MAIN_LAST]) {
+          [appOpts setMainLast:YES];
+        } else if ([option isEqualToString:SORT_TITLE]) {
+          [appOpts setSortTitle:YES];
+        } else if ([option rangeOfString:TITLE_ORDER].length > 0) {
+          [appOpts setTitleOrder:[[[option componentsSeparatedByString:EQUALS] objectAtIndex:1] componentsSeparatedByString:SEMICOLON]];
+        }
+      }
+      [appOptions setObject:appOpts forKey:appName];
+    } else {
+      [appOptions setObject:[[ApplicationOptions alloc] init] forKey:appName];
+    }
+    NSString *opsString = [tokens objectAtIndex:3];
+    NSArray *ops = [opsString componentsSeparatedByString:PIPE];
+    NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
+    for (NSInteger i = 0; i < [ops count]; i++) {
+      Operation *op = [Operation operationFromString:[ops objectAtIndex:i]];
+      if (op != nil) {
+        [opArray addObject:op];
+      } else {
+        SlateLogger(@"ERROR: Invalid Operation in Chain: '%@'", [ops objectAtIndex:i]);
+        @throw([NSException exceptionWithName:@"Invalid Operation in Chain" reason:[NSString stringWithFormat:@"Invalid operation '%@' in chain.", [ops objectAtIndex:i]] userInfo:nil]);
       }
     }
-    [appOptions setObject:appOpts forKey:appName];
-  } else {
-    [appOptions setObject:[[ApplicationOptions alloc] init] forKey:appName];
-  }
-  NSString *opsString = [tokens objectAtIndex:3];
-  NSArray *ops = [opsString componentsSeparatedByString:PIPE];
-  NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
-  for (NSInteger i = 0; i < [ops count]; i++) {
-    Operation *op = [Operation operationFromString:[ops objectAtIndex:i]];
-    if (op != nil) {
-      [opArray addObject:op];
-    } else {
-      SlateLogger(@"ERROR: Invalid Operation in Chain: '%@'", [ops objectAtIndex:i]);
-      @throw([NSException exceptionWithName:@"Invalid Operation in Chain" reason:[NSString stringWithFormat:@"Invalid operation '%@' in chain.", [ops objectAtIndex:i]] userInfo:nil]);
-    }
-  }
 
-  [[self appStates] setObject:opArray forKey:appName];
+    [[self appStates] setObject:opArray forKey:appName];
+  }
 }
 
 @end

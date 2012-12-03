@@ -199,8 +199,8 @@ The `layout` directive follows the following format:
 Where:
 
     name = the name you want to use to reference the layout
-    'app name' = single-quoted name of the application to add to the layout.
-    OPTIONS = a comma separated list of options for this application
+    'app name' = single-quoted name of the application to add to the layout **or** BEFORE or AFTER
+    OPTIONS = a comma separated list of options for this application (cannot be used with BEFORE or AFTER)
     operations = a pipe separated list of operations (move, resize, push, nudge, throw, or corner)
 
 Possible Options:
@@ -221,8 +221,10 @@ Example:
 
     layout myLayout 'iTerm' push up bar-resize:screenSizeY/2 | push down bar-resize:screenSizeY/2
     layout myLayout 'Google Chrome' push left bar-resize:screenSizeX/2 | push right bar-resize:screenSizeX/2
+    layout myLayout BEFORE shell path:~/ '/opt/local/bin/mvim before'
+    layout myLayout AFTER shell path:~/ '/opt/local/bin/mvim after'
 
-Will create a layout called `myLayout` with two operations for iTerm and two operations for Google Chrome. When activated, the first window of iTerm will be moved using the first operation in the first list and the second window of iTerm will be moved using the second operation in the first list. In addition, the first window of Google Chrome will be moved using the first operation in the second list and the second window of Google Chrome will be moved using the second operation in the second list. More information on how to actually use these layouts can be found under the `layout` operation in the `bind` directive section
+Will create a layout called `myLayout` with two operations for iTerm and two operations for Google Chrome. When activated, the first window of iTerm will be moved using the first operation in the first list and the second window of iTerm will be moved using the second operation in the first list. In addition, the first window of Google Chrome will be moved using the first operation in the second list and the second window of Google Chrome will be moved using the second operation in the second list. Finally, the operation `shell path:~/ '/opt/local/bin/mvim before'` will be run before any Applications are moved and the operation `shell path:~/ '/opt/local/bin/mvim after'` will be run after any Applications are moved. BEFORE and AFTER may also be used if the layout doesn't have any applications tied to it. More information on how to actually use these layouts can be found under the `layout` operation in the `bind` directive section.
 
 ### The `default` Directive ###
 

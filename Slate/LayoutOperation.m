@@ -98,6 +98,11 @@
     appsArray = [RunningApplications getInstance];
   }
 
+  // do before
+  for (Operation *op in [layout before]) {
+    [op doOperation];
+  }
+
   for (NSRunningApplication *app in appsArray) {
     NSString *appName = [app localizedName];
     pid_t appPID = [app processIdentifier];
@@ -205,6 +210,11 @@
     CFRelease(windows);
     CFRelease(windowsArr);
     CFRelease(windowsAppend);
+  }
+
+  // do after
+  for (Operation *op in [layout after]) {
+    [op doOperation];
   }
   return success;
 }
