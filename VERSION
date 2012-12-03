@@ -4,6 +4,7 @@ Current Version: 1.0.13
 
 Implement Issue #171 - undoOps config
 Implement Issue #179 - allow BEFORE and AFTER operations for layout
+Implement Issue #176 - allow WindowInfo to be selectable
 
 ----------------- 1.0.13 ----------------
 

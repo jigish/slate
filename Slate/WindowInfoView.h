@@ -20,6 +20,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface WindowInfoView : NSTextView
-
+@interface WindowInfoView : NSTextView {
+  NSDate *lastDraw;
+}
+- (void)genText;
 @end

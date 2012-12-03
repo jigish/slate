@@ -28,12 +28,23 @@
 
 - (id)initWithFrame:(NSRect)frame {
   self = [super initWithFrame:frame];
+  if (self) {
+    [self setSelectable:YES];
+    [self genText];
+    lastDraw = [NSDate dateWithTimeIntervalSince1970:0];
+  }
   return self;
 }
 
 - (void)viewWillDraw {
-  [super viewWillDraw];
-  SlateLogger(@"WindowInfoView will draw.");
+  NSDate *now = [NSDate date];
+  if ([now timeIntervalSinceDate:lastDraw] < 5) { return; } // refresh every 5 seconds
+  lastDraw = now;
+  [self genText];
+}
+
+- (void)genText {
+  SlateLogger(@"WindowInfoView gen text.");
   NSString *text = @"----------------- Screens -----------------\n";
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   NSMutableArray *resolutions = [NSMutableArray array];
