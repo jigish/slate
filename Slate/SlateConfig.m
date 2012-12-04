@@ -50,8 +50,10 @@ static SlateConfig *_instance = nil;
 
 + (SlateConfig *)getInstance {
   @synchronized([SlateConfig class]) {
-    if (!_instance)
+    if (!_instance) {
+      [ScreenWrapper updateStatics];
       _instance = [[[SlateConfig class] alloc] init];
+    }
     return _instance;
   }
 }
@@ -312,7 +314,7 @@ static SlateConfig *_instance = nil;
       // alias <name> <value>
       @try {
         [self addAlias:line];
-        SlateLogger(@"  LoadingL: %@",line);
+        SlateLogger(@"  LoadingA: %@",line);
       } @catch (NSException *ex) {
         SlateLogger(@"   ERROR %@",[ex name]);
         NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];

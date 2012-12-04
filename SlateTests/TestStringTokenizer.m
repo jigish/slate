@@ -129,6 +129,16 @@
   STAssertTrue([arr count] == 2, @"shit should work");
   STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
   STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  me"], @"wtf");
+  arr = [NSMutableArray array];
+  [StringTokenizer tokenize:@"hi 'tokenize\t\t  \"me\"'" into:arr maxTokens:100 quoteChars:cs];
+  STAssertTrue([arr count] == 2, @"shit should work");
+  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  \"me\""], @"wtf");
+  arr = [NSMutableArray array];
+  [StringTokenizer tokenize:@"hi 'tokenize\t\t  \"me\"'" into:arr quoteChars:cs];
+  STAssertTrue([arr count] == 2, @"shit should work");
+  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  \"me\""], @"wtf");
 }
 
 @end

@@ -86,6 +86,7 @@ static NSString *resolutions = nil;
 }
 
 + (void)updateStatics {
+  SlateLogger(@"-- updateStatics");
   [ScreenWrapper updateLeftToRightToDefault];
   [ScreenWrapper updateScreenResolutions];
 }

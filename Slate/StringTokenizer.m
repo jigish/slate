@@ -51,6 +51,7 @@
 + (void)tokenize:(NSString *)s into:(NSMutableArray *)array quoteChars:(NSCharacterSet *)quotes {
   NSMutableString *token = [[NSMutableString alloc] initWithCapacity:10];
   BOOL quoteSeen = NO;
+  char quoteChar = '.';
   for (NSInteger i = 0; i < [s length]; i++) {
     if ([self isSpaceChar:[s characterAtIndex:i]]) {
       if (![token isEqualToString:@""] && !quoteSeen) {
@@ -60,7 +61,15 @@
         [token appendFormat:@"%C", [s characterAtIndex:i]];
       }
     } else if ([self isQuoteChar:[s characterAtIndex:i] quoteChars:quotes]) {
-      quoteSeen = !quoteSeen;
+      if (!quoteSeen) {
+        quoteSeen = !quoteSeen;
+        quoteChar = [s characterAtIndex:i];
+      } else if (quoteSeen && [s characterAtIndex:i] == quoteChar) {
+        quoteSeen = !quoteSeen;
+        quoteChar = '.';
+      } else {
+        [token appendFormat:@"%C", [s characterAtIndex:i]];
+      }
     } else {
       [token appendFormat:@"%C", [s characterAtIndex:i]];
     }
@@ -104,6 +113,7 @@
   NSInteger numTokens = 0;
   NSMutableString *token = [[NSMutableString alloc] initWithCapacity:10];
   BOOL quoteSeen = NO;
+  unichar quoteChar = '.';
   for (NSInteger i = 0; i < [s length]; i++) {
     if ([self isSpaceChar:[s characterAtIndex:i]]) {
       if (![token isEqualToString:@""] && numTokens < (maxTokens-1) && !quoteSeen) {
@@ -116,7 +126,15 @@
     } else if (numTokens >= (maxTokens-1)) {
       [token appendFormat:@"%C", [s characterAtIndex:i]];
     } else if ([self isQuoteChar:[s characterAtIndex:i] quoteChars:quotes]) {
-      quoteSeen = !quoteSeen;
+      if (!quoteSeen) {
+        quoteSeen = !quoteSeen;
+        quoteChar = [s characterAtIndex:i];
+      } else if (quoteSeen && [s characterAtIndex:i] == quoteChar) {
+        quoteSeen = !quoteSeen;
+        quoteChar = '.';
+      } else {
+        [token appendFormat:@"%C", [s characterAtIndex:i]];
+      }
     } else {
       [token appendFormat:@"%C", [s characterAtIndex:i]];
     }
