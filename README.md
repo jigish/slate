@@ -387,7 +387,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
         bind 1:ctrl wait path:~/code '/opt/local/bin/mvim'
 
-    Will bind the keystroke ctrl-1 to run the command `/opt/local/bin/mvim` with the current working directory of `~/code`. Slate will also block until the command is done.
+    Will bind the keystroke ctrl-1 to run the command `/opt/local/bin/mvim` with the current working directory of `~/code`. Slate will also block until the command is done. Note that you may **not** use the tilda home directory shortcut within the command itself, it is only allowed within the path.
 
 * Hide one or more applications: `hide applications`
 
