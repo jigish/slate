@@ -1,4 +1,9 @@
-Current Version: 1.0.14
+Current Version: 1.0.15
+
+----------------- 1.0.15 ----------------
+
+Fix Issue #177 - slate now will detect the first screen change properly when checkDefaultsOnLoad is false.
+                 also, the following quoted string is now allowed: 'hello, I am a string with "nested" quotes'
 
 ----------------- 1.0.14 ----------------
 
