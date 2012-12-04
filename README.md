@@ -472,7 +472,7 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
         bind 1:ctrl layout myLayout
 
-    Will bind the keystroke ctrl-l to activate the layout called `myLayout`
+    Will bind the keystroke ctrl-l to activate the layout called `myLayout`. Note that the layout **must** be created before you bind it.
 
 * Focus a window in a direction or from an application: `focus direction|app`
 
