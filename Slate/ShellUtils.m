@@ -20,6 +20,7 @@
 
 #import "ShellUtils.h"
 #import "Constants.h"
+#import "SlateLogger.h"
 
 @implementation ShellUtils
 
@@ -68,13 +69,19 @@
   NSPipe *pipe;
   pipe = [NSPipe pipe];
   [task setStandardOutput:pipe];
+  [task setStandardError:pipe];
   [task setStandardInput:[NSPipe pipe]];
 
   NSFileHandle *file;
   file = [pipe fileHandleForReading];
 
   [task launch];
-  if (wait) [task waitUntilExit];
+  if (wait){
+    [task waitUntilExit];
+    NSData *data = [file readDataToEndOfFile];
+    SlateLogger(@"SHELL RESULT:");
+    SlateLogger([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+  }
   return task;
 }
 
