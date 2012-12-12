@@ -156,10 +156,12 @@ NSString *const LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT = @"false";
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";
 NSString *const REPEAT = @"REPEAT";
+NSString *const REPEAT_LAST = @"REPEAT_LAST";
 NSString *const SORT_TITLE = @"SORT_TITLE";
 NSString *const MAIN_FIRST = @"MAIN_FIRST";
 NSString *const MAIN_LAST = @"MAIN_LAST";
 NSString *const TITLE_ORDER = @"TITLE_ORDER=";
+NSString *const TITLE_ORDER_REGEX = @"TITLE_ORDER_REGEX=";
 
 // Modifier Keys
 NSString *const CONTROL = @"ctrl";

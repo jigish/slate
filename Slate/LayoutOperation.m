@@ -160,7 +160,30 @@
         }
       }
     }
-    // Third Pass for sort
+    // Third Pass for title order regex if needed
+    if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] titleOrderRegex] != nil) {
+      NSMutableArray *titleOrder = [NSMutableArray arrayWithArray:[(ApplicationOptions *)[[layout appOptions] objectForKey:appName] titleOrderRegex]];
+      SlateLogger(@"Title Order Regex: %@", titleOrder);
+      for (NSInteger j = 0; j < [titleOrder count]; j++) {
+        for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+          SlateLogger(@" Checking Title: %@", [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)]);
+          NSError *error = nil;
+          NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:[titleOrder objectAtIndex:j] options:0 error:&error];
+          if (error != NULL && error != nil) {
+            continue;
+          }
+          NSString *currWinTitle = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
+          NSUInteger numMatches = [regex numberOfMatchesInString:currWinTitle options:0 range:NSMakeRange(0, [currWinTitle length])];
+          if(numMatches > 0) {
+            SlateLogger(@" Found Title: %@", currWinTitle);
+            CFArrayAppendValue(windows, CFArrayGetValueAtIndex(windowsArr, i));
+            CFArrayRemoveValueAtIndex(windowsArr, i);
+            break;
+          }
+        }
+      }
+    }
+    // Fourth Pass for sort
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] sortTitle]) {
       SlateLogger(@"Sort By Title");
       while (CFArrayGetCount(windowsArr) > 0) {
@@ -193,6 +216,18 @@
       for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
         appSuccess = [[operations objectAtIndex:((i-failedWindows) % [operations count])] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
+        if ([[SlateConfig getInstance] getBoolConfig:LAYOUT_FOCUS_ON_ACTIVATE]) { [aw focus]; }
+        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
+          failedWindows++;
+      }
+    } else if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] repeatLast]) {
+      for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
+        AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
+        NSInteger opIndex = ((i-failedWindows) % [operations count]);
+        if (i-failedWindows >= [operations count]) {
+          opIndex = [operations count] - 1;
+        }
+        appSuccess = [[operations objectAtIndex:opIndex] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
         if ([[SlateConfig getInstance] getBoolConfig:LAYOUT_FOCUS_ON_ACTIVATE]) { [aw focus]; }
         if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
           failedWindows++;

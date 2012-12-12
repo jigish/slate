@@ -97,6 +97,8 @@
           [appOpts setIgnoreFail:YES];
         } else if ([option isEqualToString:REPEAT]) {
           [appOpts setRepeat:YES];
+        } else if ([option isEqualToString:REPEAT_LAST]) {
+          [appOpts setRepeatLast:YES];
         } else if ([option isEqualToString:MAIN_FIRST]) {
           [appOpts setMainFirst:YES];
         } else if ([option isEqualToString:MAIN_LAST]) {
@@ -105,6 +107,8 @@
           [appOpts setSortTitle:YES];
         } else if ([option rangeOfString:TITLE_ORDER].length > 0) {
           [appOpts setTitleOrder:[[[option componentsSeparatedByString:EQUALS] objectAtIndex:1] componentsSeparatedByString:SEMICOLON]];
+        } else if ([option rangeOfString:TITLE_ORDER_REGEX].length > 0) {
+          [appOpts setTitleOrderRegex:[[[option componentsSeparatedByString:EQUALS] objectAtIndex:1] componentsSeparatedByString:SEMICOLON]];
         }
       }
       [appOptions setObject:appOpts forKey:appName];

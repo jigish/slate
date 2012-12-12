@@ -157,10 +157,12 @@ extern NSString *const LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT;
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;
 extern NSString *const REPEAT;
+extern NSString *const REPEAT_LAST;
 extern NSString *const SORT_TITLE;
 extern NSString *const MAIN_FIRST;
 extern NSString *const MAIN_LAST;
 extern NSString *const TITLE_ORDER;
+extern NSString *const TITLE_ORDER_REGEX;
 
 // Modifier Keys
 extern NSString *const CONTROL;

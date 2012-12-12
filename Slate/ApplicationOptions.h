@@ -25,17 +25,21 @@
 @private
   BOOL ignoreFail;
   BOOL repeat;
+  BOOL repeatLast;
   BOOL mainFirst;
   BOOL mainLast;
   BOOL sortTitle;
   NSArray *titleOrder;
+  NSArray *titleOrderRegex;
 }
 
 @property (assign) BOOL ignoreFail;
 @property (assign) BOOL repeat;
+@property (assign) BOOL repeatLast;
 @property (assign) BOOL mainFirst;
 @property (assign) BOOL mainLast;
 @property (assign) BOOL sortTitle;
-@property  NSArray *titleOrder;
+@property NSArray *titleOrder;
+@property NSArray *titleOrderRegex;
 
 @end

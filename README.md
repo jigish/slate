@@ -209,10 +209,12 @@ Possible Options:
 |:-----|:---------|
 | `IGNORE_FAIL` | This will let slate move to the next operation if the current operation fails to resize/move on the current window |
 | `REPEAT` | This will repeat the list of operations if the number of windows is larger than the number of operations |
+| `REPEAT_LAST` | This will repeat the last operation in the list if the number of windows is larger than the number of operations |
 | `MAIN_FIRST` | This will cause the main window to always use the first operation |
 | `MAIN_LAST` | This will cause the main window to always use the last operation (mutally exclusive with `MAIN_FIRST`) |
 | `SORT_TITLE` | This will cause the window operations to be triggered on the windows in sorted order by the window title (can be used with `MAIN_FIRST` or `MAIN_LAST`) |
 | `TITLE_ORDER=order` | This will cause the operations to be triggered on the windows starting with order which is a semi-colon separated list of window titles |
+| `TITLE_ORDER_REGEX=order` | This will cause the operations to be triggered on the windows starting with the order which is a semi-colon separated list of window title regexes to match. Note that once a match is seen, the next regex will be used to match. This means if you have two windows that match the same regex, only the first one seen will be matched. The second will not. |
 
 
 You can have multiple layout directives that point to the same name in order to link any number of applications to the same layout.
