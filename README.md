@@ -294,7 +294,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
 **Allowed operations are:**
 
-* Move/Resize the window any which way: `move topLeftX;topLeftY sizeX;sizeY screen`
+##### move #####
+Move/Resize the window any which way: `move topLeftX;topLeftY sizeX;sizeY screen`
 
         topLeftX = top left x coordinate of the window's desired position (can be an expression)
         topLeftY = top left y coordinate of the window's desired position (can be an expression)
@@ -312,7 +313,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     **Note:** Remember to offset with `screenOriginX` in your `topLeftX` and `screenOriginY` in your `topLeftY` when using the `screen` option (or when using multiple screens in general) or your move operation will offset from the default origin `(0,0)` which is the origin of screen `0`.
 
-* Resize the window (keeping top-left the same): `resize x y anchor`
+##### resize #####
+Resize the window (keeping top-left the same): `resize x y anchor`
 
         x = amount to resize width either as a percent or a hard value (+10% or -100)
         y = amount to resize height either as a percent or a hard value (+10% or -100)
@@ -326,7 +328,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     **Note:** ctrl-rightarrow is used by default in Mac OS X by spaces. Be sure to turn these bindings off if you want to use them in Slate.
 
-* Push the window to the edge of the screen: `push direction style`
+##### push #####
+Push the window to the edge of the screen: `push direction style`
 
         direction = top|up|bottom|down|left|right
         style = (optional) none|center|bar|bar-resize:expression (default is none)
@@ -340,7 +343,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke alt-ctrl-uparrow to push the window so that it is aligned with the top of the screen
 
-* Nudge the window in any direction: `nudge x y`
+##### nudge #####
+Nudge the window in any direction: `nudge x y`
 
         x = amount to nudge x either as a percent or a hard value (+10% or -100)
         y = amount to nudge y either as a percent or a hard value (+10% or -100)
@@ -351,7 +355,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-shift-leftarrow to nudge the window `100` pixels to the left
 
-* Throw the window to any screen's origin: `throw screen style`
+##### throw #####
+Throw the window to any screen's origin: `throw screen style`
 
         screen = the screen you want to throw the window to (0 indexed)
         style = (optional) resize|resize:x-expression;y-expression (default will not resize)
@@ -362,7 +367,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke alt-ctrl-numpad1 to throw the window to the 2nd screen and resize it to fit that screen
 
-* Move/Resize the window into a corner: `corner direction style`
+##### corner #####
+Move/Resize the window into a corner: `corner direction style`
 
         direction = top-left|top-right|bottom-left|bottom-right
         style = (optional) resize:x-expression;y-expression (default will not resize)
@@ -376,7 +382,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to move the window to the top-left corner and resize it to 1/4 of the screen
 
-* Execute a shell command: `shell options 'command'`
+##### shell #####
+Execute a shell command: `shell options 'command'`
 
         command = (required) the command to run. note that it is a quoted string.
         options = (optional) a space separated list of:
@@ -391,7 +398,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to run the command `/opt/local/bin/mvim` with the current working directory of `~/code`. Slate will also block until the command is done. Note that you may **not** use the tilda home directory shortcut within the command itself, it is only allowed within the path.
 
-* Hide one or more applications: `hide applications`
+##### hide #####
+Hide one or more applications: `hide applications`
 
         applications = a comma separated list of application names. Individual application names must be
                        surrounded by quotes. You can also specify `current`, `all`, or `all-but:` for the
@@ -408,7 +416,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to hide iTerm and Google Chrome.
 
-* Show one or more applications: `show applications`
+##### show #####
+Show one or more applications: `show applications`
 
         applications = a comma separated list of application names. Individual application names must be
                        surrounded by quotes. You can also specify `current`, `all`, or `all-but:` for the
@@ -422,7 +431,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to show (unhide) iTerm and Google Chrome.
 
-* Toggle one or more applications: `toggle applications`
+##### toggle #####
+Toggle one or more applications: `toggle applications`
 
         applications = a comma separated list of application names. Individual application names must be
                        surrounded by quotes. You can also specify `current`, `all`, or `all-but:` for the
@@ -442,7 +452,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     **Note:** If you specify current in this toggle operation it will not toggle properly because after the current application is hidden, it is no longer the current application anymore.
 
-* Chain multiple operations to one binding: `chain opAndParams1 | opAndParams2 ...`
+##### chain #####
+Chain multiple operations to one binding: `chain opAndParams1 | opAndParams2 ...`
 
         opAndParamsX = any operation string (except sequence, hint and grid)
 
@@ -452,7 +463,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to push up on the first press, then push right on the second press, then push down on the third press, the push left on the fourth press and rotate back to pushing up on the fifth press (etc).
 
-* Activate a sequence of operations in one binding: `sequence opAndParams1 separator opAndParams 2 ...`
+##### sequence #####
+Activate a sequence of operations in one binding: `sequence opAndParams1 separator opAndParams 2 ...`
 
         opAndParamsX = any of the above operation strings (except chain and grid. hint must be last if present)
         separator = | or >. | will cause the next operation to be performed on the window focused at the time of
@@ -466,7 +478,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
     Will bind the keystroke ctrl-1 to first focus the window to the right, then push the previously focused window to the left, then push the newly focused window to the right. Obviously Hint will ignore `>` and `|` and just display because it doesn't care which window was focused.
 
 
-* Activate a layout: `layout name`
+##### layout #####
+Activate a layout: `layout name`
 
         name = the name of the layout to activate (set using the layout directive)
 
@@ -476,7 +489,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-l to activate the layout called `myLayout`. Note that the layout **must** be created before you bind it.
 
-* Focus a window in a direction or from an application: `focus direction|app`
+##### focus #####
+Focus a window in a direction or from an application: `focus direction|app`
 
         direction = right|left|up|above|down|below|behind
         app = an app name surrounded by quotes
@@ -491,7 +505,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to focus the main window of the application iTerm. The main window is the last focused window of that application.
 
-* Create a snapshot of your current window locations: `snapshot name options`
+##### snapshot #####
+Create a snapshot of your current window locations: `snapshot name options`
 
         name = the name of the snapshot to create (used in delete-snapshot and activate-snapshot)
         options = (optional) a semicolon separated list of any of the following options:
@@ -506,7 +521,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     **Note:** There is a menu option to take a snapshot of the current screen configuration.
 
-* Delete a snapshot: `delete-snapshot name options`
+##### delete-snapshot #####
+Delete a snapshot: `delete-snapshot name options`
 
         name = the name of the snapshot to delete
         options = (optional) a semicolon separated list of any of the following options:
@@ -519,7 +535,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to delete the snapshot called `theName` if it exists. This will delete all instances of theName meaning if you have pushed multiple snapshots on the stack, it will completely clear them all.
 
-* Activate a snapshot: `activate-snapshot name options`
+##### activate-snapshot #####
+Activate a snapshot: `activate-snapshot name options`
 
         name = the name of the snapshot to delete
         options = (optional) a semicolon separated list of any of the following options:
@@ -534,7 +551,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     **Note:** There is a menu option to activate the snapshot that you may have created using the menu option.
 
-* Show Window Hints (similar to Link Hints in Vimium except for Windows): `hint characters`
+##### hint #####
+Show Window Hints (similar to Link Hints in Vimium except for Windows): `hint characters`
 
         characters = (optional) a simple string of characters to be used for the hints. each hint consists of one
                      character. if there are more windows than characters then some windows will not get hints.
@@ -551,7 +569,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     **Note:** There are *tons* of config options to tweak this.
 
-* Show a Grid to one-off resize and move windows: `grid options`
+##### grid #####
+Show a Grid to one-off resize and move windows: `grid options`
 
         options is a whitespace separated list of:
           padding:<integer> = the padding between cells
@@ -567,7 +586,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     **Note:** There are a bunch of config options to tweak how this looks.
 
-* Relaunch Slate: `relaunch`
+##### relaunch` #####
+Relaunch Slate: `relaunch`
 
     Example:
 
@@ -575,7 +595,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to relaunch Slate. This will also reload the `.slate` file from scratch.
 
-* Undo an Operation: `undo`
+##### undo` #####
+Undo an Operation: `undo`
 
     Example
 
@@ -583,7 +604,8 @@ Some operations allow you to specify a screen. Here are the list of possible val
 
     Will bind the keystroke ctrl-1 to undo the last binding that was triggered. By default you can undo up to the last 10 commands. This can be changed using the `undoMaxStackSize` config. Also, you can only undo movement-based operations. Focus-related operations will not undo.
 
-* \[Beta\] A Better Application Switcher: `switch`
+##### switch` #####
+\[Beta\] A Better Application Switcher: `switch`
 
     If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
 
@@ -729,3 +751,4 @@ Please send all questions, bug reports, suggestions, or general commentary to [J
     z
     [
     ]
+
