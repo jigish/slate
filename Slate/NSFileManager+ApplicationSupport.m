@@ -44,7 +44,7 @@
   if (major >= 10 && minor >= 7) {
     success = [self createDirectoryAtURL:url withIntermediateDirectories:YES attributes:nil error:&error];
   } else {
-    success = [self createDirectoryAtPath:[url absoluteString] withIntermediateDirectories:YES attributes:nil error:&error];
+    success = [self createDirectoryAtPath:[url path] withIntermediateDirectories:YES attributes:nil error:&error];
   }
   if (!success) {
     if (errorOut) *errorOut = error;
