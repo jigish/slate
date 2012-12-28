@@ -83,16 +83,16 @@ static float hintIconAlpha = -1.0;
   [[NSGraphicsContext currentContext] saveGraphicsState];
   [[NSGraphicsContext currentContext] setShouldAntialias:YES];
 
+  // draw the icon behind the rounded rect, if specified
+  if (icon != nil) {
+      [icon drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:hintIconAlpha];
+  }
+
   // draw the rounded rect
   [hintBackgroundColor set];
   float cornerSize = [[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_ROUNDED_CORNER_SIZE];
-  NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:cornerSize yRadius:cornerSize];
+  NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:CGRectMake(self.bounds.origin.x + (self.bounds.size.width / 4), self.bounds.origin.y + (self.bounds.size.height / 4), self.bounds.size.width / 2, self.bounds.size.height / 2) xRadius:cornerSize yRadius:cornerSize];
   [path fill];
-
-  // draw the icon on top of the rounded rect, if specified
-  if (icon != nil) {
-    [icon drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:hintIconAlpha];
-  }
 
   // draw hint letter
   [self drawCenteredText:text
