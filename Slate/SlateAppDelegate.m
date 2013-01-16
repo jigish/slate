@@ -21,6 +21,7 @@
 #import "Constants.h"
 #import "SlateAppDelegate.h"
 #import "SlateConfig.h"
+#import "ScriptingController.h"
 #import "Binding.h"
 #import "HintOperation.h"
 #import "SlateLogger.h"
@@ -511,6 +512,8 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 
   // Read Config
   [self loadConfig];
+
+  [[ScriptingController getInstance] loadConfig];
 
   // Register Hot Keys
   [self registerHotKeys];

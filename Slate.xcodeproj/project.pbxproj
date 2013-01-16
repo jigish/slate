@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3AA7D09116A6ED1200C81A67 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA7D09016A6ED1200C81A67 /* WebKit.framework */; };
+		3AA7D09516A6EE0200C81A67 /* ScriptingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7D09416A6EE0200C81A67 /* ScriptingController.m */; };
 		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
 		3B34F39115462323004090BB /* NSFileManager+ApplicationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */; };
 		3B3C41A01501ADC600C1E927 /* HintOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C419F1501ADC600C1E927 /* HintOperation.m */; };
@@ -111,6 +112,8 @@
 
 /* Begin PBXFileReference section */
 		3AA7D09016A6ED1200C81A67 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		3AA7D09316A6EE0200C81A67 /* ScriptingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingController.h; sourceTree = "<group>"; };
+		3AA7D09416A6EE0200C81A67 /* ScriptingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptingController.m; sourceTree = "<group>"; };
 		3B3335AB14FC1EA900F72638 /* WindowInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowInfoView.h; sourceTree = "<group>"; };
 		3B3335AC14FC1EA900F72638 /* WindowInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowInfoView.m; sourceTree = "<group>"; };
 		3B34F38F15462323004090BB /* NSFileManager+ApplicationSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ApplicationSupport.h"; sourceTree = "<group>"; };
@@ -514,6 +517,8 @@
 				47C4A2A61384E8890066B6DE /* SlateAppDelegate.m */,
 				3B3335AB14FC1EA900F72638 /* WindowInfoView.h */,
 				3B3335AC14FC1EA900F72638 /* WindowInfoView.m */,
+				3AA7D09316A6EE0200C81A67 /* ScriptingController.h */,
+				3AA7D09416A6EE0200C81A67 /* ScriptingController.m */,
 			);
 			path = Slate;
 			sourceTree = "<group>";
@@ -720,6 +725,7 @@
 				3BA1BA68162F3E530026774E /* ShellOperation.m in Sources */,
 				3BA1BA6B162F4CFF0026774E /* ShellUtils.m in Sources */,
 				3B5B1B7C1665871E00D5B1B5 /* UndoOperation.m in Sources */,
+				3AA7D09516A6EE0200C81A67 /* ScriptingController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
