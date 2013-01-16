@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3AA7D09116A6ED1200C81A67 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA7D09016A6ED1200C81A67 /* WebKit.framework */; };
 		3AA7D09516A6EE0200C81A67 /* ScriptingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7D09416A6EE0200C81A67 /* ScriptingController.m */; };
+		3AA7D09B16A6FAE100C81A67 /* initialize.js in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7D09A16A6FAE100C81A67 /* initialize.js */; };
+		3AA7D09D16A6FC9B00C81A67 /* initialize.js in Resources */ = {isa = PBXBuildFile; fileRef = 3AA7D09A16A6FAE100C81A67 /* initialize.js */; };
 		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
 		3B34F39115462323004090BB /* NSFileManager+ApplicationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */; };
 		3B3C41A01501ADC600C1E927 /* HintOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C419F1501ADC600C1E927 /* HintOperation.m */; };
@@ -114,6 +116,7 @@
 		3AA7D09016A6ED1200C81A67 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		3AA7D09316A6EE0200C81A67 /* ScriptingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingController.h; sourceTree = "<group>"; };
 		3AA7D09416A6EE0200C81A67 /* ScriptingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptingController.m; sourceTree = "<group>"; };
+		3AA7D09A16A6FAE100C81A67 /* initialize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = initialize.js; sourceTree = "<group>"; };
 		3B3335AB14FC1EA900F72638 /* WindowInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowInfoView.h; sourceTree = "<group>"; };
 		3B3335AC14FC1EA900F72638 /* WindowInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowInfoView.m; sourceTree = "<group>"; };
 		3B34F38F15462323004090BB /* NSFileManager+ApplicationSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ApplicationSupport.h"; sourceTree = "<group>"; };
@@ -519,6 +522,7 @@
 				3B3335AC14FC1EA900F72638 /* WindowInfoView.m */,
 				3AA7D09316A6EE0200C81A67 /* ScriptingController.h */,
 				3AA7D09416A6EE0200C81A67 /* ScriptingController.m */,
+				3AA7D09A16A6FAE100C81A67 /* initialize.js */,
 			);
 			path = Slate;
 			sourceTree = "<group>";
@@ -639,6 +643,7 @@
 				3BF57C9B1621686900C0F89B /* statusActive.pdf in Resources */,
 				7F44A9AA16621A9D00222908 /* ASCIIToCode_Colemak.plist in Resources */,
 				5EB99A0216A7526400760915 /* ASCIIToCode_Azerty.plist in Resources */,
+				3AA7D09D16A6FC9B00C81A67 /* initialize.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,6 +731,7 @@
 				3BA1BA6B162F4CFF0026774E /* ShellUtils.m in Sources */,
 				3B5B1B7C1665871E00D5B1B5 /* UndoOperation.m in Sources */,
 				3AA7D09516A6EE0200C81A67 /* ScriptingController.m in Sources */,
+				3AA7D09B16A6FAE100C81A67 /* initialize.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

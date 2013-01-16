@@ -30,7 +30,9 @@ static ScriptingController *_instance = nil;
     [[webView mainFrame] loadHTMLString:@"" baseURL:NULL];
     scriptObject = [webView windowScriptObject];
     [scriptObject setValue:self forKey:@"slate"];
-    [self run:@"slate.log('hello from js!');"];
+    NSString *initializeJsPath = [[NSBundle mainBundle] pathForResource:@"initialize" ofType:@"js"];
+    NSString *fileString = [NSString stringWithContentsOfFile:initializeJsPath encoding:NSUTF8StringEncoding error:nil];
+    [self run:fileString];
 }
 
 - (void)log:(NSString*)msg {
