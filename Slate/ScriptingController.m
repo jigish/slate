@@ -26,13 +26,19 @@ static ScriptingController *_instance = nil;
     }
 }
 
+- (void)runFile:(NSString*)path {
+    NSString *fileString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    if(fileString != NULL) {
+        [self run:fileString];
+    }
+}
+
 - (void)loadConfig {
     [[webView mainFrame] loadHTMLString:@"" baseURL:NULL];
     scriptObject = [webView windowScriptObject];
     [scriptObject setValue:self forKey:@"slate"];
-    NSString *initializeJsPath = [[NSBundle mainBundle] pathForResource:@"initialize" ofType:@"js"];
-    NSString *fileString = [NSString stringWithContentsOfFile:initializeJsPath encoding:NSUTF8StringEncoding error:nil];
-    [self run:fileString];
+    [self runFile:[[NSBundle mainBundle] pathForResource:@"initialize" ofType:@"js"]];
+    [self runFile:[@"~/.slate.js" stringByExpandingTildeInPath]];
 }
 
 - (void)log:(NSString*)msg {
