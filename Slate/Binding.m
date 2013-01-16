@@ -164,6 +164,8 @@ static NSDictionary *dictionary = nil;
       filename = @"ASCIIToCode_Dvorak";
     } else if ([configLayout isEqualToString:KEYBOARD_LAYOUT_COLEMAK]) {
       filename = @"ASCIIToCode_Colemak";
+    } else if ([configLayout isEqualToString:KEYBOARD_LAYOUT_AZERTY]) {
+      filename = @"ASCIIToCode_Azerty";
     } else {
       filename = @"ASCIIToCode";
     }
