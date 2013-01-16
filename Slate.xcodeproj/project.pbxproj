@@ -80,6 +80,7 @@
 		47C4A2D11384F3E10066B6DE /* Operation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D01384F3E10066B6DE /* Operation.m */; };
 		47C4A2D41384F4A60066B6DE /* MoveOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D31384F4A60066B6DE /* MoveOperation.m */; };
 		47C4A2D71384F5DE0066B6DE /* ExpressionPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D61384F5DE0066B6DE /* ExpressionPoint.m */; };
+		5EB99A0216A7526400760915 /* ASCIIToCode_Azerty.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EB99A0116A7526400760915 /* ASCIIToCode_Azerty.plist */; };
 		7F44A9AA16621A9D00222908 /* ASCIIToCode_Colemak.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F44A9A916621A9D00222908 /* ASCIIToCode_Colemak.plist */; };
 		B3D087D0160577FB008A7FC6 /* status.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B3D087CF160577FB008A7FC6 /* status.pdf */; };
 /* End PBXBuildFile section */
@@ -245,6 +246,7 @@
 		47C4A2D31384F4A60066B6DE /* MoveOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MoveOperation.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		47C4A2D51384F5DD0066B6DE /* ExpressionPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionPoint.h; sourceTree = "<group>"; };
 		47C4A2D61384F5DE0066B6DE /* ExpressionPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpressionPoint.m; sourceTree = "<group>"; };
+		5EB99A0116A7526400760915 /* ASCIIToCode_Azerty.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode_Azerty.plist; sourceTree = "<group>"; };
 		7F44A9A916621A9D00222908 /* ASCIIToCode_Colemak.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode_Colemak.plist; sourceTree = "<group>"; };
 		B3D087CF160577FB008A7FC6 /* status.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = status.pdf; path = Slate/status.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -421,6 +423,7 @@
 		478293E813859C0B00452C07 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				5EB99A0116A7526400760915 /* ASCIIToCode_Azerty.plist */,
 				4786D53413882381004554B1 /* ASCIIToCode.plist */,
 				7F44A9A916621A9D00222908 /* ASCIIToCode_Colemak.plist */,
 				3B65CF241576CDF10063D298 /* ASCIIToCode_Dvorak.plist */,
@@ -626,6 +629,7 @@
 				B3D087D0160577FB008A7FC6 /* status.pdf in Resources */,
 				3BF57C9B1621686900C0F89B /* statusActive.pdf in Resources */,
 				7F44A9AA16621A9D00222908 /* ASCIIToCode_Colemak.plist in Resources */,
+				5EB99A0216A7526400760915 /* ASCIIToCode_Azerty.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
