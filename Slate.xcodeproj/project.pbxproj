@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3AA7D09116A6ED1200C81A67 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA7D09016A6ED1200C81A67 /* WebKit.framework */; };
 		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
 		3B34F39115462323004090BB /* NSFileManager+ApplicationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */; };
 		3B3C41A01501ADC600C1E927 /* HintOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C419F1501ADC600C1E927 /* HintOperation.m */; };
@@ -109,6 +110,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3AA7D09016A6ED1200C81A67 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		3B3335AB14FC1EA900F72638 /* WindowInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowInfoView.h; sourceTree = "<group>"; };
 		3B3335AC14FC1EA900F72638 /* WindowInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowInfoView.m; sourceTree = "<group>"; };
 		3B34F38F15462323004090BB /* NSFileManager+ApplicationSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ApplicationSupport.h"; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				47C4A2C81384E8B10066B6DE /* Carbon.framework in Frameworks */,
 				47C4A2941384E8890066B6DE /* Cocoa.framework in Frameworks */,
 				3BA85C9A16276DAB00FAAF0B /* Sparkle.framework in Frameworks */,
+				3AA7D09116A6ED1200C81A67 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,6 +489,7 @@
 		47C4A2951384E8890066B6DE /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3AA7D09016A6ED1200C81A67 /* WebKit.framework */,
 				47C4A2961384E8890066B6DE /* AppKit.framework */,
 				47C4A2971384E8890066B6DE /* CoreData.framework */,
 				47C4A2981384E8890066B6DE /* Foundation.framework */,
