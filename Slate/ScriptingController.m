@@ -11,10 +11,12 @@
 @implementation ScriptingController
 
 static ScriptingController *_instance = nil;
+static NSDictionary *jsMethods;
 
 - (ScriptingController *) init {
     self = [super init];
     webView = [[WebView alloc] init];
+    jsMethods = @{NSStringFromSelector(@selector(log:)): @"log"};
     return self;
 }
 
@@ -53,16 +55,13 @@ static ScriptingController *_instance = nil;
   }
 }
 
-+ (BOOL)isSelectorExcludedFromWebScript:(SEL)aSelector {
-    return NO;
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)sel {
+    return [jsMethods objectForKey:NSStringFromSelector(sel)] == NULL;
 }
 
 + (NSString *)webScriptNameForSelector:(SEL)sel
 {
-	if (sel == @selector(log:))
-		return @"log";
-
-    return nil;
+    return [jsMethods objectForKey:NSStringFromSelector(sel)];
 }
 
 @end
