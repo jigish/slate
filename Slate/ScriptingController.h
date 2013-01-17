@@ -19,3 +19,15 @@
 + (ScriptingController *)getInstance;
 
 @end
+
+
+@interface ScriptingCallback : NSObject
+
+@property WebScriptObject *function;
+@property ScriptingController *controller;
+
+- (void)call;
+
++ (ScriptingCallback *)callbackWithController:(ScriptingController*)controller function:(WebScriptObject*)function;
+
+@end

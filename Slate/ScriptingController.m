@@ -16,7 +16,10 @@ static NSDictionary *jsMethods;
 - (ScriptingController *) init {
     self = [super init];
     webView = [[WebView alloc] init];
-    jsMethods = @{NSStringFromSelector(@selector(log:)): @"log"};
+    jsMethods = @{
+        NSStringFromSelector(@selector(log:)): @"log",
+        NSStringFromSelector(@selector(bind:callback:)): @"bind"
+    };
     return self;
 }
 
@@ -26,6 +29,11 @@ static NSDictionary *jsMethods;
 	if(![data isMemberOfClass:[WebUndefined class]]) {
 		NSLog(@"%@", data);
     }
+}
+
+- (void)runFunction:(WebScriptObject*)function {
+    [scriptObject setValue:function forKey:@"_slate_callback"];
+    [self run:@"window._slate_callback();"];
 }
 
 - (void)runFile:(NSString*)path {
@@ -41,6 +49,11 @@ static NSDictionary *jsMethods;
     [scriptObject setValue:self forKey:@"slate"];
     [self runFile:[[NSBundle mainBundle] pathForResource:@"initialize" ofType:@"js"]];
     [self runFile:[@"~/.slate.js" stringByExpandingTildeInPath]];
+}
+
+- (void)bind:(NSString*)hotkey callback:(WebScriptObject*)callback {
+    NSLog(@"bind() was called with %@", callback);
+    [[ScriptingCallback callbackWithController:self function:callback] call];
 }
 
 - (void)log:(NSString*)msg {
@@ -62,6 +75,22 @@ static NSDictionary *jsMethods;
 + (NSString *)webScriptNameForSelector:(SEL)sel
 {
     return [jsMethods objectForKey:NSStringFromSelector(sel)];
+}
+
+@end
+
+
+@implementation ScriptingCallback
+
+- (void)call {
+    [self.controller runFunction:self.function];
+}
+
++ (ScriptingCallback *)callbackWithController:(ScriptingController*)controller function:(WebScriptObject*)function {
+    ScriptingCallback *callback = [[ScriptingCallback alloc] init];
+    [callback setController:controller];
+    [callback setFunction:function];
+    return callback;
 }
 
 @end
