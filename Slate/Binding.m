@@ -58,38 +58,7 @@ static NSDictionary *dictionary = nil;
       @throw([NSException exceptionWithName:@"Unrecognized Bind" reason:binding userInfo:nil]);
     }
     [self setKeystrokeFromString:[tokens objectAtIndex:1]];
-
-    BOOL theRepeat = NO;
-    NSArray *repeatOps = [[[SlateConfig getInstance] getConfig:REPEAT_ON_HOLD_OPS] componentsSeparatedByString:COMMA];
-    for (NSInteger i = 0; i < [repeatOps count]; i++) {
-      NSMutableString *opStr = [[NSMutableString alloc] initWithCapacity:10];
-      [StringTokenizer firstToken:[tokens objectAtIndex:2] into:opStr];
-      if ([opStr isEqualToString:[repeatOps objectAtIndex:i]]) {
-        theRepeat = YES;
-        break;
-      }
-    }
-
-    Operation *theOp = [Operation operationFromString:[tokens objectAtIndex:2]];
-
-    if (theOp == nil) {
-      SlateLogger(@"ERROR: Unable to create binding");
-      @throw([NSException exceptionWithName:@"Unable To Create Binding" reason:[NSString stringWithFormat:@"Unable to create '%@'", binding] userInfo:nil]);
-    }
-
-    @try {
-      [theOp testOperation];
-    } @catch (NSException *ex) {
-      SlateLogger(@"ERROR: Unable to test binding '%@'", binding);
-      @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], binding] userInfo:nil]);
-    }
-
-    if ([theOp isKindOfClass:[SwitchOperation class]]) {
-      [(SwitchOperation *)op setModifiers:modifiers];
-    }
-
-    op = theOp;
-    repeat = theRepeat;
+    [self setOperationAndRepeatFromString:[tokens objectAtIndex:2]];
   }
 
   return self;
@@ -133,6 +102,40 @@ static NSDictionary *dictionary = nil;
   keyCode = theKeyCode;
   modifiers = theModifiers;
   modalKey = theModalKey;
+}
+
+- (void)setOperationAndRepeatFromString:(NSString*)token {
+  BOOL theRepeat = NO;
+  NSArray *repeatOps = [[[SlateConfig getInstance] getConfig:REPEAT_ON_HOLD_OPS] componentsSeparatedByString:COMMA];
+  for (NSInteger i = 0; i < [repeatOps count]; i++) {
+    NSMutableString *opStr = [[NSMutableString alloc] initWithCapacity:10];
+    [StringTokenizer firstToken:token into:opStr];
+    if ([opStr isEqualToString:[repeatOps objectAtIndex:i]]) {
+      theRepeat = YES;
+      break;
+    }
+  }
+
+  Operation *theOp = [Operation operationFromString:token];
+
+  if (theOp == nil) {
+    SlateLogger(@"ERROR: Unable to create binding");
+    @throw([NSException exceptionWithName:@"Unable To Create Binding" reason:[NSString stringWithFormat:@"Unable to create '%@'", token] userInfo:nil]);
+  }
+
+  @try {
+    [theOp testOperation];
+  } @catch (NSException *ex) {
+    SlateLogger(@"ERROR: Unable to test binding '%@'", token);
+    @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], token] userInfo:nil]);
+  }
+
+  if ([theOp isKindOfClass:[SwitchOperation class]]) {
+    [(SwitchOperation *)op setModifiers:modifiers];
+  }
+
+  op = theOp;
+  repeat = theRepeat;
 }
 
 - (BOOL)doOperation {
