@@ -25,6 +25,7 @@ static NSDictionary *jsMethods;
         NSStringFromSelector(@selector(bind:callback:repeat:)): @"bind",
         NSStringFromSelector(@selector(doNudgeX:y:)): @"nudge",
         NSStringFromSelector(@selector(doResizeX:y:)): @"resize",
+        NSStringFromSelector(@selector(doFocusDirection:)): @"focus",
     };
     return self;
 }
@@ -76,6 +77,12 @@ static NSDictionary *jsMethods;
     NSString *dx = [NSString stringWithFormat:@"%@%@", x<0?@"-":@"+", x];
     NSString *dy = [NSString stringWithFormat:@"%@%@", y<0?@"-":@"+", y];
     NSString *opstr = [NSString stringWithFormat:@"resize %@ %@", dx, dy];
+    Operation *op = [Operation operationFromString:opstr];
+    return [op doOperation];
+}
+
+- (BOOL)doFocusDirection:(NSString*)direction {
+    NSString *opstr = [NSString stringWithFormat:@"focus %@", direction];
     Operation *op = [Operation operationFromString:opstr];
     return [op doOperation];
 }
