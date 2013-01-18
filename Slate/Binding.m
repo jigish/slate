@@ -53,6 +53,7 @@ static NSDictionary *dictionary = nil;
   if (self) {
     UInt32 theKeyCode = 0;
     UInt32 theModifiers = 0;
+    NSNumber *theModalKey;
     // bind <key:modifiers|modal-key> <op> <parameters>
     NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
     [StringTokenizer tokenize:binding into:tokens maxTokens:3];
@@ -63,13 +64,9 @@ static NSDictionary *dictionary = nil;
     NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:COLON];
     if ([keyAndModifiers count] >= 1) {
       theKeyCode = (UInt32)[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] integerValue];
-      [self setModalKey:nil];
       if ([keyAndModifiers count] >= 2) {
-        NSNumber *theModalKey = [[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:1]];
-        if (theModalKey != nil) {
-          // modal no modifier case
-          [self setModalKey:theModalKey];
-        } else {
+        theModalKey = [[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:1]];
+        if (theModalKey == nil) {
           // normal case
           NSArray *modifiersArray = [[keyAndModifiers objectAtIndex:1] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@",;"]];
           NSEnumerator *modEnum = [modifiersArray objectEnumerator];
@@ -86,9 +83,7 @@ static NSDictionary *dictionary = nil;
               theModifiers += shiftKey;
             } else if ([mod isEqualToString:FUNCTION]) {
               theModifiers += FUNCTION_KEY;
-            } else if (theModalKey != nil) { // modal key with modifiers
-              [self setModalKey:theModalKey];
-            } else {
+            } else if (theModalKey == nil) {
               SlateLogger(@"ERROR: Unrecognized modifier '%@'", mod);
               @throw([NSException exceptionWithName:@"Unrecognized Modifier" reason:[NSString stringWithFormat:@"Unrecognized modifier '%@' in '%@'", mod, binding] userInfo:nil]);
             }
@@ -129,6 +124,7 @@ static NSDictionary *dictionary = nil;
 
     keyCode = theKeyCode;
     modifiers = theModifiers;
+    modalKey = theModalKey;
     op = theOp;
     repeat = theRepeat;
   }
