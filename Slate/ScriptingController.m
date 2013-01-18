@@ -10,11 +10,14 @@
 
 @implementation ScriptingController
 
+@synthesize bindings;
+
 static ScriptingController *_instance = nil;
 static NSDictionary *jsMethods;
 
 - (ScriptingController *) init {
     self = [super init];
+    self.bindings = [NSMutableArray array];
     webView = [[WebView alloc] init];
     jsMethods = @{
         NSStringFromSelector(@selector(log:)): @"log",
@@ -54,6 +57,7 @@ static NSDictionary *jsMethods;
 - (void)bind:(NSString*)hotkey callback:(WebScriptObject*)callback {
     NSLog(@"bind() was called with %@", callback);
     ScriptingOperation *op = [ScriptingOperation operationWithController:self function:callback];
+    [self.bindings addObject:op];
 }
 
 - (void)log:(NSString*)msg {

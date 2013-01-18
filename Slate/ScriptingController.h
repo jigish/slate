@@ -13,7 +13,9 @@
 @interface ScriptingController : NSObject {
     WebView *webView;
     WebScriptObject *scriptObject;
+    NSMutableArray *bindings;
 }
+@property NSMutableArray *bindings;
 
 - (void)loadConfig;
 
