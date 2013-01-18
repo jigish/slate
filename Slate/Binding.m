@@ -51,6 +51,7 @@ static NSDictionary *dictionary = nil;
 - (id)initWithString:(NSString *)binding {
   self = [self init];
   if (self) {
+    UInt32 theKeyCode = 0;
     UInt32 theModifiers = 0;
     // bind <key:modifiers|modal-key> <op> <parameters>
     NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
@@ -61,7 +62,7 @@ static NSDictionary *dictionary = nil;
     NSString *keystroke = [tokens objectAtIndex:1];
     NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:COLON];
     if ([keyAndModifiers count] >= 1) {
-      [self setKeyCode:(UInt32)[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] integerValue]];
+      theKeyCode = (UInt32)[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] integerValue];
       [self setModalKey:nil];
       if ([keyAndModifiers count] >= 2) {
         NSNumber *theModalKey = [[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:1]];
@@ -126,6 +127,7 @@ static NSDictionary *dictionary = nil;
       [(SwitchOperation *)op setModifiers:modifiers];
     }
 
+    keyCode = theKeyCode;
     modifiers = theModifiers;
     op = theOp;
     repeat = theRepeat;
