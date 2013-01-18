@@ -54,7 +54,7 @@ static NSDictionary *jsMethods;
 - (void)loadConfig {
     [[webView mainFrame] loadHTMLString:@"" baseURL:NULL];
     scriptObject = [webView windowScriptObject];
-    [scriptObject setValue:self forKey:@"slate"];
+    [scriptObject setValue:self forKey:@"_controller"];
     [self runFile:[[NSBundle mainBundle] pathForResource:@"initialize" ofType:@"js"]];
     [self runFile:[@"~/.slate.js" stringByExpandingTildeInPath]];
 }
