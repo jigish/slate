@@ -24,6 +24,7 @@ static NSDictionary *jsMethods;
         NSStringFromSelector(@selector(log:)): @"log",
         NSStringFromSelector(@selector(bind:callback:repeat:)): @"bind",
         NSStringFromSelector(@selector(doNudgeX:y:)): @"nudge",
+        NSStringFromSelector(@selector(doResizeX:y:)): @"resize",
     };
     return self;
 }
@@ -67,6 +68,14 @@ static NSDictionary *jsMethods;
     NSString *dx = [NSString stringWithFormat:@"%@%@", x<0?@"-":@"+", x];
     NSString *dy = [NSString stringWithFormat:@"%@%@", y<0?@"-":@"+", y];
     NSString *opstr = [NSString stringWithFormat:@"nudge %@ %@", dx, dy];
+    Operation *op = [Operation operationFromString:opstr];
+    return [op doOperation];
+}
+
+- (BOOL)doResizeX:(NSNumber*)x y:(NSNumber*)y {
+    NSString *dx = [NSString stringWithFormat:@"%@%@", x<0?@"-":@"+", x];
+    NSString *dy = [NSString stringWithFormat:@"%@%@", y<0?@"-":@"+", y];
+    NSString *opstr = [NSString stringWithFormat:@"resize %@ %@", dx, dy];
     Operation *op = [Operation operationFromString:opstr];
     return [op doOperation];
 }
