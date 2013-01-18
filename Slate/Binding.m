@@ -107,25 +107,26 @@ static NSDictionary *dictionary = nil;
       }
     }
 
-    [self setOp:[Operation operationFromString:[tokens objectAtIndex:2]]];
+    Operation *theOp = [Operation operationFromString:[tokens objectAtIndex:2]];
 
-    if (op == nil) {
+    if (theOp == nil) {
       SlateLogger(@"ERROR: Unable to create binding");
       @throw([NSException exceptionWithName:@"Unable To Create Binding" reason:[NSString stringWithFormat:@"Unable to create '%@'", binding] userInfo:nil]);
     }
 
     @try {
-      [op testOperation];
+      [theOp testOperation];
     } @catch (NSException *ex) {
       SlateLogger(@"ERROR: Unable to test binding '%@'", binding);
       @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], binding] userInfo:nil]);
     }
 
-    if ([op isKindOfClass:[SwitchOperation class]]) {
+    if ([theOp isKindOfClass:[SwitchOperation class]]) {
       [(SwitchOperation *)op setModifiers:modifiers];
     }
 
     modifiers = theModifiers;
+    op = theOp;
   }
 
   return self;
