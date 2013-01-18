@@ -10,20 +10,30 @@ var slate = window.slate = {
         return _controller.bind(key, callback, repeat);
     },
 
+    op: function(opString) {
+        return _controller.op(opString);
+    },
+
     resize: function(dx, dy) {
-        return _controller.resize(dx, dy);
+        return slate.op("resize " + slate._delta_str(dx) +
+                        " " + slate._delta_str(dy));
     },
 
     nudge: function(dx, dy) {
-        return _controller.nudge(dx, dy);
+        return slate.op("nudge " + slate._delta_str(dx) +
+                        " " + slate._delta_str(dy));
     },
 
     focus: function(direction) {
-        return _controller.focus(direction);
+        return slate.op("focus " + direction);
     },
 
     relaunch: function() {
-        return _controller.relaunch();
+        return slate.op("relaunch");
+    },
+
+    _delta_str: function(val) {
+        return (val<0 ? "" : "+") + val;
     }
 
 };

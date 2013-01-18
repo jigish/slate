@@ -23,10 +23,7 @@ static NSDictionary *jsMethods;
     jsMethods = @{
         NSStringFromSelector(@selector(log:)): @"log",
         NSStringFromSelector(@selector(bind:callback:repeat:)): @"bind",
-        NSStringFromSelector(@selector(doNudgeX:y:)): @"nudge",
-        NSStringFromSelector(@selector(doResizeX:y:)): @"resize",
-        NSStringFromSelector(@selector(doFocusDirection:)): @"focus",
-        NSStringFromSelector(@selector(doRelaunch)): @"relaunch",
+        NSStringFromSelector(@selector(doOp:)): @"op",
     };
     return self;
 }
@@ -66,31 +63,8 @@ static NSDictionary *jsMethods;
     [self.bindings addObject:bind];
 }
 
-- (BOOL)doNudgeX:(NSNumber*)x y:(NSNumber*)y {
-    NSString *dx = [NSString stringWithFormat:@"%@%@", x<0?@"-":@"+", x];
-    NSString *dy = [NSString stringWithFormat:@"%@%@", y<0?@"-":@"+", y];
-    NSString *opstr = [NSString stringWithFormat:@"nudge %@ %@", dx, dy];
-    Operation *op = [Operation operationFromString:opstr];
-    return [op doOperation];
-}
-
-- (BOOL)doResizeX:(NSNumber*)x y:(NSNumber*)y {
-    NSString *dx = [NSString stringWithFormat:@"%@%@", x<0?@"-":@"+", x];
-    NSString *dy = [NSString stringWithFormat:@"%@%@", y<0?@"-":@"+", y];
-    NSString *opstr = [NSString stringWithFormat:@"resize %@ %@", dx, dy];
-    Operation *op = [Operation operationFromString:opstr];
-    return [op doOperation];
-}
-
-- (BOOL)doFocusDirection:(NSString*)direction {
-    NSString *opstr = [NSString stringWithFormat:@"focus %@", direction];
-    Operation *op = [Operation operationFromString:opstr];
-    return [op doOperation];
-}
-
-- (BOOL)doRelaunch {
-    Operation *op = [Operation operationFromString:@"relaunch"];
-    return [op doOperation];
+- (BOOL)doOp:(NSString*)opString {
+    return [[Operation operationFromString:opString] doOperation];
 }
 
 - (void)log:(NSString*)msg {
