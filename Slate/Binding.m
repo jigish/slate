@@ -51,6 +51,7 @@ static NSDictionary *dictionary = nil;
 - (id)initWithString:(NSString *)binding {
   self = [self init];
   if (self) {
+    UInt32 theModifiers = 0;
     // bind <key:modifiers|modal-key> <op> <parameters>
     NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
     [StringTokenizer tokenize:binding into:tokens maxTokens:3];
@@ -61,7 +62,6 @@ static NSDictionary *dictionary = nil;
     NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:COLON];
     if ([keyAndModifiers count] >= 1) {
       [self setKeyCode:(UInt32)[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] integerValue]];
-      [self setModifiers:0];
       [self setModalKey:nil];
       if ([keyAndModifiers count] >= 2) {
         NSNumber *theModalKey = [[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:1]];
@@ -76,15 +76,15 @@ static NSDictionary *dictionary = nil;
           while (mod) {
             theModalKey = [[Binding asciiToCodeDict] objectForKey:mod];
             if ([mod isEqualToString:CONTROL]) {
-              modifiers += controlKey;
+              theModifiers += controlKey;
             } else if ([mod isEqualToString:OPTION]) {
-              modifiers += optionKey;
+              theModifiers += optionKey;
             } else if ([mod isEqualToString:COMMAND]) {
-              modifiers += cmdKey;
+              theModifiers += cmdKey;
             } else if ([mod isEqualToString:SHIFT]) {
-              modifiers += shiftKey;
+              theModifiers += shiftKey;
             } else if ([mod isEqualToString:FUNCTION]) {
-              modifiers += FUNCTION_KEY;
+              theModifiers += FUNCTION_KEY;
             } else if (theModalKey != nil) { // modal key with modifiers
               [self setModalKey:theModalKey];
             } else {
@@ -124,6 +124,8 @@ static NSDictionary *dictionary = nil;
     if ([op isKindOfClass:[SwitchOperation class]]) {
       [(SwitchOperation *)op setModifiers:modifiers];
     }
+
+    modifiers = theModifiers;
   }
 
   return self;
