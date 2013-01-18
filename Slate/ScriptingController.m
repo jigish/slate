@@ -53,7 +53,7 @@ static NSDictionary *jsMethods;
 
 - (void)bind:(NSString*)hotkey callback:(WebScriptObject*)callback {
     NSLog(@"bind() was called with %@", callback);
-    [[ScriptingCallback callbackWithController:self function:callback] call];
+    ScriptingOperation *op = [ScriptingOperation operationWithController:self function:callback];
 }
 
 - (void)log:(NSString*)msg {
@@ -80,17 +80,18 @@ static NSDictionary *jsMethods;
 @end
 
 
-@implementation ScriptingCallback
+@implementation ScriptingOperation
 
-- (void)call {
+- (BOOL)doOperation {
     [self.controller runFunction:self.function];
+    return YES;
 }
 
-+ (ScriptingCallback *)callbackWithController:(ScriptingController*)controller function:(WebScriptObject*)function {
-    ScriptingCallback *callback = [[ScriptingCallback alloc] init];
-    [callback setController:controller];
-    [callback setFunction:function];
-    return callback;
++ (ScriptingOperation *)operationWithController:(ScriptingController*)controller function:(WebScriptObject*)function {
+    ScriptingOperation *op = [[ScriptingOperation alloc] init];
+    [op setController:controller];
+    [op setFunction:function];
+    return op;
 }
 
 @end

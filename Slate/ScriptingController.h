@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
+#import "Operation.h"
 
 @interface ScriptingController : NSObject {
     WebView *webView;
@@ -21,13 +22,11 @@
 @end
 
 
-@interface ScriptingCallback : NSObject
+@interface ScriptingOperation : Operation
 
 @property WebScriptObject *function;
 @property ScriptingController *controller;
 
-- (void)call;
-
-+ (ScriptingCallback *)callbackWithController:(ScriptingController*)controller function:(WebScriptObject*)function;
++ (ScriptingOperation *)operationWithController:(ScriptingController*)controller function:(WebScriptObject*)function;
 
 @end
