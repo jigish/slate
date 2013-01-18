@@ -42,6 +42,7 @@
 
 + (NSDictionary *)asciiToCodeDict;
 - (id)initWithString:(NSString *)binding;
+- (id)initWithKeystroke:(NSString*)keystroke operation:(Operation*)op_ repeat:(BOOL)repeat_;
 - (BOOL)doOperation;
 - (NSString *)modalHashKey;
 + (NSArray *)modalHashKeyToKeyAndModifiers:(NSString *)modalHashKey;

@@ -64,6 +64,16 @@ static NSDictionary *dictionary = nil;
   return self;
 }
 
+- (id)initWithKeystroke:(NSString*)keystroke operation:(Operation*)op_ repeat:(BOOL)repeat_ {
+  self = [self init];
+  if(self) {
+    [self setKeystrokeFromString:keystroke];
+    self.op = op_;
+    self.repeat = repeat_;
+  }
+  return self;
+}
+
 - (void)setKeystrokeFromString:(NSString*)keystroke {
   UInt32 theKeyCode = 0;
   UInt32 theModifiers = 0;
