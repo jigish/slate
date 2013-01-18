@@ -2,7 +2,8 @@
 
 var slate = window.slate = {
 
-    log: function(msg) {
+    log: function() {
+        var msg = Array.prototype.slice.call(arguments, 0).join(" ");
         return _controller.log(msg);
     },
 
