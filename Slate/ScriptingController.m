@@ -22,7 +22,7 @@ static NSDictionary *jsMethods;
     webView = [[WebView alloc] init];
     jsMethods = @{
         NSStringFromSelector(@selector(log:)): @"log",
-        NSStringFromSelector(@selector(bind:callback:)): @"bind"
+        NSStringFromSelector(@selector(bind:callback:repeat:)): @"bind"
     };
     return self;
 }
@@ -55,10 +55,10 @@ static NSDictionary *jsMethods;
     [self runFile:[@"~/.slate.js" stringByExpandingTildeInPath]];
 }
 
-- (void)bind:(NSString*)hotkey callback:(WebScriptObject*)callback {
+- (void)bind:(NSString*)hotkey callback:(WebScriptObject*)callback repeat:(BOOL)repeat {
     NSLog(@"bind() was called with %@", callback);
     ScriptingOperation *op = [ScriptingOperation operationWithController:self function:callback];
-    Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:false];
+    Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
     [self.bindings addObject:bind];
 }
 
