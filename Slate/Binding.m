@@ -97,12 +97,13 @@ static NSDictionary *dictionary = nil;
       }
     }
 
+    BOOL theRepeat = NO;
     NSArray *repeatOps = [[[SlateConfig getInstance] getConfig:REPEAT_ON_HOLD_OPS] componentsSeparatedByString:COMMA];
     for (NSInteger i = 0; i < [repeatOps count]; i++) {
       NSMutableString *opStr = [[NSMutableString alloc] initWithCapacity:10];
       [StringTokenizer firstToken:[tokens objectAtIndex:2] into:opStr];
       if ([opStr isEqualToString:[repeatOps objectAtIndex:i]]) {
-        [self setRepeat:YES];
+        theRepeat = YES;
         break;
       }
     }
@@ -127,6 +128,7 @@ static NSDictionary *dictionary = nil;
 
     modifiers = theModifiers;
     op = theOp;
+    repeat = theRepeat;
   }
 
   return self;
