@@ -22,7 +22,8 @@ static NSDictionary *jsMethods;
     webView = [[WebView alloc] init];
     jsMethods = @{
         NSStringFromSelector(@selector(log:)): @"log",
-        NSStringFromSelector(@selector(bind:callback:repeat:)): @"bind"
+        NSStringFromSelector(@selector(bind:callback:repeat:)): @"bind",
+        NSStringFromSelector(@selector(doNudgeX:y:)): @"nudge",
     };
     return self;
 }
@@ -60,6 +61,14 @@ static NSDictionary *jsMethods;
     ScriptingOperation *op = [ScriptingOperation operationWithController:self function:callback];
     Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
     [self.bindings addObject:bind];
+}
+
+- (BOOL)doNudgeX:(NSNumber*)x y:(NSNumber*)y {
+    NSString *dx = [NSString stringWithFormat:@"%@%@", x<0?@"-":@"+", x];
+    NSString *dy = [NSString stringWithFormat:@"%@%@", y<0?@"-":@"+", y];
+    NSString *opstr = [NSString stringWithFormat:@"nudge %@ %@", dx, dy];
+    Operation *op = [Operation operationFromString:opstr];
+    return [op doOperation];
 }
 
 - (void)log:(NSString*)msg {
