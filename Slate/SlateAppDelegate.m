@@ -104,7 +104,12 @@ static EventHandlerRef modifiersEvent;
   InstallEventHandler(GetEventMonitorTarget(), &OnHotKeyEvent, 1, &eventType, (__bridge void *)self, NULL);
   InstallEventHandler(GetEventMonitorTarget(), &OnHotKeyReleasedEvent, 1, &eventReleasedType, (__bridge void *)self, NULL);
 
-  NSArray *bindings = [[SlateConfig getInstance] bindings];
+  NSMutableArray *bindings = [[SlateConfig getInstance] bindings];
+  ScriptingController *scriptingController = [ScriptingController getInstance];
+  for (NSInteger i = 0; i < [scriptingController.bindings count]; i++) {
+    [bindings addObject:[scriptingController.bindings objectAtIndex:i]];
+  }
+
   for (NSInteger i = 0; i < [bindings count]; i++) {
     Binding *binding = [bindings objectAtIndex:i];
     SlateLogger(@"REGISTERING KEY: %u, MODIFIERS: %u", [binding keyCode], [binding modifiers]);

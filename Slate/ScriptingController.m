@@ -7,6 +7,7 @@
 //
 
 #import "ScriptingController.h"
+#import "Binding.h"
 
 @implementation ScriptingController
 
@@ -57,7 +58,8 @@ static NSDictionary *jsMethods;
 - (void)bind:(NSString*)hotkey callback:(WebScriptObject*)callback {
     NSLog(@"bind() was called with %@", callback);
     ScriptingOperation *op = [ScriptingOperation operationWithController:self function:callback];
-    [self.bindings addObject:op];
+    Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:false];
+    [self.bindings addObject:bind];
 }
 
 - (void)log:(NSString*)msg {
