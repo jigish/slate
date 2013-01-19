@@ -57,7 +57,6 @@ static NSDictionary *jsMethods;
 }
 
 - (void)bind:(NSString*)hotkey callback:(WebScriptObject*)callback repeat:(BOOL)repeat {
-    NSLog(@"bind() was called with %@", callback);
     ScriptingOperation *op = [ScriptingOperation operationWithController:self function:callback];
     Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
     [self.bindings addObject:bind];
