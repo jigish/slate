@@ -57,76 +57,85 @@ static NSDictionary *dictionary = nil;
     if ([tokens count] <=2) {
       @throw([NSException exceptionWithName:@"Unrecognized Bind" reason:binding userInfo:nil]);
     }
-    NSString *keystroke = [tokens objectAtIndex:1];
-    NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:COLON];
-    if ([keyAndModifiers count] >= 1) {
-      [self setKeyCode:(UInt32)[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] integerValue]];
-      [self setModifiers:0];
-      [self setModalKey:nil];
-      if ([keyAndModifiers count] >= 2) {
-        NSNumber *theModalKey = [[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:1]];
-        if (theModalKey != nil) {
-          // modal no modifier case
-          [self setModalKey:theModalKey];
-        } else {
-          // normal case
-          NSArray *modifiersArray = [[keyAndModifiers objectAtIndex:1] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@",;"]];
-          NSEnumerator *modEnum = [modifiersArray objectEnumerator];
-          NSString *mod = [modEnum nextObject];
-          while (mod) {
-            theModalKey = [[Binding asciiToCodeDict] objectForKey:mod];
-            if ([mod isEqualToString:CONTROL]) {
-              modifiers += controlKey;
-            } else if ([mod isEqualToString:OPTION]) {
-              modifiers += optionKey;
-            } else if ([mod isEqualToString:COMMAND]) {
-              modifiers += cmdKey;
-            } else if ([mod isEqualToString:SHIFT]) {
-              modifiers += shiftKey;
-            } else if ([mod isEqualToString:FUNCTION]) {
-              modifiers += FUNCTION_KEY;
-            } else if (theModalKey != nil) { // modal key with modifiers
-              [self setModalKey:theModalKey];
-            } else {
-              SlateLogger(@"ERROR: Unrecognized modifier '%@'", mod);
-              @throw([NSException exceptionWithName:@"Unrecognized Modifier" reason:[NSString stringWithFormat:@"Unrecognized modifier '%@' in '%@'", mod, binding] userInfo:nil]);
-            }
-            mod = [modEnum nextObject];
-          }
-        }
-      }
-    }
-
-    NSArray *repeatOps = [[[SlateConfig getInstance] getConfig:REPEAT_ON_HOLD_OPS] componentsSeparatedByString:COMMA];
-    for (NSInteger i = 0; i < [repeatOps count]; i++) {
-      NSMutableString *opStr = [[NSMutableString alloc] initWithCapacity:10];
-      [StringTokenizer firstToken:[tokens objectAtIndex:2] into:opStr];
-      if ([opStr isEqualToString:[repeatOps objectAtIndex:i]]) {
-        [self setRepeat:YES];
-        break;
-      }
-    }
-
-    [self setOp:[Operation operationFromString:[tokens objectAtIndex:2]]];
-
-    if (op == nil) {
-      SlateLogger(@"ERROR: Unable to create binding");
-      @throw([NSException exceptionWithName:@"Unable To Create Binding" reason:[NSString stringWithFormat:@"Unable to create '%@'", binding] userInfo:nil]);
-    }
-
-    @try {
-      [op testOperation];
-    } @catch (NSException *ex) {
-      SlateLogger(@"ERROR: Unable to test binding '%@'", binding);
-      @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], binding] userInfo:nil]);
-    }
-
-    if ([op isKindOfClass:[SwitchOperation class]]) {
-      [(SwitchOperation *)op setModifiers:modifiers];
-    }
+    [self setKeystrokeFromString:[tokens objectAtIndex:1]];
+    [self setOperationAndRepeatFromString:[tokens objectAtIndex:2]];
   }
 
   return self;
+}
+
+- (void)setKeystrokeFromString:(NSString*)keystroke {
+  UInt32 theKeyCode = 0;
+  UInt32 theModifiers = 0;
+  NSNumber *theModalKey;
+  NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:COLON];
+  if ([keyAndModifiers count] >= 1) {
+    theKeyCode = (UInt32)[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] integerValue];
+    if ([keyAndModifiers count] >= 2) {
+      theModalKey = [[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:1]];
+      if (theModalKey == nil) {
+        // normal case
+        NSArray *modifiersArray = [[keyAndModifiers objectAtIndex:1] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@",;"]];
+        NSEnumerator *modEnum = [modifiersArray objectEnumerator];
+        NSString *mod = [modEnum nextObject];
+        while (mod) {
+          theModalKey = [[Binding asciiToCodeDict] objectForKey:mod];
+          if ([mod isEqualToString:CONTROL]) {
+            theModifiers += controlKey;
+          } else if ([mod isEqualToString:OPTION]) {
+            theModifiers += optionKey;
+          } else if ([mod isEqualToString:COMMAND]) {
+            theModifiers += cmdKey;
+          } else if ([mod isEqualToString:SHIFT]) {
+            theModifiers += shiftKey;
+          } else if ([mod isEqualToString:FUNCTION]) {
+            theModifiers += FUNCTION_KEY;
+          } else if (theModalKey == nil) {
+            SlateLogger(@"ERROR: Unrecognized modifier '%@'", mod);
+            @throw([NSException exceptionWithName:@"Unrecognized Modifier" reason:[NSString stringWithFormat:@"Unrecognized modifier '%@' in '%@'", mod, keystroke] userInfo:nil]);
+          }
+          mod = [modEnum nextObject];
+        }
+      }
+    }
+  }
+  keyCode = theKeyCode;
+  modifiers = theModifiers;
+  modalKey = theModalKey;
+}
+
+- (void)setOperationAndRepeatFromString:(NSString*)token {
+  BOOL theRepeat = NO;
+  NSArray *repeatOps = [[[SlateConfig getInstance] getConfig:REPEAT_ON_HOLD_OPS] componentsSeparatedByString:COMMA];
+  for (NSInteger i = 0; i < [repeatOps count]; i++) {
+    NSMutableString *opStr = [[NSMutableString alloc] initWithCapacity:10];
+    [StringTokenizer firstToken:token into:opStr];
+    if ([opStr isEqualToString:[repeatOps objectAtIndex:i]]) {
+      theRepeat = YES;
+      break;
+    }
+  }
+
+  Operation *theOp = [Operation operationFromString:token];
+
+  if (theOp == nil) {
+    SlateLogger(@"ERROR: Unable to create binding");
+    @throw([NSException exceptionWithName:@"Unable To Create Binding" reason:[NSString stringWithFormat:@"Unable to create '%@'", token] userInfo:nil]);
+  }
+
+  @try {
+    [theOp testOperation];
+  } @catch (NSException *ex) {
+    SlateLogger(@"ERROR: Unable to test binding '%@'", token);
+    @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], token] userInfo:nil]);
+  }
+
+  if ([theOp isKindOfClass:[SwitchOperation class]]) {
+    [(SwitchOperation *)op setModifiers:modifiers];
+  }
+
+  op = theOp;
+  repeat = theRepeat;
 }
 
 - (BOOL)doOperation {
