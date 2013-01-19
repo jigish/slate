@@ -12,6 +12,10 @@ var slate = window.slate = {
             repeat = true;
             key = key.slice(0, -7);
         }
+        if(typeof(callback) == "string") {
+            var opString = callback;
+            callback = function() { slate.op(opString); };
+        }
         return _controller.bind(key, callback, repeat);
     },
 
