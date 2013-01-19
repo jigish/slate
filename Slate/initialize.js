@@ -15,6 +15,12 @@ var slate = window.slate = {
         return _controller.bind(key, callback, repeat);
     },
 
+    bindAll: function(bindMap) {
+        for(key in bindMap) {
+            slate.bind(key, bindMap[key]);
+        }
+    },
+
     op: function(opString) {
         return _controller.op(opString);
     },
