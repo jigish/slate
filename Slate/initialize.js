@@ -8,6 +8,10 @@ var slate = window.slate = {
     },
 
     bind: function(key, callback, repeat) {
+        if(key.slice(-7) == " repeat") {
+            repeat = true;
+            key = key.slice(0, -7);
+        }
         return _controller.bind(key, callback, repeat);
     },
 
