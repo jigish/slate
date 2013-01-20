@@ -586,7 +586,7 @@ Show a Grid to one-off resize and move windows: `grid options`
 
     **Note:** There are a bunch of config options to tweak how this looks.
 
-##### relaunch` #####
+##### relaunch #####
 Relaunch Slate: `relaunch`
 
     Example:
@@ -595,7 +595,7 @@ Relaunch Slate: `relaunch`
 
     Will bind the keystroke ctrl-1 to relaunch Slate. This will also reload the `.slate` file from scratch.
 
-##### undo` #####
+##### undo #####
 Undo an Operation: `undo`
 
     Example
@@ -604,7 +604,7 @@ Undo an Operation: `undo`
 
     Will bind the keystroke ctrl-1 to undo the last binding that was triggered. By default you can undo up to the last 10 commands. This can be changed using the `undoMaxStackSize` config. Also, you can only undo movement-based operations. Focus-related operations will not undo.
 
-##### switch` #####
+##### switch #####
 \[Beta\] A Better Application Switcher: `switch`
 
     If you bind any binding to cmd-tab or cmd-shift-tab, Slate will completely disable the default Mac OS X Application switcher!
