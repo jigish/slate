@@ -68,11 +68,6 @@ static SlateConfig *_instance = nil;
     [self setDefaultLayouts:[NSMutableArray array]];
     [self setAliases:[NSMutableDictionary dictionary]];
     [self setSnapshots:[NSMutableDictionary dictionary]];
-
-    // Listen for screen change notifications
-    NSNotificationCenter *nc = [NSDistributedNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(onScreenChange:) name:NOTIFICATION_SCREEN_CHANGE object:nil];
-    [nc addObserver:self selector:@selector(onScreenChange:) name:NOTIFICATION_SCREEN_CHANGE_LION object:nil];
     
     // Listen for screen change notifications with Quartz
     CGDisplayRegisterReconfigurationCallback(onDisplayReconfiguration, (__bridge void *)(self));
