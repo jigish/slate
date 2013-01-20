@@ -10,6 +10,9 @@ BASE_DIR = File.join(SCRIPT_DIR, "..")
 BUILD_DIR = File.join(BASE_DIR, "build")
 RELEASE_DIR = File.join(BUILD_DIR, "Release")
 DEBUG_DIR = File.join(BUILD_DIR, "Debug")
+OUTPUT_DIR = File.join(BUILD_DIR, "output")
+RELEASE_OUTPUT_DIR = File.join(OUTPUT_DIR, "Release")
+DEBUG_OUTPUT_DIR = File.join(OUTPUT_DIR, "Debug")
 APP_NAME = "Slate"
 APP_FILE = "#{APP_NAME}.app"
 DMG_FILE = "#{APP_NAME}.dmg"
@@ -114,17 +117,13 @@ def gen
   # Build
   log "Building ..."
   Dir.chdir(BASE_DIR)
-  `CC="" xcodebuild -scheme "Slate-Debug" clean archive`
-  `CC="" xcodebuild -scheme "Slate" clean archive`
+  `rm -rf #{DEBUG_OUTPUT_DIR} && mkdir -p #{DEBUG_OUTPUT_DIR} && CC="" xcodebuild -scheme "Slate-Debug" DSTROOT="#{DEBUG_OUTPUT_DIR}" clean install`
+  `rm -rf #{RELEASE_OUTPUT_DIR} && mkdir -p #{RELEASE_OUTPUT_DIR} && CC="" xcodebuild -scheme "Slate" DSTROOT="#{RELEASE_OUTPUT_DIR}" clean install`
 
   # Copy
-  debug_paths_json = File.read(File.join(BUILD_DIR, "debug_paths.json"))
-  debug_paths = JSON.parse(debug_paths_json)
-  release_paths_json = File.read(File.join(BUILD_DIR, "release_paths.json"))
-  release_paths = JSON.parse(release_paths_json)
-  { DEBUG_DIR => debug_paths['products'], RELEASE_DIR => release_paths['products'] }.each do |to, from|
+  { DEBUG_DIR => File.join(DEBUG_OUTPUT_DIR, "Applications", APP_FILE), RELEASE_DIR => File.join(RELEASE_OUTPUT_DIR, "Applications", APP_FILE) }.each do |to, from|
     FileUtils.rm_rf File.join(to, APP_FILE)
-    FileUtils.cp_r File.join(from, "Applications", APP_FILE), File.join(to, APP_FILE)
+    FileUtils.cp_r from, File.join(to, APP_FILE)
     File.new(File.join(to, APP_FILE, "Contents", "MacOS", APP_NAME)).chmod(0755)
     File.new(File.join(to, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Sparkle")).chmod(0755)
     File.new(File.join(to, APP_FILE, "Contents", "Frameworks", SPARKLE_FRAMEWORK, "Resources", RELAUNCH)).chmod(0755)
