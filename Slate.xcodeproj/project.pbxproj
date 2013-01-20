@@ -13,6 +13,8 @@
 		3AA7D09D16A6FC9B00C81A67 /* initialize.js in Resources */ = {isa = PBXBuildFile; fileRef = 3AA7D09A16A6FAE100C81A67 /* initialize.js */; };
 		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
 		3B34F39115462323004090BB /* NSFileManager+ApplicationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */; };
+		3B38E04716AB8B3500603901 /* underscore.js in Sources */ = {isa = PBXBuildFile; fileRef = 3B38E04616AB8B3500603901 /* underscore.js */; };
+		3B38E04816AB8BBF00603901 /* underscore.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B38E04616AB8B3500603901 /* underscore.js */; };
 		3B3C41A01501ADC600C1E927 /* HintOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C419F1501ADC600C1E927 /* HintOperation.m */; };
 		3B3C41A31501BE8600C1E927 /* HintWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C41A21501BE8600C1E927 /* HintWindow.m */; };
 		3B3E241013A5F59E00B0D762 /* WindowState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E240F13A5F59E00B0D762 /* WindowState.m */; };
@@ -121,6 +123,7 @@
 		3B3335AC14FC1EA900F72638 /* WindowInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowInfoView.m; sourceTree = "<group>"; };
 		3B34F38F15462323004090BB /* NSFileManager+ApplicationSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ApplicationSupport.h"; sourceTree = "<group>"; };
 		3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+ApplicationSupport.m"; sourceTree = "<group>"; };
+		3B38E04616AB8B3500603901 /* underscore.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = underscore.js; sourceTree = "<group>"; };
 		3B3C419E1501ADC600C1E927 /* HintOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HintOperation.h; sourceTree = "<group>"; };
 		3B3C419F1501ADC600C1E927 /* HintOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HintOperation.m; sourceTree = "<group>"; };
 		3B3C41A11501BE8500C1E927 /* HintWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HintWindow.h; sourceTree = "<group>"; };
@@ -355,6 +358,8 @@
 				47C4A2CD1384F26A0066B6DE /* Binding.m */,
 				3B40AC1F13A73530006C9A5C /* Layout.h */,
 				3B40AC2013A73530006C9A5C /* Layout.m */,
+				3AA7D09316A6EE0200C81A67 /* ScriptingController.h */,
+				3AA7D09416A6EE0200C81A67 /* ScriptingController.m */,
 				47C4A2C91384EA510066B6DE /* SlateConfig.h */,
 				47C4A2CA1384EA510066B6DE /* SlateConfig.m */,
 				3B42D72D13A831E6009103A0 /* ApplicationOptions.h */,
@@ -366,6 +371,8 @@
 				3BDDA17E14FDA55600829D2A /* WindowSnapshot.h */,
 				3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */,
 				3BBD24B91580206C00940ABF /* default.slate */,
+				3AA7D09A16A6FAE100C81A67 /* initialize.js */,
+				3B38E04616AB8B3500603901 /* underscore.js */,
 			);
 			name = Config;
 			sourceTree = "<group>";
@@ -520,9 +527,6 @@
 				47C4A2A61384E8890066B6DE /* SlateAppDelegate.m */,
 				3B3335AB14FC1EA900F72638 /* WindowInfoView.h */,
 				3B3335AC14FC1EA900F72638 /* WindowInfoView.m */,
-				3AA7D09316A6EE0200C81A67 /* ScriptingController.h */,
-				3AA7D09416A6EE0200C81A67 /* ScriptingController.m */,
-				3AA7D09A16A6FAE100C81A67 /* initialize.js */,
 			);
 			path = Slate;
 			sourceTree = "<group>";
@@ -643,6 +647,7 @@
 				3BF57C9B1621686900C0F89B /* statusActive.pdf in Resources */,
 				7F44A9AA16621A9D00222908 /* ASCIIToCode_Colemak.plist in Resources */,
 				5EB99A0216A7526400760915 /* ASCIIToCode_Azerty.plist in Resources */,
+				3B38E04816AB8BBF00603901 /* underscore.js in Resources */,
 				3AA7D09D16A6FC9B00C81A67 /* initialize.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -732,6 +737,7 @@
 				3B5B1B7C1665871E00D5B1B5 /* UndoOperation.m in Sources */,
 				3AA7D09516A6EE0200C81A67 /* ScriptingController.m in Sources */,
 				3AA7D09B16A6FAE100C81A67 /* initialize.js in Sources */,
+				3B38E04716AB8B3500603901 /* underscore.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

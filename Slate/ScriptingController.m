@@ -17,57 +17,58 @@ static ScriptingController *_instance = nil;
 static NSDictionary *jsMethods;
 
 - (ScriptingController *) init {
-    self = [super init];
-    self.bindings = [NSMutableArray array];
-    webView = [[WebView alloc] init];
-    jsMethods = @{
-        NSStringFromSelector(@selector(log:)): @"log",
-        NSStringFromSelector(@selector(bind:callback:repeat:)): @"bind",
-        NSStringFromSelector(@selector(doOp:)): @"op",
-    };
-    return self;
+  self = [super init];
+  self.bindings = [NSMutableArray array];
+  webView = [[WebView alloc] init];
+  jsMethods = @{
+    NSStringFromSelector(@selector(log:)): @"log",
+    NSStringFromSelector(@selector(bind:callback:repeat:)): @"bind",
+    NSStringFromSelector(@selector(doOp:)): @"op",
+  };
+  return self;
 }
 
 - (void)run:(NSString*)code {
-	NSString* script = [NSString stringWithFormat:@"try { %@ } catch (e) { e.toString() }", code];
+	NSString* script = [NSString stringWithFormat:@"try { %@ } catch (e) { e.toString(); }", code];
 	id data = [scriptObject evaluateWebScript:script];
 	if(![data isMemberOfClass:[WebUndefined class]]) {
 		NSLog(@"%@", data);
-    }
+  }
 }
 
 - (void)runFunction:(WebScriptObject*)function {
-    [scriptObject setValue:function forKey:@"_slate_callback"];
-    [self run:@"window._slate_callback();"];
+  [scriptObject setValue:function forKey:@"_slate_callback"];
+  [self run:@"window._slate_callback();"];
 }
 
 - (void)runFile:(NSString*)path {
-    NSString *fileString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-    if(fileString != NULL) {
-        [self run:fileString];
-    }
+  NSString *fileString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+  if(fileString != NULL) {
+    [self run:fileString];
+  }
 }
 
 - (void)loadConfig {
-    [[webView mainFrame] loadHTMLString:@"" baseURL:NULL];
-    scriptObject = [webView windowScriptObject];
-    [scriptObject setValue:self forKey:@"_controller"];
-    [self runFile:[[NSBundle mainBundle] pathForResource:@"initialize" ofType:@"js"]];
-    [self runFile:[@"~/.slate.js" stringByExpandingTildeInPath]];
+  [[webView mainFrame] loadHTMLString:@"" baseURL:NULL];
+  scriptObject = [webView windowScriptObject];
+  [scriptObject setValue:self forKey:@"_controller"];
+  [self runFile:[[NSBundle mainBundle] pathForResource:@"underscore" ofType:@"js"]];
+  [self runFile:[[NSBundle mainBundle] pathForResource:@"initialize" ofType:@"js"]];
+  [self runFile:[@"~/.slate.js" stringByExpandingTildeInPath]];
 }
 
 - (void)bind:(NSString*)hotkey callback:(WebScriptObject*)callback repeat:(BOOL)repeat {
-    ScriptingOperation *op = [ScriptingOperation operationWithController:self function:callback];
-    Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
-    [self.bindings addObject:bind];
+  ScriptingOperation *op = [ScriptingOperation operationWithController:self function:callback];
+  Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
+  [self.bindings addObject:bind];
 }
 
 - (BOOL)doOp:(NSString*)opString {
-    return [[Operation operationFromString:opString] doOperation];
+  return [[Operation operationFromString:opString] doOperation];
 }
 
 - (void)log:(NSString*)msg {
-    NSLog(@"%@", msg);
+  NSLog(@"%@", msg);
 }
 
 + (ScriptingController *)getInstance {
@@ -79,29 +80,27 @@ static NSDictionary *jsMethods;
 }
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel {
-    return [jsMethods objectForKey:NSStringFromSelector(sel)] == NULL;
+  return [jsMethods objectForKey:NSStringFromSelector(sel)] == NULL;
 }
 
-+ (NSString *)webScriptNameForSelector:(SEL)sel
-{
-    return [jsMethods objectForKey:NSStringFromSelector(sel)];
++ (NSString *)webScriptNameForSelector:(SEL)sel {
+  return [jsMethods objectForKey:NSStringFromSelector(sel)];
 }
 
 @end
 
-
 @implementation ScriptingOperation
 
 - (BOOL)doOperation {
-    [self.controller runFunction:self.function];
-    return YES;
+  [self.controller runFunction:self.function];
+  return YES;
 }
 
 + (ScriptingOperation *)operationWithController:(ScriptingController*)controller function:(WebScriptObject*)function {
-    ScriptingOperation *op = [[ScriptingOperation alloc] init];
-    [op setController:controller];
-    [op setFunction:function];
-    return op;
+  ScriptingOperation *op = [[ScriptingOperation alloc] init];
+  [op setController:controller];
+  [op setFunction:function];
+  return op;
 }
 
 @end
