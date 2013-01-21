@@ -31,20 +31,23 @@ static NSDictionary *jsMethods;
 
 - (ScriptingController *) init {
   self = [super init];
-  self.bindings = [NSMutableArray array];
-  self.operations = [NSMutableDictionary dictionary];
-  self.functions = [NSMutableDictionary dictionary];
-  webView = [[WebView alloc] init];
-  jsMethods = @{
-    NSStringFromSelector(@selector(log:)): @"log",
-    NSStringFromSelector(@selector(bindFunction:callback:repeat:)): @"bindFunction",
-    NSStringFromSelector(@selector(bindNative:callback:repeat:)): @"bindNative",
-    NSStringFromSelector(@selector(configFunction:callback:)): @"configFunction",
-    NSStringFromSelector(@selector(configNative:callback:)): @"configNative",
-    NSStringFromSelector(@selector(doOperation:)): @"doOperation",
-    NSStringFromSelector(@selector(operation:options:)): @"operation",
-    NSStringFromSelector(@selector(operationFromString:)): @"operationFromString",
-  };
+  if (self) {
+    inited = NO;
+    self.bindings = [NSMutableArray array];
+    self.operations = [NSMutableDictionary dictionary];
+    self.functions = [NSMutableDictionary dictionary];
+    webView = [[WebView alloc] init];
+    jsMethods = @{
+      NSStringFromSelector(@selector(log:)): @"log",
+      NSStringFromSelector(@selector(bindFunction:callback:repeat:)): @"bindFunction",
+      NSStringFromSelector(@selector(bindNative:callback:repeat:)): @"bindNative",
+      NSStringFromSelector(@selector(configFunction:callback:)): @"configFunction",
+      NSStringFromSelector(@selector(configNative:callback:)): @"configNative",
+      NSStringFromSelector(@selector(doOperation:)): @"doOperation",
+      NSStringFromSelector(@selector(operation:options:)): @"operation",
+      NSStringFromSelector(@selector(operationFromString:)): @"operationFromString",
+    };
+  }
   return self;
 }
 
@@ -88,14 +91,14 @@ static NSDictionary *jsMethods;
   }
 }
 
-- (void)loadConfig {
+- (void)initializeWebView {
+  if (inited) { return; }
   [[webView mainFrame] loadHTMLString:@"" baseURL:NULL];
   scriptObject = [webView windowScriptObject];
   [scriptObject setValue:self forKey:@"_controller"];
   @try {
     [self runFile:[[NSBundle mainBundle] pathForResource:@"underscore" ofType:@"js"]];
     [self runFile:[[NSBundle mainBundle] pathForResource:@"initialize" ofType:@"js"]];
-    [self runFile:[@"~/.slate.js" stringByExpandingTildeInPath]];
   } @catch (NSException *ex) {
     SlateLogger(@"   ERROR %@",[ex name]);
     NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
@@ -106,6 +109,25 @@ static NSDictionary *jsMethods;
       [NSApp terminate:nil];
     }
   }
+  inited = YES;
+}
+
+- (BOOL)loadConfigFileWithPath:(NSString *)path {
+  [self initializeWebView];
+  @try {
+    [self runFile:[path stringByExpandingTildeInPath]];
+  } @catch (NSException *ex) {
+    SlateLogger(@"   ERROR %@",[ex name]);
+    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
+    [alert setMessageText:[ex name]];
+    [alert setInformativeText:[ex reason]];
+    if ([alert runModal] == NSAlertFirstButtonReturn) {
+      SlateLogger(@"User selected exit");
+      [NSApp terminate:nil];
+    }
+    return NO;
+  }
+  return YES;
 }
 
 - (void)configFunction:(NSString *)key callback:(WebScriptObject *)callback {

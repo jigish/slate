@@ -27,12 +27,13 @@
   NSMutableArray *bindings;
   NSMutableDictionary *operations;
   NSMutableDictionary *functions;
+  BOOL inited;
 }
 @property NSMutableArray *bindings;
 @property NSMutableDictionary *operations;
 @property NSMutableDictionary *functions;
 
-- (void)loadConfig;
+- (BOOL)loadConfigFileWithPath:(NSString *)path;
 - (NSString *)addCallableFunction:(WebScriptObject *)function;
 - (id)runCallableFunction:(NSString *)key;
 + (ScriptingController *)getInstance;

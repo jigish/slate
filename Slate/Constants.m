@@ -326,6 +326,9 @@ NSInteger const MAIN_MENU_HEIGHT = 22;
 NSString *const MENU_SNAPSHOT = @"menuSnapshot"; // need to change this name.
 NSString *const UNDO_SNAPSHOT = @"_internal_UndoSnapshot";
 
+// File Extensions
+NSString *const EXT_JS = @".js";
+
 // Javascript Operation Options Hash Keys
 NSString *const OPT_STYLE = @"style";
 NSString *const OPT_DIRECTION = @"direction";

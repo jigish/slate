@@ -138,10 +138,13 @@ static SlateConfig *_instance = nil;
   [self setDefaultLayouts:[[NSMutableArray alloc] init]];
   [self setAliases:[[NSMutableDictionary alloc] init]];
 
-  if (![self loadConfigFileWithPath:@"~/.slate"]) {
-    SlateLogger(@"  ERROR Could not load ~/.slate");
+  BOOL loadedDefault = [self loadConfigFileWithPath:@"~/.slate"];
+  BOOL loadedJS = [self loadConfigFileWithPath:@"~/.slate.js"];
+
+  if (!loadedDefault && !loadedJS) {
+    SlateLogger(@"  ERROR Could not load ~/.slate or ~/.slate.js");
     NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Continue", @"Quit", nil]];
-    [alert setMessageText:@"Could not load ~/.slate"];
+    [alert setMessageText:@"Could not load ~/.slate or ~/.slate.js"];
     [alert setInformativeText:@"The default configuration will be used. You can find the default .slate file at https://github.com/jigish/slate/blob/master/Slate/default.slate"];
     if ([alert runModal] == NSAlertSecondButtonReturn) {
       SlateLogger(@"User selected exit");
@@ -178,6 +181,9 @@ static SlateConfig *_instance = nil;
   NSString *configFile = file;
   if ([file rangeOfString:SLASH].location != 0 && [file rangeOfString:TILDA].location != 0)
     configFile = [NSString stringWithFormat:@"~/%@", file];
+  if ([configFile hasSuffix:EXT_JS]) {
+    return [[ScriptingController getInstance] loadConfigFileWithPath:configFile];
+  }
   NSString *fileString = [NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:nil];
   return [self append:fileString];
 }

@@ -518,8 +518,6 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
   // Read Config
   [self loadConfig];
 
-  [[ScriptingController getInstance] loadConfig];
-
   // Register Hot Keys
   [self registerHotKeys];
 

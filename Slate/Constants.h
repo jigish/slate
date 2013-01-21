@@ -327,6 +327,9 @@ extern NSInteger const MAIN_MENU_HEIGHT;
 extern NSString *const MENU_SNAPSHOT;
 extern NSString *const UNDO_SNAPSHOT;
 
+// File Extensions
+extern NSString *const EXT_JS;
+
 // Javascript Operation Options Hash Keys
 extern NSString *const OPT_STYLE;
 extern NSString *const OPT_DIRECTION;
