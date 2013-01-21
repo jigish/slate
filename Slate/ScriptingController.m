@@ -61,7 +61,7 @@ static NSDictionary *jsMethods;
 }
 
 - (NSString *)genFuncKey {
-  return [NSString stringWithFormat:@"%ld", [functions count]];
+  return [NSString stringWithFormat:@"javascript:function[%ld]", [functions count]];
 }
 
 - (NSString *)addCallableFunction:(WebScriptObject *)function {
@@ -130,7 +130,7 @@ static NSDictionary *jsMethods;
 }
 
 - (NSString *)genOpKey {
-  return [NSString stringWithFormat:@"%ld", [operations count]];
+  return [NSString stringWithFormat:@"javascript:operation[%ld]", [operations count]];
 }
 
 - (NSString *)operation:(NSString*)name options:(WebScriptObject *)opts {
