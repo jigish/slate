@@ -93,4 +93,12 @@
       return new Operation(name, opts);
     },
   };
+
+  window.S = window.slate;
+  window.S.cfg = window.S.config;
+  window.S.cfga = window.S.configAll;
+  window.S.bnd = window.S.bind;
+  window.S.bnda = window.S.bindAll;
+  window.S.op = window.S.operation;
+  window.S.opstr = window.S.operationFromString;
 })(window._controller);
