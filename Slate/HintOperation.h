@@ -56,6 +56,7 @@
 - (void)activateHintKey:(NSInteger)hintId;
 - (BOOL)collidesWithExistingHint:(NSPoint)origin;
 
++ (id)hintOperation;
 + (id)hintOperationFromString:(NSString *)hintOperation;
 
 @end

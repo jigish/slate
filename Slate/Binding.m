@@ -152,7 +152,19 @@ static NSDictionary *dictionary = nil;
   if ([(SlateAppDelegate *)[NSApp delegate] hasUndoOperation] && [op shouldTakeUndoSnapshot]) {
     [[(SlateAppDelegate *)[NSApp delegate] undoSnapshotOperation] doOperation];
   }
-  return [op doOperation];
+  @try {
+    return [op doOperation];
+  } @catch (NSException *ex) {
+    SlateLogger(@"   ERROR %@",[ex name]);
+    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
+    [alert setMessageText:[ex name]];
+    [alert setInformativeText:[ex reason]];
+    if ([alert runModal] == NSAlertFirstButtonReturn) {
+      SlateLogger(@"User selected exit");
+      [NSApp terminate:nil];
+    }
+  }
+  return NO;
 }
 
 - (NSString *)modalHashKey {

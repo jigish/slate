@@ -34,6 +34,7 @@
 
 + (BOOL)activateLayout:(NSString *)name;
 + (BOOL)activateLayout:(NSString *)name screenWrapper:(ScreenWrapper *)sw;
++ (id)layoutOperation;
 + (id)layoutOperationFromString:(NSString *)layoutOperation;
 
 @end

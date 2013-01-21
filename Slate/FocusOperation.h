@@ -33,6 +33,7 @@
 
 - (id)initWithDirectionOrApp:(NSString *)s;
 
++ (id)focusOperation;
 + (id)focusOperationFromString:(NSString *)focusOperation;
 
 @end

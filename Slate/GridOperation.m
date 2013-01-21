@@ -38,11 +38,24 @@
 @property NSInteger height;
 @property NSString *key;
 
++ (ScreenConfig *)screenConfigFromDictionary:(NSDictionary *)dict key:(NSString *)key;
+
 @end
 
 @implementation ScreenConfig
 
 @synthesize width, height, key;
+
++ (ScreenConfig *)screenConfigFromDictionary:(NSDictionary *)dict key:(NSString *)key {
+  if ([dict objectForKey:WIDTH] == nil || [dict objectForKey:HEIGHT] == nil || key == nil) {
+    @throw([NSException exceptionWithName:@"Invalid Grid" reason:[NSString stringWithFormat:@"Invalid Grid '%@'", key] userInfo:nil]);
+  }
+  ScreenConfig *sc = [[ScreenConfig alloc] init];
+  [sc setWidth:[[dict objectForKey:WIDTH] integerValue]];
+  [sc setHeight:[[dict objectForKey:HEIGHT] integerValue]];
+  [sc setKey:key];
+  return sc;
+}
 
 @end
 
@@ -51,6 +64,16 @@
 @synthesize screenConfigs, grids, focusedWindow, padding;
 
 static const UInt32 ESC_GRID_ID = 10002;
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    [self setScreenConfigs:[NSMutableDictionary dictionary]];
+    [self setGrids:[NSMutableArray array]];
+    [self setPadding:2];
+  }
+  return self;
+}
 
 - (id)initWithScreenConfigs:(NSDictionary *)myScreenConfigs padding:(NSInteger)myPadding {
   self = [super init];
@@ -71,6 +94,7 @@ static const UInt32 ESC_GRID_ID = 10002;
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
+  [self evalOptions];
   [self setFocusedWindow:[[AccessibilityWrapper alloc] init]];
   NSInteger currentScreenId = [sw getScreenIdForPoint:[NSEvent mouseLocation]];
   [(SlateAppDelegate *)[NSApp delegate] setCurrentGridOperation:self];
@@ -151,6 +175,35 @@ static const UInt32 ESC_GRID_ID = 10002;
   MoveOperation *mo = [[MoveOperation alloc] initWithTopLeftEP:origin dimensionsEP:size screenId:screenId];
   [focusedWindow focus];
   [mo doOperation];
+}
+
+- (void)parseOption:(NSString *)name value:(id)value {
+  if (value == nil) { return; }
+  if ([name isEqualToString:OPT_PADDING]) {
+    // should be a string or integer
+    if (![value isKindOfClass:[NSString class]] && ![value isKindOfClass:[NSValue class]]) {
+      @throw([NSException exceptionWithName:@"Invalid Padding" reason:[NSString stringWithFormat:@"Invalid Padding '%@'", value] userInfo:nil]);
+    }
+    [self setPadding:[value integerValue]];
+  } else if ([name isEqualToString:OPT_GRIDS]) {
+    // should be a dictionary
+    if (![value isKindOfClass:[NSDictionary class]]) {
+      @throw([NSException exceptionWithName:@"Invalid Grids" reason:[NSString stringWithFormat:@"Invalid Grids '%@'", value] userInfo:nil]);
+    }
+    NSMutableDictionary *configs = [NSMutableDictionary dictionary];
+    for (NSString *screen in [value allKeys]) {
+      id dict = [value objectForKey:screen];
+      if (![dict isKindOfClass:[NSDictionary class]]) {
+        @throw([NSException exceptionWithName:@"Invalid Grid" reason:[NSString stringWithFormat:@"Invalid Grid '%@'", value] userInfo:nil]);
+      }
+      [configs setObject:[ScreenConfig screenConfigFromDictionary:dict key:screen] forKey:screen];
+    }
+    [self setScreenConfigs:configs];
+  }
+}
+
++ (id)gridOperation {
+  return [[GridOperation alloc] init];
 }
 
 + (id)gridOperationFromString:(NSString *) gridOperation {

@@ -28,6 +28,17 @@
 
 @synthesize command, args, waitForExit, currentPath;
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    [self setCommand:@""];
+    [self setArgs:[NSArray array]];
+    [self setWaitForExit:NO];
+    [self setCurrentPath:nil];
+  }
+  return self;
+}
+
 - (id)initWithCommand:(NSString *)theCommand args:(NSArray *)theArgs waitForExit:(BOOL)theWaitForExit currentPath:(NSString *)theCurrentPath {
   self = [super init];
   if (self) {
@@ -48,12 +59,54 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
+  [self evalOptions];
   NSTask *task = [ShellUtils run:[self command] args:[self args] wait:[self waitForExit] path:[self currentPath]];
   return task != nil;
 }
 
 - (BOOL)testOperation {
   return [ShellUtils commandExists:[self command]];
+}
+
+- (NSArray *)requiredOptions {
+  return [NSArray arrayWithObjects:OPT_COMMAND, nil];
+}
+
+- (void)parseOption:(NSString *)name value:(NSString *)value {
+  // all options should be strings
+  if (value == nil) { return; }
+  if ([name isEqualToString:OPT_COMMAND]) {
+    if (![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, value] userInfo:nil]);
+    }
+    NSMutableArray *commandAndArgsTokens = [NSMutableArray array];
+    [StringTokenizer tokenize:value into:commandAndArgsTokens];
+    if ([commandAndArgsTokens count] < 1) {
+      SlateLogger(@"ERROR: Invalid Shell Parameter '%@'", value);
+      @throw([NSException exceptionWithName:@"Invalid Shell Parameter" reason:[NSString stringWithFormat:@"Invalid Shell Parameter '%@'.", value] userInfo:nil]);
+    }
+    NSString *cmd = [commandAndArgsTokens objectAtIndex:0];
+    NSMutableArray *ars = [NSMutableArray array];
+    for (NSInteger i = 1; i < [commandAndArgsTokens count]; i++) {
+      [ars addObject:[commandAndArgsTokens objectAtIndex:i]];
+    }
+    [self setCommand:cmd];
+    [self setArgs:ars];
+  } else if ([name isEqualToString:OPT_WAIT]) {
+    if (![value isKindOfClass:[NSString class]] && ![value isKindOfClass:[NSValue class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, value] userInfo:nil]);
+    }
+    [self setWaitForExit:[value boolValue]];
+  } else if ([name isEqualToString:OPT_PATH]) {
+    if (![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, value] userInfo:nil]);
+    }
+    [self setCurrentPath:[value stringByExpandingTildeInPath]];
+  }
+}
+
++ (id)shellOperation {
+  return [[ShellOperation alloc] init];
 }
 
 + (id)shellOperationFromString:(NSString *)shellOperation {

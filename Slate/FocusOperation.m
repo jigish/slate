@@ -32,6 +32,10 @@
 
 - (id)init {
   self = [super init];
+  if (self) {
+    [self setDirection:DIRECTION_UNKNOWN];
+    [self setApp:nil];
+  }
   return self;
 }
 
@@ -70,6 +74,7 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
+  [self evalOptions];
   // App case
   if ([self app] != nil) {
     for (NSRunningApplication *runningApp in [RunningApplications getInstance]) {
@@ -185,6 +190,49 @@
   if ([self direction] == DIRECTION_UNKNOWN && [self app] == nil)
     @throw [NSException exceptionWithName:@"Unknown Direction" reason:@"direction" userInfo:nil];
   return YES;
+}
+
+- (NSString *)checkRequiredOptions:(NSDictionary *)_options {
+  if ([_options objectForKey:OPT_APP] == nil && [_options objectForKey:OPT_DIRECTION] == nil) {
+    return [[NSArray arrayWithObjects:OPT_APP, OPT_DIRECTION, nil] componentsJoinedByString:@" or "];
+  }
+  return nil;
+}
+
+- (void)parseOption:(NSString *)name value:(id)value {
+  if (value == nil) { return; }
+  if ([name isEqualToString:OPT_APP]) {
+    // should be string
+    if (![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:@"Invalid App" reason:[NSString stringWithFormat:@"Invalid App %@", value] userInfo:nil]);
+      return;
+    }
+    [self setApp:value];
+  } else if ([name isEqualToString:OPT_DIRECTION]) {
+    // should be a string
+    if (![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:@"Invalid Direction" reason:[NSString stringWithFormat:@"Invalid Direction %@", value] userInfo:nil]);
+      return;
+    }
+    if ([value isEqualToString:UP] || [value isEqualToString:ABOVE]) {
+      [self setDirection:DIRECTION_UP];
+    } else if ([value isEqualToString:DOWN] || [value isEqualToString:BELOW]) {
+      [self setDirection:DIRECTION_DOWN];
+    } else if ([value isEqualToString:LEFT]) {
+      [self setDirection:DIRECTION_LEFT];
+    } else if ([value isEqualToString:RIGHT]) {
+      [self setDirection:DIRECTION_RIGHT];
+    } else if ([value isEqualToString:BEHIND]) {
+      [self setDirection:DIRECTION_BEHIND];
+    } else {
+      @throw([NSException exceptionWithName:@"Invalid Direction" reason:[NSString stringWithFormat:@"Invalid Direction %@", value] userInfo:nil]);
+      return;
+    }
+  }
+}
+
++ (id)focusOperation {
+  return [[FocusOperation alloc] init];
 }
 
 + (id)focusOperationFromString:(NSString *)focusOperation {

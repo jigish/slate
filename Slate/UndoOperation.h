@@ -22,6 +22,7 @@
 
 @interface UndoOperation : ActivateSnapshotOperation
 
-+ (id)undoOperationFromString:(NSString *)undoOperation;
++ (id)undoOperation;
++ (id)undoOperationFromString:(NSString *)unused;
 
 @end

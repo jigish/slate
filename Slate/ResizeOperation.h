@@ -38,6 +38,7 @@
 - (NSSize)getDimensionsWithCurrentWindow:(NSRect)cWindowRect screenWrapper:(ScreenWrapper *)sw;
 - (NSInteger)resizeStringToInt:(NSString *)resize withValue:(NSInteger) val;
 
++ (id)resizeOperation;
 + (id)resizeOperationFromString:(NSString *)resizeOperation;
 
 @end

@@ -24,11 +24,17 @@
 
 @implementation UndoOperation
 
-+ (id)undoOperationFromString:(NSString *)undoOperation {
-  // undo
+- (NSArray *)requiredOptions {
+  return [NSArray array];
+}
+
++ (id)undoOperation {
   [(SlateAppDelegate *)[NSApp delegate] setHasUndoOperation:YES];
-  Operation *op = [[UndoOperation alloc] initWithName:UNDO_SNAPSHOT options:DELETE];
-  return op;
+  return [[UndoOperation alloc] initWithName:UNDO_SNAPSHOT options:DELETE];
+}
+
++ (id)undoOperationFromString:(NSString *)unused {
+  return [UndoOperation undoOperation];
 }
 
 @end

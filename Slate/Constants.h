@@ -326,3 +326,30 @@ extern NSInteger const MAIN_MENU_HEIGHT;
 // Internal Snapshots
 extern NSString *const MENU_SNAPSHOT;
 extern NSString *const UNDO_SNAPSHOT;
+
+// Javascript Operation Options Hash Keys
+extern NSString *const OPT_STYLE;
+extern NSString *const OPT_DIRECTION;
+extern NSString *const OPT_SCREEN;
+extern NSString *const OPT_X;
+extern NSString *const OPT_Y;
+extern NSString *const OPT_WIDTH;
+extern NSString *const OPT_HEIGHT;
+extern NSString *const OPT_ANCHOR;
+extern NSString *const OPT_APP;
+extern NSString *const OPT_COMMAND;
+extern NSString *const OPT_WAIT;
+extern NSString *const OPT_PATH;
+extern NSString *const OPT_NAME;
+extern NSString *const OPT_CHARACTERS;
+extern NSString *const OPT_PADDING;
+extern NSString *const OPT_GRIDS;
+extern NSString *const OPT_BACK;
+extern NSString *const OPT_QUIT;
+extern NSString *const OPT_FORCE_QUIT;
+extern NSString *const OPT_HIDE;
+extern NSString *const OPT_DELETE;
+extern NSString *const OPT_ALL;
+extern NSString *const OPT_SAVE;
+extern NSString *const OPT_STACK;
+extern NSString *const OPT_OPERATIONS;

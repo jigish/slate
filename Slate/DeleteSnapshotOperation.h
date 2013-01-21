@@ -31,6 +31,7 @@
 
 - (id)initWithName:(NSString *)theName options:(NSString *)options;
 
++ (id)deleteSnapshotOperation;
 + (id)deleteSnapshotOperationFromString:(NSString *)deleteSnapshotOperation;
 
 @end

@@ -325,3 +325,30 @@ NSInteger const MAIN_MENU_HEIGHT = 22;
 // Internal Snapshots
 NSString *const MENU_SNAPSHOT = @"menuSnapshot"; // need to change this name.
 NSString *const UNDO_SNAPSHOT = @"_internal_UndoSnapshot";
+
+// Javascript Operation Options Hash Keys
+NSString *const OPT_STYLE = @"style";
+NSString *const OPT_DIRECTION = @"direction";
+NSString *const OPT_SCREEN = @"screen";
+NSString *const OPT_X = @"x";
+NSString *const OPT_Y = @"y";
+NSString *const OPT_WIDTH = @"width";
+NSString *const OPT_HEIGHT = @"height";
+NSString *const OPT_ANCHOR = @"anchor";
+NSString *const OPT_APP = @"app";
+NSString *const OPT_COMMAND = @"command";
+NSString *const OPT_WAIT = @"wait";
+NSString *const OPT_PATH = @"path";
+NSString *const OPT_NAME = @"name";
+NSString *const OPT_CHARACTERS = @"characters";
+NSString *const OPT_PADDING = @"padding";
+NSString *const OPT_GRIDS = @"grids";
+NSString *const OPT_BACK = @"back";
+NSString *const OPT_QUIT = @"quit";
+NSString *const OPT_FORCE_QUIT = @"force-quit";
+NSString *const OPT_HIDE = @"hide";
+NSString *const OPT_DELETE = @"delete";
+NSString *const OPT_ALL = @"all";
+NSString *const OPT_SAVE = @"save";
+NSString *const OPT_STACK = @"stack";
+NSString *const OPT_OPERATIONS = @"operations";

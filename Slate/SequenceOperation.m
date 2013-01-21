@@ -22,6 +22,7 @@
 #import "SlateLogger.h"
 #import "StringTokenizer.h"
 #import "Constants.h"
+#import "ScriptingController.h"
 
 @implementation SequenceOperation
 
@@ -29,16 +30,17 @@
 
 - (id)init {
   self = [super init];
+  if (self) {
+    [self setOperations:[NSArray array]];
+  }
   return self;
 }
 
 - (id)initWithArray:(NSArray *)opArray {
   self = [self init];
-
   if (self) {
     [self setOperations:opArray];
   }
-
   return self;
 }
 
@@ -69,6 +71,55 @@
     }
   }
   return success;
+}
+
+- (NSArray *)requiredOptions {
+  return [NSArray arrayWithObject:OPT_OPERATIONS];
+}
+
+- (void)parseOption:(NSString *)_name value:(id)value {
+  if (value == nil) { return; }
+  if ([_name isEqualToString:OPT_OPERATIONS]) {
+    if (![value isKindOfClass:[NSArray class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+      return;
+    }
+    NSMutableArray *ops = [NSMutableArray array];
+    for (id key in value) {
+      if (![key isKindOfClass:[NSString class]] && ![key isKindOfClass:[NSArray class]]) {
+        @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+        continue;
+      }
+      NSMutableArray *innerOps = [NSMutableArray array];
+      if ([key isKindOfClass:[NSString class]]) {
+        Operation *op = [[[ScriptingController getInstance] operations] objectForKey:key];
+        if (op == nil) {
+          @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+          continue;
+        }
+        [innerOps addObject:op];
+      } else if ([key isKindOfClass:[NSArray class]]) {
+        for (id innerKey in key) {
+          if (![innerKey isKindOfClass:[NSString class]]) {
+            @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+            continue;
+          }
+          Operation *op = [[[ScriptingController getInstance] operations] objectForKey:innerKey];
+          if (op == nil) {
+            @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+            continue;
+          }
+          [innerOps addObject:op];
+        }
+      }
+      [ops addObject:innerOps];
+    }
+    [self setOperations:ops];
+  }
+}
+
++ (id)sequenceOperation {
+  return [[SequenceOperation alloc] init];
 }
 
 + (id)sequenceOperationFromString:(NSString *)sequenceOperation {

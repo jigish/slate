@@ -34,6 +34,11 @@
 
 - (id)init {
   self = [super init];
+  if (self) {
+    [self setAnchor:ANCHOR_TOP_LEFT];
+    [self setXResize:@"+0"];
+    [self setYResize:@"+0"];
+  }
   return self;
 }
 
@@ -60,6 +65,7 @@
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = NO;
+  [self evalOptions];
   NSPoint cTopLeft = [aw getCurrentTopLeft];
   NSSize cSize = [aw getCurrentSize];
   NSRect cWindowRect = NSMakeRect(cTopLeft.x, cTopLeft.y, cSize.width, cSize.height);
@@ -142,6 +148,36 @@
   NSInteger dimX = cSize.width + [self resizeStringToInt:xResize withValue:sizeX];
   NSInteger dimY = cSize.height + [self resizeStringToInt:yResize withValue:sizeY];
   return NSMakeSize(dimX,dimY);
+}
+
+- (void)parseOption:(NSString *)name value:(NSString *)value {
+  // all options should be strings
+  if (value == nil) { return; }
+  if (![value isKindOfClass:[NSString class]]) {
+    @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, value] userInfo:nil]);
+  }
+  if ([name isEqualToString:OPT_WIDTH]) {
+    [self setXResize:value];
+  } else if ([name isEqualToString:OPT_HEIGHT]) {
+    [self setYResize:value];
+  } else if ([name isEqualToString:OPT_ANCHOR]) {
+    if ([value isEqualToString:TOP_LEFT]) {
+      [self setAnchor:ANCHOR_TOP_LEFT];
+    } else if ([value isEqualToString:TOP_RIGHT]) {
+      [self setAnchor:ANCHOR_TOP_RIGHT];
+    } else if ([value isEqualToString:BOTTOM_LEFT]) {
+      [self setAnchor:ANCHOR_BOTTOM_LEFT];
+    } else if ([value isEqualToString:BOTTOM_RIGHT]) {
+      [self setAnchor:ANCHOR_BOTTOM_RIGHT];
+    } else {
+      SlateLogger(@"ERROR: Unrecognized anchor '%@'", value);
+      @throw([NSException exceptionWithName:@"Unrecognized Anchor" reason:[NSString stringWithFormat:@"ERROR: Unrecognized anchor '%@'", value] userInfo:nil]);
+    }
+  }
+}
+
++ (id)resizeOperation {
+  return [[ResizeOperation alloc] init];
 }
 
 + (id)resizeOperationFromString:(NSString *)resizeOperation {

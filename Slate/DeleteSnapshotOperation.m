@@ -36,12 +36,12 @@
   return self;
 }
 
-- (id)initWithName:(NSString *)theName options:(NSString *)options {
+- (id)initWithName:(NSString *)theName options:(NSString *)_options {
   self = [self init];
   if (self) {
     [self setName:theName];
-    if (options) {
-      NSArray *optionsTokens = [options componentsSeparatedByString:SEMICOLON];
+    if (_options) {
+      NSArray *optionsTokens = [_options componentsSeparatedByString:SEMICOLON];
       for (NSInteger i = 0; i < [optionsTokens count]; i++) {
         NSString *option = [optionsTokens objectAtIndex:i];
         if ([ALL isEqualToString:option]) {
@@ -61,12 +61,38 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
+  [self evalOptions];
   [[SlateConfig getInstance] deleteSnapshot:name pop:pop];
   return YES;
 }
 
 - (BOOL)testOperation {
   return YES;
+}
+
+- (NSArray *)requiredOptions {
+  return [NSArray arrayWithObject:OPT_NAME];
+}
+
+- (void)parseOption:(NSString *)_name value:(id)value {
+  if (value == nil) { return; }
+  if ([_name isEqualToString:OPT_NAME]) {
+    if (![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+      return;
+    }
+    [self setName:_name];
+  } else if ([_name isEqualToString:OPT_ALL]) {
+    if (![value isKindOfClass:[NSValue class]] && ![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+      return;
+    }
+    [self setPop:![value boolValue]];
+  }
+}
+
++ (id)deleteSnapshotOperation {
+  return [[DeleteSnapshotOperation alloc] init];
 }
 
 + (id)deleteSnapshotOperationFromString:(NSString *)deleteSnapshotOperation {

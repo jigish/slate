@@ -36,6 +36,7 @@
 - (NSInteger)getNextOperation:(AccessibilityWrapper *)aw;
 - (void)setNextOperation:(AccessibilityWrapper *)aw nextOp:(NSNumber *)op;
 
++ (id)chainOperation;
 + (id)chainOperationFromString:(NSString *)chainOperation;
 
 @end

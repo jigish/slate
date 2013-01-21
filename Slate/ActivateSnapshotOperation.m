@@ -36,16 +36,17 @@
   self = [super init];
   if (self) {
     del = NO;
+    [self setName:nil];
   }
   return self;
 }
 
-- (id)initWithName:(NSString *)theName options:(NSString *)options {
+- (id)initWithName:(NSString *)theName options:(NSString *)_options {
   self = [self init];
   if (self) {
     [self setName:theName];
-    if (options) {
-      NSArray *optionsTokens = [options componentsSeparatedByString:SEMICOLON];
+    if (_options) {
+      NSArray *optionsTokens = [_options componentsSeparatedByString:SEMICOLON];
       for (NSInteger i = 0; i < [optionsTokens count]; i++) {
         NSString *option = [optionsTokens objectAtIndex:i];
         if ([DELETE isEqualToString:option]) {
@@ -65,11 +66,33 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
+  [self evalOptions];
   return [ActivateSnapshotOperation activateSnapshot:name remove:del];
 }
 
 - (BOOL)testOperation {
   return YES;
+}
+
+- (NSArray *)requiredOptions {
+  return [NSArray arrayWithObject:OPT_NAME];
+}
+
+- (void)parseOption:(NSString *)_name value:(id)value {
+  if (value == nil) { return; }
+  if ([_name isEqualToString:OPT_NAME]) {
+    if (![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+      return;
+    }
+    [self setName:_name];
+  } else if ([_name isEqualToString:OPT_DELETE]) {
+    if (![value isKindOfClass:[NSValue class]] && ![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+      return;
+    }
+    [self setDel:[value boolValue]];
+  }
 }
 
 + (BOOL)activateSnapshot:(NSString *)name remove:(BOOL)del {
@@ -117,6 +140,10 @@
     }
   }
   return YES;
+}
+
++ (id)activateSnapshotOperation {
+  return [[ActivateSnapshotOperation alloc] init];
 }
 
 + (id)activateSnapshotOperationFromString:(NSString *)activateSnapshotOperation {

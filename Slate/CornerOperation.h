@@ -1,8 +1,8 @@
 //
-//  RelaunchOperation.h
+//  CornerOperation.h
 //  Slate
 //
-//  Created by Jigish Patel on 10/11/12.
+//  Created by Jigish Patel on 1/20/13.
 //  Copyright 2011 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -18,11 +18,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
-#import "Operation.h"
+#import "MoveOperation.h"
 
-@interface RelaunchOperation : Operation
+@interface CornerOperation : MoveOperation
 
-+ (id)relaunchOperation;
-+ (id)relaunchOperationFromString:(NSString *)unused;
++ (id)cornerOperation;
++ (id)cornerOperationFromString:(NSString *)cornerOperation;
 
 @end

@@ -33,6 +33,9 @@
 
 - (id)init {
   self = [super init];
+  if (self) {
+    [self setName:nil];
+  }
   return self;
 }
 
@@ -55,6 +58,7 @@
 
 // Note that the AccessibilityWrapper is never used because layouts use multiple applications
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
+  [self evalOptions];
   return [LayoutOperation activateLayout:[self name] screenWrapper:sw];
 }
 
@@ -77,6 +81,21 @@
     }
   }
   return success;
+}
+
+- (NSArray *)requiredOptions {
+  return [NSArray arrayWithObjects:OPT_NAME, nil];
+}
+
+- (void)parseOption:(NSString *)_name value:(id)value {
+  if (value == nil) { return; }
+  if ([_name isEqualToString:OPT_NAME]) {
+    if (![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+      return;
+    }
+    [self setName:value];
+  }
 }
 
 + (BOOL)activateLayout:(NSString *)name screenWrapper:(ScreenWrapper *)sw {
@@ -257,6 +276,10 @@
 + (BOOL)activateLayout:(NSString *)name {
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   return [LayoutOperation activateLayout:name screenWrapper:sw];
+}
+
++ (id)layoutOperation {
+  return [[LayoutOperation alloc] init];
 }
 
 + (id)layoutOperationFromString:(NSString *)layoutOperation {

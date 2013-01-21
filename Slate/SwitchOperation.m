@@ -63,7 +63,7 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
   return self;
 }
 
-- (id)initWithOptions:(NSString *)options {
+- (id)initWithOptions:(NSString *)_options {
   self = [super init];
   if (self) {
     backKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_BACK_KEY] unsignedIntValue];
@@ -71,7 +71,7 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
     fquitKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_FQUIT_KEY] unsignedIntValue];
     hideKeyCode = [[[Binding asciiToCodeDict] objectForKey:DEFAULT_HIDE_KEY] unsignedIntValue];
     NSMutableArray *optionsArr = [NSMutableArray array];
-    [StringTokenizer tokenize:options into:optionsArr];
+    [StringTokenizer tokenize:_options into:optionsArr];
     for (NSString *option in optionsArr) {
       NSArray *optionTokens = [option componentsSeparatedByString:COLON];
       if ([optionTokens count] != 2) continue;
@@ -108,6 +108,7 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
+  [self evalOptions];
   apps = [NSArray arrayWithArray:[[RunningApplications getInstance] apps]];
   for (NSRunningApplication *app in apps) {
     [appsToQuit addObject:[NSNumber numberWithBool:NO]];
@@ -321,7 +322,27 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
   [switchersToViews removeAllObjects];
 }
 
-+ (id)switchOperationFromString:(NSString *)hintOperation {
+- (void)parseOption:(NSString *)name value:(id)value {
+  if (value == nil) { return; }
+  if (![value isKindOfClass:[NSString class]]) {
+    @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, value] userInfo:nil]);
+  }
+  if ([name isEqualToString:OPT_BACK]) {
+    backKeyCode = [[[Binding asciiToCodeDict] objectForKey:value] unsignedIntValue];
+  } else if ([name isEqualToString:OPT_QUIT]) {
+    quitKeyCode = [[[Binding asciiToCodeDict] objectForKey:value] unsignedIntValue];
+  } else if ([name isEqualToString:OPT_FORCE_QUIT]) {
+    fquitKeyCode = [[[Binding asciiToCodeDict] objectForKey:value] unsignedIntValue];
+  } else if ([name isEqualToString:OPT_HIDE]) {
+    hideKeyCode = [[[Binding asciiToCodeDict] objectForKey:value] unsignedIntValue];
+  }
+}
+
++ (id)switchOperation {
+  return [[SwitchOperation alloc] init];
+}
+
++ (id)switchOperationFromString:(NSString *)switchOperation {
   // switch option+
   // options:
   //   back:[key code]
@@ -329,7 +350,7 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
   //   force-quit:[key code]
   //   hide:[key code]
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
-  [StringTokenizer tokenize:hintOperation into:tokens maxTokens:2];
+  [StringTokenizer tokenize:switchOperation into:tokens maxTokens:2];
   Operation *op = nil;
   if ([tokens count] > 1) {
     op = [[SwitchOperation alloc] initWithOptions:[tokens objectAtIndex:1]];

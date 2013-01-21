@@ -30,10 +30,10 @@
 }
 
 - (BOOL)doOperation {
-  SlateLogger(@"----------------- Begin Focus Operation -----------------");
+  SlateLogger(@"----------------- Begin Relaunch Operation -----------------");
   // We don't use the passed in AccessibilityWrapper or ScreenWrapper so they are nil. No need to waste time creating them here.
   BOOL success = [self doOperationWithAccessibilityWrapper:nil screenWrapper:nil];
-  SlateLogger(@"-----------------  End Focus Operation  -----------------");
+  SlateLogger(@"-----------------  End Relaunch Operation  -----------------");
   return success;
 }
 
@@ -46,9 +46,12 @@
   return YES;
 }
 
++ (id)relaunchOperation {
+  return [[RelaunchOperation alloc] init];
+}
+
 + (id)relaunchOperationFromString:(NSString *)unused {
-  Operation *op = [[RelaunchOperation alloc] init];
-  return op;
+  return [RelaunchOperation relaunchOperation];
 }
 
 @end

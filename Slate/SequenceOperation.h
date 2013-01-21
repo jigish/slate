@@ -28,6 +28,7 @@
 
 - (id)initWithArray:(NSArray *)opArray;
 
++ (id)sequenceOperation;
 + (id)sequenceOperationFromString:(NSString *)sequenceOperation;
 
 @end

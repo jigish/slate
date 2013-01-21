@@ -257,6 +257,7 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
   if (hideTimer != nil) return YES;
+  [self evalOptions];
   [(SlateAppDelegate *)[NSApp delegate] setCurrentHintOperation:self];
   ignoreHidden = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
   [self setCurrentHint:0];
@@ -386,6 +387,21 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
   [aw focus];
   [self killHints];
   SlateLogger(@"focus fail");
+}
+
+- (void)parseOption:(NSString *)name value:(id)value {
+  if (value == nil) { return; }
+  if ([name isEqualToString:OPT_CHARACTERS]) {
+    if (![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, value] userInfo:nil]);
+      return;
+    }
+    [self setHintCharacters:value];
+  }
+}
+
++ (id)hintOperation {
+  return [[HintOperation alloc] init];
 }
 
 + (id)hintOperationFromString:(NSString *)hintOperation {

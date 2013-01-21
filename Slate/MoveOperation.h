@@ -41,10 +41,7 @@
 - (NSPoint)getTopLeftWithCurrentWindowRect:(NSRect)cWindowRect newSize:(NSSize)nSize screenWrapper:(ScreenWrapper *)sw;
 - (NSSize)getDimensionsWithCurrentWindowRect:(NSRect)cWindowRect screenWrapper:(ScreenWrapper *)sw;
 
++ (id)moveOperation;
 + (id)moveOperationFromString:(NSString *)moveOperation;
-+ (id)pushOperationFromString:(NSString *)pushOperation;
-+ (id)nudgeOperationFromString:(NSString *)nudgeOperation;
-+ (id)throwOperationFromString:(NSString *)throwOperation;
-+ (id)cornerOperationFromString:(NSString *)cornerOperation;
 
 @end

@@ -24,6 +24,7 @@
 #import "StringTokenizer.h"
 #import "Constants.h"
 #import "SlateLogger.h"
+#import "ScriptingController.h"
 
 @implementation ChainOperation
 
@@ -33,19 +34,18 @@
 - (id)init {
   self = [super init];
   if (self) {
-    [self setCurrentOp:0];
+    [self setCurrentOp:[[NSMutableDictionary alloc] initWithCapacity:10]];
+    [self setOperations:[NSArray array]];
   }
   return self;
 }
 
 - (id)initWithArray:(NSArray *)opArray {
   self = [self init];
-
   if (self) {
     [self setCurrentOp:[[NSMutableDictionary alloc] initWithCapacity:10]];
     [self setOperations:opArray];
   }
-
   return self;
 }
 
@@ -61,6 +61,7 @@
 
 - (BOOL) doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = NO;
+  [self evalOptions];
   NSInteger opRun = 0;
   if ([aw inited]) {
     opRun = [self getNextOperation:aw];
@@ -106,6 +107,38 @@
 - (void)setNextOperation:(AccessibilityWrapper *)aw nextOp:(NSNumber *)op {
   WindowState *ws = [[WindowState alloc] init:aw];
   [currentOp setObject:op forKey:ws];
+}
+
+- (NSArray *)requiredOptions {
+  return [NSArray arrayWithObject:OPT_OPERATIONS];
+}
+
+- (void)parseOption:(NSString *)_name value:(id)value {
+  if (value == nil) { return; }
+  if ([_name isEqualToString:OPT_OPERATIONS]) {
+    if (![value isKindOfClass:[NSArray class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+      return;
+    }
+    NSMutableArray *ops = [NSMutableArray array];
+    for (id key in value) {
+      if (![key isKindOfClass:[NSString class]]) {
+        @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+        continue;
+      }
+      Operation *op = [[[ScriptingController getInstance] operations] objectForKey:key];
+      if (op == nil) {
+        @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+        continue;
+      }
+      [ops addObject:op];
+    }
+    [self setOperations:ops];
+  }
+}
+
++ (id)chainOperation {
+  return [[ChainOperation alloc] init];
 }
 
 + (id)chainOperationFromString:(NSString *)chainOperation {

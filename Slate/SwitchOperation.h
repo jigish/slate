@@ -39,6 +39,8 @@
 
 - (void)activateSwitchKey:(EventHotKeyID)key isRepeat:(BOOL)isRepeat;
 - (BOOL)modifiersChanged:(UInt32)was new:(UInt32)new;
-+ (id)switchOperationFromString:(NSString *)hintOperation;
+
++ (id)switchOperation;
++ (id)switchOperationFromString:(NSString *)switchOperation;
 
 @end

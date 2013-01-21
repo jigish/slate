@@ -37,17 +37,18 @@
     saveToDisk = NO;
     isStack = NO;
     stackSize = [[SlateConfig getInstance] getIntegerConfig:SNAPSHOT_MAX_STACK_SIZE];
+    [self setName:nil];
   }
   return self;
 }
 
-- (id)initWithName:(NSString *)theName options:(NSString *)options {
+- (id)initWithName:(NSString *)theName options:(NSString *)_options {
   self = [self init];
   if (self) {
     [self setStackSize:[[SlateConfig getInstance] getIntegerConfig:SNAPSHOT_MAX_STACK_SIZE]];
     [self setName:theName];
-    if (options) {
-      NSArray *optionsTokens = [options componentsSeparatedByString:SEMICOLON];
+    if (_options) {
+      NSArray *optionsTokens = [_options componentsSeparatedByString:SEMICOLON];
       for (NSInteger i = 0; i < [optionsTokens count]; i++) {
         NSString *option = [optionsTokens objectAtIndex:i];
         if ([SAVE_TO_DISK isEqualToString:option]) {
@@ -69,6 +70,7 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
+  [self evalOptions];
   Snapshot *snapshot = [[Snapshot alloc] init];
   for (NSRunningApplication *app in [RunningApplications getInstance]) {
     NSString *appName = [app localizedName];
@@ -94,6 +96,37 @@
 
 - (BOOL)testOperation {
   return YES;
+}
+
+- (NSArray *)requiredOptions {
+  return [NSArray arrayWithObject:OPT_NAME];
+}
+
+- (void)parseOption:(NSString *)_name value:(id)value {
+  if (value == nil) { return; }
+  if ([_name isEqualToString:OPT_NAME]) {
+    if (![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+      return;
+    }
+    [self setName:_name];
+  } else if ([_name isEqualToString:OPT_SAVE]) {
+    if (![value isKindOfClass:[NSValue class]] && ![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+      return;
+    }
+    [self setSaveToDisk:[value boolValue]];
+  } else if ([_name isEqualToString:OPT_STACK]) {
+    if (![value isKindOfClass:[NSValue class]] && ![value isKindOfClass:[NSString class]]) {
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+      return;
+    }
+    [self setIsStack:[value boolValue]];
+  }
+}
+
++ (id)snapshotOperation {
+  return [[SnapshotOperation alloc] init];
 }
 
 + (id)snapshotOperationFromString:(NSString *)snapshotOperation {

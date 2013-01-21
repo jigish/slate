@@ -68,6 +68,10 @@
 		3BFC8A6D15FABC9700B16139 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A6C15FABC9600B16139 /* GridView.m */; };
 		3BFC8A7015FABCBE00B16139 /* GridWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A6F15FABCBD00B16139 /* GridWindow.m */; };
 		3BFC8A7315FE5CD700B16139 /* GridCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A7215FE5CD700B16139 /* GridCellView.m */; };
+		3BFF7D7116AC784B00A8CB0E /* PushOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFF7D7016AC784A00A8CB0E /* PushOperation.m */; };
+		3BFF7D7516AC7B3D00A8CB0E /* NudgeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFF7D7416AC7B3C00A8CB0E /* NudgeOperation.m */; };
+		3BFF7D7816AC7E2900A8CB0E /* ThrowOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFF7D7716AC7E2800A8CB0E /* ThrowOperation.m */; };
+		3BFF7D7B16AC7FF600A8CB0E /* CornerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFF7D7A16AC7FF600A8CB0E /* CornerOperation.m */; };
 		4747E1EF13877C160005180C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4747E1EE13877C150005180C /* icon.icns */; };
 		4786D53513882381004554B1 /* ASCIIToCode.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4786D53413882381004554B1 /* ASCIIToCode.plist */; };
 		47C4A2941384E8890066B6DE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C4A2931384E8890066B6DE /* Cocoa.framework */; };
@@ -225,6 +229,14 @@
 		3BFC8A6F15FABCBD00B16139 /* GridWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridWindow.m; sourceTree = "<group>"; };
 		3BFC8A7115FE5CD600B16139 /* GridCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridCellView.h; sourceTree = "<group>"; };
 		3BFC8A7215FE5CD700B16139 /* GridCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCellView.m; sourceTree = "<group>"; };
+		3BFF7D6F16AC784A00A8CB0E /* PushOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushOperation.h; sourceTree = "<group>"; };
+		3BFF7D7016AC784A00A8CB0E /* PushOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushOperation.m; sourceTree = "<group>"; };
+		3BFF7D7316AC7B3C00A8CB0E /* NudgeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NudgeOperation.h; sourceTree = "<group>"; };
+		3BFF7D7416AC7B3C00A8CB0E /* NudgeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NudgeOperation.m; sourceTree = "<group>"; };
+		3BFF7D7616AC7E2800A8CB0E /* ThrowOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThrowOperation.h; sourceTree = "<group>"; };
+		3BFF7D7716AC7E2800A8CB0E /* ThrowOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThrowOperation.m; sourceTree = "<group>"; };
+		3BFF7D7916AC7FF500A8CB0E /* CornerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CornerOperation.h; sourceTree = "<group>"; };
+		3BFF7D7A16AC7FF600A8CB0E /* CornerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CornerOperation.m; sourceTree = "<group>"; };
 		4747E1EE13877C150005180C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Slate/icon.icns; sourceTree = "<group>"; };
 		4786D53413882381004554B1 /* ASCIIToCode.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode.plist; sourceTree = "<group>"; };
 		47C4A28F1384E8890066B6DE /* Slate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Slate.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -384,6 +396,8 @@
 				3BC9E96E15005925002FD1FA /* ActivateSnapshotOperation.m */,
 				3BDC2B591391C55400B0D151 /* ChainOperation.h */,
 				3BDC2B5A1391C55400B0D151 /* ChainOperation.m */,
+				3BFF7D7916AC7FF500A8CB0E /* CornerOperation.h */,
+				3BFF7D7A16AC7FF600A8CB0E /* CornerOperation.m */,
 				3BD8191B14FDC0CE003D63BC /* DeleteSnapshotOperation.h */,
 				3BD8191C14FDC0CE003D63BC /* DeleteSnapshotOperation.m */,
 				3BCE40F313B15FF300804615 /* FocusOperation.h */,
@@ -406,8 +420,12 @@
 				3B40AC2313A743AF006C9A5C /* LayoutOperation.m */,
 				47C4A2D21384F4A60066B6DE /* MoveOperation.h */,
 				47C4A2D31384F4A60066B6DE /* MoveOperation.m */,
+				3BFF7D7316AC7B3C00A8CB0E /* NudgeOperation.h */,
+				3BFF7D7416AC7B3C00A8CB0E /* NudgeOperation.m */,
 				47C4A2CF1384F3E10066B6DE /* Operation.h */,
 				47C4A2D01384F3E10066B6DE /* Operation.m */,
+				3BFF7D6F16AC784A00A8CB0E /* PushOperation.h */,
+				3BFF7D7016AC784A00A8CB0E /* PushOperation.m */,
 				3B883A0B1627725200FF3D8C /* RelaunchOperation.h */,
 				3B883A0C1627725200FF3D8C /* RelaunchOperation.m */,
 				3B7EB3A5138F3F6800EBEC2B /* ResizeOperation.h */,
@@ -428,6 +446,8 @@
 				3B4CDD02150AD68000B819E2 /* SwitchView.m */,
 				3B4CDD04150AD69500B819E2 /* SwitchWindow.h */,
 				3B4CDD05150AD69500B819E2 /* SwitchWindow.m */,
+				3BFF7D7616AC7E2800A8CB0E /* ThrowOperation.h */,
+				3BFF7D7716AC7E2800A8CB0E /* ThrowOperation.m */,
 				3B5B1B7A1665871D00D5B1B5 /* UndoOperation.h */,
 				3B5B1B7B1665871D00D5B1B5 /* UndoOperation.m */,
 				3BF57C9C16216C2200C0F89B /* VisibilityOperation.h */,
@@ -738,6 +758,10 @@
 				3AA7D09516A6EE0200C81A67 /* ScriptingController.m in Sources */,
 				3AA7D09B16A6FAE100C81A67 /* initialize.js in Sources */,
 				3B38E04716AB8B3500603901 /* underscore.js in Sources */,
+				3BFF7D7116AC784B00A8CB0E /* PushOperation.m in Sources */,
+				3BFF7D7516AC7B3D00A8CB0E /* NudgeOperation.m in Sources */,
+				3BFF7D7816AC7E2900A8CB0E /* ThrowOperation.m in Sources */,
+				3BFF7D7B16AC7FF600A8CB0E /* CornerOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

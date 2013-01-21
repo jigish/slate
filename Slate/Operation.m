@@ -39,15 +39,25 @@
 #import "ShellOperation.h"
 #import "UndoOperation.h"
 #import "SlateConfig.h"
+#import <WebKit/WebKit.h>
+#import "ScriptingController.h"
+#import "CornerOperation.h"
+#import "ThrowOperation.h"
+#import "NudgeOperation.h"
+#import "PushOperation.h"
 
 @implementation Operation
 
 @synthesize opName;
+@synthesize options;
+@synthesize dynamicOptions;
 
 - (id)init {
   self = [super init];
   if (self) {
     [self setOpName:nil];
+    [self setOptions:[NSMutableDictionary dictionary]];
+    [self setDynamicOptions:[NSMutableDictionary dictionary]];
   }
 
   return self;
@@ -70,6 +80,69 @@
   return [[[SlateConfig getInstance] getConfig:UNDO_OPS] rangeOfString:[self opName]].location != NSNotFound;
 }
 
+- (NSArray *)requiredOptions {
+  return [NSArray array];
+}
+
+- (NSString *)checkRequiredOptions:(NSDictionary *)_options {
+  for (NSString *key in [self requiredOptions]) {
+    id opt = [_options objectForKey:key];
+    if (opt == nil) {
+      return key;
+    }
+  }
+  return nil;
+}
+
+- (void)initOptions:(NSDictionary *)_options {
+  NSString *missing = [self checkRequiredOptions:_options];
+  if (missing != nil) {
+    SlateLogger(@"ERROR: Missing Option in %@", [self opName]);
+    @throw([NSException exceptionWithName:@"Missing Option" reason:[NSString stringWithFormat:@"Missing option '%@' in '%@'", missing, [self opName]] userInfo:nil]);
+    return;
+  }
+  [self beforeInitOptions];
+  for (NSString *key in [_options allKeys]) {
+    id opt = [_options objectForKey:key];
+    if (opt == nil) { continue; }
+    if ([opt isKindOfClass:[NSString class]] || [opt isKindOfClass:[NSValue class]] ||
+        [opt isKindOfClass:[NSDictionary class]] || [opt isKindOfClass:[NSArray class]]) {
+      [self.options setObject:opt forKey:key];
+      [self parseOption:key value:[[self options] objectForKey:key]];
+    } else if ([opt isKindOfClass:[WebScriptObject class]]) {
+      // assume this is a function (otherwise it would have been converted)
+      NSString *jsKey = [[ScriptingController getInstance] addCallableFunction:opt];
+      [self.dynamicOptions setObject:jsKey forKey:key];
+    } else {
+      [self.options setObject:[NSString stringWithFormat:@"%@", opt] forKey:key];
+      [self parseOption:key value:[[self options] objectForKey:key]];
+    }
+  }
+  if ([[self dynamicOptions] count] == 0) { [self afterEvalOptions]; };
+}
+
+- (void)beforeInitOptions {
+  // OVERRIDE - runs before any options are set
+}
+
+- (void)parseOption:(NSString *)name value:(id)value {
+  // OVERRIDE - runs while setting options (both normal and dynamic)
+}
+
+- (void)afterEvalOptions {
+  // OVERRIDE - runs after all options are set
+}
+
+- (void)evalOptions {
+  for (NSString *key in [[self dynamicOptions] allKeys]) {
+    id result = [[ScriptingController getInstance] runCallableFunction:[[self dynamicOptions] objectForKey:key]];
+    if (result == nil) { continue; }
+    [self.options setObject:result forKey:key];
+    [self parseOption:key value:[[self options] objectForKey:key]];
+  }
+  if ([[self dynamicOptions] count] > 0) { [self afterEvalOptions]; };
+}
+
 + (id)operationFromString:(NSString *)opString {
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:opString into:tokens maxTokens:2];
@@ -80,13 +153,13 @@
   } else if ([op isEqualToString:RESIZE]) {
     operation = [ResizeOperation resizeOperationFromString:opString];
   } else if ([op isEqualToString:PUSH]) {
-    operation = [MoveOperation pushOperationFromString:opString];
+    operation = [PushOperation pushOperationFromString:opString];
   } else if ([op isEqualToString:NUDGE]) {
-    operation = [MoveOperation nudgeOperationFromString:opString];
+    operation = [NudgeOperation nudgeOperationFromString:opString];
   } else if ([op isEqualToString:THROW]) {
-    operation = [MoveOperation throwOperationFromString:opString];
+    operation = [ThrowOperation throwOperationFromString:opString];
   } else if ([op isEqualToString:CORNER]) {
-    operation = [MoveOperation cornerOperationFromString:opString];
+    operation = [CornerOperation cornerOperationFromString:opString];
   } else if ([op isEqualToString:CHAIN]) {
     operation = [ChainOperation chainOperationFromString:opString];
   } else if ([op isEqualToString:LAYOUT]) {
@@ -120,6 +193,59 @@
     @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@' in '%@'", op, opString] userInfo:nil]);
   }
   if (operation != nil) { [operation setOpName:op]; }
+  return operation;
+}
+
++ (id)operationWithName:(NSString *)op options:(NSDictionary *)options {
+  Operation *operation = nil;
+  if ([op isEqualToString:MOVE]) {
+    operation = [MoveOperation moveOperation];
+  } else if ([op isEqualToString:RESIZE]) {
+    operation = [ResizeOperation resizeOperation];
+  } else if ([op isEqualToString:PUSH]) {
+    operation = [PushOperation pushOperation];
+  } else if ([op isEqualToString:NUDGE]) {
+    operation = [NudgeOperation nudgeOperation];
+  } else if ([op isEqualToString:THROW]) {
+    operation = [ThrowOperation throwOperation];
+  } else if ([op isEqualToString:CORNER]) {
+    operation = [CornerOperation cornerOperation];
+  } else if ([op isEqualToString:CHAIN]) {
+    operation = [ChainOperation chainOperation];
+  } else if ([op isEqualToString:LAYOUT]) {
+    operation = [LayoutOperation layoutOperation];
+  } else if ([op isEqualToString:FOCUS]) {
+    operation = [FocusOperation focusOperation];
+  } else if ([op isEqualToString:SNAPSHOT]) {
+    operation = [SnapshotOperation snapshotOperation];
+  } else if ([op isEqualToString:ACTIVATE_SNAPSHOT]) {
+    operation = [ActivateSnapshotOperation activateSnapshotOperation];
+  } else if ([op isEqualToString:DELETE_SNAPSHOT]) {
+    operation = [DeleteSnapshotOperation deleteSnapshotOperation];
+  } else if ([op isEqualToString:HINT]) {
+    operation = [HintOperation hintOperation];
+  } else if ([op isEqualToString:SWITCH]) {
+    operation = [SwitchOperation switchOperation];
+  } else if ([op isEqualToString:GRID]) {
+    operation = [GridOperation gridOperation];
+  } else if ([op isEqualToString:SEQUENCE]) {
+    operation = [SequenceOperation sequenceOperation];
+  } else if ([op isEqualToString:TOGGLE] || [op isEqualToString:SHOW] || [op isEqualToString:HIDE]) {
+    operation = [VisibilityOperation visibilityOperation];
+  } else if ([op isEqualToString:RELAUNCH]) {
+    operation = [RelaunchOperation relaunchOperation];
+  } else if ([op isEqualToString:SHELL]) {
+    operation = [ShellOperation shellOperation];
+  } else if ([op isEqualToString:UNDO]) {
+    operation = [UndoOperation undoOperation];
+  } else {
+    SlateLogger(@"ERROR: Unrecognized operation '%@'", op);
+    @throw([NSException exceptionWithName:@"Unrecognized Operation" reason:[NSString stringWithFormat:@"Unrecognized operation '%@'", op] userInfo:nil]);
+  }
+  if (operation != nil) {
+    [operation setOpName:op];
+    [operation initOptions:options];
+  }
   return operation;
 }
 

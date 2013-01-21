@@ -25,15 +25,27 @@
 
 @interface Operation : NSObject {
   NSString *opName;
+  NSMutableDictionary *options;
+  NSMutableDictionary *dynamicOptions;
 }
 
 @property NSString *opName;
+@property NSMutableDictionary *options;
+@property NSMutableDictionary *dynamicOptions;
 
 - (BOOL)doOperation;
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;
 - (BOOL)testOperation;
 - (BOOL)shouldTakeUndoSnapshot;
+- (NSArray *)requiredOptions;
+- (NSString *)checkRequiredOptions:(NSDictionary *)_options;
+- (void)beforeInitOptions;
+- (void)initOptions:(NSDictionary *)_options;
+- (void)parseOption:(NSString *)name value:(id)value;
+- (void)evalOptions;
+- (void)afterEvalOptions;
 
 + (id)operationFromString:(NSString *)opString;
++ (id)operationWithName:(NSString *)op options:(NSDictionary *)options;
 
 @end

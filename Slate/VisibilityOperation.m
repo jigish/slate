@@ -28,6 +28,15 @@
 
 @synthesize type, apps;
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    [self setType:VisibilityOperationTypeUnknown];
+    [self setApps:nil];
+  }
+  return self;
+}
+
 - (id)initWithType:(VisibilityOperationType)theType apps:(NSArray *)theApps {
   self = [super init];
   if (self) {
@@ -60,6 +69,7 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
+  [self evalOptions];
   for (NSString *appName in [self apps]) {
     NSRunningApplication *app = nil;
     if ([CURRENT isEqualToString:appName]) {
@@ -93,6 +103,36 @@
   if ([self type] == VisibilityOperationTypeUnknown)
     @throw [NSException exceptionWithName:@"Unknown Type" reason:@"type" userInfo:nil];
   return YES;
+}
+
+- (void)beforeInitOptions {
+  if ([SHOW isEqualToString:[self opName]]) {
+    [self setType:VisibilityOperationTypeShow];
+  } else if ([HIDE isEqualToString:[self opName]]) {
+    [self setType:VisibilityOperationTypeHide];
+  } else if ([TOGGLE isEqualToString:[self opName]]) {
+    [self setType:VisibilityOperationTypeToggle];
+  } else {
+    // should never happen
+    @throw([NSException exceptionWithName:@"Invalid Type" reason:[NSString stringWithFormat:@"Invalid visibility type '%@'", [self opName]] userInfo:nil]);
+  }
+}
+
+- (void)parseOption:(NSString *)name value:(id)value {
+  if (value == nil) { return; }
+  if ([name isEqualToString:OPT_APP]) {
+    if ([value isKindOfClass:[NSString class]]) {
+      [self setApps:[NSArray arrayWithObject:value]];
+    } else if ([value isKindOfClass:[NSArray class]]) {
+      [self setApps:value];
+    } else { // app should be a string or an array
+      @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, value] userInfo:nil]);
+    }
+  }
+}
+
++ (id)visibilityOperation {
+  return [[VisibilityOperation alloc] init];
 }
 
 + (id)visibilityOperationFromString:(NSString *)visibilityOperation {

@@ -11,14 +11,19 @@
 #import "Operation.h"
 
 @interface ScriptingController : NSObject {
-    WebView *webView;
-    WebScriptObject *scriptObject;
-    NSMutableArray *bindings;
+  WebView *webView;
+  WebScriptObject *scriptObject;
+  NSMutableArray *bindings;
+  NSMutableDictionary *operations;
+  NSMutableDictionary *functions;
 }
 @property NSMutableArray *bindings;
+@property NSMutableDictionary *operations;
+@property NSMutableDictionary *functions;
 
 - (void)loadConfig;
-
+- (NSString *)addCallableFunction:(WebScriptObject *)function;
+- (id)runCallableFunction:(NSString *)key;
 + (ScriptingController *)getInstance;
 
 @end

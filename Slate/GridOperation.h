@@ -40,6 +40,7 @@
 - (void)activateGridKey:(NSInteger)hintId;
 - (void)activateLayoutWithOrigin:(ExpressionPoint *)origin size:(ExpressionPoint *)size screenId:(NSInteger)screenId;
 
++ (id)gridOperation;
 + (id)gridOperationFromString:(NSString *) gridOperation;
 
 @end

@@ -35,6 +35,12 @@
 
 - (id)init {
   self = [super init];
+  if (self) {
+    [self setTopLeft:[[ExpressionPoint alloc] initWithX:@"" y:@""]];
+    [self setDimensions:[[ExpressionPoint alloc] initWithX:@"" y:@""]];
+    [self setMonitor:REF_CURRENT_SCREEN];
+    [self setScreenId:-1];
+  }
   return self;
 }
 
@@ -84,6 +90,7 @@
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = NO;
+  [self evalOptions];
   NSPoint cTopLeft = [aw getCurrentTopLeft];
   NSSize cSize = [aw getCurrentSize];
   NSRect cWindowRect = NSMakeRect(cTopLeft.x, cTopLeft.y, cSize.width, cSize.height);
@@ -136,6 +143,34 @@
   return [dimensions getSizeWithDict:values];
 }
 
+- (NSArray *)requiredOptions {
+  return [NSArray arrayWithObjects:OPT_X, OPT_Y, OPT_WIDTH, OPT_HEIGHT, nil];
+}
+
+- (void)parseOption:(NSString *)name value:(id)value {
+  // all options should be strings
+  if (value == nil) { return; }
+  if (![value isKindOfClass:[NSString class]]) {
+    @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, value] userInfo:nil]);
+    return;
+  }
+  if ([name isEqualToString:OPT_X]) {
+    [[self topLeft] setX:value];
+  } else if ([name isEqualToString:OPT_Y]) {
+    [[self topLeft] setY:value];
+  } else if ([name isEqualToString:OPT_SCREEN]) {
+    [self setMonitor:value];
+  } else if ([name isEqualToString:OPT_WIDTH]) {
+    [[self dimensions] setX:value];
+  } else if ([name isEqualToString:OPT_HEIGHT]) {
+    [[self dimensions] setY:value];
+  }
+}
+
++ (id)moveOperation {
+  return [[MoveOperation alloc] init];
+}
+
 + (id)moveOperationFromString:(NSString *)moveOperation {
   // move <topLeft> <dimensions> <optional:monitor>
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
@@ -148,198 +183,6 @@
 
   Operation *op = nil;
   op = [[MoveOperation alloc] initWithTopLeft:[tokens objectAtIndex:1] dimensions:[tokens objectAtIndex:2] monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
-  return op;
-}
-
-+ (id)pushOperationFromString:(NSString *)pushOperation {
-  // push <top|bottom|up|down|left|right> <optional:none|center|bar|bar-resize:expression> <optional:monitor (must specify previous option to specify monitor)>
-  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
-  [StringTokenizer tokenize:pushOperation into:tokens];
-
-  if ([tokens count] < 2) {
-    SlateLogger(@"ERROR: Invalid Parameters '%@'", pushOperation);
-    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Push operations require the following format: 'push direction [optional:style]'", pushOperation] userInfo:nil]);
-  }
-
-  NSString *direction = [tokens objectAtIndex:1];
-  NSString *dimensions = @"windowSizeX;windowSizeY";
-  NSString *topLeft = nil;
-  NSString *style = NONE;
-  if ([tokens count] >= 3) {
-    style = [tokens objectAtIndex:2];
-  }
-  if ([direction isEqualToString:TOP] || [direction isEqualToString:UP]) {
-    if ([style isEqualToString:CENTER]) {
-      topLeft = @"screenOriginX+(screenSizeX-windowSizeX)/2;screenOriginY";
-    } else if ([style isEqualToString:BAR]) {
-      topLeft = @"screenOriginX;screenOriginY";
-      dimensions = @"screenSizeX;windowSizeY";
-    } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
-      NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      topLeft = @"screenOriginX;screenOriginY";
-      dimensions = [@"screenSizeX;" stringByAppendingString:resizeExpression];
-    } else if ([style isEqualToString:NONE]) {
-      topLeft = @"windowTopLeftX;screenOriginY";
-    } else {
-      SlateLogger(@"ERROR: Unrecognized style '%@'", style);
-      @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
-    }
-  } else if ([direction isEqualToString:BOTTOM] || [direction isEqualToString:DOWN]) {
-    if ([style isEqualToString:CENTER]) {
-      topLeft = @"screenOriginX+(screenSizeX-windowSizeX)/2;screenOriginY+screenSizeY-windowSizeY";
-    } else if ([style isEqualToString:BAR]) {
-      topLeft = @"screenOriginX;screenOriginY+screenSizeY-windowSizeY";
-      dimensions = @"screenSizeX;windowSizeY";
-    } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
-      NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      topLeft = [@"screenOriginX;screenOriginY+screenSizeY-" stringByAppendingString:resizeExpression];
-      dimensions = [@"screenSizeX;" stringByAppendingString:resizeExpression];
-    } else if ([style isEqualToString:NONE]) {
-      topLeft = @"windowTopLeftX;screenOriginY+screenSizeY-windowSizeY";
-    } else {
-      SlateLogger(@"ERROR: Unrecognized style '%@'", style);
-      @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
-    }
-  } else if ([direction isEqualToString:LEFT]) {
-    if ([style isEqualToString:CENTER]) {
-      topLeft = @"screenOriginX;screenOriginY+(screenSizeY-windowSizeY)/2";
-    } else if ([style isEqualToString:BAR]) {
-      topLeft = @"screenOriginX;screenOriginY";
-      dimensions = @"windowSizeX;screenSizeY";
-    } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
-      NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      topLeft = @"screenOriginX;screenOriginY";
-      dimensions = [resizeExpression stringByAppendingString:@",screenSizeY"];
-    } else if ([style isEqualToString:NONE]) {
-      topLeft = @"screenOriginX;windowTopLeftY";
-    } else {
-      SlateLogger(@"ERROR: Unrecognized style '%@'", style);
-      @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
-    }
-  } else if ([direction isEqualToString:RIGHT]) {
-    if ([style isEqualToString:CENTER]) {
-      topLeft = @"screenOriginX+screenSizeX-windowSizeX;screenOriginY+(screenSizeY-windowSizeY)/2";
-    } else if ([style isEqualToString:BAR]) {
-      topLeft = @"screenOriginX+screenSizeX-windowSizeX;screenOriginY";
-      dimensions = @"windowSizeX;screenSizeY";
-    } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
-      NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      topLeft = [[@"screenOriginX+screenSizeX-" stringByAppendingString:resizeExpression] stringByAppendingString:@";screenOriginY"];
-      dimensions = [resizeExpression stringByAppendingString:@";screenSizeY"];
-    } else if ([style isEqualToString:NONE]) {
-      topLeft = @"screenOriginX+screenSizeX-windowSizeX;windowTopLeftY";
-    } else {
-      SlateLogger(@"ERROR: Unrecognized style '%@'", style);
-      @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, pushOperation] userInfo:nil]);
-    }
-  } else {
-    SlateLogger(@"ERROR: Unrecognized direction '%@'", direction);
-    @throw([NSException exceptionWithName:@"Unrecognized Direction" reason:[NSString stringWithFormat:@"Unrecognized direction '%@' in '%@'", direction, pushOperation] userInfo:nil]);
-  }
-  Operation *op = [[MoveOperation alloc] initWithTopLeft:topLeft dimensions:dimensions monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
-  return op;
-}
-
-+ (id)nudgeOperationFromString:(NSString *)nudgeOperation {
-  // nudge x y
-  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
-  [StringTokenizer tokenize:nudgeOperation into:tokens];
-
-  if ([tokens count] < 2) {
-    SlateLogger(@"ERROR: Invalid Parameters '%@'", nudgeOperation);
-    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Nudge operations require the following format: 'nudge x y'", nudgeOperation] userInfo:nil]);
-  }
-
-  NSString *tlX = WINDOW_TOP_LEFT_X;
-  NSString *x = [tokens objectAtIndex:1];
-  NSString *nudgePercentOf = [[SlateConfig getInstance] getConfig:NUDGE_PERCENT_OF];
-  if ([x hasSuffix:PERCENT]) {
-    // % Nudge
-    tlX = [tlX stringByAppendingString:[x stringByReplacingOccurrencesOfString:PERCENT withString:[NSString stringWithFormat:@"*%@X/100",nudgePercentOf]]];
-  } else {
-    // Hard Nudge
-    tlX = [tlX stringByAppendingString:x];
-  }
-
-  NSString *tlY = WINDOW_TOP_LEFT_Y;
-  NSString *y = [tokens objectAtIndex:2];
-  if ([y hasSuffix:PERCENT]) {
-    // % Nudge
-    tlY = [tlY stringByAppendingString:[y stringByReplacingOccurrencesOfString:PERCENT withString:[NSString stringWithFormat:@"*%@Y/100",nudgePercentOf]]];
-  } else {
-    // Hard Nudge
-    tlY = [tlY stringByAppendingString:y];
-  }
-  Operation *op = [[MoveOperation alloc] initWithTopLeft:[[tlX stringByAppendingString:SEMICOLON] stringByAppendingString:tlY] dimensions:@"windowSizeX;windowSizeY" monitor:REF_CURRENT_SCREEN];
-  return op;
-}
-
-+ (id)throwOperationFromString:(NSString *)throwOperation {
-  // throw <monitor> <optional:style (default is noresize)>
-  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
-  [StringTokenizer tokenize:throwOperation into:tokens];
-
-  if ([tokens count] < 2) {
-    SlateLogger(@"ERROR: Invalid Parameters '%@'", throwOperation);
-    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Throw operations require the following format: 'throw screen [optional:style]'", throwOperation] userInfo:nil]);
-  }
-
-  NSString *tl = @"screenOriginX;screenOriginY";
-  NSString *dim = @"windowSizeX;windowSizeY";
-  if ([tokens count] >= 3) {
-    NSString *style = [tokens objectAtIndex:2];
-    if ([style isEqualToString:RESIZE]) {
-      tl = @"screenOriginX;screenOriginY";
-      dim = @"screenSizeX;screenSizeY";
-    } else if ([style hasPrefix:RESIZE_WITH_VALUE]) {
-      tl = @"screenOriginX;screenOriginY";
-      dim = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-    } else if ([style isEqualToString:NORESIZE]) {
-      // do nothing
-    } else {
-      SlateLogger(@"ERROR: Unrecognized style '%@'", style);
-      @throw([NSException exceptionWithName:@"Unrecognized Style" reason:[NSString stringWithFormat:@"Unrecognized style '%@' in '%@'", style, throwOperation] userInfo:nil]);
-    }
-  }
-  Operation *op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:[tokens objectAtIndex:1]];
-  return op;
-}
-
-+ (id)cornerOperationFromString:(NSString *)cornerOperation {
-  // corner <top-left|top-right|bottom-left|bottom-right> <optional:resize:expression> <optional:monitor>
-  NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
-  [StringTokenizer tokenize:cornerOperation into:tokens];
-
-  if ([tokens count] < 2) {
-    SlateLogger(@"ERROR: Invalid Parameters '%@'", cornerOperation);
-    @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Corner operations require the following format: 'corner direction [optional:style]'", cornerOperation] userInfo:nil]);
-  }
-
-  NSString *tl = nil;
-  NSString *dim = @"windowSizeX;windowSizeY";
-  NSString *direction = [tokens objectAtIndex:1];
-
-  if ([tokens count] >= 3) {
-    NSString *style = [tokens objectAtIndex:2];
-    if ([style hasPrefix:RESIZE_WITH_VALUE]) {
-      dim = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-    }
-  }
-
-  if ([direction isEqualToString:TOP_LEFT]) {
-    tl = @"screenOriginX;screenOriginY";
-  } else if ([direction isEqualToString:TOP_RIGHT]) {
-    tl = [[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:0]] stringByAppendingString:@";screenOriginY"];
-  } else if ([direction isEqualToString:BOTTOM_LEFT]) {
-    tl = [@"screenOriginX;screenOriginY+screenSizeY-" stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:1]];
-  } else if ([direction isEqualToString:BOTTOM_RIGHT]) {
-    tl = [[[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:0]] stringByAppendingString:@";screenOriginY+screenSizeY-"] stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:1]];
-  } else {
-    SlateLogger(@"ERROR: Unrecognized corner '%@'", direction);
-    @throw([NSException exceptionWithName:@"Unrecognized Corner" reason:[NSString stringWithFormat:@"Unrecognized corner '%@' in '%@'", direction, cornerOperation] userInfo:nil]);
-  }
-
-  Operation *op = [[MoveOperation alloc] initWithTopLeft:tl dimensions:dim monitor:([tokens count] >=4 ? [tokens objectAtIndex:3] : REF_CURRENT_SCREEN)];
   return op;
 }
 

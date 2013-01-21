@@ -39,6 +39,7 @@ typedef enum {
 - (id)initWithType:(VisibilityOperationType)theType apps:(NSArray *)theApps;
 - (void)applyVisibilityToApp:(NSRunningApplication *)app;
 
++ (id)visibilityOperation;
 + (id)visibilityOperationFromString:(NSString *)visibilityOperation;
 
 @end
