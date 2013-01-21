@@ -134,13 +134,14 @@
 }
 
 - (void)evalOptions {
+  if ([[self dynamicOptions] count] == 0) { return; }
   for (NSString *key in [[self dynamicOptions] allKeys]) {
     id result = [[ScriptingController getInstance] runCallableFunction:[[self dynamicOptions] objectForKey:key]];
     if (result == nil) { continue; }
     [self.options setObject:result forKey:key];
     [self parseOption:key value:[[self options] objectForKey:key]];
   }
-  if ([[self dynamicOptions] count] > 0) { [self afterEvalOptions]; };
+  [self afterEvalOptions];
 }
 
 + (id)operationFromString:(NSString *)opString {
