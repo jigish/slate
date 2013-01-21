@@ -57,7 +57,13 @@
 
     bindAll: function(bindMap) {
       for(key in bindMap) {
-        slate.bind(key, bindMap[key]);
+        if (_.isArray(bindMap[key]) && _.size(bindMap[key]) >= 2) {
+          slate.bind(key, bindMap[key][0], bindMap[key][1]);
+        } else if (_.isArray(bindMap[key]) && _.size(bindMap[key]) == 1) {
+          slate.bind(key, bindMap[key][0], false);
+        } else {
+          slate.bind(key, bindMap[key], false);
+        }
       }
     },
 
