@@ -52,6 +52,12 @@
       }
     },
 
+    configAll: function(configMap) {
+      for (key in configMap) {
+        slate.config(key, configMap[key]);
+      }
+    },
+
     bind: function(key, callback, repeat) {
       if(_.isString(callback)) {
         var op = new Operation(callback);
