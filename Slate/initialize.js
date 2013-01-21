@@ -30,6 +30,7 @@
     if (_.isArray(obj)) { return "array"; }
     if (_.isFunction(obj)) { return "function"; }
     if (_.isObject(obj)) {
+      // special case for objects created here like Operation
       if (obj.___type) { return obj.___type; }
       return "object";
     }
@@ -47,9 +48,12 @@
     config: function(key, callback) {
       if (_.isFunction(callback)) {
         return _controller.configFunction(key, callback);
-      } else {
+      } else if (_.isString(callback) || _.isNumber(callback) || _.isBoolean(callback)) {
         return _controller.configNative(key, callback);
+      } else if (_.isArray(callback)) {
+        return _controller.configNative(key, callback.join(';'));
       }
+      throw "Invalid "+key+" "+callback;
     },
 
     configAll: function(configMap) {
