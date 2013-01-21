@@ -28,6 +28,8 @@ static NSDictionary *jsMethods;
     NSStringFromSelector(@selector(log:)): @"log",
     NSStringFromSelector(@selector(bindFunction:callback:repeat:)): @"bindFunction",
     NSStringFromSelector(@selector(bindNative:callback:repeat:)): @"bindNative",
+    NSStringFromSelector(@selector(configFunction:callback:)): @"configFunction",
+    NSStringFromSelector(@selector(configNative:callback:)): @"configNative",
     NSStringFromSelector(@selector(doOperation:)): @"doOperation",
     NSStringFromSelector(@selector(operation:options:)): @"operation",
     NSStringFromSelector(@selector(operationFromString:)): @"operationFromString",
@@ -95,13 +97,22 @@ static NSDictionary *jsMethods;
   }
 }
 
-- (void)bindFunction:(NSString*)hotkey callback:(WebScriptObject*)callback repeat:(BOOL)repeat {
+- (void)configFunction:(NSString *)key callback:(WebScriptObject *)callback {
+  NSString *fkey = [self addCallableFunction:callback];
+  [[[SlateConfig getInstance] configs] setValue:[NSString stringWithFormat:@"_javascript_::%@", fkey] forKey:key];
+}
+
+- (void)configNative:(NSString *)key callback:(id)callback {
+  [[[SlateConfig getInstance] configs] setValue:[NSString stringWithFormat:@"%@", callback] forKey:key];
+}
+
+- (void)bindFunction:(NSString *)hotkey callback:(WebScriptObject *)callback repeat:(BOOL)repeat {
   ScriptingOperation *op = [ScriptingOperation operationWithController:self function:callback];
   Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
   [self.bindings addObject:bind];
 }
 
-- (void)bindNative:(NSString*)hotkey callback:(NSString*)key repeat:(BOOL)repeat {
+- (void)bindNative:(NSString *)hotkey callback:(NSString *)key repeat:(BOOL)repeat {
   Operation *op = [operations objectForKey:key];
   Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
   [self.bindings addObject:bind];

@@ -44,14 +44,22 @@
       return _controller.log(msg);
     },
 
+    config: function(key, callback) {
+      if (_.isFunction(callback)) {
+        return _controller.configFunction(key, callback);
+      } else {
+        return _controller.configNative(key, callback);
+      }
+    },
+
     bind: function(key, callback, repeat) {
-      if(typeof(callback) == "string") {
+      if(_.isString(callback)) {
         var op = new Operation(callback);
         return _controller.bindNative(key, op.key, repeat);
-      } else if (typeof(callback) == "object") {
-        return _controller.bindNative(key, callback.key, repeat);
-      } else if (typeof(callback) == "function") {
+      } else if (_.isFunction(callback)) {
         return _controller.bindFunction(key, callback, repeat);
+      } else if (_.isObject(callback)) {
+        return _controller.bindNative(key, callback.key, repeat);
       }
     },
 

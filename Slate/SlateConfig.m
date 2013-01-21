@@ -33,6 +33,7 @@
 #import "NSFileManager+ApplicationSupport.h"
 #import "NSString+Indicies.h"
 #import "ActivateSnapshotOperation.h"
+#import "ScriptingController.h"
 
 @implementation SlateConfig
 
@@ -77,27 +78,33 @@ static SlateConfig *_instance = nil;
 }
 
 - (BOOL)getBoolConfig:(NSString *)key {
-  return [[configs objectForKey:key] boolValue];
+  return [[self getConfig:key] boolValue];
 }
 
 - (NSInteger)getIntegerConfig:(NSString *)key {
-  return [[configs objectForKey:key] integerValue];
+  return [[self getConfig:key] integerValue];
 }
 
 - (double)getDoubleConfig:(NSString *)key {
-  return [[configs objectForKey:key] doubleValue];
+  return [[self getConfig:key] doubleValue];
 }
 
 - (float)getFloatConfig:(NSString *)key {
-  return [[configs objectForKey:key] floatValue];
+  return [[self getConfig:key] floatValue];
 }
 
 - (NSArray *)getArrayConfig:(NSString *)key {
-  return [[configs objectForKey:key] componentsSeparatedByString:SEMICOLON];
+  return [[self getConfig:key] componentsSeparatedByString:SEMICOLON];
 }
 
 - (NSString *)getConfig:(NSString *)key {
-  return [configs objectForKey:key];
+  NSString *c = [configs objectForKey:key];
+  if ([c hasPrefix:@"_javascript_::"]) {
+    NSString *fkey = [c stringByReplacingOccurrencesOfString:@"_javascript_::" withString:@""];
+    id ret = [[ScriptingController getInstance] runCallableFunction:fkey];
+    return [NSString stringWithFormat:@"%@", ret];
+  }
+  return c;
 }
 
 - (NSString *)getConfigDefault:(NSString *)key {
