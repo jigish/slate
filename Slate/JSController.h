@@ -40,6 +40,7 @@
 - (id)runFunction:(WebScriptObject *)function withArg:(id)arg;
 - (id)unmarshall:(id)obj;
 - (id)marshall:(id)obj;
+- (NSString *)jsTypeof:(WebScriptObject *)obj;
 + (JSController *)getInstance;
 
 @end
