@@ -1,4 +1,4 @@
-(function(_controller) {
+(function(_controller, _info) {
   var OperationFromString = function(opString) {
     this.key = _controller.operationFromString(opString);
     this.___type = "operation";
@@ -109,4 +109,5 @@
   window.S.op = window.S.operation;
   window.S.opstr = window.S.operationFromString;
   window.S.src = window.S.source;
-})(window._controller);
+  window.S.info = _info;
+})(window._controller, window._info);

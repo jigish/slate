@@ -28,6 +28,7 @@
 		3B5B1B7C1665871E00D5B1B5 /* UndoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B1B7B1665871D00D5B1B5 /* UndoOperation.m */; };
 		3B65CF251576CDF10063D298 /* ASCIIToCode_Dvorak.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B65CF241576CDF10063D298 /* ASCIIToCode_Dvorak.plist */; };
 		3B66A56213ADBDFD0015EDD5 /* ScreenWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */; };
+		3B7DDCDF16AE1E290087CD12 /* ScriptingInfoWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7DDCDE16AE1E290087CD12 /* ScriptingInfoWrapper.m */; };
 		3B7EB3A7138F3F6800EBEC2B /* ResizeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */; };
 		3B7EB475138F691800EBEC2B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB474138F691800EBEC2B /* Constants.m */; };
 		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
@@ -154,6 +155,8 @@
 		3B65CF241576CDF10063D298 /* ASCIIToCode_Dvorak.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode_Dvorak.plist; sourceTree = "<group>"; };
 		3B66A56013ADBDFD0015EDD5 /* ScreenWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenWrapper.h; sourceTree = "<group>"; };
 		3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenWrapper.m; sourceTree = "<group>"; };
+		3B7DDCDD16AE1E290087CD12 /* ScriptingInfoWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingInfoWrapper.h; sourceTree = "<group>"; };
+		3B7DDCDE16AE1E290087CD12 /* ScriptingInfoWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptingInfoWrapper.m; sourceTree = "<group>"; };
 		3B7EB3A5138F3F6800EBEC2B /* ResizeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizeOperation.h; sourceTree = "<group>"; };
 		3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizeOperation.m; sourceTree = "<group>"; };
 		3B7EB473138F691800EBEC2B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Constants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -477,6 +480,8 @@
 				3BB5380313AEDA190005CFFC /* ScreenState.m */,
 				3B66A56013ADBDFD0015EDD5 /* ScreenWrapper.h */,
 				3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */,
+				3B7DDCDD16AE1E290087CD12 /* ScriptingInfoWrapper.h */,
+				3B7DDCDE16AE1E290087CD12 /* ScriptingInfoWrapper.m */,
 				3BA1BA69162F4CFE0026774E /* ShellUtils.h */,
 				3BA1BA6A162F4CFF0026774E /* ShellUtils.m */,
 				3B58154215054EBD0078D568 /* SlateLogger.h */,
@@ -762,6 +767,7 @@
 				3BFF7D7516AC7B3D00A8CB0E /* NudgeOperation.m in Sources */,
 				3BFF7D7816AC7E2900A8CB0E /* ThrowOperation.m in Sources */,
 				3BFF7D7B16AC7FF600A8CB0E /* CornerOperation.m in Sources */,
+				3B7DDCDF16AE1E290087CD12 /* ScriptingInfoWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

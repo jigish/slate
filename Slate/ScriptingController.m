@@ -21,6 +21,7 @@
 #import "Binding.h"
 #import "SlateLogger.h"
 #import "SlateConfig.h"
+#import "ScriptingInfoWrapper.h"
 
 @implementation ScriptingController
 
@@ -92,11 +93,16 @@ static NSDictionary *jsMethods;
   }
 }
 
+- (void)setInfo {
+  [scriptObject setValue:[[ScriptingInfoWrapper alloc] init] forKey:@"_info"];
+}
+
 - (void)initializeWebView {
   if (inited) { return; }
   [[webView mainFrame] loadHTMLString:@"" baseURL:NULL];
   scriptObject = [webView windowScriptObject];
   [scriptObject setValue:self forKey:@"_controller"];
+  [self setInfo];
   @try {
     [self runFile:[[NSBundle mainBundle] pathForResource:@"underscore" ofType:@"js"]];
     [self runFile:[[NSBundle mainBundle] pathForResource:@"initialize" ofType:@"js"]];
