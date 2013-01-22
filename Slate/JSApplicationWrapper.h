@@ -21,13 +21,16 @@
 #import <Foundation/Foundation.h>
 
 @class AccessibilityWrapper;
+@class ScreenWrapper;
 
 @interface JSApplicationWrapper : NSObject {
   AccessibilityWrapper *aw;
+  ScreenWrapper *sw;
   NSRunningApplication *app;
 }
 @property (strong) AccessibilityWrapper *aw;
+@property (strong) ScreenWrapper *sw;
 @property (strong) NSRunningApplication *app;
-- (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw;
-- (id)initWithRunningApplication:(NSRunningApplication *)_app;
+- (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw screenWrapper:(ScreenWrapper *)_sw;
+- (id)initWithRunningApplication:(NSRunningApplication *)_app screenWrapper:(ScreenWrapper *)_sw;
 @end

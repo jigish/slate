@@ -20,38 +20,44 @@
 
 #import "JSApplicationWrapper.h"
 #import "AccessibilityWrapper.h"
+#import "ScreenWrapper.h"
+#import "JSController.h"
+#import "JSWindowWrapper.h"
 
 @implementation JSApplicationWrapper
 
 static NSDictionary *jsawJsMethods;
 
-@synthesize aw, app;
+@synthesize aw, sw, app;
 
 - (id)init {
   self = [super init];
   if (self) {
     [self setAw:[[AccessibilityWrapper alloc] init]];
+    [self setSw:[[ScreenWrapper alloc] init]];
     [self setApp:[NSRunningApplication runningApplicationWithProcessIdentifier:[aw processIdentifier]]];
     [JSApplicationWrapper setJsMethods];
   }
   return self;
 }
 
-- (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw {
+- (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw screenWrapper:(ScreenWrapper *)_sw {
   self = [super init];
   if (self) {
     [self setAw:_aw];
+    [self setSw:_sw];
     [self setApp:[NSRunningApplication runningApplicationWithProcessIdentifier:[aw processIdentifier]]];
     [JSApplicationWrapper setJsMethods];
   }
   return self;
 }
 
-- (id)initWithRunningApplication:(NSRunningApplication *)_app {
+- (id)initWithRunningApplication:(NSRunningApplication *)_app screenWrapper:(ScreenWrapper *)_sw {
   self = [super init];
   if (self) {
     [self setApp:_app];
     [self setAw:nil];
+    [self setSw:_sw];
     [JSApplicationWrapper setJsMethods];
   }
   return self;
@@ -65,11 +71,23 @@ static NSDictionary *jsawJsMethods;
   return [app localizedName];
 }
 
+- (void)eachWindow:(id)func {
+  CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInRunningApp:app];
+  if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) return;
+  CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, windowsArrRef);
+  for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+    AccessibilityWrapper *_aw = [[AccessibilityWrapper alloc] initWithApp:AXUIElementCreateApplication([app processIdentifier])
+                                                                   window:CFArrayGetValueAtIndex(windowsArr, i)];
+    [[JSController getInstance] runFunction:func withArg:[[JSWindowWrapper alloc] initWithAccessibilityWrapper:_aw screenWrapper:sw]];
+  }
+}
+
 + (void)setJsMethods {
   if (jsawJsMethods == nil) {
     jsawJsMethods = @{
       NSStringFromSelector(@selector(pid)): @"pid",
       NSStringFromSelector(@selector(name)): @"name",
+      NSStringFromSelector(@selector(eachWindow:)): @"eachWindow",
     };
   }
 }

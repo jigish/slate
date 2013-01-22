@@ -67,12 +67,13 @@ static NSDictionary *jsiwJsMethods;
 }
 
 - (JSApplicationWrapper *)app {
-  return [[JSApplicationWrapper alloc] initWithAccessibilityWrapper:aw];
+  return [[JSApplicationWrapper alloc] initWithAccessibilityWrapper:aw screenWrapper:sw];
 }
 
 - (void)eachApp:(id)func {
   for (NSRunningApplication *runningApp in [RunningApplications getInstance]) {
-    [[JSController getInstance] runFunction:func withArg:[[JSApplicationWrapper alloc] initWithRunningApplication:runningApp]];
+    [[JSController getInstance] runFunction:func withArg:[[JSApplicationWrapper alloc] initWithRunningApplication:runningApp
+                                                                                                    screenWrapper:sw]];
   }
 }
 
