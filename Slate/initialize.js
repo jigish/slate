@@ -92,6 +92,13 @@
     operation : function(name, opts) {
       return new Operation(name, opts);
     },
+
+    source : function(path) {
+      if (!_.isString(path)) {
+        throw "Source path must be a string. Was: "+path;
+      }
+      return _controller.source(path);
+    }
   };
 
   window.S = window.slate;
@@ -101,4 +108,5 @@
   window.S.bnda = window.S.bindAll;
   window.S.op = window.S.operation;
   window.S.opstr = window.S.operationFromString;
+  window.S.src = window.S.source;
 })(window._controller);

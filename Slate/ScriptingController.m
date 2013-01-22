@@ -46,6 +46,7 @@ static NSDictionary *jsMethods;
       NSStringFromSelector(@selector(doOperation:)): @"doOperation",
       NSStringFromSelector(@selector(operation:options:)): @"operation",
       NSStringFromSelector(@selector(operationFromString:)): @"operationFromString",
+      NSStringFromSelector(@selector(source:)): @"source",
     };
   }
   return self;
@@ -194,6 +195,10 @@ static NSDictionary *jsMethods;
     }
   }
   return NO;
+}
+
+- (BOOL)source:(NSString *)path {
+  return [[SlateConfig getInstance] loadConfigFileWithPath:path];
 }
 
 - (void)log:(NSString*)msg {
