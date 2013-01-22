@@ -83,6 +83,10 @@ static NSDictionary *jswwJsMethods;
   return [aw isMinimizedOrHidden];
 }
 
+- (BOOL)isMain {
+  return [AccessibilityWrapper isMainWindow:[aw window]];
+}
+
 - (NSDictionary *)screenAndWindowValues:(NSString *)screen {
   NSInteger screenId = 0;
   NSPoint wTL = [aw getCurrentTopLeft];
@@ -171,6 +175,7 @@ static NSDictionary *jswwJsMethods;
       NSStringFromSelector(@selector(pid)): @"pid",
       NSStringFromSelector(@selector(focus)): @"focus",
       NSStringFromSelector(@selector(isMinimizedOrHidden)): @"isMinimizedOrHidden",
+      NSStringFromSelector(@selector(isMain)): @"isMain",
       NSStringFromSelector(@selector(move:)): @"move",
       NSStringFromSelector(@selector(resize:)): @"resize",
     };

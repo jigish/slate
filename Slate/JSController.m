@@ -71,9 +71,15 @@ static NSDictionary *jscJsMethods;
   return [self runFunction:func];
 }
 
-- (id)runFunction:(WebScriptObject*)function {
+- (id)runFunction:(WebScriptObject *)function {
   [scriptObject setValue:function forKey:@"_slate_callback"];
   return [self run:@"window._slate_callback();"];
+}
+
+- (id)runFunction:(WebScriptObject *)function withArg:(id)arg {
+  [scriptObject setValue:function forKey:@"_slate_callback"];
+  [scriptObject setValue:arg forKey:@"_slate_callback_arg"];
+  return [self run:@"window._slate_callback(window._slate_callback_arg);"];
 }
 
 - (void)runFile:(NSString*)path {

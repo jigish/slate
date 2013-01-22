@@ -25,12 +25,13 @@
 
 static NSDictionary *jsawJsMethods;
 
-@synthesize aw;
+@synthesize aw, app;
 
 - (id)init {
   self = [super init];
   if (self) {
     [self setAw:[[AccessibilityWrapper alloc] init]];
+    [self setApp:[NSRunningApplication runningApplicationWithProcessIdentifier:[aw processIdentifier]]];
     [JSApplicationWrapper setJsMethods];
   }
   return self;
@@ -40,19 +41,35 @@ static NSDictionary *jsawJsMethods;
   self = [super init];
   if (self) {
     [self setAw:_aw];
+    [self setApp:[NSRunningApplication runningApplicationWithProcessIdentifier:[aw processIdentifier]]];
+    [JSApplicationWrapper setJsMethods];
+  }
+  return self;
+}
+
+- (id)initWithRunningApplication:(NSRunningApplication *)_app {
+  self = [super init];
+  if (self) {
+    [self setApp:_app];
+    [self setAw:nil];
     [JSApplicationWrapper setJsMethods];
   }
   return self;
 }
 
 - (pid_t)pid {
-  return [aw processIdentifier];
+  return [app processIdentifier];
+}
+
+- (NSString *)name {
+  return [app localizedName];
 }
 
 + (void)setJsMethods {
   if (jsawJsMethods == nil) {
     jsawJsMethods = @{
       NSStringFromSelector(@selector(pid)): @"pid",
+      NSStringFromSelector(@selector(name)): @"name",
     };
   }
 }

@@ -24,6 +24,8 @@
 #import "JSWindowWrapper.h"
 #import "JSApplicationWrapper.h"
 #import "AccessibilityWrapper.h"
+#import "JSController.h"
+#import "RunningApplications.h"
 
 @implementation JSInfoWrapper
 
@@ -43,8 +45,8 @@ static NSDictionary *jsiwJsMethods;
 - (id)init {
   self = [super init];
   if (self) {
-    [self setAw:nil];
-    [self setSw:nil];
+    [self setAw:[[AccessibilityWrapper alloc] init]];
+    [self setSw:[[ScreenWrapper alloc] init]];
     [JSInfoWrapper setJsMethods];
   }
   return self;
@@ -68,11 +70,18 @@ static NSDictionary *jsiwJsMethods;
   return [[JSApplicationWrapper alloc] initWithAccessibilityWrapper:aw];
 }
 
+- (void)eachApp:(id)func {
+  for (NSRunningApplication *runningApp in [RunningApplications getInstance]) {
+    [[JSController getInstance] runFunction:func withArg:[[JSApplicationWrapper alloc] initWithRunningApplication:runningApp]];
+  }
+}
+
 + (void)setJsMethods {
   if (jsiwJsMethods == nil) {
     jsiwJsMethods = @{
       NSStringFromSelector(@selector(window)): @"window",
       NSStringFromSelector(@selector(app)): @"app",
+      NSStringFromSelector(@selector(eachApp:)): @"eachApp",
     };
   }
 }

@@ -24,7 +24,10 @@
 
 @interface JSApplicationWrapper : NSObject {
   AccessibilityWrapper *aw;
+  NSRunningApplication *app;
 }
 @property (strong) AccessibilityWrapper *aw;
+@property (strong) NSRunningApplication *app;
 - (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw;
+- (id)initWithRunningApplication:(NSRunningApplication *)_app;
 @end
