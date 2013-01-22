@@ -102,6 +102,7 @@ static NSDictionary *jscJsMethods;
   [self setInfo];
   @try {
     [self runFile:[[NSBundle mainBundle] pathForResource:@"underscore" ofType:@"js"]];
+    [self runFile:[[NSBundle mainBundle] pathForResource:@"utils" ofType:@"js"]];
     [self runFile:[[NSBundle mainBundle] pathForResource:@"initialize" ofType:@"js"]];
   } @catch (NSException *ex) {
     SlateLogger(@"   ERROR %@",[ex name]);
@@ -227,6 +228,14 @@ static NSDictionary *jscJsMethods;
   SlateLogger(@"%@", msg);
 }
 
+- (WebScriptObject *)getJsArray:(NSArray *)arr {
+  id type = [scriptObject callWebScriptMethod:@"_array_with_" withArguments:arr];
+  if (![type isKindOfClass:[WebScriptObject class]]) {
+    return nil;
+  }
+  return type;
+}
+
 - (WebScriptObject *)getJsArray {
   id type = [scriptObject callWebScriptMethod:@"_array_" withArguments:[NSArray array]];
   if ([type isKindOfClass:[WebScriptObject class]]) {
@@ -257,6 +266,10 @@ static NSDictionary *jscJsMethods;
       [hash setValue:[obj objectForKey:key] forKey:key];
     }
     return hash;
+  }
+  if ([obj isKindOfClass:[NSArray class]]) {
+    WebScriptObject *arr = [self getJsArray:obj];
+    return arr;
   }
   return nil;
 }

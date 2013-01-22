@@ -194,6 +194,12 @@ static NSDictionary *jsiwJsMethods;
   }
 }
 
+- (id)jsMethods {
+  NSMutableArray *methods = [[jsiwJsMethods allValues] mutableCopy];
+  [methods removeObject:@"jsMethods"];
+  return [[JSController getInstance] marshall:methods];
+}
+
 + (void)setJsMethods {
   if (jsiwJsMethods == nil) {
     jsiwJsMethods = @{
@@ -206,6 +212,7 @@ static NSDictionary *jsiwJsMethods;
       NSStringFromSelector(@selector(screenForRef:)): @"screenForRef",
       NSStringFromSelector(@selector(screenCount)): @"screenCount",
       NSStringFromSelector(@selector(eachScreen:)): @"eachScreen",
+      NSStringFromSelector(@selector(jsMethods)): @"jsMethods",
     };
   }
 }

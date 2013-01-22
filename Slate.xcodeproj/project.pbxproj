@@ -64,6 +64,8 @@
 		3BDDA17D14FDA50C00829D2A /* Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17C14FDA50C00829D2A /* Snapshot.m */; };
 		3BDDA18014FDA55600829D2A /* WindowSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */; };
 		3BDDA18314FDAA6600829D2A /* SnapshotList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA18214FDAA6600829D2A /* SnapshotList.m */; };
+		3BE0736616AF3C3F00D33DB0 /* utils.js in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0736516AF3C3F00D33DB0 /* utils.js */; };
+		3BE0736816AF3C9B00D33DB0 /* utils.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BE0736516AF3C3F00D33DB0 /* utils.js */; };
 		3BE702B3161F9D5000260716 /* SequenceOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE702B2161F9D5000260716 /* SequenceOperation.m */; };
 		3BF39E1214FDB16F0083E9C4 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF39E1114FDB16F0083E9C4 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3BF57C9B1621686900C0F89B /* statusActive.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3BF57C9A1621686900C0F89B /* statusActive.pdf */; };
@@ -226,6 +228,7 @@
 		3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowSnapshot.m; sourceTree = "<group>"; };
 		3BDDA18114FDAA6600829D2A /* SnapshotList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapshotList.h; sourceTree = "<group>"; };
 		3BDDA18214FDAA6600829D2A /* SnapshotList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapshotList.m; sourceTree = "<group>"; };
+		3BE0736516AF3C3F00D33DB0 /* utils.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = utils.js; sourceTree = "<group>"; };
 		3BE702B1161F9D5000260716 /* SequenceOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequenceOperation.h; sourceTree = "<group>"; };
 		3BE702B2161F9D5000260716 /* SequenceOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequenceOperation.m; sourceTree = "<group>"; };
 		3BF39E1014FDB16F0083E9C4 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
@@ -412,6 +415,7 @@
 				3BBD24B91580206C00940ABF /* default.slate */,
 				3AA7D09A16A6FAE100C81A67 /* initialize.js */,
 				3B38E04616AB8B3500603901 /* underscore.js */,
+				3BE0736516AF3C3F00D33DB0 /* utils.js */,
 			);
 			name = Config;
 			sourceTree = "<group>";
@@ -696,6 +700,7 @@
 				7F44A9AA16621A9D00222908 /* ASCIIToCode_Colemak.plist in Resources */,
 				5EB99A0216A7526400760915 /* ASCIIToCode_Azerty.plist in Resources */,
 				3B38E04816AB8BBF00603901 /* underscore.js in Resources */,
+				3BE0736816AF3C9B00D33DB0 /* utils.js in Resources */,
 				3AA7D09D16A6FC9B00C81A67 /* initialize.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -794,6 +799,7 @@
 				3B7DDCE416AE301D0087CD12 /* JSWindowWrapper.m in Sources */,
 				3B7DDCE716AE35840087CD12 /* JSApplicationWrapper.m in Sources */,
 				3B7DDCEA16AE90FF0087CD12 /* JSScreenWrapper.m in Sources */,
+				3BE0736616AF3C3F00D33DB0 /* utils.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

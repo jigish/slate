@@ -21,27 +21,6 @@
     }
   });
 
-  for (key in _) {
-    window["_"+key+"_"] = _[key];
-  }
-
-  var _typeof_ = window._typeof_ = function(obj) {
-    if (_.isString(obj)) { return "string"; }
-    if (_.isArray(obj)) { return "array"; }
-    if (_.isFunction(obj)) { return "function"; }
-    if (_.isObject(obj)) {
-      // special case for objects created here like Operation
-      if (obj.___type) { return obj.___type; }
-      return "object";
-    }
-    if (_.isNumber(obj)) { return "number"; }
-    if (_.isBoolean(obj)) { return "boolean"; }
-    return "unknown";
-  }
-
-  var _array_ = window._array_ = function() { return []; }
-  var _hash_ = window._hash_ = function() { return {}; }
-
   var slate = window.slate = {
     log: function() {
       var msg = Array.prototype.slice.call(arguments, 0).join(" ");
@@ -122,4 +101,11 @@
   window.S.opstr = window.S.operationFromString;
   window.S.src = window.S.source;
   window.S.info = _info;
+  var methods = window.S.info.jsMethods();
+  _.each(methods, function(method) {
+    if (window.S[method] !== undefined) {
+      throw "OMGWTFBBQ!!!";
+    }
+    window.S[method] = _.bind(_info[method], _info);
+  });
 })(window._controller, window._info);
