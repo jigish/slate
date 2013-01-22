@@ -36,6 +36,8 @@
 - (BOOL)loadConfigFileWithPath:(NSString *)path;
 - (NSString *)addCallableFunction:(WebScriptObject *)function;
 - (id)runCallableFunction:(NSString *)key;
+- (id)unmarshall:(id)obj;
+- (id)marshall:(id)obj;
 + (JSController *)getInstance;
 
 @end

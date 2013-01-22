@@ -28,7 +28,7 @@
 @synthesize bindings, operations, functions;
 
 static JSController *_instance = nil;
-static NSDictionary *jsMethods;
+static NSDictionary *jscJsMethods;
 
 - (JSController *) init {
   self = [super init];
@@ -38,17 +38,7 @@ static NSDictionary *jsMethods;
     self.operations = [NSMutableDictionary dictionary];
     self.functions = [NSMutableDictionary dictionary];
     webView = [[WebView alloc] init];
-    jsMethods = @{
-      NSStringFromSelector(@selector(log:)): @"log",
-      NSStringFromSelector(@selector(bindFunction:callback:repeat:)): @"bindFunction",
-      NSStringFromSelector(@selector(bindNative:callback:repeat:)): @"bindNative",
-      NSStringFromSelector(@selector(configFunction:callback:)): @"configFunction",
-      NSStringFromSelector(@selector(configNative:callback:)): @"configNative",
-      NSStringFromSelector(@selector(doOperation:)): @"doOperation",
-      NSStringFromSelector(@selector(operation:options:)): @"operation",
-      NSStringFromSelector(@selector(operationFromString:)): @"operationFromString",
-      NSStringFromSelector(@selector(source:)): @"source",
-    };
+    [JSController setJsMethods];
   }
   return self;
 }
@@ -62,7 +52,7 @@ static NSDictionary *jsMethods;
       @throw([NSException exceptionWithName:@"JavaScript Error" reason:data userInfo:nil]);
     }
   }
-  return [self returnedToSomething:data];
+  return [self unmarshall:data];
 }
 
 - (NSString *)genFuncKey {
@@ -211,36 +201,46 @@ static NSDictionary *jsMethods;
   SlateLogger(@"%@", msg);
 }
 
-- (NSString *)jsTypeof:(WebScriptObject *)obj {
-  id type = [scriptObject callWebScriptMethod:@"_typeof_" withArguments:[NSArray arrayWithObjects:obj, nil]];
-  if ([type isKindOfClass:[NSString class]]) {
-    return type; // should be a string
+- (WebScriptObject *)getJsArray {
+  id type = [scriptObject callWebScriptMethod:@"_array_" withArguments:[NSArray array]];
+  if ([type isKindOfClass:[WebScriptObject class]]) {
+    return type;
   }
-  return @"unknown";
+  return nil;
 }
 
-- (NSArray *)jsToArray:(WebScriptObject *)obj {
-  UInt16 count = [[obj valueForKey:@"length"] unsignedIntValue];
-  NSMutableArray *a = [NSMutableArray array];
-  for (UInt16 i = 0; i < count; i++) {
-    id item = [obj webScriptValueAtIndex:i];
-    if (item == nil || [item isMemberOfClass:[WebUndefined class]]) {
-      continue;
-    }
-    if ([item isKindOfClass:[NSString class]] || [item isKindOfClass:[NSValue class]]) {
-      [a addObject:item];
-    } else if ([item isKindOfClass:[WebScriptObject class]]) {
-      [a addObject:[self jsToSomething:item]];
-    }
+- (WebScriptObject *)getJsHash {
+  id type = [scriptObject callWebScriptMethod:@"_hash_" withArguments:[NSArray array]];
+  if ([type isKindOfClass:[WebScriptObject class]]) {
+    return type;
   }
-  return a;
+  return nil;
 }
 
-- (id)returnedToSomething:(id)obj {
+- (id)marshall:(id)obj {
+  if (obj == nil) {
+    return [WebUndefined undefined];
+  }
+  if ([obj isKindOfClass:[NSString class]] || [obj isKindOfClass:[NSValue class]] ||
+      [obj isKindOfClass:[NSNumber class]]) {
+    return obj;
+  }
+  if ([obj isKindOfClass:[NSDictionary class]]) {
+    WebScriptObject *hash = [self getJsHash];
+    for (NSString *key in [obj allKeys]) {
+      [hash setValue:[obj objectForKey:key] forKey:key];
+    }
+    return hash;
+  }
+  return nil;
+}
+
+- (id)unmarshall:(id)obj {
   if (obj == nil || [obj isMemberOfClass:[WebUndefined class]]) {
     return nil;
   }
-  if ([obj isKindOfClass:[NSString class]] || [obj isKindOfClass:[NSValue class]]) {
+  if ([obj isKindOfClass:[NSString class]] || [obj isKindOfClass:[NSValue class]] ||
+      [obj isKindOfClass:[NSNumber class]]) {
     return obj;
   } else if ([obj isKindOfClass:[WebScriptObject class]]) {
     return [self jsToSomething:obj];
@@ -265,6 +265,31 @@ static NSDictionary *jsMethods;
   }
   // nothing else should be here, primitives become NSString or NSValue
   return nil;
+}
+
+- (NSString *)jsTypeof:(WebScriptObject *)obj {
+  id type = [scriptObject callWebScriptMethod:@"_typeof_" withArguments:[NSArray arrayWithObjects:obj, nil]];
+  if ([type isKindOfClass:[NSString class]]) {
+    return type; // should be a string
+  }
+  return @"unknown";
+}
+
+- (NSArray *)jsToArray:(WebScriptObject *)obj {
+  UInt16 count = [[obj valueForKey:@"length"] unsignedIntValue];
+  NSMutableArray *a = [NSMutableArray array];
+  for (UInt16 i = 0; i < count; i++) {
+    id item = [obj webScriptValueAtIndex:i];
+    if (item == nil || [item isMemberOfClass:[WebUndefined class]]) {
+      continue;
+    }
+    if ([item isKindOfClass:[NSString class]] || [item isKindOfClass:[NSValue class]]) {
+      [a addObject:item];
+    } else if ([item isKindOfClass:[WebScriptObject class]]) {
+      [a addObject:[self jsToSomething:item]];
+    }
+  }
+  return a;
 }
 
 - (NSDictionary *)jsToDictionary:(WebScriptObject *)obj {
@@ -293,12 +318,26 @@ static NSDictionary *jsMethods;
   }
 }
 
++ (void)setJsMethods {
+  jscJsMethods = @{
+    NSStringFromSelector(@selector(log:)): @"log",
+    NSStringFromSelector(@selector(bindFunction:callback:repeat:)): @"bindFunction",
+    NSStringFromSelector(@selector(bindNative:callback:repeat:)): @"bindNative",
+    NSStringFromSelector(@selector(configFunction:callback:)): @"configFunction",
+    NSStringFromSelector(@selector(configNative:callback:)): @"configNative",
+    NSStringFromSelector(@selector(doOperation:)): @"doOperation",
+    NSStringFromSelector(@selector(operation:options:)): @"operation",
+    NSStringFromSelector(@selector(operationFromString:)): @"operationFromString",
+    NSStringFromSelector(@selector(source:)): @"source",
+  };
+}
+
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel {
-  return [jsMethods objectForKey:NSStringFromSelector(sel)] == NULL;
+  return [jscJsMethods objectForKey:NSStringFromSelector(sel)] == NULL;
 }
 
 + (NSString *)webScriptNameForSelector:(SEL)sel {
-  return [jsMethods objectForKey:NSStringFromSelector(sel)];
+  return [jscJsMethods objectForKey:NSStringFromSelector(sel)];
 }
 
 @end

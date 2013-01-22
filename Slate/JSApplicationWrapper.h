@@ -1,5 +1,5 @@
 //
-//  JSWindowWrapper.h
+//  JSApplicationWrapper.h
 //  Slate
 //
 //  Created by Jigish Patel on 1/21/13.
@@ -21,16 +21,10 @@
 #import <Foundation/Foundation.h>
 
 @class AccessibilityWrapper;
-@class ScreenWrapper;
 
-@interface JSWindowWrapper : NSObject {
-  ScreenWrapper *sw;
+@interface JSApplicationWrapper : NSObject {
   AccessibilityWrapper *aw;
 }
-
-@property (strong) ScreenWrapper *sw;
 @property (strong) AccessibilityWrapper *aw;
-
-- (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw screenWrapper:(ScreenWrapper *)_sw;
-
+- (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw;
 @end

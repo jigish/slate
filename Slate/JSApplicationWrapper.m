@@ -1,5 +1,5 @@
 //
-//  JSInfoWrapper.m
+//  JSApplicationWrapper.m
 //  Slate
 //
 //  Created by Jigish Patel on 1/21/13.
@@ -18,62 +18,51 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
-#import "JSInfoWrapper.h"
-#import "ScreenWrapper.h"
-#import <WebKit/WebKit.h>
-#import "JSWindowWrapper.h"
 #import "JSApplicationWrapper.h"
 #import "AccessibilityWrapper.h"
 
-static NSDictionary *jsiwJsMethods;
+@implementation JSApplicationWrapper
 
-@implementation JSInfoWrapper
+static NSDictionary *jsawJsMethods;
 
-@synthesize sw, aw;
+@synthesize aw;
 
 - (id)init {
   self = [super init];
   if (self) {
-    [self setAw:nil];
-    [self setSw:nil];
-    [JSInfoWrapper setJsMethods];
+    [self setAw:[[AccessibilityWrapper alloc] init]];
+    [JSApplicationWrapper setJsMethods];
   }
   return self;
 }
 
-- (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw screenWrapper:(ScreenWrapper *)_sw {
+- (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw {
   self = [super init];
   if (self) {
     [self setAw:_aw];
-    [self setSw:_sw];
-    [JSInfoWrapper setJsMethods];
+    [JSApplicationWrapper setJsMethods];
   }
   return self;
 }
 
-- (JSWindowWrapper *)window {
-  return [[JSWindowWrapper alloc] init];
-}
-
-- (JSApplicationWrapper *)app {
-  return [[JSApplicationWrapper alloc] init];
+- (pid_t)pid {
+  return [aw processIdentifier];
 }
 
 + (void)setJsMethods {
-  if (jsiwJsMethods == nil) {
-    jsiwJsMethods = @{
-      NSStringFromSelector(@selector(window)): @"window",
-      NSStringFromSelector(@selector(app)): @"app",
+  if (jsawJsMethods == nil) {
+    jsawJsMethods = @{
+      NSStringFromSelector(@selector(pid)): @"pid",
     };
   }
 }
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel {
-  return [jsiwJsMethods objectForKey:NSStringFromSelector(sel)] == NULL;
+  return [jsawJsMethods objectForKey:NSStringFromSelector(sel)] == NULL;
 }
 
 + (NSString *)webScriptNameForSelector:(SEL)sel {
-  return [jsiwJsMethods objectForKey:NSStringFromSelector(sel)];
+  return [jsawJsMethods objectForKey:NSStringFromSelector(sel)];
 }
 
 @end

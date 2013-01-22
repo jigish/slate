@@ -39,6 +39,9 @@
     return "unknown";
   }
 
+  var _array_ = window._array_ = function() { return []; }
+  var _hash_ = window._hash_ = function() { return {}; }
+
   var slate = window.slate = {
     log: function() {
       var msg = Array.prototype.slice.call(arguments, 0).join(" ");
