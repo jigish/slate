@@ -71,6 +71,12 @@ static NSDictionary *jsawJsMethods;
   return [app localizedName];
 }
 
+- (id)focusedWindow {
+  AccessibilityWrapper *_aw = [[AccessibilityWrapper alloc] initWithApp:AXUIElementCreateApplication([app processIdentifier])
+                                                                 window:[AccessibilityWrapper focusedWindowInRunningApp:app]];
+  return [[JSWindowWrapper alloc] initWithAccessibilityWrapper:_aw screenWrapper:sw];
+}
+
 - (void)eachWindow:(id)func {
   CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInRunningApp:app];
   if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) return;
@@ -88,6 +94,7 @@ static NSDictionary *jsawJsMethods;
       NSStringFromSelector(@selector(pid)): @"pid",
       NSStringFromSelector(@selector(name)): @"name",
       NSStringFromSelector(@selector(eachWindow:)): @"eachWindow",
+      NSStringFromSelector(@selector(focusedWindow)): @"focusedWindow",
     };
   }
 }
