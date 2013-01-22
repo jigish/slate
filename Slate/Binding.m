@@ -77,7 +77,7 @@ static NSDictionary *dictionary = nil;
 - (void)setKeystrokeFromString:(NSString*)keystroke {
   UInt32 theKeyCode = 0;
   UInt32 theModifiers = 0;
-  NSNumber *theModalKey;
+  NSNumber *theModalKey = nil;
   NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:COLON];
   if ([keyAndModifiers count] >= 1) {
     theKeyCode = (UInt32)[[[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]] integerValue];
@@ -89,7 +89,7 @@ static NSDictionary *dictionary = nil;
         NSEnumerator *modEnum = [modifiersArray objectEnumerator];
         NSString *mod = [modEnum nextObject];
         while (mod) {
-          theModalKey = [[Binding asciiToCodeDict] objectForKey:mod];
+          NSNumber *_theModalKey = [[Binding asciiToCodeDict] objectForKey:mod];
           if ([mod isEqualToString:CONTROL]) {
             theModifiers += controlKey;
           } else if ([mod isEqualToString:OPTION]) {
@@ -100,7 +100,9 @@ static NSDictionary *dictionary = nil;
             theModifiers += shiftKey;
           } else if ([mod isEqualToString:FUNCTION]) {
             theModifiers += FUNCTION_KEY;
-          } else if (theModalKey == nil) {
+          } else if (_theModalKey != nil) {
+            theModalKey = _theModalKey;
+          } else {
             SlateLogger(@"ERROR: Unrecognized modifier '%@'", mod);
             @throw([NSException exceptionWithName:@"Unrecognized Modifier" reason:[NSString stringWithFormat:@"Unrecognized modifier '%@' in '%@'", mod, keystroke] userInfo:nil]);
           }
