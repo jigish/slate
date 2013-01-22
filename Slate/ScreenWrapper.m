@@ -129,6 +129,10 @@ static NSString *resolutions = nil;
   }
 }
 
+- (NSRect)getScreenRect:(NSInteger)screenId {
+  return [self convertScreenRectToWindowCoords:screenId];
+}
+
 - (NSInteger)convertDefaultOrderToLeftToRightOrder:(NSInteger)screenId {
   return [[leftToRightToDefault objectAtIndex:screenId] integerValue];
 }

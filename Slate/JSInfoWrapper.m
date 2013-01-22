@@ -27,6 +27,7 @@
 #import "JSController.h"
 #import "RunningApplications.h"
 #import "ExpressionPoint.h"
+#import "JSScreenWrapper.h"
 
 @implementation JSInfoWrapper
 
@@ -128,13 +129,83 @@ static NSDictionary *jsiwJsMethods;
   }
 }
 
+- (JSScreenWrapper *)screen {
+  NSPoint tl = [aw getCurrentTopLeft];
+  NSSize size = [aw getCurrentSize];
+  NSRect wRect = NSMakeRect(tl.x, tl.y, size.width, size.height);
+  return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenIdForRect:wRect] screenWrapper:sw];
+}
+
+- (BOOL)isRectOffScreen:(id)rect {
+  id rectDict = [[JSController getInstance] unmarshall:rect];
+  if (![rectDict isKindOfClass:[NSDictionary class]]) { return NO; }
+  if ([rectDict objectForKey:@"x"] == nil) { return NO; }
+  if ([rectDict objectForKey:@"y"] == nil) { return NO; }
+  if ([rectDict objectForKey:@"width"] == nil) { return NO; }
+  if ([rectDict objectForKey:@"height"] == nil) { return NO; }
+
+  float x = 0;
+  if ([[rectDict objectForKey:@"x"] isKindOfClass:[NSNumber class]] ||
+      [[rectDict objectForKey:@"x"] isKindOfClass:[NSValue class]]) {
+    x = [[rectDict objectForKey:@"x"] floatValue];
+  } else {
+    return NO;
+  }
+  float y = 0;
+  if ([[rectDict objectForKey:@"y"] isKindOfClass:[NSNumber class]] ||
+      [[rectDict objectForKey:@"y"] isKindOfClass:[NSValue class]]) {
+    y = [[rectDict objectForKey:@"y"] floatValue];
+  } else {
+    return NO;
+  }
+  float width = 0;
+  if ([[rectDict objectForKey:@"width"] isKindOfClass:[NSNumber class]] ||
+      [[rectDict objectForKey:@"width"] isKindOfClass:[NSValue class]]) {
+    width = [[rectDict objectForKey:@"width"] floatValue];
+  } else {
+    return NO;
+  }
+  float height = 0;
+  if ([[rectDict objectForKey:@"height"] isKindOfClass:[NSNumber class]] ||
+      [[rectDict objectForKey:@"height"] isKindOfClass:[NSValue class]]) {
+    height = [[rectDict objectForKey:@"height"] floatValue];
+  } else {
+    return NO;
+  }
+
+  return [sw isRectOffScreen:NSMakeRect(x, y, width, height)];
+}
+
+- (JSScreenWrapper *)screenForRef:(NSString *)ref {
+  NSPoint tl = [aw getCurrentTopLeft];
+  NSSize size = [aw getCurrentSize];
+  NSRect wRect = NSMakeRect(tl.x, tl.y, size.width, size.height);
+  return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenId:ref windowRect:wRect] screenWrapper:sw];
+}
+
+- (NSInteger)screenCount {
+  return [sw getScreenCount];
+}
+
+- (void)eachScreen:(id)func {
+  for (NSInteger i = 0; i < [sw getScreenCount]; i++) {
+    [[JSController getInstance] runFunction:func withArg:[[JSScreenWrapper alloc] initWithScreenId:i
+                                                                                     screenWrapper:sw]];
+  }
+}
+
 + (void)setJsMethods {
   if (jsiwJsMethods == nil) {
     jsiwJsMethods = @{
       NSStringFromSelector(@selector(window)): @"window",
       NSStringFromSelector(@selector(app)): @"app",
+      NSStringFromSelector(@selector(screen)): @"screen",
       NSStringFromSelector(@selector(eachApp:)): @"eachApp",
       NSStringFromSelector(@selector(windowUnderPoint:)): @"windowUnderPoint",
+      NSStringFromSelector(@selector(isRectOffScreen:)): @"isRectOffScreen",
+      NSStringFromSelector(@selector(screenForRef:)): @"screenForRef",
+      NSStringFromSelector(@selector(screenCount)): @"screenCount",
+      NSStringFromSelector(@selector(eachScreen:)): @"eachScreen",
     };
   }
 }

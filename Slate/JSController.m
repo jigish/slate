@@ -22,6 +22,7 @@
 #import "SlateLogger.h"
 #import "SlateConfig.h"
 #import "JSInfoWrapper.h"
+#import "JSScreenWrapper.h"
 
 @implementation JSController
 
@@ -254,7 +255,11 @@ static NSDictionary *jscJsMethods;
   return nil;
 }
 
-- (id)jsToSomething:(WebScriptObject *)obj {
+- (id)jsToSomething:(id)obj {
+  if (obj == nil) { return nil; }
+  if ([obj isKindOfClass:[JSScreenWrapper class]]) {
+    return [obj toString];
+  }
   NSString *type = [self jsTypeof:obj];
   if (type == nil) { return nil; }
   if ([type isEqualToString:@"array"]) {

@@ -23,6 +23,7 @@
 #import "ScreenWrapper.h"
 #import "JSController.h"
 #import "ExpressionPoint.h"
+#import "JSScreenWrapper.h"
 
 @implementation JSWindowWrapper
 
@@ -166,6 +167,13 @@ static NSDictionary *jswwJsMethods;
   return [aw resizeWindow:NSMakeSize(width, height)];
 }
 
+- (JSScreenWrapper *)screen {
+  NSPoint tl = [aw getCurrentTopLeft];
+  NSSize size = [aw getCurrentSize];
+  NSRect wRect = NSMakeRect(tl.x, tl.y, size.width, size.height);
+  return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenIdForRect:wRect] screenWrapper:sw];
+}
+
 + (void)setJsMethods {
   if (jswwJsMethods == nil) {
     jswwJsMethods = @{
@@ -178,6 +186,7 @@ static NSDictionary *jswwJsMethods;
       NSStringFromSelector(@selector(isMain)): @"isMain",
       NSStringFromSelector(@selector(move:)): @"move",
       NSStringFromSelector(@selector(resize:)): @"resize",
+      NSStringFromSelector(@selector(screen)): @"screen",
     };
   }
 }

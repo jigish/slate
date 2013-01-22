@@ -35,6 +35,7 @@
 + (BOOL)hasScreenConfigChanged;
 - (id)initWithScreens:(NSArray *)theScreens; // Used for testing
 - (NSInteger)getScreenCount;
+- (NSRect)getScreenRect:(NSInteger)screenId;
 - (NSInteger)convertDefaultOrderToLeftToRightOrder:(NSInteger)screenId;
 - (void)getScreenResolutionStrings:(NSMutableArray *)strings;
 - (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window;

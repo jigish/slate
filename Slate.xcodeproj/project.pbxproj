@@ -31,6 +31,7 @@
 		3B7DDCDF16AE1E290087CD12 /* JSInfoWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7DDCDE16AE1E290087CD12 /* JSInfoWrapper.m */; };
 		3B7DDCE416AE301D0087CD12 /* JSWindowWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7DDCE316AE301D0087CD12 /* JSWindowWrapper.m */; };
 		3B7DDCE716AE35840087CD12 /* JSApplicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7DDCE616AE35840087CD12 /* JSApplicationWrapper.m */; };
+		3B7DDCEA16AE90FF0087CD12 /* JSScreenWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7DDCE916AE90FF0087CD12 /* JSScreenWrapper.m */; };
 		3B7EB3A7138F3F6800EBEC2B /* ResizeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */; };
 		3B7EB475138F691800EBEC2B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB474138F691800EBEC2B /* Constants.m */; };
 		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
@@ -163,6 +164,8 @@
 		3B7DDCE316AE301D0087CD12 /* JSWindowWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSWindowWrapper.m; sourceTree = "<group>"; };
 		3B7DDCE516AE35840087CD12 /* JSApplicationWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSApplicationWrapper.h; sourceTree = "<group>"; };
 		3B7DDCE616AE35840087CD12 /* JSApplicationWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSApplicationWrapper.m; sourceTree = "<group>"; };
+		3B7DDCE816AE90FF0087CD12 /* JSScreenWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSScreenWrapper.h; sourceTree = "<group>"; };
+		3B7DDCE916AE90FF0087CD12 /* JSScreenWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSScreenWrapper.m; sourceTree = "<group>"; };
 		3B7EB3A5138F3F6800EBEC2B /* ResizeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizeOperation.h; sourceTree = "<group>"; };
 		3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizeOperation.m; sourceTree = "<group>"; };
 		3B7EB473138F691800EBEC2B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Constants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -322,6 +325,8 @@
 				3AA7D09416A6EE0200C81A67 /* JSController.m */,
 				3B7DDCDD16AE1E290087CD12 /* JSInfoWrapper.h */,
 				3B7DDCDE16AE1E290087CD12 /* JSInfoWrapper.m */,
+				3B7DDCE816AE90FF0087CD12 /* JSScreenWrapper.h */,
+				3B7DDCE916AE90FF0087CD12 /* JSScreenWrapper.m */,
 				3B7DDCE216AE301D0087CD12 /* JSWindowWrapper.h */,
 				3B7DDCE316AE301D0087CD12 /* JSWindowWrapper.m */,
 			);
@@ -788,6 +793,7 @@
 				3B7DDCDF16AE1E290087CD12 /* JSInfoWrapper.m in Sources */,
 				3B7DDCE416AE301D0087CD12 /* JSWindowWrapper.m in Sources */,
 				3B7DDCE716AE35840087CD12 /* JSApplicationWrapper.m in Sources */,
+				3B7DDCEA16AE90FF0087CD12 /* JSScreenWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
