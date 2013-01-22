@@ -61,7 +61,7 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
-  [self evalOptions];
+  [self evalOptionsWithAccessibilityWrapper:iamnil screenWrapper:iamalsonil];
   [[SlateConfig getInstance] deleteSnapshot:name pop:pop];
   return YES;
 }

@@ -45,6 +45,7 @@
 #import "ThrowOperation.h"
 #import "NudgeOperation.h"
 #import "PushOperation.h"
+#import "JSInfoWrapper.h"
 
 @implementation Operation
 
@@ -133,8 +134,18 @@
   // OVERRIDE - runs after all options are set
 }
 
-- (void)evalOptions {
+- (void)evalOptionsWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   if ([[self dynamicOptions] count] == 0) { return; }
+  if (aw == nil) {
+    [[JSInfoWrapper getInstance] setAw:[[AccessibilityWrapper alloc] init]];
+  } else {
+    [[JSInfoWrapper getInstance] setAw:aw];
+  }
+  if (aw == nil) {
+    [[JSInfoWrapper getInstance] setSw:[[ScreenWrapper alloc] init]];
+  } else {
+    [[JSInfoWrapper getInstance] setSw:sw];
+  }
   for (NSString *key in [[self dynamicOptions] allKeys]) {
     id result = [[JSController getInstance] runCallableFunction:[[self dynamicOptions] objectForKey:key]];
     if (result == nil) { continue; }

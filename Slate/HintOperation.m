@@ -257,7 +257,7 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
   if (hideTimer != nil) return YES;
-  [self evalOptions];
+  [self evalOptionsWithAccessibilityWrapper:iamnil screenWrapper:sw];
   [(SlateAppDelegate *)[NSApp delegate] setCurrentHintOperation:self];
   ignoreHidden = [[SlateConfig getInstance] getBoolConfig:WINDOW_HINTS_IGNORE_HIDDEN_WINDOWS];
   [self setCurrentHint:0];

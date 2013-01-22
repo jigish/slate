@@ -66,7 +66,7 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
-  [self evalOptions];
+  [self evalOptionsWithAccessibilityWrapper:iamnil screenWrapper:iamalsonil];
   return [ActivateSnapshotOperation activateSnapshot:name remove:del];
 }
 

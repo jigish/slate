@@ -84,7 +84,7 @@ static NSDictionary *jscJsMethods;
 }
 
 - (void)setInfo {
-  [scriptObject setValue:[[JSInfoWrapper alloc] init] forKey:@"_info"];
+  [scriptObject setValue:[JSInfoWrapper getInstance] forKey:@"_info"];
 }
 
 - (void)initializeWebView {
@@ -353,6 +353,8 @@ static NSDictionary *jscJsMethods;
 }
 
 - (BOOL)doOperation {
+  [[JSInfoWrapper getInstance] setAw:[[AccessibilityWrapper alloc] init]];
+  [[JSInfoWrapper getInstance] setSw:[[ScreenWrapper alloc] init]];
   [self.controller runFunction:self.function];
   return YES;
 }

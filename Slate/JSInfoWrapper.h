@@ -32,4 +32,6 @@
 
 - (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw screenWrapper:(ScreenWrapper *)_sw;
 
++ (JSInfoWrapper *)getInstance;
+
 @end

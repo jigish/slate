@@ -25,11 +25,20 @@
 #import "JSApplicationWrapper.h"
 #import "AccessibilityWrapper.h"
 
-static NSDictionary *jsiwJsMethods;
-
 @implementation JSInfoWrapper
 
 @synthesize sw, aw;
+
+static JSInfoWrapper *_instance = nil;
+static NSDictionary *jsiwJsMethods;
+
++ (JSInfoWrapper *)getInstance {
+  @synchronized([JSInfoWrapper class]) {
+    if (!_instance)
+      _instance = [[[JSInfoWrapper class] alloc] init];
+    return _instance;
+  }
+}
 
 - (id)init {
   self = [super init];
@@ -52,11 +61,11 @@ static NSDictionary *jsiwJsMethods;
 }
 
 - (JSWindowWrapper *)window {
-  return [[JSWindowWrapper alloc] init];
+  return [[JSWindowWrapper alloc] initWithAccessibilityWrapper:aw screenWrapper:sw];
 }
 
 - (JSApplicationWrapper *)app {
-  return [[JSApplicationWrapper alloc] init];
+  return [[JSApplicationWrapper alloc] initWithAccessibilityWrapper:aw];
 }
 
 + (void)setJsMethods {

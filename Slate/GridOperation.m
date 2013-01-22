@@ -94,7 +94,7 @@ static const UInt32 ESC_GRID_ID = 10002;
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
-  [self evalOptions];
+  [self evalOptionsWithAccessibilityWrapper:aw screenWrapper:sw];
   [self setFocusedWindow:[[AccessibilityWrapper alloc] init]];
   NSInteger currentScreenId = [sw getScreenIdForPoint:[NSEvent mouseLocation]];
   [(SlateAppDelegate *)[NSApp delegate] setCurrentGridOperation:self];

@@ -61,7 +61,7 @@
 
 - (BOOL) doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = NO;
-  [self evalOptions];
+  [self evalOptionsWithAccessibilityWrapper:aw screenWrapper:sw];
   NSInteger opRun = 0;
   if ([aw inited]) {
     opRun = [self getNextOperation:aw];

@@ -42,7 +42,7 @@
 - (void)beforeInitOptions;
 - (void)initOptions:(NSDictionary *)_options;
 - (void)parseOption:(NSString *)name value:(id)value;
-- (void)evalOptions;
+- (void)evalOptionsWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;
 - (void)afterEvalOptions;
 
 + (id)operationFromString:(NSString *)opString;

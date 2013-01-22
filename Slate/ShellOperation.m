@@ -59,7 +59,7 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
-  [self evalOptions];
+  [self evalOptionsWithAccessibilityWrapper:iamnil screenWrapper:iamalsonil];
   NSTask *task = [ShellUtils run:[self command] args:[self args] wait:[self waitForExit] path:[self currentPath]];
   return task != nil;
 }

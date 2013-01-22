@@ -58,7 +58,7 @@
 
 // Note that the AccessibilityWrapper is never used because layouts use multiple applications
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)sw {
-  [self evalOptions];
+  [self evalOptionsWithAccessibilityWrapper:iamnil screenWrapper:sw];
   return [LayoutOperation activateLayout:[self name] screenWrapper:sw];
 }
 
