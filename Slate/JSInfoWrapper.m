@@ -1,5 +1,5 @@
 //
-//  ScriptingInfoWrapper.m
+//  JSInfoWrapper.m
 //  Slate
 //
 //  Created by Jigish Patel on 1/21/13.
@@ -18,66 +18,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
-#import "ScriptingInfoWrapper.h"
-#import "AccessibilityWrapper.h"
+#import "JSInfoWrapper.h"
 #import "ScreenWrapper.h"
 #import <WebKit/WebKit.h>
+#import "JSWindowWrapper.h"
 
-static NSDictionary *swJsMethods;
 static NSDictionary *siwJsMethods;
 
-@interface ScriptingWindow : NSObject {
-  AccessibilityWrapper *aw;
-}
-@property (strong) AccessibilityWrapper *aw;
-- (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw;
-@end
-
-@implementation ScriptingWindow
-
-@synthesize aw;
-
-- (id)init {
-  self = [super init];
-  if (self) {
-    [self setAw:[[AccessibilityWrapper alloc] init]];
-    [ScriptingWindow setJsMethods];
-  }
-  return self;
-}
-
-- (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw {
-  self = [super init];
-  if (self) {
-    [self setAw:_aw];
-    [ScriptingWindow setJsMethods];
-  }
-  return self;
-}
-
-- (NSString *)title {
-  return [aw getTitle];
-}
-
-+ (void)setJsMethods {
-  if (swJsMethods == nil) {
-    swJsMethods = @{
-      NSStringFromSelector(@selector(title)): @"title",
-    };
-  }
-}
-
-+ (BOOL)isSelectorExcludedFromWebScript:(SEL)sel {
-  return [swJsMethods objectForKey:NSStringFromSelector(sel)] == NULL;
-}
-
-+ (NSString *)webScriptNameForSelector:(SEL)sel {
-  return [swJsMethods objectForKey:NSStringFromSelector(sel)];
-}
-
-@end
-
-@implementation ScriptingInfoWrapper
+@implementation JSInfoWrapper
 
 @synthesize sw;
 
@@ -85,7 +33,7 @@ static NSDictionary *siwJsMethods;
   self = [super init];
   if (self) {
     [self setSw:[[ScreenWrapper alloc] init]];
-    [ScriptingInfoWrapper setJsMethods];
+    [JSInfoWrapper setJsMethods];
   }
   return self;
 }
@@ -94,13 +42,17 @@ static NSDictionary *siwJsMethods;
   self = [super init];
   if (self) {
     [self setSw:_sw];
-    [ScriptingInfoWrapper setJsMethods];
+    [JSInfoWrapper setJsMethods];
   }
   return self;
 }
 
-- (ScriptingWindow *)focusedWindow {
-  return [[ScriptingWindow alloc] init];
+- (JSWindowWrapper *)focusedWindow {
+  return [[JSWindowWrapper alloc] init];
+}
+
+- (JSWindowWrapper *)focusedApplication {
+  return [[JSWindowWrapper alloc] init];
 }
 
 + (void)setJsMethods {

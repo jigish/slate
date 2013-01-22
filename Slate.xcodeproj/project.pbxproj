@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3AA7D09116A6ED1200C81A67 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA7D09016A6ED1200C81A67 /* WebKit.framework */; };
-		3AA7D09516A6EE0200C81A67 /* ScriptingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7D09416A6EE0200C81A67 /* ScriptingController.m */; };
+		3AA7D09516A6EE0200C81A67 /* JSController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7D09416A6EE0200C81A67 /* JSController.m */; };
 		3AA7D09B16A6FAE100C81A67 /* initialize.js in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7D09A16A6FAE100C81A67 /* initialize.js */; };
 		3AA7D09D16A6FC9B00C81A67 /* initialize.js in Resources */ = {isa = PBXBuildFile; fileRef = 3AA7D09A16A6FAE100C81A67 /* initialize.js */; };
 		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
@@ -28,7 +28,8 @@
 		3B5B1B7C1665871E00D5B1B5 /* UndoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B1B7B1665871D00D5B1B5 /* UndoOperation.m */; };
 		3B65CF251576CDF10063D298 /* ASCIIToCode_Dvorak.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B65CF241576CDF10063D298 /* ASCIIToCode_Dvorak.plist */; };
 		3B66A56213ADBDFD0015EDD5 /* ScreenWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */; };
-		3B7DDCDF16AE1E290087CD12 /* ScriptingInfoWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7DDCDE16AE1E290087CD12 /* ScriptingInfoWrapper.m */; };
+		3B7DDCDF16AE1E290087CD12 /* JSInfoWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7DDCDE16AE1E290087CD12 /* JSInfoWrapper.m */; };
+		3B7DDCE416AE301D0087CD12 /* JSWindowWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7DDCE316AE301D0087CD12 /* JSWindowWrapper.m */; };
 		3B7EB3A7138F3F6800EBEC2B /* ResizeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */; };
 		3B7EB475138F691800EBEC2B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB474138F691800EBEC2B /* Constants.m */; };
 		3B7EB4CC138F72D900EBEC2B /* StringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EB4CB138F72D900EBEC2B /* StringTokenizer.m */; };
@@ -121,8 +122,8 @@
 
 /* Begin PBXFileReference section */
 		3AA7D09016A6ED1200C81A67 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		3AA7D09316A6EE0200C81A67 /* ScriptingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingController.h; sourceTree = "<group>"; };
-		3AA7D09416A6EE0200C81A67 /* ScriptingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptingController.m; sourceTree = "<group>"; };
+		3AA7D09316A6EE0200C81A67 /* JSController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSController.h; sourceTree = "<group>"; };
+		3AA7D09416A6EE0200C81A67 /* JSController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSController.m; sourceTree = "<group>"; };
 		3AA7D09A16A6FAE100C81A67 /* initialize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = initialize.js; sourceTree = "<group>"; };
 		3B3335AB14FC1EA900F72638 /* WindowInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowInfoView.h; sourceTree = "<group>"; };
 		3B3335AC14FC1EA900F72638 /* WindowInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowInfoView.m; sourceTree = "<group>"; };
@@ -155,8 +156,10 @@
 		3B65CF241576CDF10063D298 /* ASCIIToCode_Dvorak.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ASCIIToCode_Dvorak.plist; sourceTree = "<group>"; };
 		3B66A56013ADBDFD0015EDD5 /* ScreenWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenWrapper.h; sourceTree = "<group>"; };
 		3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenWrapper.m; sourceTree = "<group>"; };
-		3B7DDCDD16AE1E290087CD12 /* ScriptingInfoWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingInfoWrapper.h; sourceTree = "<group>"; };
-		3B7DDCDE16AE1E290087CD12 /* ScriptingInfoWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptingInfoWrapper.m; sourceTree = "<group>"; };
+		3B7DDCDD16AE1E290087CD12 /* JSInfoWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSInfoWrapper.h; sourceTree = "<group>"; };
+		3B7DDCDE16AE1E290087CD12 /* JSInfoWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSInfoWrapper.m; sourceTree = "<group>"; };
+		3B7DDCE216AE301D0087CD12 /* JSWindowWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSWindowWrapper.h; sourceTree = "<group>"; };
+		3B7DDCE316AE301D0087CD12 /* JSWindowWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSWindowWrapper.m; sourceTree = "<group>"; };
 		3B7EB3A5138F3F6800EBEC2B /* ResizeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizeOperation.h; sourceTree = "<group>"; };
 		3B7EB3A6138F3F6800EBEC2B /* ResizeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizeOperation.m; sourceTree = "<group>"; };
 		3B7EB473138F691800EBEC2B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Constants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -307,6 +310,19 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		3B7DDCE116AE2FEC0087CD12 /* JavaScript */ = {
+			isa = PBXGroup;
+			children = (
+				3AA7D09316A6EE0200C81A67 /* JSController.h */,
+				3AA7D09416A6EE0200C81A67 /* JSController.m */,
+				3B7DDCDD16AE1E290087CD12 /* JSInfoWrapper.h */,
+				3B7DDCDE16AE1E290087CD12 /* JSInfoWrapper.m */,
+				3B7DDCE216AE301D0087CD12 /* JSWindowWrapper.h */,
+				3B7DDCE316AE301D0087CD12 /* JSWindowWrapper.m */,
+			);
+			name = JavaScript;
+			sourceTree = "<group>";
+		};
 		3B8B5524161A1FC600E21A6C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -373,8 +389,6 @@
 				47C4A2CD1384F26A0066B6DE /* Binding.m */,
 				3B40AC1F13A73530006C9A5C /* Layout.h */,
 				3B40AC2013A73530006C9A5C /* Layout.m */,
-				3AA7D09316A6EE0200C81A67 /* ScriptingController.h */,
-				3AA7D09416A6EE0200C81A67 /* ScriptingController.m */,
 				47C4A2C91384EA510066B6DE /* SlateConfig.h */,
 				47C4A2CA1384EA510066B6DE /* SlateConfig.m */,
 				3B42D72D13A831E6009103A0 /* ApplicationOptions.h */,
@@ -480,8 +494,6 @@
 				3BB5380313AEDA190005CFFC /* ScreenState.m */,
 				3B66A56013ADBDFD0015EDD5 /* ScreenWrapper.h */,
 				3B66A56113ADBDFD0015EDD5 /* ScreenWrapper.m */,
-				3B7DDCDD16AE1E290087CD12 /* ScriptingInfoWrapper.h */,
-				3B7DDCDE16AE1E290087CD12 /* ScriptingInfoWrapper.m */,
 				3BA1BA69162F4CFE0026774E /* ShellUtils.h */,
 				3BA1BA6A162F4CFF0026774E /* ShellUtils.m */,
 				3B58154215054EBD0078D568 /* SlateLogger.h */,
@@ -542,6 +554,7 @@
 				3BC9E97015005F5F002FD1FA /* Categories */,
 				3BF39E0F14FDB16F0083E9C4 /* JSONKit */,
 				478293E813859C0B00452C07 /* Common */,
+				3B7DDCE116AE2FEC0087CD12 /* JavaScript */,
 				478293E513859BA000452C07 /* Config */,
 				478293E713859BED00452C07 /* Operation */,
 				47C4A29A1384E8890066B6DE /* Supporting Files */,
@@ -760,14 +773,15 @@
 				3BA1BA68162F3E530026774E /* ShellOperation.m in Sources */,
 				3BA1BA6B162F4CFF0026774E /* ShellUtils.m in Sources */,
 				3B5B1B7C1665871E00D5B1B5 /* UndoOperation.m in Sources */,
-				3AA7D09516A6EE0200C81A67 /* ScriptingController.m in Sources */,
+				3AA7D09516A6EE0200C81A67 /* JSController.m in Sources */,
 				3AA7D09B16A6FAE100C81A67 /* initialize.js in Sources */,
 				3B38E04716AB8B3500603901 /* underscore.js in Sources */,
 				3BFF7D7116AC784B00A8CB0E /* PushOperation.m in Sources */,
 				3BFF7D7516AC7B3D00A8CB0E /* NudgeOperation.m in Sources */,
 				3BFF7D7816AC7E2900A8CB0E /* ThrowOperation.m in Sources */,
 				3BFF7D7B16AC7FF600A8CB0E /* CornerOperation.m in Sources */,
-				3B7DDCDF16AE1E290087CD12 /* ScriptingInfoWrapper.m in Sources */,
+				3B7DDCDF16AE1E290087CD12 /* JSInfoWrapper.m in Sources */,
+				3B7DDCE416AE301D0087CD12 /* JSWindowWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

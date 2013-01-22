@@ -33,7 +33,7 @@
 #import "NSFileManager+ApplicationSupport.h"
 #import "NSString+Indicies.h"
 #import "ActivateSnapshotOperation.h"
-#import "ScriptingController.h"
+#import "JSController.h"
 
 @implementation SlateConfig
 
@@ -101,7 +101,7 @@ static SlateConfig *_instance = nil;
   NSString *c = [configs objectForKey:key];
   if ([c hasPrefix:@"_javascript_::"]) {
     NSString *fkey = [c stringByReplacingOccurrencesOfString:@"_javascript_::" withString:@""];
-    id ret = [[ScriptingController getInstance] runCallableFunction:fkey];
+    id ret = [[JSController getInstance] runCallableFunction:fkey];
     return [NSString stringWithFormat:@"%@", ret];
   }
   return c;
@@ -182,7 +182,7 @@ static SlateConfig *_instance = nil;
   if ([file rangeOfString:SLASH].location != 0 && [file rangeOfString:TILDA].location != 0)
     configFile = [NSString stringWithFormat:@"~/%@", file];
   if ([configFile hasSuffix:EXT_JS]) {
-    return [[ScriptingController getInstance] loadConfigFileWithPath:configFile];
+    return [[JSController getInstance] loadConfigFileWithPath:configFile];
   }
   NSString *fileString = [NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:nil];
   return [self append:fileString];

@@ -40,7 +40,7 @@
 #import "UndoOperation.h"
 #import "SlateConfig.h"
 #import <WebKit/WebKit.h>
-#import "ScriptingController.h"
+#import "JSController.h"
 #import "CornerOperation.h"
 #import "ThrowOperation.h"
 #import "NudgeOperation.h"
@@ -111,7 +111,7 @@
       [self parseOption:key value:[[self options] objectForKey:key]];
     } else if ([opt isKindOfClass:[WebScriptObject class]]) {
       // assume this is a function (otherwise it would have been converted)
-      NSString *jsKey = [[ScriptingController getInstance] addCallableFunction:opt];
+      NSString *jsKey = [[JSController getInstance] addCallableFunction:opt];
       [self.dynamicOptions setObject:jsKey forKey:key];
     } else {
       [self.options setObject:[NSString stringWithFormat:@"%@", opt] forKey:key];
@@ -136,7 +136,7 @@
 - (void)evalOptions {
   if ([[self dynamicOptions] count] == 0) { return; }
   for (NSString *key in [[self dynamicOptions] allKeys]) {
-    id result = [[ScriptingController getInstance] runCallableFunction:[[self dynamicOptions] objectForKey:key]];
+    id result = [[JSController getInstance] runCallableFunction:[[self dynamicOptions] objectForKey:key]];
     if (result == nil) { continue; }
     [self.options setObject:result forKey:key];
     [self parseOption:key value:[[self options] objectForKey:key]];

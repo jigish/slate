@@ -1,5 +1,5 @@
 //
-//  ScriptingController.h
+//  JSController.h
 //  Slate
 //
 //  Created by Alex Morega on 2013-01-16.
@@ -21,7 +21,7 @@
 #import <WebKit/WebKit.h>
 #import "Operation.h"
 
-@interface ScriptingController : NSObject {
+@interface JSController : NSObject {
   WebView *webView;
   WebScriptObject *scriptObject;
   NSMutableArray *bindings;
@@ -36,7 +36,7 @@
 - (BOOL)loadConfigFileWithPath:(NSString *)path;
 - (NSString *)addCallableFunction:(WebScriptObject *)function;
 - (id)runCallableFunction:(NSString *)key;
-+ (ScriptingController *)getInstance;
++ (JSController *)getInstance;
 
 @end
 
@@ -44,8 +44,8 @@
 @interface ScriptingOperation : Operation
 
 @property WebScriptObject *function;
-@property ScriptingController *controller;
+@property JSController *controller;
 
-+ (ScriptingOperation *)operationWithController:(ScriptingController*)controller function:(WebScriptObject*)function;
++ (ScriptingOperation *)operationWithController:(JSController*)controller function:(WebScriptObject*)function;
 
 @end

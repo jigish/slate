@@ -1,5 +1,5 @@
 //
-//  ScriptingInfoWrapper.h
+//  JSInfoWrapper.h
 //  Slate
 //
 //  Created by Jigish Patel on 1/21/13.
@@ -21,7 +21,7 @@
 #import <Foundation/Foundation.h>
 @class ScreenWrapper;
 
-@interface ScriptingInfoWrapper : NSObject {
+@interface JSInfoWrapper : NSObject {
   ScreenWrapper *sw;
 }
 

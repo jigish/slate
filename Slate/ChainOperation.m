@@ -24,7 +24,7 @@
 #import "StringTokenizer.h"
 #import "Constants.h"
 #import "SlateLogger.h"
-#import "ScriptingController.h"
+#import "JSController.h"
 
 @implementation ChainOperation
 
@@ -126,7 +126,7 @@
         @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
         continue;
       }
-      Operation *op = [[[ScriptingController getInstance] operations] objectForKey:key];
+      Operation *op = [[[JSController getInstance] operations] objectForKey:key];
       if (op == nil) {
         @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
         continue;

@@ -21,7 +21,7 @@
 #import "Constants.h"
 #import "SlateAppDelegate.h"
 #import "SlateConfig.h"
-#import "ScriptingController.h"
+#import "JSController.h"
 #import "Binding.h"
 #import "HintOperation.h"
 #import "SlateLogger.h"
@@ -105,7 +105,7 @@ static EventHandlerRef modifiersEvent;
   InstallEventHandler(GetEventMonitorTarget(), &OnHotKeyReleasedEvent, 1, &eventReleasedType, (__bridge void *)self, NULL);
 
   NSMutableArray *bindings = [[SlateConfig getInstance] bindings];
-  ScriptingController *scriptingController = [ScriptingController getInstance];
+  JSController *scriptingController = [JSController getInstance];
   for (NSInteger i = 0; i < [scriptingController.bindings count]; i++) {
     [bindings addObject:[scriptingController.bindings objectAtIndex:i]];
   }

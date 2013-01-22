@@ -1,5 +1,5 @@
 //
-//  ScriptingController.m
+//  JSController.m
 //  Slate
 //
 //  Created by Alex Morega on 2013-01-16.
@@ -17,20 +17,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
-#import "ScriptingController.h"
+#import "JSController.h"
 #import "Binding.h"
 #import "SlateLogger.h"
 #import "SlateConfig.h"
-#import "ScriptingInfoWrapper.h"
+#import "JSInfoWrapper.h"
 
-@implementation ScriptingController
+@implementation JSController
 
 @synthesize bindings, operations, functions;
 
-static ScriptingController *_instance = nil;
+static JSController *_instance = nil;
 static NSDictionary *jsMethods;
 
-- (ScriptingController *) init {
+- (JSController *) init {
   self = [super init];
   if (self) {
     inited = NO;
@@ -94,7 +94,7 @@ static NSDictionary *jsMethods;
 }
 
 - (void)setInfo {
-  [scriptObject setValue:[[ScriptingInfoWrapper alloc] init] forKey:@"_info"];
+  [scriptObject setValue:[[JSInfoWrapper alloc] init] forKey:@"_info"];
 }
 
 - (void)initializeWebView {
@@ -285,10 +285,10 @@ static NSDictionary *jsMethods;
   return ret;
 }
 
-+ (ScriptingController *)getInstance {
-  @synchronized([ScriptingController class]) {
++ (JSController *)getInstance {
+  @synchronized([JSController class]) {
     if (!_instance)
-      _instance = [[[ScriptingController class] alloc] init];
+      _instance = [[[JSController class] alloc] init];
     return _instance;
   }
 }
@@ -318,7 +318,7 @@ static NSDictionary *jsMethods;
   return YES;
 }
 
-+ (ScriptingOperation *)operationWithController:(ScriptingController*)controller function:(WebScriptObject*)function {
++ (ScriptingOperation *)operationWithController:(JSController*)controller function:(WebScriptObject*)function {
   ScriptingOperation *op = [[ScriptingOperation alloc] init];
   [op setController:controller];
   [op setFunction:function];
