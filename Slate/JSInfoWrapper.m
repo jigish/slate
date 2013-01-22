@@ -26,6 +26,7 @@
 #import "AccessibilityWrapper.h"
 #import "JSController.h"
 #import "RunningApplications.h"
+#import "ExpressionPoint.h"
 
 @implementation JSInfoWrapper
 
@@ -70,6 +71,56 @@ static NSDictionary *jsiwJsMethods;
   return [[JSApplicationWrapper alloc] initWithAccessibilityWrapper:aw screenWrapper:sw];
 }
 
+- (NSDictionary *)screenAndWindowValues:(NSString *)screen {
+  NSInteger screenId = 0;
+  NSPoint wTL = [aw getCurrentTopLeft];
+  NSSize wSize = [aw getCurrentSize];
+  NSRect wRect = NSMakeRect(wTL.x, wTL.y, wSize.width, wSize.height);
+  if (screen != nil) {
+    screenId = [sw getScreenId:screen windowRect:wRect];
+  } else {
+    screenId = [sw getScreenIdForRect:wRect];
+  }
+  return [sw getScreenAndWindowValues:screenId window:wRect newSize:wRect.size];
+}
+
+- (JSWindowWrapper *)windowUnderPoint:(id)point {
+  id pointDict = [[JSController getInstance] unmarshall:point];
+  if (![pointDict isKindOfClass:[NSDictionary class]]) { return NO; }
+  if ([pointDict objectForKey:@"x"] == nil) { return NO; }
+  if ([pointDict objectForKey:@"y"] == nil) { return NO; }
+
+  NSDictionary *values = nil;
+  float x = 0;
+  if ([[pointDict objectForKey:@"x"] isKindOfClass:[NSString class]]) {
+    values = [self screenAndWindowValues:[pointDict objectForKey:@"screen"]];
+    x = [ExpressionPoint expToFloat:[pointDict objectForKey:@"x"] withDict:values];
+  } else if ([[pointDict objectForKey:@"x"] isKindOfClass:[NSNumber class]] ||
+             [[pointDict objectForKey:@"x"] isKindOfClass:[NSValue class]]) {
+    x = [[pointDict objectForKey:@"x"] floatValue];
+  } else {
+    return NO;
+  }
+  float y = 0;
+  if ([[pointDict objectForKey:@"y"] isKindOfClass:[NSString class]]) {
+    if (values == nil) {
+      values = [self screenAndWindowValues:[pointDict objectForKey:@"screen"]];
+    }
+    y = [ExpressionPoint expToFloat:[pointDict objectForKey:@"y"] withDict:values];
+  } else if ([[pointDict objectForKey:@"y"] isKindOfClass:[NSNumber class]] ||
+             [[pointDict objectForKey:@"y"] isKindOfClass:[NSValue class]]) {
+    y = [[pointDict objectForKey:@"y"] floatValue];
+  } else {
+    return NO;
+  }
+
+  AXUIElementRef win = [AccessibilityWrapper windowUnderPoint:NSMakePoint(x, y)];
+  if (win == nil || win == NULL) { return nil; }
+  AXUIElementRef app = [AccessibilityWrapper applicationForElement:win];
+  AccessibilityWrapper *_aw = [[AccessibilityWrapper alloc] initWithApp:app window:win];
+  return [[JSWindowWrapper alloc] initWithAccessibilityWrapper:_aw screenWrapper:sw];
+}
+
 - (void)eachApp:(id)func {
   for (NSRunningApplication *runningApp in [RunningApplications getInstance]) {
     [[JSController getInstance] runFunction:func withArg:[[JSApplicationWrapper alloc] initWithRunningApplication:runningApp
@@ -83,6 +134,7 @@ static NSDictionary *jsiwJsMethods;
       NSStringFromSelector(@selector(window)): @"window",
       NSStringFromSelector(@selector(app)): @"app",
       NSStringFromSelector(@selector(eachApp:)): @"eachApp",
+      NSStringFromSelector(@selector(windowUnderPoint:)): @"windowUnderPoint",
     };
   }
 }
