@@ -1,4 +1,9 @@
-Current Version: 1.0.17
+Current Version: 1.0.18
+
+----------------- 1.0.18 ----------------
+
+Fix Issue #209 - fix modal bindings
+WIP Issue #91 - javascript config file (no documentation yet)
 
 ----------------- 1.0.17 ----------------
 
