@@ -82,13 +82,17 @@ static NSDictionary *jsawJsMethods;
   CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInRunningApp:app];
   if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) return;
   CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, windowsArrRef);
-  for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
-    AccessibilityWrapper *_aw = [[AccessibilityWrapper alloc] initWithApp:AXUIElementCreateApplication([app processIdentifier])
-                                                                   window:CFArrayGetValueAtIndex(windowsArr, i)];
-    if ([@"operation" isEqualToString:type]) {
+  if ([@"operation" isEqualToString:type]) {
+    for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+      AccessibilityWrapper *_aw = [[AccessibilityWrapper alloc] initWithApp:AXUIElementCreateApplication([app processIdentifier])
+                                                                     window:CFArrayGetValueAtIndex(windowsArr, i)];
       NSString *key = [funcOrOp valueForKey:@"___objc"];
       [[[[JSController getInstance] operations] objectForKey:key] doOperationWithAccessibilityWrapper:_aw screenWrapper:sw];
-    } else if ([@"function" isEqualToString:type]) {
+    }
+  } else if ([@"function" isEqualToString:type]) {
+    for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+      AccessibilityWrapper *_aw = [[AccessibilityWrapper alloc] initWithApp:AXUIElementCreateApplication([app processIdentifier])
+                                                                     window:CFArrayGetValueAtIndex(windowsArr, i)];
       [[JSController getInstance] runFunction:funcOrOp withArg:[[JSWindowWrapper alloc] initWithAccessibilityWrapper:_aw screenWrapper:sw]];
     }
   }

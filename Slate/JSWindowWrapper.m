@@ -174,6 +174,10 @@ static NSDictionary *jswwJsMethods;
   return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenIdForRect:wRect] screenWrapper:sw];
 }
 
+- (BOOL)doOperation:(id)op {
+  return [[JSController getInstance] doOperation:op aw:aw sw:sw];
+}
+
 + (void)setJsMethods {
   if (jswwJsMethods == nil) {
     jswwJsMethods = @{
@@ -187,6 +191,7 @@ static NSDictionary *jswwJsMethods;
       NSStringFromSelector(@selector(move:)): @"move",
       NSStringFromSelector(@selector(resize:)): @"resize",
       NSStringFromSelector(@selector(screen)): @"screen",
+      NSStringFromSelector(@selector(doOperation:)): @"doOperation",
     };
   }
 }

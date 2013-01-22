@@ -38,6 +38,7 @@
 - (id)runCallableFunction:(NSString *)key;
 - (id)runFunction:(WebScriptObject*)function;
 - (id)runFunction:(WebScriptObject *)function withArg:(id)arg;
+- (BOOL)doOperation:(id)op aw:(AccessibilityWrapper *)_aw sw:(ScreenWrapper *)_sw;
 - (id)unmarshall:(id)obj;
 - (id)marshall:(id)obj;
 - (NSString *)jsTypeof:(WebScriptObject *)obj;

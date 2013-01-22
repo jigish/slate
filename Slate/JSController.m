@@ -200,6 +200,25 @@ static NSDictionary *jscJsMethods;
   return NO;
 }
 
+- (BOOL)doOperation:(id)op aw:(AccessibilityWrapper *)_aw sw:(ScreenWrapper *)_sw {
+  @try {
+    NSString *type = [self jsTypeof:op];
+    if (![@"operation" isEqualToString:type]) { return NO; }
+    NSString *key = [op valueForKey:@"___objc"];
+    [[[self operations] objectForKey:key] doOperationWithAccessibilityWrapper:_aw screenWrapper:_sw];
+  } @catch (NSException *ex) {
+    SlateLogger(@"   ERROR %@",[ex name]);
+    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
+    [alert setMessageText:[ex name]];
+    [alert setInformativeText:[ex reason]];
+    if ([alert runModal] == NSAlertFirstButtonReturn) {
+      SlateLogger(@"User selected exit");
+      [NSApp terminate:nil];
+    }
+  }
+  return NO;
+}
+
 - (BOOL)source:(NSString *)path {
   return [[SlateConfig getInstance] loadConfigFileWithPath:path];
 }
