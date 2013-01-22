@@ -102,6 +102,15 @@
       }
       return _controller.source(path);
     }
+
+    // TODO layout (should take hash of hashes. inner hash should describe app.)
+    // {
+    //   "APP NAME" : {
+    //     various options (repeat, sort order, etc)
+    //     list of operations/functions
+    //   }
+    // }
+    // TODO default (screen config -> layout. should take hash so you can do multiple at a time.)
   };
 
   window.S = window.slate;
