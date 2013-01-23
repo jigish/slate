@@ -64,12 +64,12 @@ static NSDictionary *dictionary = nil;
   return self;
 }
 
-- (id)initWithKeystroke:(NSString*)keystroke operation:(Operation*)op_ repeat:(BOOL)repeat_ {
+- (id)initWithKeystroke:(NSString *)keystroke operation:(Operation *)op_ repeat:(BOOL)repeat_ {
   self = [self init];
-  if(self) {
+  if (self) {
     [self setKeystrokeFromString:keystroke];
-    self.op = op_;
-    self.repeat = repeat_;
+    [self setOp:op_];
+    [self setRepeat:repeat_];
   }
   return self;
 }
@@ -117,16 +117,9 @@ static NSDictionary *dictionary = nil;
 }
 
 - (void)setOperationAndRepeatFromString:(NSString*)token {
-  BOOL theRepeat = NO;
-  NSArray *repeatOps = [[[SlateConfig getInstance] getConfig:REPEAT_ON_HOLD_OPS] componentsSeparatedByString:COMMA];
-  for (NSInteger i = 0; i < [repeatOps count]; i++) {
-    NSMutableString *opStr = [[NSMutableString alloc] initWithCapacity:10];
-    [StringTokenizer firstToken:token into:opStr];
-    if ([opStr isEqualToString:[repeatOps objectAtIndex:i]]) {
-      theRepeat = YES;
-      break;
-    }
-  }
+  NSMutableString *opStr = [[NSMutableString alloc] initWithCapacity:10];
+  [StringTokenizer firstToken:token into:opStr];
+  BOOL theRepeat = [Operation isRepeatOnHoldOp:opStr];
 
   Operation *theOp = [Operation operationFromString:token];
 

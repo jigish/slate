@@ -261,4 +261,14 @@
   return operation;
 }
 
++ (BOOL)isRepeatOnHoldOp:(NSString *)op {
+  NSArray *repeatOps = [[[SlateConfig getInstance] getConfig:REPEAT_ON_HOLD_OPS] componentsSeparatedByString:COMMA];
+  for (NSInteger i = 0; i < [repeatOps count]; i++) {
+    if ([op isEqualToString:[repeatOps objectAtIndex:i]]) {
+      return YES;
+    }
+  }
+  return NO;
+}
+
 @end

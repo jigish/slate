@@ -147,14 +147,26 @@ static NSDictionary *jscJsMethods;
   [[[SlateConfig getInstance] configs] setValue:[NSString stringWithFormat:@"%@", callback] forKey:key];
 }
 
-- (void)bindFunction:(NSString *)hotkey callback:(WebScriptObject *)callback repeat:(BOOL)repeat {
+- (void)bindFunction:(NSString *)hotkey callback:(WebScriptObject *)callback repeat:(id)_repeat {
   JSOperation *op = [JSOperation jsOperationWithFunction:callback];
+  BOOL repeat = NO;
+  if (_repeat != nil && ([_repeat isKindOfClass:[NSNumber class]] || [_repeat isKindOfClass:[NSValue class]] || [_repeat isKindOfClass:[NSString class]])) {
+    repeat = [_repeat boolValue];
+  } else {
+    repeat = [Operation isRepeatOnHoldOp:[op opName]];
+  }
   Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
   [self.bindings addObject:bind];
 }
 
-- (void)bindNative:(NSString *)hotkey callback:(NSString *)key repeat:(BOOL)repeat {
+- (void)bindNative:(NSString *)hotkey callback:(NSString *)key repeat:(id)_repeat {
   Operation *op = [operations objectForKey:key];
+  BOOL repeat = NO;
+  if (_repeat != nil && ([_repeat isKindOfClass:[NSNumber class]] || [_repeat isKindOfClass:[NSValue class]] || [_repeat isKindOfClass:[NSString class]])) {
+    repeat = [_repeat boolValue];
+  } else {
+    repeat = [Operation isRepeatOnHoldOp:[op opName]];
+  }
   Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
   [self.bindings addObject:bind];
 }

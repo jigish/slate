@@ -47,5 +47,6 @@
 
 + (id)operationFromString:(NSString *)opString;
 + (id)operationWithName:(NSString *)op options:(NSDictionary *)options;
++ (BOOL)isRepeatOnHoldOp:(NSString *)op;
 
 @end
