@@ -281,6 +281,8 @@ static NSDictionary *jscJsMethods;
   if ([obj isKindOfClass:[NSString class]] || [obj isKindOfClass:[NSValue class]] ||
       [obj isKindOfClass:[NSNumber class]]) {
     return obj;
+  } else if ([obj isKindOfClass:[JSScreenWrapper class]]) {
+    return [obj toString];
   } else if ([obj isKindOfClass:[WebScriptObject class]]) {
     return [self jsToSomething:obj];
   }
@@ -344,7 +346,9 @@ static NSDictionary *jscJsMethods;
     NSString *key = [keyArr objectAtIndex:i];
     id ele = [obj valueForKey:key];
     if (ele == nil || [ele isMemberOfClass:[WebUndefined class]]) { continue; }
-    if ([ele isKindOfClass:[NSString class]] || [ele isKindOfClass:[NSValue class]]) {
+    if ([ele isKindOfClass:[JSScreenWrapper class]]) {
+      [ret setObject:[ele toString] forKey:key];
+    } else if ([ele isKindOfClass:[NSString class]] || [ele isKindOfClass:[NSValue class]]) {
       [ret setObject:ele forKey:key];
     } else if ([ele isKindOfClass:[WebScriptObject class]]) {
       [ret setObject:[self jsToSomething:ele] forKey:key];

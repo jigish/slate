@@ -134,7 +134,12 @@ static NSString *resolutions = nil;
 }
 
 - (NSInteger)convertDefaultOrderToLeftToRightOrder:(NSInteger)screenId {
-  return [[leftToRightToDefault objectAtIndex:screenId] integerValue];
+  return [leftToRightToDefault indexOfObject:[NSNumber numberWithInteger:screenId]];
+}
+
+- (NSInteger)getScreenRefId:(NSString *)screenRef windowRect:(NSRect)window {
+  // returns the external (not default ordering) screen ID
+  return [self convertDefaultOrderToLeftToRightOrder:[self getScreenId:screenRef windowRect:window]];
 }
 
 - (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window {
@@ -200,6 +205,10 @@ static NSString *resolutions = nil;
   }
 }
 
+- (NSInteger)getScreenRefIdForRect:(NSRect)rect {
+  return [self convertDefaultOrderToLeftToRightOrder:[self getScreenIdForRect:rect]];
+}
+
 - (NSInteger)getScreenIdForRect:(NSRect)rect {
   NSRect largestIntersection = NSZeroRect;
   NSInteger screenIndex = ID_IGNORE_SCREEN;
@@ -211,6 +220,10 @@ static NSString *resolutions = nil;
     }
   }
   return screenIndex;
+}
+
+- (NSInteger)getScreenRefIdForPoint:(NSPoint)point {
+  return [self convertDefaultOrderToLeftToRightOrder:[self getScreenIdForPoint:point]];
 }
 
 - (NSInteger)getScreenIdForPoint:(NSPoint)point {

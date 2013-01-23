@@ -90,6 +90,7 @@
     //   }
     // }
     // TODO default (screen config -> layout. should take hash so you can do multiple at a time.)
+    // TODO test modal keys and try to do modal toggle
   };
 
   window.S = window.slate;

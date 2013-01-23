@@ -38,8 +38,11 @@
 - (NSRect)getScreenRect:(NSInteger)screenId;
 - (NSInteger)convertDefaultOrderToLeftToRightOrder:(NSInteger)screenId;
 - (void)getScreenResolutionStrings:(NSMutableArray *)strings;
+- (NSInteger)getScreenRefId:(NSString *)screenRef windowRect:(NSRect)window;
 - (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window;
+- (NSInteger)getScreenRefIdForRect:(NSRect)rect;
 - (NSInteger)getScreenIdForRect:(NSRect)rect;
+- (NSInteger)getScreenRefIdForPoint:(NSPoint)point;
 - (NSInteger)getScreenIdForPoint:(NSPoint)point;
 - (BOOL)isMainScreen:(NSInteger)screenID;
 - (BOOL)isRectOffScreen:(NSRect)rect;

@@ -171,7 +171,7 @@ static NSDictionary *jswwJsMethods;
   NSPoint tl = [aw getCurrentTopLeft];
   NSSize size = [aw getCurrentSize];
   NSRect wRect = NSMakeRect(tl.x, tl.y, size.width, size.height);
-  return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenIdForRect:wRect] screenWrapper:sw];
+  return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenRefIdForRect:wRect] screenWrapper:sw];
 }
 
 - (BOOL)doOperation:(id)op {
