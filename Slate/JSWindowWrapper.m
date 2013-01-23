@@ -24,6 +24,8 @@
 #import "JSController.h"
 #import "ExpressionPoint.h"
 #import "JSScreenWrapper.h"
+#import "JSWrapperUtils.h"
+#import "JSApplicationWrapper.h"
 
 @implementation JSWindowWrapper
 
@@ -88,83 +90,18 @@ static NSDictionary *jswwJsMethods;
   return [AccessibilityWrapper isMainWindow:[aw window]];
 }
 
-- (NSDictionary *)screenAndWindowValues:(NSString *)screen {
-  NSInteger screenId = 0;
-  NSPoint wTL = [aw getCurrentTopLeft];
-  NSSize wSize = [aw getCurrentSize];
-  NSRect wRect = NSMakeRect(wTL.x, wTL.y, wSize.width, wSize.height);
-  if (screen != nil) {
-    screenId = [sw getScreenId:screen windowRect:wRect];
-  } else {
-    screenId = [sw getScreenIdForRect:wRect];
-  }
-  return [sw getScreenAndWindowValues:screenId window:wRect newSize:wRect.size];
-}
-
 - (BOOL)move:(id)point {
   id pointDict = [[JSController getInstance] unmarshall:point];
-  if (![pointDict isKindOfClass:[NSDictionary class]]) { return NO; }
-  if ([pointDict objectForKey:@"x"] == nil) { return NO; }
-  if ([pointDict objectForKey:@"y"] == nil) { return NO; }
-
-  NSDictionary *values = nil;
-  float x = 0;
-  if ([[pointDict objectForKey:@"x"] isKindOfClass:[NSString class]]) {
-    values = [self screenAndWindowValues:[pointDict objectForKey:@"screen"]];
-    x = [ExpressionPoint expToFloat:[pointDict objectForKey:@"x"] withDict:values];
-  } else if ([[pointDict objectForKey:@"x"] isKindOfClass:[NSNumber class]] ||
-             [[pointDict objectForKey:@"x"] isKindOfClass:[NSValue class]]) {
-    x = [[pointDict objectForKey:@"x"] floatValue];
-  } else {
-    return NO;
-  }
-  float y = 0;
-  if ([[pointDict objectForKey:@"y"] isKindOfClass:[NSString class]]) {
-    if (values == nil) {
-      values = [self screenAndWindowValues:[pointDict objectForKey:@"screen"]];
-    }
-    y = [ExpressionPoint expToFloat:[pointDict objectForKey:@"y"] withDict:values];
-  } else if ([[pointDict objectForKey:@"y"] isKindOfClass:[NSNumber class]] ||
-             [[pointDict objectForKey:@"y"] isKindOfClass:[NSValue class]]) {
-    y = [[pointDict objectForKey:@"y"] floatValue];
-  } else {
-    return NO;
-  }
-
-  return [aw moveWindow:NSMakePoint(x, y)];
+  NSValue *p = [JSWrapperUtils pointFromDict:pointDict aw:aw sw:sw];
+  if (p == nil) { return NO; }
+  return [aw moveWindow:[p pointValue]];
 }
 
 - (BOOL)resize:(id)size {
   id sizeDict = [[JSController getInstance] unmarshall:size];
-  if (![sizeDict isKindOfClass:[NSDictionary class]]) { return NO; }
-  if ([sizeDict objectForKey:@"width"] == nil) { return NO; }
-  if ([sizeDict objectForKey:@"height"] == nil) { return NO; }
-
-  NSDictionary *values = nil;
-  float width = 0;
-  if ([[sizeDict objectForKey:@"width"] isKindOfClass:[NSString class]]) {
-    values = [self screenAndWindowValues:[sizeDict objectForKey:@"screen"]];
-    width = [ExpressionPoint expToFloat:[sizeDict objectForKey:@"width"] withDict:values];
-  } else if ([[sizeDict objectForKey:@"width"] isKindOfClass:[NSNumber class]] ||
-             [[sizeDict objectForKey:@"width"] isKindOfClass:[NSValue class]]) {
-    width = [[sizeDict objectForKey:@"width"] floatValue];
-  } else {
-    return NO;
-  }
-  float height = 0;
-  if ([[sizeDict objectForKey:@"height"] isKindOfClass:[NSString class]]) {
-    if (values == nil) {
-      values = [self screenAndWindowValues:[sizeDict objectForKey:@"screen"]];
-    }
-    height = [ExpressionPoint expToFloat:[sizeDict objectForKey:@"height"] withDict:values];
-  } else if ([[sizeDict objectForKey:@"height"] isKindOfClass:[NSNumber class]] ||
-             [[sizeDict objectForKey:@"height"] isKindOfClass:[NSValue class]]) {
-    height = [[sizeDict objectForKey:@"height"] floatValue];
-  } else {
-    return NO;
-  }
-
-  return [aw resizeWindow:NSMakeSize(width, height)];
+  NSValue *s = [JSWrapperUtils sizeFromDict:sizeDict aw:aw sw:sw];
+  if (s == nil) { return NO; }
+  return [aw resizeWindow:[s sizeValue]];
 }
 
 - (JSScreenWrapper *)screen {
@@ -172,6 +109,10 @@ static NSDictionary *jswwJsMethods;
   NSSize size = [aw getCurrentSize];
   NSRect wRect = NSMakeRect(tl.x, tl.y, size.width, size.height);
   return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenRefIdForRect:wRect] screenWrapper:sw];
+}
+
+- (JSApplicationWrapper *)app {
+  return [[JSApplicationWrapper alloc] initWithAccessibilityWrapper:aw screenWrapper:sw];
 }
 
 - (BOOL)doOperation:(id)op {
@@ -192,6 +133,7 @@ static NSDictionary *jswwJsMethods;
       NSStringFromSelector(@selector(resize:)): @"resize",
       NSStringFromSelector(@selector(screen)): @"screen",
       NSStringFromSelector(@selector(doOperation:)): @"doOperation",
+      NSStringFromSelector(@selector(app)): @"app",
     };
   }
 }

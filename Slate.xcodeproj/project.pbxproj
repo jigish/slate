@@ -66,6 +66,7 @@
 		3BDDA18314FDAA6600829D2A /* SnapshotList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA18214FDAA6600829D2A /* SnapshotList.m */; };
 		3BE0736616AF3C3F00D33DB0 /* utils.js in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0736516AF3C3F00D33DB0 /* utils.js */; };
 		3BE0736816AF3C9B00D33DB0 /* utils.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BE0736516AF3C3F00D33DB0 /* utils.js */; };
+		3BE0736B16AF735A00D33DB0 /* JSWrapperUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0736A16AF735A00D33DB0 /* JSWrapperUtils.m */; };
 		3BE702B3161F9D5000260716 /* SequenceOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE702B2161F9D5000260716 /* SequenceOperation.m */; };
 		3BF39E1214FDB16F0083E9C4 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF39E1114FDB16F0083E9C4 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3BF57C9B1621686900C0F89B /* statusActive.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3BF57C9A1621686900C0F89B /* statusActive.pdf */; };
@@ -229,6 +230,8 @@
 		3BDDA18114FDAA6600829D2A /* SnapshotList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapshotList.h; sourceTree = "<group>"; };
 		3BDDA18214FDAA6600829D2A /* SnapshotList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapshotList.m; sourceTree = "<group>"; };
 		3BE0736516AF3C3F00D33DB0 /* utils.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = utils.js; sourceTree = "<group>"; };
+		3BE0736916AF735A00D33DB0 /* JSWrapperUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSWrapperUtils.h; sourceTree = "<group>"; };
+		3BE0736A16AF735A00D33DB0 /* JSWrapperUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSWrapperUtils.m; sourceTree = "<group>"; };
 		3BE702B1161F9D5000260716 /* SequenceOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequenceOperation.h; sourceTree = "<group>"; };
 		3BE702B2161F9D5000260716 /* SequenceOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequenceOperation.m; sourceTree = "<group>"; };
 		3BF39E1014FDB16F0083E9C4 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
@@ -332,6 +335,8 @@
 				3B7DDCE916AE90FF0087CD12 /* JSScreenWrapper.m */,
 				3B7DDCE216AE301D0087CD12 /* JSWindowWrapper.h */,
 				3B7DDCE316AE301D0087CD12 /* JSWindowWrapper.m */,
+				3BE0736916AF735A00D33DB0 /* JSWrapperUtils.h */,
+				3BE0736A16AF735A00D33DB0 /* JSWrapperUtils.m */,
 			);
 			name = JavaScript;
 			sourceTree = "<group>";
@@ -800,6 +805,7 @@
 				3B7DDCE716AE35840087CD12 /* JSApplicationWrapper.m in Sources */,
 				3B7DDCEA16AE90FF0087CD12 /* JSScreenWrapper.m in Sources */,
 				3BE0736616AF3C3F00D33DB0 /* utils.js in Sources */,
+				3BE0736B16AF735A00D33DB0 /* JSWrapperUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
