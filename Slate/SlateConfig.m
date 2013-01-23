@@ -199,6 +199,13 @@ static SlateConfig *_instance = nil;
   return [[theLine substringToIndex:idx] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:WHITESPACE]];
 }
 
+- (BOOL)addLayout:(NSString *)name dict:(NSDictionary *)dict {
+  Layout *l = [[Layout alloc] initWithName:(NSString *)name dict:dict];
+  if (l == nil) { return NO; }
+  [[self layouts] setObject:l forKey:name];
+  return YES;
+}
+
 - (BOOL)append:(NSString *)configString {
   if (configString == nil)
     return NO;

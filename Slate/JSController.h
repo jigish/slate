@@ -45,13 +45,3 @@
 + (JSController *)getInstance;
 
 @end
-
-
-@interface ScriptingOperation : Operation
-
-@property WebScriptObject *function;
-@property JSController *controller;
-
-+ (ScriptingOperation *)operationWithController:(JSController*)controller function:(WebScriptObject*)function;
-
-@end

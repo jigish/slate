@@ -53,6 +53,52 @@
   return self;
 }
 
+- (id)initWithName:(NSString *)_name dict:(NSDictionary *)dict {
+  self = [self init];
+  if (self) {
+    if (_name == nil) { return nil; }
+    [self setName:_name];
+    for (NSString *appName in [dict allKeys]) {
+      id appDict = [dict objectForKey:appName];
+      if (appDict == nil || ![appDict isKindOfClass:[NSDictionary class]]) continue;
+      if ([OPT_BEFORE isEqualToString:appName]) {
+        id ops = [appDict objectForKey:OPT_OPERATIONS];
+        if (ops == nil || ![ops isKindOfClass:[NSArray class]]) continue;
+        [self setBefore:ops];
+      } else if ([OPT_AFTER isEqualToString:appName]) {
+        id ops = [appDict objectForKey:OPT_OPERATIONS];
+        if (ops == nil || ![ops isKindOfClass:[NSArray class]]) continue;
+        [self setAfter:ops];
+      } else {
+        id ops = [appDict objectForKey:OPT_OPERATIONS];
+        if (ops == nil || ![ops isKindOfClass:[NSArray class]]) continue;
+        [[self appOrder] addObject:appName];
+        [[self appStates] setObject:ops forKey:appName];
+        ApplicationOptions *appOpts = [[ApplicationOptions alloc] init];
+        if ([appDict objectForKey:OPT_IGNORE_FAIL] != nil && [[appDict objectForKey:OPT_IGNORE_FAIL] boolValue]) {
+          [appOpts setIgnoreFail:YES];
+        } else if ([appDict objectForKey:OPT_REPEAT] != nil && [[appDict objectForKey:OPT_REPEAT] boolValue]) {
+          [appOpts setRepeat:YES];
+        } else if ([appDict objectForKey:OPT_REPEAT_LAST] != nil && [[appDict objectForKey:OPT_REPEAT_LAST] boolValue]) {
+          [appOpts setRepeatLast:YES];
+        } else if ([appDict objectForKey:OPT_MAIN_FIRST] != nil && [[appDict objectForKey:OPT_MAIN_FIRST] boolValue]) {
+          [appOpts setMainFirst:YES];
+        } else if ([appDict objectForKey:OPT_MAIN_LAST] != nil && [[appDict objectForKey:OPT_MAIN_LAST] boolValue]) {
+          [appOpts setMainLast:YES];
+        } else if ([appDict objectForKey:OPT_SORT_TITLE] != nil && [[appDict objectForKey:OPT_SORT_TITLE] boolValue]) {
+          [appOpts setSortTitle:YES];
+        } else if ([appDict objectForKey:OPT_TITLE_ORDER] != nil && [[appDict objectForKey:OPT_TITLE_ORDER] isKindOfClass:[NSArray class]]) {
+          [appOpts setTitleOrder:[appDict objectForKey:OPT_TITLE_ORDER]];
+        } else if ([appDict objectForKey:OPT_TITLE_ORDER_REGEX] != nil && [[appDict objectForKey:OPT_TITLE_ORDER_REGEX] isKindOfClass:[NSArray class]]) {
+          [appOpts setTitleOrderRegex:[appDict objectForKey:OPT_TITLE_ORDER_REGEX]];
+        }
+        [appOptions setObject:appOpts forKey:appName];
+      }
+    }
+  }
+  return self;
+}
+
 - (void)addWithString:(NSString *)layout {
   // layout <name> <app name> <op+params> (| <op+params>)*
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];

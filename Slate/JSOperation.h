@@ -1,9 +1,9 @@
 //
-//  Layout.h
+//  JSOperation.h
 //  Slate
 //
-//  Created by Jigish Patel on 6/13/11.
-//  Copyright 2011 Jigish Patel. All rights reserved.
+//  Created by Jigish Patel on 1/22/13.
+//  Copyright 2013 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -19,27 +19,16 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 #import <Foundation/Foundation.h>
+#import <WebKit/WebKit.h>
+#import "Operation.h"
 
-
-@interface Layout : NSObject {
-@private
-  NSString *name;
-  NSMutableDictionary *appStates;
-  NSMutableDictionary *appOptions;
-  NSMutableArray *appOrder;
-  NSMutableArray *before;
-  NSMutableArray *after;
+@interface JSOperation : Operation {
+  WebScriptObject *function;
 }
 
-@property (copy) NSString *name;
-@property NSMutableDictionary *appStates;
-@property NSMutableDictionary *appOptions;
-@property NSMutableArray *appOrder;
-@property NSMutableArray *before;
-@property NSMutableArray *after;
+@property (strong) WebScriptObject *function;
 
-- (id)initWithString:(NSString *)layout;
-- (id)initWithName:(NSString *)name dict:(NSDictionary *)dict;
-- (void)addWithString:(NSString *)layout;
+- (id)initWithFunction:(WebScriptObject *)_function;
++ (id)jsOperationWithFunction:(WebScriptObject *)function;
 
 @end

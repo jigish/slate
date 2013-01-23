@@ -80,16 +80,24 @@
         throw "Source path must be a string. Was: "+path;
       }
       return _controller.source(path);
+    },
+
+    layout : function(name, hash) {
+      if (!_.isString(name)) {
+        throw "layout name must be a string. Was: "+path;
+      }
+      if (!_.isObject(hash)) {
+        throw "layout app hash should be a hash, was: "+path;
+      }
+      return _controller.layout(name, hash);
+    },
+
+    default : function(screenConfig, todo) {
+      // TODO
     }
 
-    // TODO layout (should take hash of hashes. inner hash should describe app.)
-    // {
-    //   "APP NAME" : {
-    //     various options (repeat, sort order, etc)
-    //     list of operations/functions
-    //   }
-    // }
     // TODO default (screen config -> layout. should take hash so you can do multiple at a time.)
+    //      - should be able to use layout/snapshot name, layout object, or function
     // TODO test modal keys and try to do modal toggle
   };
 
@@ -101,6 +109,8 @@
   window.S.op = window.S.operation;
   window.S.opstr = window.S.operationFromString;
   window.S.src = window.S.source;
+  window.S.lay = window.S.layout;
+  window.S.def = window.S.default;
   window.S.info = _info;
   var methods = window.S.info.jsMethods();
   _.each(methods, function(method) {

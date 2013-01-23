@@ -47,6 +47,7 @@
 + (NSAlert *)warningAlertWithKeyEquivalents:(NSArray *)titles;
 - (BOOL)load;
 - (BOOL)loadConfigFileWithPath:(NSString *)file;
+- (BOOL)addLayout:(NSString *)name dict:(NSDictionary *)dict;
 - (BOOL)append:(NSString *)configString;
 - (BOOL)loadSnapshots;
 - (BOOL)getBoolConfig:(NSString *)key;

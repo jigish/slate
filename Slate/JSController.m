@@ -23,6 +23,8 @@
 #import "SlateConfig.h"
 #import "JSInfoWrapper.h"
 #import "JSScreenWrapper.h"
+#import "Constants.h"
+#import "JSOperation.h"
 
 @implementation JSController
 
@@ -45,7 +47,7 @@ static NSDictionary *jscJsMethods;
 }
 
 - (id)run:(NSString*)code {
-	NSString* script = [NSString stringWithFormat:@"try { %@ } catch (___ex___) { 'EXCEPTION: '+___ex___.toString(); }", code];
+	NSString* script = [NSString stringWithFormat:@"try { %@ } catch (___ex___) { 'EXCEPTION: '+___ex___; }", code];
 	id data = [scriptObject evaluateWebScript:script];
 	if(![data isMemberOfClass:[WebUndefined class]]) {
 		SlateLogger(@"%@", data);
@@ -145,7 +147,7 @@ static NSDictionary *jscJsMethods;
 }
 
 - (void)bindFunction:(NSString *)hotkey callback:(WebScriptObject *)callback repeat:(BOOL)repeat {
-  ScriptingOperation *op = [ScriptingOperation operationWithController:self function:callback];
+  JSOperation *op = [JSOperation jsOperationWithFunction:callback];
   Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
   [self.bindings addObject:bind];
 }
@@ -154,6 +156,53 @@ static NSDictionary *jscJsMethods;
   Operation *op = [operations objectForKey:key];
   Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
   [self.bindings addObject:bind];
+}
+
+- (NSString *)layout:(NSString *)name hash:(WebScriptObject *)hash {
+  NSMutableDictionary *dict = [[self jsToDictionary:hash] mutableCopy];
+  for (NSString *app in [dict allKeys]) {
+    id tmpDict = [dict objectForKey:app];
+    if (![tmpDict isKindOfClass:[NSDictionary class]]) {
+      continue;
+    }
+    NSMutableDictionary *appDict = [tmpDict mutableCopy];
+    if ([appDict objectForKey:OPT_OPERATIONS] == nil) {
+      continue;
+    }
+    id _operations = [appDict objectForKey:OPT_OPERATIONS];
+    NSMutableArray *ops = [NSMutableArray array];
+    if ([_operations isKindOfClass:[NSString class]]) {
+      // this is an operation key
+      Operation *op = [operations objectForKey:_operations];
+      if (op == nil) { continue; }
+      [ops addObject:op];
+    } else if ([_operations isKindOfClass:[WebScriptObject class]]) {
+      // this is a function
+      Operation *op = [JSOperation jsOperationWithFunction:_operations];
+      if (op == nil) { continue; }
+      [ops addObject:op];
+    } else if ([_operations isKindOfClass:[NSArray class]]) {
+      // array of operations and/or functions
+      for (id obj in _operations) {
+        if ([obj isKindOfClass:[NSString class]]) {
+          // this is an operation key
+          Operation *op = [operations objectForKey:obj];
+          if (op == nil) { continue; }
+          [ops addObject:op];
+        } else if ([obj isKindOfClass:[WebScriptObject class]]) {
+          // this is a function
+          Operation *op = [JSOperation jsOperationWithFunction:obj];
+          if (op == nil) { continue; }
+          [ops addObject:op];
+        }
+      }
+    }
+    if ([ops count] == 0) { continue; }
+    [appDict setObject:ops forKey:OPT_OPERATIONS];
+    [dict setObject:appDict forKey:app];
+  }
+  if (![[SlateConfig getInstance] addLayout:name dict:dict]) { return nil; }
+  return name;
 }
 
 - (NSString *)genOpKey {
@@ -376,6 +425,7 @@ static NSDictionary *jscJsMethods;
     NSStringFromSelector(@selector(operation:options:)): @"operation",
     NSStringFromSelector(@selector(operationFromString:)): @"operationFromString",
     NSStringFromSelector(@selector(source:)): @"source",
+    NSStringFromSelector(@selector(layout:hash:)): @"layout",
   };
 }
 
@@ -385,32 +435,6 @@ static NSDictionary *jscJsMethods;
 
 + (NSString *)webScriptNameForSelector:(SEL)sel {
   return [jscJsMethods objectForKey:NSStringFromSelector(sel)];
-}
-
-@end
-
-@implementation ScriptingOperation
-
-- init {
-  self = [super init];
-  if (self) {
-    [self setOpName:@"scripting"];
-  }
-  return self;
-}
-
-- (BOOL)doOperation {
-  [[JSInfoWrapper getInstance] setAw:[[AccessibilityWrapper alloc] init]];
-  [[JSInfoWrapper getInstance] setSw:[[ScreenWrapper alloc] init]];
-  [self.controller runFunction:self.function];
-  return YES;
-}
-
-+ (ScriptingOperation *)operationWithController:(JSController*)controller function:(WebScriptObject*)function {
-  ScriptingOperation *op = [[ScriptingOperation alloc] init];
-  [op setController:controller];
-  [op setFunction:function];
-  return op;
 }
 
 @end
