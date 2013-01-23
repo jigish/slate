@@ -82,6 +82,7 @@
       [self setType:TYPE_COUNT];
     } else if ([screenConfig isKindOfClass:[NSArray class]]) {
       [self setResolutions:[screenConfig mutableCopy]];
+      [resolutions sortUsingSelector:@selector(compare:)];
       [self setType:TYPE_RESOLUTIONS];
     } else {
       return nil;
