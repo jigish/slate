@@ -207,19 +207,16 @@ static NSDictionary *jscJsMethods;
 }
 
 - (void)default:(id)config toAction:(id)_action {
-  id screenConfig = config;
+  id screenConfig = [self unmarshall:config];
   if ([screenConfig isKindOfClass:[NSNumber class]] || [screenConfig isKindOfClass:[NSValue class]] || [screenConfig isKindOfClass:[NSString class]]) {
     // count
+  } else if ([screenConfig isKindOfClass:[NSArray class]]) {
+    // resolutions
   } else {
-    screenConfig = [self jsToSomething:config];
-    if ([screenConfig isKindOfClass:[NSArray class]]) {
-      // resolutions
-    } else {
-      // wtf?
-      return;
-    }
+    // wtf?
+    return;
   }
-  id action = [self jsToSomething:_action];
+  id action = [self unmarshall:_action];
   NSString *name = nil;
   if ([action isKindOfClass:[NSString class]]) {
     name = action;
@@ -394,7 +391,7 @@ static NSDictionary *jscJsMethods;
   if ([type isEqualToString:@"operation"]) {
     return [obj valueForKey:@"___objc"];
   }
-  // nothing else should be here, primitives become NSString or NSValue
+  // nothing else should be here, primitives become NSString or NSValue or NSNumber
   return nil;
 }
 
@@ -414,7 +411,7 @@ static NSDictionary *jscJsMethods;
     if (item == nil || [item isMemberOfClass:[WebUndefined class]]) {
       continue;
     }
-    if ([item isKindOfClass:[NSString class]] || [item isKindOfClass:[NSValue class]]) {
+    if ([item isKindOfClass:[NSString class]] || [item isKindOfClass:[NSNumber class]]|| [item isKindOfClass:[NSValue class]]) {
       [a addObject:item];
     } else if ([item isKindOfClass:[WebScriptObject class]]) {
       [a addObject:[self jsToSomething:item]];
@@ -434,7 +431,7 @@ static NSDictionary *jscJsMethods;
     if (ele == nil || [ele isMemberOfClass:[WebUndefined class]]) { continue; }
     if ([ele isKindOfClass:[JSScreenWrapper class]]) {
       [ret setObject:[ele toString] forKey:key];
-    } else if ([ele isKindOfClass:[NSString class]] || [ele isKindOfClass:[NSValue class]]) {
+    } else if ([ele isKindOfClass:[NSString class]] || [ele isKindOfClass:[NSNumber class]] || [ele isKindOfClass:[NSValue class]]) {
       [ret setObject:ele forKey:key];
     } else if ([ele isKindOfClass:[WebScriptObject class]]) {
       [ret setObject:[self jsToSomething:ele] forKey:key];
