@@ -133,13 +133,22 @@ static NSString *resolutions = nil;
   return [self convertScreenRectToWindowCoords:screenId];
 }
 
+- (NSRect)getScreenRectForRef:(NSInteger)screenRefId {
+  NSInteger screenId = [[SlateConfig getInstance] getBoolConfig:ORDER_SCREENS_LEFT_TO_RIGHT] ? [[leftToRightToDefault objectAtIndex:screenRefId] integerValue] : screenRefId;
+  return [self getScreenRect:screenId];
+}
+
 - (NSInteger)convertDefaultOrderToLeftToRightOrder:(NSInteger)screenId {
   return [leftToRightToDefault indexOfObject:[NSNumber numberWithInteger:screenId]];
 }
 
 - (NSInteger)getScreenRefId:(NSString *)screenRef windowRect:(NSRect)window {
   // returns the external (not default ordering) screen ID
-  return [self convertDefaultOrderToLeftToRightOrder:[self getScreenId:screenRef windowRect:window]];
+  if ([[SlateConfig getInstance] getBoolConfig:ORDER_SCREENS_LEFT_TO_RIGHT]) {
+    return [self convertDefaultOrderToLeftToRightOrder:[self getScreenId:screenRef windowRect:window]];
+  } else {
+    return [self getScreenId:screenRef windowRect:window];
+  }
 }
 
 - (NSInteger)getScreenId:(NSString *)screenRef windowRect:(NSRect)window {
@@ -238,6 +247,11 @@ static NSString *resolutions = nil;
 
 - (BOOL)isMainScreen:(NSInteger)screenID {
   return screenID == ID_MAIN_SCREEN;
+}
+
+- (BOOL)isMainScreenRef:(NSInteger)screenRefId {
+  NSInteger screenId = [[SlateConfig getInstance] getBoolConfig:ORDER_SCREENS_LEFT_TO_RIGHT] ? [[leftToRightToDefault objectAtIndex:screenRefId] integerValue] : screenRefId;
+  return [self isMainScreen:screenId];
 }
 
 - (BOOL)isRectOffScreen:(NSRect)rect {

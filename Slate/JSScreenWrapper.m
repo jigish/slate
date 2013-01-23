@@ -50,7 +50,7 @@ static NSDictionary *jsswJsMethods = nil;
 }
 
 - (id)resolution {
-  NSRect rect = [sw getScreenRect:[self screenId]];
+  NSRect rect = [sw getScreenRectForRef:[self screenId]];
   return [[JSController getInstance] marshall:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:rect.size.width],
                                                                                          @"width",
                                                                                          [NSNumber numberWithInteger:rect.size.height],
@@ -62,7 +62,7 @@ static NSDictionary *jsswJsMethods = nil;
 }
 
 - (BOOL)isMain {
-  return [sw isMainScreen:[self screenId]];
+  return [sw isMainScreenRef:[self screenId]];
 }
 
 + (void)setJsMethods {
