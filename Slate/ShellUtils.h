@@ -24,5 +24,6 @@
 
 + (BOOL)commandExists:(NSString *)command;
 + (NSTask *)run:(NSString *)command args:(NSArray *)args wait:(BOOL)wait path:(NSString *)path;
++ (NSString *)run:(NSString *)commandAndArgs wait:(BOOL)wait path:(NSString *)path;
 
 @end

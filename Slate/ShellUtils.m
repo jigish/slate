@@ -21,6 +21,7 @@
 #import "ShellUtils.h"
 #import "Constants.h"
 #import "SlateLogger.h"
+#import "StringTokenizer.h"
 
 @implementation ShellUtils
 
@@ -83,6 +84,43 @@
     SlateLogger([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
   }
   return task;
+}
+
++ (NSString *)run:(NSString *)commandAndArgs wait:(BOOL)wait path:(NSString *)path {
+  NSMutableArray *commandAndArgsTokens = [NSMutableArray array];
+  [StringTokenizer tokenize:commandAndArgs into:commandAndArgsTokens];
+  if ([commandAndArgsTokens count] < 1) {
+    SlateLogger(@"ERROR: Invalid Shell Parameter '%@'", commandAndArgs);
+    @throw([NSException exceptionWithName:@"Invalid Shell Parameter" reason:[NSString stringWithFormat:@"Invalid Shell Parameter '%@'.", commandAndArgs] userInfo:nil]);
+  }
+  NSString *command = [commandAndArgsTokens objectAtIndex:0];
+  NSMutableArray *args = [NSMutableArray array];
+  for (NSInteger i = 1; i < [commandAndArgsTokens count]; i++) {
+    [args addObject:[commandAndArgsTokens objectAtIndex:i]];
+  }
+  NSTask *task;
+  task = [[NSTask alloc] init];
+  [task setLaunchPath:[command stringByExpandingTildeInPath]];
+  [task setArguments:args];
+  if (path != nil) [task setCurrentDirectoryPath:[path stringByExpandingTildeInPath]];
+
+  NSPipe *pipe;
+  pipe = [NSPipe pipe];
+  [task setStandardOutput:pipe];
+  [task setStandardError:pipe];
+  [task setStandardInput:[NSPipe pipe]];
+
+  NSFileHandle *file;
+  file = [pipe fileHandleForReading];
+
+  [task launch];
+  if (!wait) return nil;
+  [task waitUntilExit];
+  NSData *data = [file readDataToEndOfFile];
+  NSString *res = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+  SlateLogger(@"SHELL RESULT:");
+  SlateLogger(res);
+  return res;
 }
 
 @end

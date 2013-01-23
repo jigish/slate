@@ -101,9 +101,22 @@
         return _controller.default(screenConfig, thething);
       }
       throw "default action should be a function, operation, or string, was: "+thething;
-    }
+    },
 
-    // TODO test modal keys and try to do modal toggle
+    shell : function(commandAndArgs, wait, path) {
+      if (!_.isString(commandAndArgs)) {
+        throw "shell command should be a string, was: "+commandAndArgs;
+      }
+      if (path === null) { path = undefined; }
+      if (path !== undefined && !_.isString(path)) {
+        throw "path should be undefined or a string, was: "+path;
+      }
+      if (wait === null || wait === undefined) { wait = false; }
+      if (!_.isBoolean(wait)) {
+        throw "wait should be a boolean, was: "+wait;
+      }
+      return _controller.shell(commandAndArgs, wait, path);
+    }
   };
 
   window.S = window.slate;
@@ -116,6 +129,7 @@
   window.S.src = window.S.source;
   window.S.lay = window.S.layout;
   window.S.def = window.S.default;
+  window.S.sh = window.S.shell;
   window.S.info = _info;
   var methods = window.S.info.jsMethods();
   _.each(methods, function(method) {

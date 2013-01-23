@@ -25,6 +25,7 @@
 #import "JSScreenWrapper.h"
 #import "Constants.h"
 #import "JSOperation.h"
+#import "ShellUtils.h"
 
 @implementation JSController
 
@@ -232,6 +233,13 @@ static NSDictionary *jscJsMethods;
     return;
   }
   [[SlateConfig getInstance] addDefault:screenConfig layout:name];
+}
+
+- (NSString *)shell:(NSString *)commandAndArgs wait:(NSNumber *)wait path:(NSString *)path {
+  if ([path isMemberOfClass:[WebUndefined class]]) {
+    return [ShellUtils run:commandAndArgs wait:[wait boolValue] path:nil];
+  }
+  return [ShellUtils run:commandAndArgs wait:[wait boolValue] path:path];
 }
 
 - (NSString *)genOpKey {
@@ -456,6 +464,7 @@ static NSDictionary *jscJsMethods;
     NSStringFromSelector(@selector(source:)): @"source",
     NSStringFromSelector(@selector(layout:hash:)): @"layout",
     NSStringFromSelector(@selector(default:toAction:)): @"default",
+    NSStringFromSelector(@selector(shell:wait:path:)): @"shell",
   };
 }
 

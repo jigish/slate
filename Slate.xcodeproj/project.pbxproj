@@ -340,6 +340,9 @@
 				3B7DDCE316AE301D0087CD12 /* JSWindowWrapper.m */,
 				3BE0736916AF735A00D33DB0 /* JSWrapperUtils.h */,
 				3BE0736A16AF735A00D33DB0 /* JSWrapperUtils.m */,
+				3AA7D09A16A6FAE100C81A67 /* initialize.js */,
+				3B38E04616AB8B3500603901 /* underscore.js */,
+				3BE0736516AF3C3F00D33DB0 /* utils.js */,
 			);
 			name = JavaScript;
 			sourceTree = "<group>";
@@ -421,9 +424,6 @@
 				3BDDA17E14FDA55600829D2A /* WindowSnapshot.h */,
 				3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */,
 				3BBD24B91580206C00940ABF /* default.slate */,
-				3AA7D09A16A6FAE100C81A67 /* initialize.js */,
-				3B38E04616AB8B3500603901 /* underscore.js */,
-				3BE0736516AF3C3F00D33DB0 /* utils.js */,
 			);
 			name = Config;
 			sourceTree = "<group>";
