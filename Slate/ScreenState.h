@@ -35,5 +35,6 @@
 @property  NSMutableArray *resolutions;
 
 - (id)initWithString:(NSString *)state;
+- (id)initWithConfig:(id)screenConfig layout:(NSString *)_layout;
 
 @end

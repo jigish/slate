@@ -92,12 +92,17 @@
       return _controller.layout(name, hash);
     },
 
-    default : function(screenConfig, todo) {
-      // TODO
+    default : function(screenConfig, thething) {
+      if (!_.isNumber(screenConfig) && !_.isString(screenConfig) && !_.isArray(screenConfig)) {
+        throw "default screen config should be a number, string, or array, was: "+screenConfig;
+      }
+      if (thething !== undefined && thething !== null &&
+          (thething.___type === "operation" || _.isFunction(thething) || _.isString(thething))) {
+        return _controller.default(screenConfig, thething);
+      }
+      throw "default action should be a function, operation, or string, was: "+thething;
     }
 
-    // TODO default (screen config -> layout. should take hash so you can do multiple at a time.)
-    //      - should be able to use layout/snapshot name, layout object, or function
     // TODO test modal keys and try to do modal toggle
   };
 

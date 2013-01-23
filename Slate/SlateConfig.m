@@ -366,6 +366,12 @@ static SlateConfig *_instance = nil;
   return YES;
 }
 
+- (void)addDefault:(id)screenConfig layout:(NSString *)layout {
+  ScreenState *state = [[ScreenState alloc] initWithConfig:screenConfig layout:layout];
+  if (state == nil) return;
+  [defaultLayouts addObject:state];
+}
+
 - (void)snapshotsFromDictionary:(NSDictionary *)snapshotsDict {
   NSArray *keys = [snapshotsDict allKeys];
   for (NSString *name in keys) {
@@ -412,6 +418,8 @@ static SlateConfig *_instance = nil;
     [LayoutOperation activateLayout:name];
   } else if ([snapshots objectForKey:name] != nil) {
     [ActivateSnapshotOperation activateSnapshot:name remove:NO];
+  } else if ([[[JSController getInstance] operations] objectForKey:name] != nil) {
+    [[[[JSController getInstance] operations] objectForKey:name] doOperation];
   }
 }
 

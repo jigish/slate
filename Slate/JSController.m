@@ -205,6 +205,35 @@ static NSDictionary *jscJsMethods;
   return name;
 }
 
+- (void)default:(id)config toAction:(id)_action {
+  id screenConfig = config;
+  if ([screenConfig isKindOfClass:[NSNumber class]] || [screenConfig isKindOfClass:[NSValue class]] || [screenConfig isKindOfClass:[NSString class]]) {
+    // count
+  } else {
+    screenConfig = [self jsToSomething:config];
+    if ([screenConfig isKindOfClass:[NSArray class]]) {
+      // resolutions
+    } else {
+      // wtf?
+      return;
+    }
+  }
+  id action = [self jsToSomething:_action];
+  NSString *name = nil;
+  if ([action isKindOfClass:[NSString class]]) {
+    name = action;
+  } else if ([action isKindOfClass:[WebScriptObject class]]) {
+    Operation *op = [JSOperation jsOperationWithFunction:action];
+    NSString *key = [self genOpKey];
+    [[self operations] setObject:op forKey:key];
+    name = key;
+  } else {
+    // wtf?
+    return;
+  }
+  [[SlateConfig getInstance] addDefault:screenConfig layout:name];
+}
+
 - (NSString *)genOpKey {
   return [NSString stringWithFormat:@"javascript:operation[%ld]", [operations count]];
 }
@@ -426,6 +455,7 @@ static NSDictionary *jscJsMethods;
     NSStringFromSelector(@selector(operationFromString:)): @"operationFromString",
     NSStringFromSelector(@selector(source:)): @"source",
     NSStringFromSelector(@selector(layout:hash:)): @"layout",
+    NSStringFromSelector(@selector(default:toAction:)): @"default",
   };
 }
 

@@ -73,5 +73,22 @@
   return self;
 }
 
+- (id)initWithConfig:(id)screenConfig layout:(NSString *)_layout {
+  self = [self init];
+  if (self) {
+    [self setLayout:_layout];
+    if ([screenConfig isKindOfClass:[NSValue class]] || [screenConfig isKindOfClass:[NSNumber class]]) {
+      [self setCount:[screenConfig integerValue]];
+      [self setType:TYPE_COUNT];
+    } else if ([screenConfig isKindOfClass:[NSArray class]]) {
+      [self setResolutions:[screenConfig mutableCopy]];
+      [self setType:TYPE_RESOLUTIONS];
+    } else {
+      return nil;
+    }
+  }
+  return self;
+}
+
 
 @end

@@ -48,6 +48,7 @@
 - (BOOL)load;
 - (BOOL)loadConfigFileWithPath:(NSString *)file;
 - (BOOL)addLayout:(NSString *)name dict:(NSDictionary *)dict;
+- (void)addDefault:(id)screenConfig layout:(NSString *)layout;
 - (BOOL)append:(NSString *)configString;
 - (BOOL)loadSnapshots;
 - (BOOL)getBoolConfig:(NSString *)key;
