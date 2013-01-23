@@ -47,7 +47,7 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
-  BOOL success = NO;
+  BOOL success = YES;
   [self evalOptionsWithAccessibilityWrapper:aw screenWrapper:sw];
   [[JSController getInstance] runFunction:[self function] withArg:[[JSWindowWrapper alloc] initWithAccessibilityWrapper:aw
                                                                                                           screenWrapper:sw]];
