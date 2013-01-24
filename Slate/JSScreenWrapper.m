@@ -49,12 +49,16 @@ static NSDictionary *jsswJsMethods = nil;
   return self;
 }
 
-- (id)resolution {
+- (id)rect {
   NSRect rect = [sw getScreenRectForRef:[self screenId]];
   return [[JSController getInstance] marshall:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:rect.size.width],
                                                                                          @"width",
                                                                                          [NSNumber numberWithInteger:rect.size.height],
-                                                                                         @"height", nil]];
+                                                                                         @"height",
+                                                                                         [NSNumber numberWithInteger:rect.origin.x],
+                                                                                         @"x",
+                                                                                         [NSNumber numberWithInteger:rect.origin.y],
+                                                                                         @"y", nil]];
 }
 
 - (NSString *)toString {
@@ -69,7 +73,7 @@ static NSDictionary *jsswJsMethods = nil;
   if (jsswJsMethods == nil) {
     jsswJsMethods = @{
       NSStringFromSelector(@selector(screenId)): @"id",
-      NSStringFromSelector(@selector(resolution)): @"resolution",
+      NSStringFromSelector(@selector(resolution)): @"rect",
       NSStringFromSelector(@selector(isMain)): @"isMain",
     };
   }
