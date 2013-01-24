@@ -117,8 +117,8 @@ List of allowed configs:
 | Name | Type | Behavior |
 |:-----|:-----|:---------|
 | `defaultToCurrentScreen` | Boolean | Default: `false`. `true` causes all bindings to default to the current screen if the screen the reference does not exist. `false` causes only bindings that do not specify a screen to default to the current screen while bindings that reference screens that do not exist simply do nothing. |
-| `nudgePercentOf` | String | Default: `windowSize`. Will use this value for the nudge percent calculation. Possible values are `windowSize` and `screenSize`. |
-| `resizePercentOf` | String | Default: `windowSize`. Will use this value for the resize percent calculation. Possible values are `windowSize` and `screenSize`. |
+| `nudgePercentOf` | String | Default: `screenSize`. Will use this value for the nudge percent calculation. Possible values are `windowSize` and `screenSize`. |
+| `resizePercentOf` | String | Default: `screenSize`. Will use this value for the resize percent calculation. Possible values are `windowSize` and `screenSize`. |
 | `repeatOnHoldOps` | String | Default: `resize,nudge`. Comma separated list of operations that should repeat when the hotkey is held. |
 | `secondsBeforeRepeat` | Number | Default: `0.4`. The number of seconds before repeating starts (for ops in `repeatOnHoldOps`) |
 | `secondsBetweenRepeat` | Number | Default: `0.1`. The number of seconds between repeats (for ops in `repeatOnHoldOps`) |
