@@ -171,7 +171,7 @@ static const UInt32 ESC_GRID_ID = 10002;
 }
 
 - (void)activateLayoutWithOrigin:(ExpressionPoint *)origin size:(ExpressionPoint *)size screenId:(NSInteger)screenId {
-  NSLog(@"Activate Layout: %@, %@, %@, %@", origin.x, origin.y, size.x, size.y);
+  SlateLogger(@"Activate Layout: %@, %@, %@, %@", origin.x, origin.y, size.x, size.y);
   MoveOperation *mo = [[MoveOperation alloc] initWithTopLeftEP:origin dimensionsEP:size screenId:screenId];
   [focusedWindow focus];
   [mo doOperation];

@@ -600,13 +600,13 @@ static SlateConfig *_instance = nil;
   if (appSupportDir) {
     snapshotsFile = [appSupportDir URLByAppendingPathComponent:SNAPSHOTS_FILE];
   }
-  NSLog(@"TEST ------------- %@", [snapshotsFile absoluteString]);
+  SlateLogger(@"TEST ------------- %@", [snapshotsFile absoluteString]);
   return snapshotsFile;
 }
 
 @end
 
 void onDisplayReconfiguration (CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
-    NSLog(@"onDisplayReconfiguration");
+    SlateLogger(@"onDisplayReconfiguration");
     [(__bridge id)userInfo onScreenChange:nil];
 }
