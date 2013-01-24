@@ -106,7 +106,7 @@
   for (NSString *key in [_options allKeys]) {
     id opt = [_options objectForKey:key];
     if (opt == nil) { continue; }
-    if ([opt isKindOfClass:[NSString class]] || [opt isKindOfClass:[NSValue class]] ||
+    if ([opt isKindOfClass:[NSString class]] || [opt isKindOfClass:[NSValue class]] || [opt isKindOfClass:[NSNumber class]] ||
         [opt isKindOfClass:[NSDictionary class]] || [opt isKindOfClass:[NSArray class]]) {
       [self.options setObject:opt forKey:key];
       [self parseOption:key value:[[self options] objectForKey:key]];

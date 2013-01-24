@@ -93,7 +93,7 @@
     [self setCommand:cmd];
     [self setArgs:ars];
   } else if ([name isEqualToString:OPT_WAIT]) {
-    if (![value isKindOfClass:[NSString class]] && ![value isKindOfClass:[NSValue class]]) {
+    if (![value isKindOfClass:[NSString class]] && ![value isKindOfClass:[NSValue class]] && ![value isKindOfClass:[NSNumber class]]) {
       @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, value] userInfo:nil]);
     }
     [self setWaitForExit:[value boolValue]];

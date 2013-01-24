@@ -181,7 +181,7 @@ static const UInt32 ESC_GRID_ID = 10002;
   if (value == nil) { return; }
   if ([name isEqualToString:OPT_PADDING]) {
     // should be a string or integer
-    if (![value isKindOfClass:[NSString class]] && ![value isKindOfClass:[NSValue class]]) {
+    if (![value isKindOfClass:[NSString class]] && ![value isKindOfClass:[NSValue class]] && ![value isKindOfClass:[NSNumber class]]) {
       @throw([NSException exceptionWithName:@"Invalid Padding" reason:[NSString stringWithFormat:@"Invalid Padding '%@'", value] userInfo:nil]);
     }
     [self setPadding:[value integerValue]];
