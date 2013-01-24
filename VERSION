@@ -1,4 +1,9 @@
-Current Version: 1.0.18
+Current Version: 1.0.19
+
+----------------- 1.0.19 ----------------
+
+Implement Issue #91 - [BETA] javascript config file (no documentation yet)
+Implement Issue #172 - modal mode toggle
 
 ----------------- 1.0.18 ----------------
 

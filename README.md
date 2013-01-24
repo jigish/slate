@@ -41,6 +41,8 @@ Just run this in your terminal:
 
 ## Configuring Slate ##
 
+**BETA:** You may now use a ".slate.js" file to configure slate using JavaScript. This allows for much more complex and dynamic configurations that the normal slate configuration style below. You can check out the documentation for this [here](https://github.com/jigish/slate/wiki/JavaScript-Configs).
+
 Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon running Slate. You can also re-load the config using the "Load Config" menu option on the status menu (use this at your own risk. It is better to simply restart Slate).
 
 **Note:** If no ".slate" file exists in the current user's home directory, the [default config file](https://github.com/jigish/slate/blob/master/Slate/default.slate) will be used.
@@ -171,6 +173,7 @@ List of allowed configs:
 | `layoutFocusOnActivate` | Boolean | Default: `false`. If true, activating a layout will focus all windows touched by the layout. The order in which they will be focused is the order in which the Applications occur in the slate file. Thus, the last Application configured in the slate file will be the foremost application after the layout is triggered. If set to false, activating a layout will not focus any of the windows touched. Thus the foremost application after the layout is triggered will be the foremost application before the layout was triggered. |
 | `undoMaxStackSize` | Integer | Default: `10`. The size of the stack to keep when creating undo snapshots. If <= 0, the size of the stack will be unlimited. This is effectively the number of times you can use the `undo` binding to undo Slate operations. |
 | `undoOps` | String | Default: `activate-snapshot,chain,grid,layout,move,resize,sequence,shell`. The list of undoable operations. Any operation in this list will take a snapshot before activation to allow undoing it. This may decrease performance. Snapshots will only be taken if an undo operation exists in your config. |
+| `modalEscapeKey` | String | Default: `` (empty string). This is the keystroke that will end modal mode (in addition to the keystroke that started modal mode itself). For example setting this to `esc` will allow you to press `esc` after entering modal mode to exit modal mode. You may specify an entire keystroke with modifiers here e.g. `esc:ctrl`. |
 
 Example:
 
@@ -277,7 +280,11 @@ The `bind` directive follows one of the following formats (tokens may be separat
 
 #### Modal Key ####
 
-`modal-key` is any one of the Allowed Keys. If using a `modal-key`, pressing that key will cause the Slate menu bar icon to change indicating modal mode is activated. then clicking `key` will activate the binding. Modal mode will remain active until `key` has been pressed or `modal-key` is pressed again. You may specify multiple bindings with the same `modal-key` as long as `key` is different. Also, `modal-key` can accompany a comma or semicolon separated list of modifier keys listed above. This will cause that entire keystroke to be considered the modal activation binding. For example: `bind 1:f4,ctrl,alt` will result in the modal keystroke being ctrl+alt+f4. After pressing that keystroke, modal mode will be activated and pressing 1 after that will activate the binding.
+`modal-key` is any one of the Allowed Keys. If using a `modal-key`, pressing that key will cause the Slate menu bar icon to change indicating modal mode is activated. then clicking `key` will activate the binding. Modal mode will remain active until `key` has been pressed or `modal-key` is pressed again. You may specify multiple bindings with the same `modal-key` as long as `key` is different. Also, `modal-key` can accompany a comma or semicolon separated list of modifier keys listed above. This will cause that entire keystroke to be considered the modal activation binding. For example: `bind 1:f4,ctrl,alt` will result in the modal keystroke being `ctrl+alt+f4`. After pressing that keystroke, modal mode will be activated and pressing `1` after that will activate the binding.
+
+##### Modal Toggle Behavior #####
+
+If you add `:toggle` to the end of a modal binding it will cause that binding to not end the modal mode. For example with the binding `1:ctrl,f4`, you press `ctrl+f4` and then press `1` to activate the binding. Once that binding is activated, modal mode will end and you have to press `ctrl+f4` again to activate it. However, with the binding `1:ctrl,f4:toggle` pressing `ctrl+f4` will toggle modal mode. pressing `1` will activate the binding but not end modal mode. To end modal mode, press `ctrl+f4` again or use the config `modalEscapeKey`.
 
 #### Operation ####
 

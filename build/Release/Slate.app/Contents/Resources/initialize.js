@@ -21,24 +21,6 @@
     }
   });
 
-  for (key in _) {
-    window["_"+key+"_"] = _[key];
-  }
-
-  var _typeof_ = window._typeof_ = function(obj) {
-    if (_.isString(obj)) { return "string"; }
-    if (_.isArray(obj)) { return "array"; }
-    if (_.isFunction(obj)) { return "function"; }
-    if (_.isObject(obj)) {
-      // special case for objects created here like Operation
-      if (obj.___type) { return obj.___type; }
-      return "object";
-    }
-    if (_.isNumber(obj)) { return "number"; }
-    if (_.isBoolean(obj)) { return "boolean"; }
-    return "unknown";
-  }
-
   var slate = window.slate = {
     log: function() {
       var msg = Array.prototype.slice.call(arguments, 0).join(" ");
@@ -98,6 +80,42 @@
         throw "Source path must be a string. Was: "+path;
       }
       return _controller.source(path);
+    },
+
+    layout : function(name, hash) {
+      if (!_.isString(name)) {
+        throw "layout name must be a string. Was: "+path;
+      }
+      if (!_.isObject(hash)) {
+        throw "layout app hash should be a hash, was: "+path;
+      }
+      return _controller.layout(name, hash);
+    },
+
+    default : function(screenConfig, thething) {
+      if (!_.isNumber(screenConfig) && !_.isString(screenConfig) && !_.isArray(screenConfig)) {
+        throw "default screen config should be a number, string, or array, was: "+screenConfig;
+      }
+      if (thething !== undefined && thething !== null &&
+          (thething.___type === "operation" || _.isFunction(thething) || _.isString(thething))) {
+        return _controller.default(screenConfig, thething);
+      }
+      throw "default action should be a function, operation, or string, was: "+thething;
+    },
+
+    shell : function(commandAndArgs, wait, path) {
+      if (!_.isString(commandAndArgs)) {
+        throw "shell command should be a string, was: "+commandAndArgs;
+      }
+      if (path === null) { path = undefined; }
+      if (path !== undefined && !_.isString(path)) {
+        throw "path should be undefined or a string, was: "+path;
+      }
+      if (wait === null || wait === undefined) { wait = false; }
+      if (!_.isBoolean(wait)) {
+        throw "wait should be a boolean, was: "+wait;
+      }
+      return _controller.shell(commandAndArgs, wait, path);
     }
   };
 
@@ -109,5 +127,15 @@
   window.S.op = window.S.operation;
   window.S.opstr = window.S.operationFromString;
   window.S.src = window.S.source;
+  window.S.lay = window.S.layout;
+  window.S.def = window.S.default;
+  window.S.sh = window.S.shell;
   window.S.info = _info;
+  var methods = window.S.info.jsMethods();
+  _.each(methods, function(method) {
+    if (window.S[method] !== undefined) {
+      throw "OMGWTFBBQ!!!";
+    }
+    window.S[method] = _.bind(_info[method], _info);
+  });
 })(window._controller, window._info);
