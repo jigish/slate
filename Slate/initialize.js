@@ -60,9 +60,9 @@
         if (_.isArray(bindMap[key]) && _.size(bindMap[key]) >= 2) {
           slate.bind(key, bindMap[key][0], bindMap[key][1]);
         } else if (_.isArray(bindMap[key]) && _.size(bindMap[key]) == 1) {
-          slate.bind(key, bindMap[key][0], false);
+          slate.bind(key, bindMap[key][0]);
         } else {
-          slate.bind(key, bindMap[key], false);
+          slate.bind(key, bindMap[key]);
         }
       }
     },
