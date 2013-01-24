@@ -162,7 +162,7 @@
       [appOptions setObject:[[ApplicationOptions alloc] init] forKey:appName];
     }
     NSString *opsString = [tokens objectAtIndex:3];
-    NSArray *ops = [opsString componentsSeparatedByString:PIPE];
+    NSArray *ops = [opsString componentsSeparatedByString:PIPE_PADDED];
     NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
     for (NSInteger i = 0; i < [ops count]; i++) {
       Operation *op = [Operation operationFromString:[ops objectAtIndex:i]];

@@ -20,6 +20,8 @@
 
 #import "Constants.h"
 
+NSInteger const MODAL_ESCAPE_ID = 40000;
+
 NSString *const SNAPSHOTS_FILE = @"snapshots";
 
 // Directive Keys
@@ -152,6 +154,8 @@ NSString *const GRID_CELL_ROUNDED_CORNER_SIZE = @"gridCellRoundedCornerSize";
 NSString *const GRID_CELL_ROUNDED_CORNER_SIZE_DEFAULT = @"5";
 NSString *const LAYOUT_FOCUS_ON_ACTIVATE = @"layoutFocusOnActivate";
 NSString *const LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT = @"false";
+NSString *const MODAL_ESCAPE_KEY = @"modalEscapeKey";
+NSString *const MODAL_ESCAPE_KEY_DEFAULT = @"";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";
@@ -286,8 +290,8 @@ NSString *const MINUS = @"-";
 NSString *const PLUS = @"+";
 NSString *const PERCENT = @"%";
 NSString *const EMPTY = @"";
-NSString *const PIPE = @" | ";
-NSString *const GREATER_THAN = @" > ";
+NSString *const PIPE_PADDED = @" | ";
+NSString *const GREATER_THAN_PADDED = @" > ";
 NSString *const QUOTES = @"'\"";
 NSString *const EQUALS = @"=";
 NSString *const TILDA = @"~";

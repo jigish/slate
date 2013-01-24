@@ -133,10 +133,10 @@
   }
 
   NSString *opsString = [tokens objectAtIndex:1];
-  NSArray *ops = [opsString componentsSeparatedByString:PIPE];
+  NSArray *ops = [opsString componentsSeparatedByString:PIPE_PADDED];
   NSMutableArray *opArray = [[NSMutableArray alloc] initWithCapacity:10];
   for (NSInteger i = 0; i < [ops count]; i++) {
-    NSArray *sameWindowOps = [[ops objectAtIndex:i] componentsSeparatedByString:GREATER_THAN];
+    NSArray *sameWindowOps = [[ops objectAtIndex:i] componentsSeparatedByString:GREATER_THAN_PADDED];
     NSMutableArray *sameWindowOpArray = [[NSMutableArray alloc] initWithCapacity:10];
     for (NSInteger j = 0; j < [sameWindowOps count]; j++) {
       Operation *op = [Operation operationFromString:[sameWindowOps objectAtIndex:j]];

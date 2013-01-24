@@ -24,12 +24,10 @@
 @interface JSController : NSObject {
   WebView *webView;
   WebScriptObject *scriptObject;
-  NSMutableArray *bindings;
   NSMutableDictionary *operations;
   NSMutableDictionary *functions;
   BOOL inited;
 }
-@property NSMutableArray *bindings;
 @property NSMutableDictionary *operations;
 @property NSMutableDictionary *functions;
 

@@ -22,6 +22,7 @@ extern NSString *const SNAPSHOTS_FILE;
 
 #define MODAL_BEGIN_ID 20000;
 #define CURRENT_MODAL_BEGIN_ID 30000;
+extern NSInteger const MODAL_ESCAPE_ID;
 
 // Directive Keys
 extern NSString *const BIND;
@@ -153,6 +154,8 @@ extern NSString *const GRID_CELL_ROUNDED_CORNER_SIZE;
 extern NSString *const GRID_CELL_ROUNDED_CORNER_SIZE_DEFAULT;
 extern NSString *const LAYOUT_FOCUS_ON_ACTIVATE;
 extern NSString *const LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT;
+extern NSString *const MODAL_ESCAPE_KEY;
+extern NSString *const MODAL_ESCAPE_KEY_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;
@@ -287,8 +290,8 @@ extern NSString *const MINUS;
 extern NSString *const PLUS;
 extern NSString *const PERCENT;
 extern NSString *const EMPTY;
-extern NSString *const PIPE;
-extern NSString *const GREATER_THAN;
+extern NSString *const PIPE_PADDED;
+extern NSString *const GREATER_THAN_PADDED;
 extern NSString *const QUOTES;
 extern NSString *const EQUALS;
 extern NSString *const TILDA;

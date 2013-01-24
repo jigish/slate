@@ -105,10 +105,6 @@ static EventHandlerRef modifiersEvent;
   InstallEventHandler(GetEventMonitorTarget(), &OnHotKeyReleasedEvent, 1, &eventReleasedType, (__bridge void *)self, NULL);
 
   NSMutableArray *bindings = [[SlateConfig getInstance] bindings];
-  JSController *scriptingController = [JSController getInstance];
-  for (NSInteger i = 0; i < [scriptingController.bindings count]; i++) {
-    [bindings addObject:[scriptingController.bindings objectAtIndex:i]];
-  }
 
   for (NSInteger i = 0; i < [bindings count]; i++) {
     Binding *binding = [bindings objectAtIndex:i];
@@ -241,6 +237,15 @@ static EventHandlerRef modifiersEvent;
         [[self currentModalHotKeyRefs] addObject:[NSValue valueWithPointer:myHotKeyRef]];
         i++;
       }
+      if (![EMPTY isEqualToString:[[SlateConfig getInstance] getConfig:MODAL_ESCAPE_KEY]]) {
+        EventHotKeyID myHotKeyID;
+        EventHotKeyRef myHotKeyRef;
+        myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%li",MODAL_ESCAPE_ID] cStringUsingEncoding:NSASCIIStringEncoding];
+        myHotKeyID.id = (UInt32)MODAL_ESCAPE_ID;
+        NSArray *keyarr = [Binding getKeystrokeFromString:[[SlateConfig getInstance] getConfig:MODAL_ESCAPE_KEY]];
+        RegisterEventHotKey([[keyarr objectAtIndex:0] unsignedIntValue], [[keyarr objectAtIndex:1] unsignedIntValue], myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
+        [[self currentModalHotKeyRefs] addObject:[NSValue valueWithPointer:myHotKeyRef]];
+      }
       [self setCurrentModalKey:modalKey];
       // change status image
       [statusItem setImage:[NSImage imageNamed:@"statusActive"]];
@@ -250,11 +255,18 @@ static EventHandlerRef modifiersEvent;
 
   if (hkCom.id >= [[[SlateConfig getInstance] bindings] count]) {
     if (currentModalKey != nil) {
-      NSInteger potentialId = hkCom.id - CURRENT_MODAL_BEGIN_ID;
-      if (potentialId >= 0 && potentialId < [[[[SlateConfig getInstance] modalBindings] objectForKey:currentModalKey] count]) {
-        [[[[[SlateConfig getInstance] modalBindings] objectForKey:currentModalKey] objectAtIndex:potentialId] doOperation];
-        // clear out bindings
+      if (hkCom.id == MODAL_ESCAPE_ID) {
         [self resetModalKey];
+      } else {
+        NSInteger potentialId = hkCom.id - CURRENT_MODAL_BEGIN_ID;
+        if (potentialId >= 0 && potentialId < [[[[SlateConfig getInstance] modalBindings] objectForKey:currentModalKey] count]) {
+          Binding *binding = [[[[SlateConfig getInstance] modalBindings] objectForKey:currentModalKey] objectAtIndex:potentialId];
+          [binding doOperation];
+          if (![binding toggle]) {
+            // clear out bindings
+            [self resetModalKey];
+          }
+        }
       }
     }
     return noErr;

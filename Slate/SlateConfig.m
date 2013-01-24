@@ -206,6 +206,17 @@ static SlateConfig *_instance = nil;
   return YES;
 }
 
+- (void)addBinding:(Binding *)bind {
+  if ([bind modalKey] != nil) {
+    NSMutableArray *theBindings = [modalBindings objectForKey:[bind modalHashKey]];
+    if (theBindings == nil) theBindings = [NSMutableArray array];
+    [theBindings addObject:bind];
+    [modalBindings setObject:theBindings forKey:[bind modalHashKey]];
+  } else {
+    [bindings addObject:bind];
+  }
+}
+
 - (BOOL)append:(NSString *)configString {
   if (configString == nil)
     return NO;
@@ -261,14 +272,7 @@ static SlateConfig *_instance = nil;
       @try {
         SlateLogger(@"  LoadingB: %@",line);
         Binding *bind = [[Binding alloc] initWithString:line];
-        if ([bind modalKey] != nil) {
-          NSMutableArray *theBindings = [modalBindings objectForKey:[bind modalHashKey]];
-          if (theBindings == nil) theBindings = [NSMutableArray array];
-          [theBindings addObject:bind];
-          [modalBindings setObject:theBindings forKey:[bind modalHashKey]];
-        } else {
-          [bindings addObject:bind];
-        }
+        [self addBinding:bind];
       } @catch (NSException *ex) {
         SlateLogger(@"   ERROR %@",[ex name]);
         NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
@@ -583,6 +587,7 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:SNAPSHOT_MAX_STACK_SIZE_DEFAULT forKey:SNAPSHOT_MAX_STACK_SIZE];
   [configDefaults setObject:UNDO_MAX_STACK_SIZE_DEFAULT forKey:UNDO_MAX_STACK_SIZE];
   [configDefaults setObject:UNDO_OPS_DEFAULT forKey:UNDO_OPS];
+  [configDefaults setObject:MODAL_ESCAPE_KEY_DEFAULT forKey:MODAL_ESCAPE_KEY];
   [self setConfigs:[NSMutableDictionary dictionary]];
   [self setAppConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];

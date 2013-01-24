@@ -21,6 +21,8 @@
 #import <Foundation/Foundation.h>
 #import "Snapshot.h"
 
+@class Binding;
+
 @interface SlateConfig : NSObject {
 @private
   NSMutableDictionary *configs;
@@ -49,6 +51,7 @@
 - (BOOL)loadConfigFileWithPath:(NSString *)file;
 - (BOOL)addLayout:(NSString *)name dict:(NSDictionary *)dict;
 - (void)addDefault:(id)screenConfig layout:(NSString *)layout;
+- (void)addBinding:(Binding *)bind;
 - (BOOL)append:(NSString *)configString;
 - (BOOL)loadSnapshots;
 - (BOOL)getBoolConfig:(NSString *)key;

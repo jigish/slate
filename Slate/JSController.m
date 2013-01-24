@@ -29,7 +29,7 @@
 
 @implementation JSController
 
-@synthesize bindings, operations, functions;
+@synthesize operations, functions;
 
 static JSController *_instance = nil;
 static NSDictionary *jscJsMethods;
@@ -38,7 +38,6 @@ static NSDictionary *jscJsMethods;
   self = [super init];
   if (self) {
     inited = NO;
-    self.bindings = [NSMutableArray array];
     self.operations = [NSMutableDictionary dictionary];
     self.functions = [NSMutableDictionary dictionary];
     webView = [[WebView alloc] init];
@@ -156,7 +155,7 @@ static NSDictionary *jscJsMethods;
     repeat = [Operation isRepeatOnHoldOp:[op opName]];
   }
   Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
-  [self.bindings addObject:bind];
+  [[SlateConfig getInstance] addBinding:bind];
 }
 
 - (void)bindNative:(NSString *)hotkey callback:(NSString *)key repeat:(id)_repeat {
@@ -168,7 +167,7 @@ static NSDictionary *jscJsMethods;
     repeat = [Operation isRepeatOnHoldOp:[op opName]];
   }
   Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
-  [self.bindings addObject:bind];
+  [[SlateConfig getInstance] addBinding:bind];
 }
 
 - (NSString *)layout:(NSString *)name hash:(WebScriptObject *)hash {
