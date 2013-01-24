@@ -27,7 +27,7 @@
 @implementation NudgeOperation
 
 - (NSArray *)requiredOptions {
-  return [NSArray arrayWithObjects:OPT_WIDTH, OPT_HEIGHT, nil];
+  return [NSArray arrayWithObjects:OPT_X, OPT_Y, nil];
 }
 
 - (void)beforeInitOptions {
@@ -43,7 +43,7 @@
     return;
   }
   NSString *nudgePercentOf = [[SlateConfig getInstance] getConfig:NUDGE_PERCENT_OF];
-  if ([name isEqualToString:OPT_WIDTH]) {
+  if ([name isEqualToString:OPT_X]) {
     NSString *tlX = WINDOW_TOP_LEFT_X;
     if ([value hasSuffix:PERCENT]) {
       // % Nudge
@@ -53,7 +53,7 @@
       tlX = [tlX stringByAppendingString:value];
     }
     [[self topLeft] setX:tlX];
-  } else if ([name isEqualToString:OPT_HEIGHT]) {
+  } else if ([name isEqualToString:OPT_Y]) {
     NSString *tlY = WINDOW_TOP_LEFT_Y;
     if ([value hasSuffix:PERCENT]) {
       // % Nudge
