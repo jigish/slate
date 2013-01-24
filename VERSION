@@ -1,4 +1,10 @@
-Current Version: 1.0.19
+Current Version: 1.0.20
+
+----------------- 1.0.20 ----------------
+
+Random fixes to javascript configs
+nudgePercentOf and resizePercentOf now default to screenSize because that just makes more sense.
+Added some documentation for javascript configs on the Wiki. more incoming.
 
 ----------------- 1.0.19 ----------------
 
