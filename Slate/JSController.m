@@ -26,6 +26,7 @@
 #import "Constants.h"
 #import "JSOperation.h"
 #import "ShellUtils.h"
+#import "JSApplicationWrapper.h"
 
 @implementation JSController
 
@@ -375,7 +376,7 @@ static NSDictionary *jscJsMethods;
   if ([obj isKindOfClass:[NSString class]] || [obj isKindOfClass:[NSValue class]] ||
       [obj isKindOfClass:[NSNumber class]]) {
     return obj;
-  } else if ([obj isKindOfClass:[JSScreenWrapper class]]) {
+  } else if ([obj isKindOfClass:[JSScreenWrapper class]] || [obj isKindOfClass:[JSApplicationWrapper class]]) {
     return [obj toString];
   } else if ([obj isKindOfClass:[WebScriptObject class]]) {
     return [self jsToSomething:obj];
@@ -385,7 +386,7 @@ static NSDictionary *jscJsMethods;
 
 - (id)jsToSomething:(id)obj {
   if (obj == nil) { return nil; }
-  if ([obj isKindOfClass:[JSScreenWrapper class]]) {
+  if ([obj isKindOfClass:[JSScreenWrapper class]] || [obj isKindOfClass:[JSApplicationWrapper class]]) {
     return [obj toString];
   }
   NSString *type = [self jsTypeof:obj];
@@ -422,6 +423,9 @@ static NSDictionary *jscJsMethods;
     if (item == nil || [item isMemberOfClass:[WebUndefined class]]) {
       continue;
     }
+    if ([item isKindOfClass:[JSScreenWrapper class]] || [item isKindOfClass:[JSApplicationWrapper class]]) {
+      [a addObject:[item toString]];
+    }
     if ([item isKindOfClass:[NSString class]] || [item isKindOfClass:[NSNumber class]]|| [item isKindOfClass:[NSValue class]]) {
       [a addObject:item];
     } else if ([item isKindOfClass:[WebScriptObject class]]) {
@@ -440,7 +444,7 @@ static NSDictionary *jscJsMethods;
     NSString *key = [keyArr objectAtIndex:i];
     id ele = [obj valueForKey:key];
     if (ele == nil || [ele isMemberOfClass:[WebUndefined class]]) { continue; }
-    if ([ele isKindOfClass:[JSScreenWrapper class]]) {
+    if ([ele isKindOfClass:[JSScreenWrapper class]] || [ele isKindOfClass:[JSApplicationWrapper class]]) {
       [ret setObject:[ele toString] forKey:key];
     } else if ([ele isKindOfClass:[NSString class]] || [ele isKindOfClass:[NSNumber class]] || [ele isKindOfClass:[NSValue class]]) {
       [ret setObject:ele forKey:key];

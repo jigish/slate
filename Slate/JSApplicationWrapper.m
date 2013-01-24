@@ -98,6 +98,10 @@ static NSDictionary *jsawJsMethods;
   }
 }
 
+- (NSString *)toString {
+  return [self name];
+}
+
 + (void)setJsMethods {
   if (jsawJsMethods == nil) {
     jsawJsMethods = @{

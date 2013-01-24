@@ -33,4 +33,5 @@
 @property (strong) NSRunningApplication *app;
 - (id)initWithAccessibilityWrapper:(AccessibilityWrapper *)_aw screenWrapper:(ScreenWrapper *)_sw;
 - (id)initWithRunningApplication:(NSRunningApplication *)_app screenWrapper:(ScreenWrapper *)_sw;
+- (NSString *)toString;
 @end
