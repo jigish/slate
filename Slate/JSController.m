@@ -441,7 +441,13 @@ static NSDictionary *jscJsMethods;
   id keys = [scriptObject callWebScriptMethod:@"_keys_" withArguments:[NSArray arrayWithObjects:obj, nil]];
   NSArray *keyArr = [self jsToArray:keys];
   for(NSUInteger i = 0; i < [keyArr count]; i++) {
-    NSString *key = [keyArr objectAtIndex:i];
+    id _key = [keyArr objectAtIndex:i];
+    NSString* key = nil;
+    if ([_key isKindOfClass:[NSString class]]) {
+      key = _key;
+    } else if ([_key isKindOfClass:[JSScreenWrapper class]]) {
+      key = [_key toString];
+    }
     id ele = [obj valueForKey:key];
     if (ele == nil || [ele isMemberOfClass:[WebUndefined class]]) { continue; }
     if ([ele isKindOfClass:[JSScreenWrapper class]] || [ele isKindOfClass:[JSApplicationWrapper class]]) {

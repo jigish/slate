@@ -32,5 +32,6 @@
 @property NSInteger screenId;
 
 - (id)initWithScreenId:(NSInteger)_id screenWrapper:(ScreenWrapper *)_sw;
+- (NSString *)toString;
 
 @end
