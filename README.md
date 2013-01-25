@@ -484,7 +484,7 @@ Delete a snapshot: `delete-snapshot name options`
 ##### activate-snapshot #####
 Activate a snapshot: `activate-snapshot name options`
 
-        name = the name of the snapshot to delete
+        name = the name of the snapshot to activate
         options = (optional) a semicolon separated list of any of the following options:
           delete -> this will delete the snapshot after activating it (if the snapshot is a stack, it will pop the top
                     snapshot off and keep the rest)
