@@ -25,6 +25,8 @@
 #import "Constants.h"
 #import "SlateLogger.h"
 #import "JSController.h"
+#import <WebKit/WebKit.h>
+#import "JSOperation.h"
 
 @implementation ChainOperation
 
@@ -122,11 +124,13 @@
     }
     NSMutableArray *ops = [NSMutableArray array];
     for (id key in value) {
-      if (![key isKindOfClass:[NSString class]]) {
-        @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
-        continue;
+      Operation *op = nil;
+      if ([key isKindOfClass:[WebScriptObject class]]) {
+        op = [JSOperation jsOperationWithFunction:key];
+      } else if ([key isKindOfClass:[NSString class]]) {
+        op = [[[JSController getInstance] operations] objectForKey:key];
       }
-      Operation *op = [[[JSController getInstance] operations] objectForKey:key];
+
       if (op == nil) {
         @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
         continue;

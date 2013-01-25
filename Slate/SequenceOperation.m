@@ -23,6 +23,8 @@
 #import "StringTokenizer.h"
 #import "Constants.h"
 #import "JSController.h"
+#import <WebKit/WebKit.h>
+#import "JSOperation.h"
 
 @implementation SequenceOperation
 
@@ -86,12 +88,19 @@
     }
     NSMutableArray *ops = [NSMutableArray array];
     for (id key in value) {
-      if (![key isKindOfClass:[NSString class]] && ![key isKindOfClass:[NSArray class]]) {
+      if (![key isKindOfClass:[NSString class]] && ![key isKindOfClass:[NSArray class]] && ![key isKindOfClass:[WebScriptObject class]]) {
         @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
         continue;
       }
       NSMutableArray *innerOps = [NSMutableArray array];
-      if ([key isKindOfClass:[NSString class]]) {
+      if ([key isKindOfClass:[WebScriptObject class]]) {
+        Operation *op = [JSOperation jsOperationWithFunction:key];
+        if (op == nil) {
+          @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
+          continue;
+        }
+        [innerOps addObject:op];
+      } else if ([key isKindOfClass:[NSString class]]) {
         Operation *op = [[[JSController getInstance] operations] objectForKey:key];
         if (op == nil) {
           @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
@@ -100,11 +109,12 @@
         [innerOps addObject:op];
       } else if ([key isKindOfClass:[NSArray class]]) {
         for (id innerKey in key) {
-          if (![innerKey isKindOfClass:[NSString class]]) {
-            @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
-            continue;
+          Operation *op = nil;
+          if ([innerKey isKindOfClass:[WebScriptObject class]]) {
+            op = [JSOperation jsOperationWithFunction:innerKey];
+          } else if ([innerKey isKindOfClass:[NSString class]]) {
+            op = [[[JSController getInstance] operations] objectForKey:innerKey];
           }
-          Operation *op = [[[JSController getInstance] operations] objectForKey:innerKey];
           if (op == nil) {
             @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
             continue;
