@@ -142,6 +142,10 @@ static NSString *resolutions = nil;
   return [leftToRightToDefault indexOfObject:[NSNumber numberWithInteger:screenId]];
 }
 
+- (NSInteger)convertDefaultOrderToLeftToRightOrderIfNeeded:(NSInteger)screenId {
+  return [[SlateConfig getInstance] getBoolConfig:ORDER_SCREENS_LEFT_TO_RIGHT] ? [self convertDefaultOrderToLeftToRightOrder:screenId] : screenId;
+}
+
 - (NSInteger)getScreenRefId:(NSString *)screenRef windowRect:(NSRect)window {
   // returns the external (not default ordering) screen ID
   if ([[SlateConfig getInstance] getBoolConfig:ORDER_SCREENS_LEFT_TO_RIGHT]) {

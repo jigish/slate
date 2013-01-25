@@ -122,7 +122,8 @@ static const UInt32 ESC_GRID_ID = 10002;
     NSString *resolution = [NSString stringWithFormat:@"%ldx%ld", [[NSNumber numberWithFloat:[screen frame].size.width] integerValue], [[NSNumber numberWithFloat:[screen frame].size.height] integerValue]];
     ScreenConfig *myConfig = [[self screenConfigs] objectForKey:resolution];
     if (myConfig == nil) {
-      myConfig = [[self screenConfigs] objectForKey:[NSString stringWithFormat:@"%ld",screenId]];
+      NSInteger screenRefId = [sw convertDefaultOrderToLeftToRightOrderIfNeeded:screenId];
+      myConfig = [[self screenConfigs] objectForKey:[NSString stringWithFormat:@"%ld",screenRefId]];
     }
     if (myConfig != nil) {
       height = [myConfig height];
