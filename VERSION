@@ -1,4 +1,12 @@
-Current Version: 1.0.20
+Current Version: 1.0.21
+
+----------------- 1.0.21 ----------------
+
+Random fixes to javascript configs
+- Sequence and Chain can now take functions as well as objects
+- screen object rect() function should now work properly
+Fixed a bug with grid operation that did not take orderScreensLeftToRight into account
+Removed all logging in Slate. if you want to see the logs, use the debug version of Slate from the repo.
 
 ----------------- 1.0.20 ----------------
 
