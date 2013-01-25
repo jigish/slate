@@ -367,5 +367,5 @@ NSString *const OPT_MAIN_FIRST = @"main-first";
 NSString *const OPT_MAIN_LAST = @"main-last";
 NSString *const OPT_TITLE_ORDER = @"title-order";
 NSString *const OPT_TITLE_ORDER_REGEX = @"title-order-regex";
-NSString *const OPT_BEFORE = @"before";
-NSString *const OPT_AFTER = @"after";
+NSString *const OPT_BEFORE = @"_before_";
+NSString *const OPT_AFTER = @"_after_";
