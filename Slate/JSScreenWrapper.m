@@ -73,7 +73,7 @@ static NSDictionary *jsswJsMethods = nil;
   if (jsswJsMethods == nil) {
     jsswJsMethods = @{
       NSStringFromSelector(@selector(screenId)): @"id",
-      NSStringFromSelector(@selector(resolution)): @"rect",
+      NSStringFromSelector(@selector(rect)): @"rect",
       NSStringFromSelector(@selector(isMain)): @"isMain",
     };
   }
