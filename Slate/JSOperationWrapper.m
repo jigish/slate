@@ -142,8 +142,6 @@ static NSDictionary *jsowJsMethods;
   if (jsowJsMethods == nil) {
     jsowJsMethods = @{
       NSStringFromSelector(@selector(run)): @"run",
-      NSStringFromSelector(@selector(run)): @"do",
-      NSStringFromSelector(@selector(dup:)): @"duplicate",
       NSStringFromSelector(@selector(dup:)): @"dup",
     };
   }

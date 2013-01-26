@@ -108,11 +108,7 @@ static NSDictionary *jsawJsMethods;
       NSStringFromSelector(@selector(pid)): @"pid",
       NSStringFromSelector(@selector(name)): @"name",
       NSStringFromSelector(@selector(eachWindow:)): @"eachWindow",
-      NSStringFromSelector(@selector(eachWindow:)): @"ewindow",
       NSStringFromSelector(@selector(mainWindow)): @"mainWindow",
-      NSStringFromSelector(@selector(mainWindow)): @"mwindow",
-      NSStringFromSelector(@selector(mainWindow)): @"focusedWindow",
-      NSStringFromSelector(@selector(mainWindow)): @"fwindow",
     };
   }
 }

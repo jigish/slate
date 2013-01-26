@@ -137,20 +137,16 @@ static NSDictionary *jswwJsMethods;
     jswwJsMethods = @{
       NSStringFromSelector(@selector(title)): @"title",
       NSStringFromSelector(@selector(topLeft)): @"topLeft",
-      NSStringFromSelector(@selector(topLeft)): @"tl",
       NSStringFromSelector(@selector(size)): @"size",
       NSStringFromSelector(@selector(rect)): @"rect",
       NSStringFromSelector(@selector(pid)): @"pid",
       NSStringFromSelector(@selector(focus)): @"focus",
       NSStringFromSelector(@selector(isMinimizedOrHidden)): @"isMinimizedOrHidden",
-      NSStringFromSelector(@selector(isMinimizedOrHidden)): @"hidden",
       NSStringFromSelector(@selector(isMain)): @"isMain",
-      NSStringFromSelector(@selector(isMain)): @"main",
       NSStringFromSelector(@selector(move:)): @"move",
       NSStringFromSelector(@selector(resize:)): @"resize",
       NSStringFromSelector(@selector(screen)): @"screen",
       NSStringFromSelector(@selector(doOperation:)): @"doOperation",
-      NSStringFromSelector(@selector(doOperation:)): @"do",
       NSStringFromSelector(@selector(app)): @"app",
     };
   }
