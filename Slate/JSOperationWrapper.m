@@ -38,6 +38,27 @@ static NSDictionary *jsowJsMethods;
   return self;
 }
 
+- (id)initWithOperation:(Operation *)_op {
+  self = [self init];
+  if (self) {
+    @try {
+      [self setOp:_op];
+      if ([self op] == nil) { return nil; }
+    } @catch (NSException *ex) {
+      SlateLogger(@"   ERROR %@",[ex name]);
+      NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
+      [alert setMessageText:[ex name]];
+      [alert setInformativeText:[ex reason]];
+      if ([alert runModal] == NSAlertFirstButtonReturn) {
+        SlateLogger(@"User selected exit");
+        [NSApp terminate:nil];
+      }
+      return nil;
+    }
+  }
+  return self;
+}
+
 - (id)initWithName:(NSString*)name options:(WebScriptObject *)opts {
   self = [self init];
   if (self) {
@@ -93,8 +114,20 @@ static NSDictionary *jsowJsMethods;
 }
 
 - (JSOperationWrapper *)dup:(WebScriptObject *)opts {
-  // TODO
-  return nil;
+  NSString *type = [[JSController getInstance] jsTypeof:opts];
+  if (![@"object" isEqualToString:type]) {
+    SlateLogger(@"   ERROR operation.dup parameter must be a hash");
+    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
+    [alert setMessageText:@"operation.dup parameter must be a hash"];
+    [alert setInformativeText:[NSString stringWithFormat:@"was: %@", type]];
+    if ([alert runModal] == NSAlertFirstButtonReturn) {
+      SlateLogger(@"User selected exit");
+      [NSApp terminate:nil];
+    }
+    return nil;
+  }
+  NSDictionary *optDict = [[JSController getInstance] unmarshall:opts];
+  return [[JSOperationWrapper alloc] initWithOperation:[[self op] dup:optDict]];
 }
 
 + (JSOperationWrapper *)operation:(NSString*)name options:(WebScriptObject *)opts {

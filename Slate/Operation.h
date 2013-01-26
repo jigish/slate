@@ -44,6 +44,7 @@
 - (void)parseOption:(NSString *)name value:(id)value;
 - (void)evalOptionsWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;
 - (void)afterEvalOptions;
+- (id)dup:(NSDictionary *)_options;
 
 + (id)operationFromString:(NSString *)opString;
 + (id)operationWithName:(NSString *)op options:(NSDictionary *)options;

@@ -155,6 +155,13 @@
   [self afterEvalOptions];
 }
 
+- (id)dup:(NSDictionary *)_options {
+  NSMutableDictionary *newOptions = [NSMutableDictionary dictionaryWithDictionary:[self options]];
+  [newOptions addEntriesFromDictionary:[self dynamicOptions]];
+  [newOptions addEntriesFromDictionary:_options];
+  return [Operation operationWithName:[self opName] options:newOptions];
+}
+
 + (id)operationFromString:(NSString *)opString {
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:opString into:tokens maxTokens:2];
