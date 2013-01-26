@@ -1,4 +1,10 @@
-Current Version: 1.0.21
+Current Version: 1.0.22
+
+----------------- 1.0.22 ----------------
+
+Updates to javascript configs
+- add dup function to operations
+- slate.log now will show the message on the OS X Console for easier debugging
 
 ----------------- 1.0.21 ----------------
 

@@ -7,11 +7,7 @@
     if (_.isString(obj)) { return "string"; }
     if (_.isArray(obj)) { return "array"; }
     if (_.isFunction(obj)) { return "function"; }
-    if (_.isObject(obj)) {
-      // special case for objects created here like Operation
-      if (obj.___type) { return obj.___type; }
-      return "object";
-    }
+    if (_.isObject(obj)) { return "object"; }
     if (_.isNumber(obj)) { return "number"; }
     if (_.isBoolean(obj)) { return "boolean"; }
     return "unknown";

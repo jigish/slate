@@ -1,26 +1,4 @@
 (function(_controller, _info) {
-  var OperationFromString = function(opString) {
-    this.key = _controller.operationFromString(opString);
-    this.___type = "operation";
-    this.___objc = this.key;
-  };
-  _.extend(OperationFromString.prototype, {
-    run : function(options) {
-      _controller.doOperation(this.key);
-    }
-  });
-
-  var Operation = function(name, opts) {
-    this.key = _controller.operation(name, opts);
-    this.___type = "operation";
-    this.___objc = this.key;
-  };
-  _.extend(Operation.prototype, {
-    run : function(options) {
-      _controller.doOperation(this.key);
-    }
-  });
-
   var slate = window.slate = {
     log: function() {
       var msg = Array.prototype.slice.call(arguments, 0).join(" ");
@@ -45,14 +23,12 @@
     },
 
     bind: function(key, callback, repeat) {
-      if(_.isString(callback)) {
-        var op = new Operation(callback);
-        return _controller.bindNative(key, op.key, repeat);
-      } else if (_.isFunction(callback)) {
+      if (_.isFunction(callback)) {
         return _controller.bindFunction(key, callback, repeat);
       } else if (_.isObject(callback)) {
-        return _controller.bindNative(key, callback.key, repeat);
+        return _controller.bindNative(key, callback, repeat);
       }
+      throw "bind failed, second parameter must be an operation or a function. was: "+callback;
     },
 
     bindAll: function(bindMap) {
@@ -68,11 +44,20 @@
     },
 
     operationFromString: function(opString) {
-      return new OperationFromString(opString);
+      if (!_.isString(opString)) {
+        throw "Operation String must be a string. Was: "+opString;
+      }
+      return _controller.operationFromString(opString);
     },
 
     operation : function(name, opts) {
-      return new Operation(name, opts);
+      if (!_.isString(name)) {
+        throw "Operation name must be a string. Was: "+name;
+      }
+      if (opts !== undefined && !_.isObject(opts)) {
+        throw "Operation options must be undefined or a hash. Was: "+opts;
+      }
+      return _controller.operation(name, opts);
     },
 
     source : function(path) {
@@ -97,7 +82,7 @@
         throw "default screen config should be a number, string, or array, was: "+screenConfig;
       }
       if (thething !== undefined && thething !== null &&
-          (thething.___type === "operation" || _.isFunction(thething) || _.isString(thething))) {
+          (_.isObject(thething) || _.isFunction(thething) || _.isString(thething))) {
         return _controller.default(screenConfig, thething);
       }
       throw "default action should be a function, operation, or string, was: "+thething;
@@ -138,4 +123,5 @@
     }
     window.S[method] = _.bind(_info[method], _info);
   });
+  window.S.log("JS INIT FINISHED");
 })(window._controller, window._info);
