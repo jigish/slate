@@ -127,8 +127,8 @@
       Operation *op = nil;
       if ([key isKindOfClass:[WebScriptObject class]]) {
         op = [JSOperation jsOperationWithFunction:key];
-      } else if ([key isKindOfClass:[NSString class]]) {
-        op = [[[JSController getInstance] operations] objectForKey:key];
+      } else if ([key isKindOfClass:[Operation class]]) {
+        op = key;
       }
 
       if (op == nil) {

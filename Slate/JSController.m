@@ -27,10 +27,11 @@
 #import "JSOperation.h"
 #import "ShellUtils.h"
 #import "JSApplicationWrapper.h"
+#import "JSOperationWrapper.h"
 
 @implementation JSController
 
-@synthesize operations, functions;
+@synthesize functions;
 
 static JSController *_instance = nil;
 static NSDictionary *jscJsMethods;
@@ -39,7 +40,6 @@ static NSDictionary *jscJsMethods;
   self = [super init];
   if (self) {
     inited = NO;
-    self.operations = [NSMutableDictionary dictionary];
     self.functions = [NSMutableDictionary dictionary];
     webView = [[WebView alloc] init];
     [JSController setJsMethods];
@@ -159,8 +159,8 @@ static NSDictionary *jscJsMethods;
   [[SlateConfig getInstance] addBinding:bind];
 }
 
-- (void)bindNative:(NSString *)hotkey callback:(NSString *)key repeat:(id)_repeat {
-  Operation *op = [operations objectForKey:key];
+- (void)bindNative:(NSString *)hotkey callback:(JSOperationWrapper *)opWrapper repeat:(id)_repeat {
+  Operation *op = [opWrapper op];
   BOOL repeat = NO;
   if (_repeat != nil && ([_repeat isKindOfClass:[NSNumber class]] || [_repeat isKindOfClass:[NSValue class]] || [_repeat isKindOfClass:[NSString class]])) {
     repeat = [_repeat boolValue];
@@ -172,7 +172,7 @@ static NSDictionary *jscJsMethods;
 }
 
 - (NSString *)layout:(NSString *)name hash:(WebScriptObject *)hash {
-  NSMutableDictionary *dict = [[self jsToDictionary:hash] mutableCopy];
+  NSMutableDictionary *dict = [[self unmarshall:hash] mutableCopy];
   for (NSString *app in [dict allKeys]) {
     id tmpDict = [dict objectForKey:app];
     if (![tmpDict isKindOfClass:[NSDictionary class]]) {
@@ -184,11 +184,9 @@ static NSDictionary *jscJsMethods;
     }
     id _operations = [appDict objectForKey:OPT_OPERATIONS];
     NSMutableArray *ops = [NSMutableArray array];
-    if ([_operations isKindOfClass:[NSString class]]) {
-      // this is an operation key
-      Operation *op = [operations objectForKey:_operations];
-      if (op == nil) { continue; }
-      [ops addObject:op];
+    if ([_operations isKindOfClass:[Operation class]]) {
+      // this is an operation wrapper
+      [ops addObject:_operations];
     } else if ([_operations isKindOfClass:[WebScriptObject class]]) {
       // this is a function
       Operation *op = [JSOperation jsOperationWithFunction:_operations];
@@ -197,11 +195,9 @@ static NSDictionary *jscJsMethods;
     } else if ([_operations isKindOfClass:[NSArray class]]) {
       // array of operations and/or functions
       for (id obj in _operations) {
-        if ([obj isKindOfClass:[NSString class]]) {
+        if ([obj isKindOfClass:[Operation class]]) {
           // this is an operation key
-          Operation *op = [operations objectForKey:obj];
-          if (op == nil) { continue; }
-          [ops addObject:op];
+          [ops addObject:obj];
         } else if ([obj isKindOfClass:[WebScriptObject class]]) {
           // this is a function
           Operation *op = [JSOperation jsOperationWithFunction:obj];
@@ -229,14 +225,11 @@ static NSDictionary *jscJsMethods;
     return;
   }
   id action = [self unmarshall:_action];
-  NSString *name = nil;
+  id name = nil;
   if ([action isKindOfClass:[NSString class]]) {
     name = action;
   } else if ([action isKindOfClass:[WebScriptObject class]]) {
-    Operation *op = [JSOperation jsOperationWithFunction:action];
-    NSString *key = [self genOpKey];
-    [[self operations] setObject:op forKey:key];
-    name = key;
+    name = [JSOperation jsOperationWithFunction:action];
   } else {
     // wtf?
     return;
@@ -251,16 +244,9 @@ static NSDictionary *jscJsMethods;
   return [ShellUtils run:commandAndArgs wait:[wait boolValue] path:path];
 }
 
-- (NSString *)genOpKey {
-  return [NSString stringWithFormat:@"javascript:operation[%ld]", [operations count]];
-}
-
-- (NSString *)operation:(NSString*)name options:(WebScriptObject *)opts {
-  NSString *opKey = [self genOpKey];
+- (JSOperationWrapper *)operation:(NSString*)name options:(WebScriptObject *)opts {
   @try {
-    Operation *op = [Operation operationWithName:name options:[self jsToDictionary:opts]];
-    [operations setObject:op forKey:opKey];
-    return opKey;
+    return [JSOperationWrapper operation:name options:opts];
   } @catch (NSException *ex) {
     SlateLogger(@"   ERROR %@",[ex name]);
     NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
@@ -274,45 +260,8 @@ static NSDictionary *jscJsMethods;
   return nil;
 }
 
-- (NSString *)operationFromString:(NSString *)opString {
-  NSString *opKey = [self genOpKey];
-  [operations setObject:[Operation operationFromString:opString] forKey:opKey];
-  return opKey;
-}
-
-- (BOOL)doOperation:(NSString *)key {
-  @try {
-    return [[operations objectForKey:key] doOperation];
-  } @catch (NSException *ex) {
-    SlateLogger(@"   ERROR %@",[ex name]);
-    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
-    [alert setMessageText:[ex name]];
-    [alert setInformativeText:[ex reason]];
-    if ([alert runModal] == NSAlertFirstButtonReturn) {
-      SlateLogger(@"User selected exit");
-      [NSApp terminate:nil];
-    }
-  }
-  return NO;
-}
-
-- (BOOL)doOperation:(id)op aw:(AccessibilityWrapper *)_aw sw:(ScreenWrapper *)_sw {
-  @try {
-    NSString *type = [self jsTypeof:op];
-    if (![@"operation" isEqualToString:type]) { return NO; }
-    NSString *key = [op valueForKey:@"___objc"];
-    [[[self operations] objectForKey:key] doOperationWithAccessibilityWrapper:_aw screenWrapper:_sw];
-  } @catch (NSException *ex) {
-    SlateLogger(@"   ERROR %@",[ex name]);
-    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
-    [alert setMessageText:[ex name]];
-    [alert setInformativeText:[ex reason]];
-    if ([alert runModal] == NSAlertFirstButtonReturn) {
-      SlateLogger(@"User selected exit");
-      [NSApp terminate:nil];
-    }
-  }
-  return NO;
+- (JSOperationWrapper *)operationFromString:(NSString *)opString {
+  return [JSOperationWrapper operationFromString:opString];
 }
 
 - (BOOL)source:(NSString *)path {
@@ -373,22 +322,24 @@ static NSDictionary *jscJsMethods;
   if (obj == nil || [obj isMemberOfClass:[WebUndefined class]]) {
     return nil;
   }
+  if ([obj isKindOfClass:[JSOperationWrapper class]]) {
+    return [obj op];
+  }
   if ([obj isKindOfClass:[NSString class]] || [obj isKindOfClass:[NSValue class]] ||
       [obj isKindOfClass:[NSNumber class]]) {
     return obj;
-  } else if ([obj isKindOfClass:[JSScreenWrapper class]] || [obj isKindOfClass:[JSApplicationWrapper class]]) {
+  }
+  if ([obj isKindOfClass:[JSScreenWrapper class]] || [obj isKindOfClass:[JSApplicationWrapper class]]) {
     return [obj toString];
-  } else if ([obj isKindOfClass:[WebScriptObject class]]) {
+  }
+  if ([obj isKindOfClass:[WebScriptObject class]]) {
     return [self jsToSomething:obj];
   }
   return nil;
 }
 
-- (id)jsToSomething:(id)obj {
+- (id)jsToSomething:(WebScriptObject *)obj {
   if (obj == nil) { return nil; }
-  if ([obj isKindOfClass:[JSScreenWrapper class]] || [obj isKindOfClass:[JSApplicationWrapper class]]) {
-    return [obj toString];
-  }
   NSString *type = [self jsTypeof:obj];
   if (type == nil) { return nil; }
   if ([type isEqualToString:@"array"]) {
@@ -399,9 +350,6 @@ static NSDictionary *jscJsMethods;
   }
   if ([type isEqualToString:@"object"]) {
     return [self jsToDictionary:obj];
-  }
-  if ([type isEqualToString:@"operation"]) {
-    return [obj valueForKey:@"___objc"];
   }
   // nothing else should be here, primitives become NSString or NSValue or NSNumber
   return nil;
@@ -423,14 +371,7 @@ static NSDictionary *jscJsMethods;
     if (item == nil || [item isMemberOfClass:[WebUndefined class]]) {
       continue;
     }
-    if ([item isKindOfClass:[JSScreenWrapper class]] || [item isKindOfClass:[JSApplicationWrapper class]]) {
-      [a addObject:[item toString]];
-    }
-    if ([item isKindOfClass:[NSString class]] || [item isKindOfClass:[NSNumber class]]|| [item isKindOfClass:[NSValue class]]) {
-      [a addObject:item];
-    } else if ([item isKindOfClass:[WebScriptObject class]]) {
-      [a addObject:[self jsToSomething:item]];
-    }
+    [a addObject:[self unmarshall:item]];
   }
   return a;
 }
@@ -441,22 +382,10 @@ static NSDictionary *jscJsMethods;
   id keys = [scriptObject callWebScriptMethod:@"_keys_" withArguments:[NSArray arrayWithObjects:obj, nil]];
   NSArray *keyArr = [self jsToArray:keys];
   for(NSUInteger i = 0; i < [keyArr count]; i++) {
-    id _key = [keyArr objectAtIndex:i];
-    NSString* key = nil;
-    if ([_key isKindOfClass:[NSString class]]) {
-      key = _key;
-    } else if ([_key isKindOfClass:[JSScreenWrapper class]]) {
-      key = [_key toString];
-    }
+    NSString* key = [keyArr objectAtIndex:i];
     id ele = [obj valueForKey:key];
     if (ele == nil || [ele isMemberOfClass:[WebUndefined class]]) { continue; }
-    if ([ele isKindOfClass:[JSScreenWrapper class]] || [ele isKindOfClass:[JSApplicationWrapper class]]) {
-      [ret setObject:[ele toString] forKey:key];
-    } else if ([ele isKindOfClass:[NSString class]] || [ele isKindOfClass:[NSNumber class]] || [ele isKindOfClass:[NSValue class]]) {
-      [ret setObject:ele forKey:key];
-    } else if ([ele isKindOfClass:[WebScriptObject class]]) {
-      [ret setObject:[self jsToSomething:ele] forKey:key];
-    }
+    [ret setObject:[self unmarshall:ele] forKey:key];
   }
   return ret;
 }

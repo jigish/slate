@@ -23,6 +23,7 @@
 #import "ScreenWrapper.h"
 #import "JSController.h"
 #import "JSWindowWrapper.h"
+#import "JSOperationWrapper.h"
 
 @implementation JSApplicationWrapper
 
@@ -82,12 +83,11 @@ static NSDictionary *jsawJsMethods;
   CFArrayRef windowsArrRef = [AccessibilityWrapper windowsInRunningApp:app];
   if (!windowsArrRef || CFArrayGetCount(windowsArrRef) == 0) return;
   CFMutableArrayRef windowsArr = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, windowsArrRef);
-  if ([@"operation" isEqualToString:type]) {
+  if ([funcOrOp isKindOfClass:[Operation class]] || [funcOrOp isKindOfClass:[JSOperationWrapper class]]) {
     for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
       AccessibilityWrapper *_aw = [[AccessibilityWrapper alloc] initWithApp:AXUIElementCreateApplication([app processIdentifier])
                                                                      window:CFArrayGetValueAtIndex(windowsArr, i)];
-      NSString *key = [funcOrOp valueForKey:@"___objc"];
-      [[[[JSController getInstance] operations] objectForKey:key] doOperationWithAccessibilityWrapper:_aw screenWrapper:sw];
+      [funcOrOp doOperationWithAccessibilityWrapper:_aw screenWrapper:sw];
     }
   } else if ([@"function" isEqualToString:type]) {
     for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {

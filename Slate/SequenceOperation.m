@@ -88,7 +88,7 @@
     }
     NSMutableArray *ops = [NSMutableArray array];
     for (id key in value) {
-      if (![key isKindOfClass:[NSString class]] && ![key isKindOfClass:[NSArray class]] && ![key isKindOfClass:[WebScriptObject class]]) {
+      if (![key isKindOfClass:[Operation class]] && ![key isKindOfClass:[NSArray class]] && ![key isKindOfClass:[WebScriptObject class]]) {
         @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
         continue;
       }
@@ -100,20 +100,15 @@
           continue;
         }
         [innerOps addObject:op];
-      } else if ([key isKindOfClass:[NSString class]]) {
-        Operation *op = [[[JSController getInstance] operations] objectForKey:key];
-        if (op == nil) {
-          @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
-          continue;
-        }
-        [innerOps addObject:op];
+      } else if ([key isKindOfClass:[Operation class]]) {
+        [innerOps addObject:key];
       } else if ([key isKindOfClass:[NSArray class]]) {
         for (id innerKey in key) {
           Operation *op = nil;
           if ([innerKey isKindOfClass:[WebScriptObject class]]) {
             op = [JSOperation jsOperationWithFunction:innerKey];
-          } else if ([innerKey isKindOfClass:[NSString class]]) {
-            op = [[[JSController getInstance] operations] objectForKey:innerKey];
+          } else if ([innerKey isKindOfClass:[Operation class]]) {
+            op = innerKey;
           }
           if (op == nil) {
             @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);

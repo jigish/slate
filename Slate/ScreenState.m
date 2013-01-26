@@ -73,7 +73,7 @@
   return self;
 }
 
-- (id)initWithConfig:(id)screenConfig layout:(NSString *)_layout {
+- (id)initWithConfig:(id)screenConfig layout:(id)_layout {
   self = [self init];
   if (self) {
     [self setLayout:_layout];

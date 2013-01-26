@@ -1,8 +1,9 @@
 //
-//  JSController.h
+//  JSOperationWrapper.h
 //  Slate
 //
-//  Created by Alex Morega on 2013-01-16.
+//  Created by Jigish Patel on 1/25/13.
+//  Copyright 2013 Jigish Patel. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -19,24 +20,23 @@
 
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
-#import "Operation.h"
 
-@interface JSController : NSObject {
-  WebView *webView;
-  WebScriptObject *scriptObject;
-  NSMutableDictionary *functions;
-  BOOL inited;
+@class AccessibilityWrapper;
+@class ScreenWrapper;
+@class Operation;
+
+@interface JSOperationWrapper : NSObject {
+  Operation *op;
 }
-@property NSMutableDictionary *functions;
 
-- (BOOL)loadConfigFileWithPath:(NSString *)path;
-- (NSString *)addCallableFunction:(WebScriptObject *)function;
-- (id)runCallableFunction:(NSString *)key;
-- (id)runFunction:(WebScriptObject*)function;
-- (id)runFunction:(WebScriptObject *)function withArg:(id)arg;
-- (id)unmarshall:(id)obj;
-- (id)marshall:(id)obj;
-- (NSString *)jsTypeof:(WebScriptObject *)obj;
-+ (JSController *)getInstance;
+@property (strong) Operation *op;
+
+- (BOOL)run;
+- (JSOperationWrapper *)dup:(WebScriptObject *)opts;
+- (BOOL)doOperation;
+- (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;
+
++ (JSOperationWrapper *)operation:(NSString*)name options:(WebScriptObject *)opts;
++ (JSOperationWrapper *)operationFromString:(NSString *)opString;
 
 @end

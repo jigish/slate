@@ -23,18 +23,18 @@
 
 @interface ScreenState : NSObject {
 @private
-  NSString *layout;
+  id layout;
   NSInteger type;
   NSInteger count;
   NSMutableArray *resolutions;
 }
 
-@property  NSString *layout;
+@property  id layout;
 @property (assign) NSInteger type;
 @property (assign) NSInteger count;
 @property  NSMutableArray *resolutions;
 
 - (id)initWithString:(NSString *)state;
-- (id)initWithConfig:(id)screenConfig layout:(NSString *)_layout;
+- (id)initWithConfig:(id)screenConfig layout:(id)_layout;
 
 @end

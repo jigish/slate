@@ -34,6 +34,7 @@
 #import "NSString+Indicies.h"
 #import "ActivateSnapshotOperation.h"
 #import "JSController.h"
+#import "Operation.h"
 
 @implementation SlateConfig
 
@@ -370,7 +371,7 @@ static SlateConfig *_instance = nil;
   return YES;
 }
 
-- (void)addDefault:(id)screenConfig layout:(NSString *)layout {
+- (void)addDefault:(id)screenConfig layout:(id)layout {
   ScreenState *state = [[ScreenState alloc] initWithConfig:screenConfig layout:layout];
   if (state == nil) return;
   [defaultLayouts addObject:state];
@@ -417,13 +418,13 @@ static SlateConfig *_instance = nil;
   SlateLogger(@"Notification Name: <%@>", [notification name]);
 }*/
 
-- (void)activateLayoutOrSnapshot:(NSString *)name {
-  if ([layouts objectForKey:name] != nil) {
+- (void)activateLayoutOrSnapshot:(id)name {
+  if ([name isKindOfClass:[Operation class]]) {
+    [name doOperation];
+  } else if ([layouts objectForKey:name] != nil) {
     [LayoutOperation activateLayout:name];
   } else if ([snapshots objectForKey:name] != nil) {
     [ActivateSnapshotOperation activateSnapshot:name remove:NO];
-  } else if ([[[JSController getInstance] operations] objectForKey:name] != nil) {
-    [[[[JSController getInstance] operations] objectForKey:name] doOperation];
   }
 }
 

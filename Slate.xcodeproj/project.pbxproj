@@ -11,6 +11,7 @@
 		3AA7D09516A6EE0200C81A67 /* JSController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7D09416A6EE0200C81A67 /* JSController.m */; };
 		3AA7D09B16A6FAE100C81A67 /* initialize.js in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7D09A16A6FAE100C81A67 /* initialize.js */; };
 		3AA7D09D16A6FC9B00C81A67 /* initialize.js in Resources */ = {isa = PBXBuildFile; fileRef = 3AA7D09A16A6FAE100C81A67 /* initialize.js */; };
+		3B1E86EE16B3627A001B9090 /* JSOperationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1E86ED16B3627A001B9090 /* JSOperationWrapper.m */; };
 		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
 		3B34F39115462323004090BB /* NSFileManager+ApplicationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */; };
 		3B38E04716AB8B3500603901 /* underscore.js in Sources */ = {isa = PBXBuildFile; fileRef = 3B38E04616AB8B3500603901 /* underscore.js */; };
@@ -131,6 +132,8 @@
 		3AA7D09316A6EE0200C81A67 /* JSController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSController.h; sourceTree = "<group>"; };
 		3AA7D09416A6EE0200C81A67 /* JSController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSController.m; sourceTree = "<group>"; };
 		3AA7D09A16A6FAE100C81A67 /* initialize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = initialize.js; sourceTree = "<group>"; };
+		3B1E86EC16B3627A001B9090 /* JSOperationWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSOperationWrapper.h; sourceTree = "<group>"; };
+		3B1E86ED16B3627A001B9090 /* JSOperationWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSOperationWrapper.m; sourceTree = "<group>"; };
 		3B3335AB14FC1EA900F72638 /* WindowInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowInfoView.h; sourceTree = "<group>"; };
 		3B3335AC14FC1EA900F72638 /* WindowInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowInfoView.m; sourceTree = "<group>"; };
 		3B34F38F15462323004090BB /* NSFileManager+ApplicationSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ApplicationSupport.h"; sourceTree = "<group>"; };
@@ -334,6 +337,8 @@
 				3AA7D09416A6EE0200C81A67 /* JSController.m */,
 				3B7DDCDD16AE1E290087CD12 /* JSInfoWrapper.h */,
 				3B7DDCDE16AE1E290087CD12 /* JSInfoWrapper.m */,
+				3B1E86EC16B3627A001B9090 /* JSOperationWrapper.h */,
+				3B1E86ED16B3627A001B9090 /* JSOperationWrapper.m */,
 				3B7DDCE816AE90FF0087CD12 /* JSScreenWrapper.h */,
 				3B7DDCE916AE90FF0087CD12 /* JSScreenWrapper.m */,
 				3B7DDCE216AE301D0087CD12 /* JSWindowWrapper.h */,
@@ -812,6 +817,7 @@
 				3BE0736616AF3C3F00D33DB0 /* utils.js in Sources */,
 				3BE0736B16AF735A00D33DB0 /* JSWrapperUtils.m in Sources */,
 				3BE0736E16AFB5CA00D33DB0 /* JSOperation.m in Sources */,
+				3B1E86EE16B3627A001B9090 /* JSOperationWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

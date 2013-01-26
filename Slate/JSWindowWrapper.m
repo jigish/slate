@@ -116,7 +116,7 @@ static NSDictionary *jswwJsMethods;
 }
 
 - (BOOL)doOperation:(id)op {
-  return [[JSController getInstance] doOperation:op aw:aw sw:sw];
+  return [op doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
 }
 
 + (void)setJsMethods {
