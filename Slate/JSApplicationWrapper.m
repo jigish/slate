@@ -72,7 +72,7 @@ static NSDictionary *jsawJsMethods;
   return [app localizedName];
 }
 
-- (id)focusedWindow {
+- (id)mainWindow {
   AccessibilityWrapper *_aw = [[AccessibilityWrapper alloc] initWithApp:AXUIElementCreateApplication([app processIdentifier])
                                                                  window:[AccessibilityWrapper focusedWindowInRunningApp:app]];
   return [[JSWindowWrapper alloc] initWithAccessibilityWrapper:_aw screenWrapper:sw];
@@ -108,7 +108,11 @@ static NSDictionary *jsawJsMethods;
       NSStringFromSelector(@selector(pid)): @"pid",
       NSStringFromSelector(@selector(name)): @"name",
       NSStringFromSelector(@selector(eachWindow:)): @"eachWindow",
-      NSStringFromSelector(@selector(focusedWindow)): @"focusedWindow",
+      NSStringFromSelector(@selector(eachWindow:)): @"ewindow",
+      NSStringFromSelector(@selector(mainWindow)): @"mainWindow",
+      NSStringFromSelector(@selector(mainWindow)): @"mwindow",
+      NSStringFromSelector(@selector(mainWindow)): @"focusedWindow",
+      NSStringFromSelector(@selector(mainWindow)): @"fwindow",
     };
   }
 }

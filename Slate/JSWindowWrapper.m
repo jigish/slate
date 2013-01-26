@@ -58,6 +58,19 @@ static NSDictionary *jswwJsMethods;
   return [aw getTitle];
 }
 
+- (id)rect {
+  NSPoint tl = [aw getCurrentTopLeft];
+  NSSize s = [aw getCurrentSize];
+  return [[JSController getInstance] marshall:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:tl.x],
+                                                                                         @"x",
+                                                                                         [NSNumber numberWithInteger:tl.y],
+                                                                                         @"y",
+                                                                                         [NSNumber numberWithInteger:s.width],
+                                                                                         @"width",
+                                                                                         [NSNumber numberWithInteger:s.height],
+                                                                                         @"height", nil]];
+}
+
 - (id)topLeft {
   NSPoint tl = [aw getCurrentTopLeft];
   return [[JSController getInstance] marshall:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:tl.x],
@@ -124,15 +137,20 @@ static NSDictionary *jswwJsMethods;
     jswwJsMethods = @{
       NSStringFromSelector(@selector(title)): @"title",
       NSStringFromSelector(@selector(topLeft)): @"topLeft",
+      NSStringFromSelector(@selector(topLeft)): @"tl",
       NSStringFromSelector(@selector(size)): @"size",
+      NSStringFromSelector(@selector(rect)): @"rect",
       NSStringFromSelector(@selector(pid)): @"pid",
       NSStringFromSelector(@selector(focus)): @"focus",
       NSStringFromSelector(@selector(isMinimizedOrHidden)): @"isMinimizedOrHidden",
+      NSStringFromSelector(@selector(isMinimizedOrHidden)): @"hidden",
       NSStringFromSelector(@selector(isMain)): @"isMain",
+      NSStringFromSelector(@selector(isMain)): @"main",
       NSStringFromSelector(@selector(move:)): @"move",
       NSStringFromSelector(@selector(resize:)): @"resize",
       NSStringFromSelector(@selector(screen)): @"screen",
       NSStringFromSelector(@selector(doOperation:)): @"doOperation",
+      NSStringFromSelector(@selector(doOperation:)): @"do",
       NSStringFromSelector(@selector(app)): @"app",
     };
   }

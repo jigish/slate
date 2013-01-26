@@ -75,6 +75,7 @@ static NSDictionary *jsswJsMethods = nil;
       NSStringFromSelector(@selector(screenId)): @"id",
       NSStringFromSelector(@selector(rect)): @"rect",
       NSStringFromSelector(@selector(isMain)): @"isMain",
+      NSStringFromSelector(@selector(isMain)): @"main",
     };
   }
 }
