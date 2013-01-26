@@ -79,9 +79,8 @@
   [task launch];
   if (wait){
     [task waitUntilExit];
-    NSData *data = [file readDataToEndOfFile];
     SlateLogger(@"SHELL RESULT:");
-    SlateLogger([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    SlateLogger([[NSString alloc] initWithData:[file readDataToEndOfFile] encoding:NSUTF8StringEncoding]);
   }
   return task;
 }
