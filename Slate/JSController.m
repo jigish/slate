@@ -268,8 +268,8 @@ static NSDictionary *jscJsMethods;
   return [[SlateConfig getInstance] loadConfigFileWithPath:path];
 }
 
-- (void)log:(NSString*)msg {
-  SlateLogger(@"%@", msg);
+- (void)log:(NSString *)msg {
+  NSLog(@"%@", msg);
 }
 
 - (WebScriptObject *)getJsArray:(NSArray *)arr {
