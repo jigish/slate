@@ -134,6 +134,11 @@
   // OVERRIDE - runs after all options are set
 }
 
+- (BOOL)testOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
+  [self evalOptionsWithAccessibilityWrapper:aw screenWrapper:sw];
+  return [self testOperation];
+}
+
 - (void)evalOptionsWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   if ([[self dynamicOptions] count] == 0) { return; }
   if (aw == nil) {

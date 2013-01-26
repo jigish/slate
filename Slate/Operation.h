@@ -36,6 +36,7 @@
 - (BOOL)doOperation;
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;
 - (BOOL)testOperation;
+- (BOOL)testOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;
 - (BOOL)shouldTakeUndoSnapshot;
 - (NSArray *)requiredOptions;
 - (NSString *)checkRequiredOptions:(NSDictionary *)_options;

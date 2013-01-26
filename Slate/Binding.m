@@ -72,6 +72,22 @@ static NSDictionary *dictionary = nil;
   if (self) {
     [self setKeystrokeFromString:keystroke];
     [self setOp:op_];
+    if ([self op] == nil) {
+      SlateLogger(@"ERROR: Unable to create binding");
+      @throw([NSException exceptionWithName:@"Unable To Create Binding" reason:[NSString stringWithFormat:@"Unable to create %@", keystroke] userInfo:nil]);
+    }
+
+    @try {
+      AccessibilityWrapper *awTest = [[AccessibilityWrapper alloc] init];
+      ScreenWrapper *swTest = [[ScreenWrapper alloc] init];
+      [[self op] testOperationWithAccessibilityWrapper:awTest screenWrapper:swTest];
+    } @catch (NSException *ex) {
+      SlateLogger(@"ERROR: Unable to test binding");
+      @throw([NSException exceptionWithName:@"Unable To Parse Binding" reason:[NSString stringWithFormat:@"Unable to parse '%@' in '%@'", [ex reason], [[self op] opName]] userInfo:nil]);
+    }
+    if ([[self op] isKindOfClass:[SwitchOperation class]]) {
+      [(SwitchOperation *)op setModifiers:modifiers];
+    }
     [self setRepeat:repeat_];
   }
   return self;

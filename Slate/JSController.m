@@ -155,8 +155,19 @@ static NSDictionary *jscJsMethods;
   } else {
     repeat = [Operation isRepeatOnHoldOp:[op opName]];
   }
-  Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
-  [[SlateConfig getInstance] addBinding:bind];
+  @try {
+    Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
+    [[SlateConfig getInstance] addBinding:bind];
+  } @catch (NSException *ex) {
+    SlateLogger(@"   ERROR %@",[ex name]);
+    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
+    [alert setMessageText:[ex name]];
+    [alert setInformativeText:[ex reason]];
+    if ([alert runModal] == NSAlertFirstButtonReturn) {
+      SlateLogger(@"User selected exit");
+      [NSApp terminate:nil];
+    }
+  }
 }
 
 - (void)bindNative:(NSString *)hotkey callback:(JSOperationWrapper *)opWrapper repeat:(id)_repeat {
@@ -167,8 +178,19 @@ static NSDictionary *jscJsMethods;
   } else {
     repeat = [Operation isRepeatOnHoldOp:[op opName]];
   }
-  Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
-  [[SlateConfig getInstance] addBinding:bind];
+  @try {
+    Binding *bind = [[Binding alloc] initWithKeystroke:hotkey operation:op repeat:repeat];
+    [[SlateConfig getInstance] addBinding:bind];
+  } @catch (NSException *ex) {
+    SlateLogger(@"   ERROR %@",[ex name]);
+    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
+    [alert setMessageText:[ex name]];
+    [alert setInformativeText:[ex reason]];
+    if ([alert runModal] == NSAlertFirstButtonReturn) {
+      SlateLogger(@"User selected exit");
+      [NSApp terminate:nil];
+    }
+  }
 }
 
 - (NSString *)layout:(NSString *)name hash:(WebScriptObject *)hash {
