@@ -116,7 +116,12 @@ static NSDictionary *dictionary = nil;
   NSNumber *theModalKey = nil;
   NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:COLON];
   if ([keyAndModifiers count] >= 1) {
-    theKeyCode = [[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:0]];
+    NSString *theKey = [keyAndModifiers objectAtIndex:0];
+    theKeyCode = [[Binding asciiToCodeDict] objectForKey:theKey];
+    if (theKeyCode == nil) {
+      SlateLogger(@"ERROR: Unrecognized key \"%@\" in \"%@\"", theKey, keystroke);
+      @throw([NSException exceptionWithName:@"Unrecognized Key" reason:[NSString stringWithFormat:@"Unrecognized key \"%@\" in \"%@\"", theKey, keystroke] userInfo:nil]);
+    }
     if ([keyAndModifiers count] >= 2) {
       theModalKey = [[Binding asciiToCodeDict] objectForKey:[keyAndModifiers objectAtIndex:1]];
       if (theModalKey == nil) {
