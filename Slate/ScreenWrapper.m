@@ -129,6 +129,15 @@ static NSString *resolutions = nil;
   }
 }
 
+- (NSRect)getScreenVisibleRect:(NSInteger)screenId {
+  return [self convertScreenVisibleRectToWindowCoords:screenId];
+}
+
+- (NSRect)getScreenVisibleRectForRef:(NSInteger)screenRefId {
+  NSInteger screenId = [[SlateConfig getInstance] getBoolConfig:ORDER_SCREENS_LEFT_TO_RIGHT] ? [[leftToRightToDefault objectAtIndex:screenRefId] integerValue] : screenRefId;
+  return [self getScreenVisibleRect:screenId];
+}
+
 - (NSRect)getScreenRect:(NSInteger)screenId {
   return [self convertScreenRectToWindowCoords:screenId];
 }
