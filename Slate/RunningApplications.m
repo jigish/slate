@@ -380,9 +380,16 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   AXUIElementRef sendingApp = AXUIElementCreateApplication([launchedApp processIdentifier]);
   AXObserverRef observer;
   err = AXObserverCreate([launchedApp processIdentifier], windowCallback, &observer);
+  if (err != kAXErrorSuccess) return;
   err = AXObserverAddNotification(observer, sendingApp, kAXWindowCreatedNotification, (__bridge void *)self);
   err = AXObserverAddNotification(observer, sendingApp, kAXFocusedWindowChangedNotification, (__bridge void *)self);
   err = AXObserverAddNotification(observer, sendingApp, kAXTitleChangedNotification, (__bridge void *)self);
+  if (err != kAXErrorSuccess) {
+    AXObserverRemoveNotification(observer, AXUIElementCreateApplication([launchedApp processIdentifier]), kAXWindowCreatedNotification);
+    AXObserverRemoveNotification(observer, AXUIElementCreateApplication([launchedApp processIdentifier]), kAXFocusedWindowChangedNotification);
+    AXObserverRemoveNotification(observer, AXUIElementCreateApplication([launchedApp processIdentifier]), kAXTitleChangedNotification);
+    return;
+  }
   CFRunLoopAddSource ([[NSRunLoop currentRunLoop] getCFRunLoop], AXObserverGetRunLoopSource(observer), kCFRunLoopDefaultMode);
   [pidToObserver setObject:[NSValue valueWithPointer:observer] forKey:[NSNumber numberWithInteger:[launchedApp processIdentifier]]];
   [self bringAppToFront:launchedApp];
@@ -397,6 +404,8 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   NSNumber *appPID = [NSNumber numberWithInteger:[app processIdentifier]];
   [appToWindows removeObjectForKey:appPID];
   AXObserverRemoveNotification([[pidToObserver objectForKey:[NSNumber numberWithInteger:[app processIdentifier]]] pointerValue], AXUIElementCreateApplication([app processIdentifier]), kAXWindowCreatedNotification);
+  AXObserverRemoveNotification([[pidToObserver objectForKey:[NSNumber numberWithInteger:[app processIdentifier]]] pointerValue], AXUIElementCreateApplication([app processIdentifier]), kAXFocusedWindowChangedNotification);
+  AXObserverRemoveNotification([[pidToObserver objectForKey:[NSNumber numberWithInteger:[app processIdentifier]]] pointerValue], AXUIElementCreateApplication([app processIdentifier]), kAXTitleChangedNotification);
   [pidToObserver removeObjectForKey:[NSNumber numberWithInteger:[app processIdentifier]]];
   [self pruneWindows];
   [self bringAppToFront:[self currentApplication]];
