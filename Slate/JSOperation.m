@@ -49,8 +49,9 @@
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = YES;
   [self evalOptionsWithAccessibilityWrapper:aw screenWrapper:sw];
-  [[JSController getInstance] runFunction:[self function] withArg:[[JSWindowWrapper alloc] initWithAccessibilityWrapper:aw
-                                                                                                          screenWrapper:sw]];
+  JSWindowWrapper *window = nil;
+  if (aw != nil && [aw inited]) window = [[JSWindowWrapper alloc] initWithAccessibilityWrapper:aw screenWrapper:sw];
+  [[JSController getInstance] runFunction:[self function] withArg:window];
   return success;
 }
 
@@ -59,7 +60,8 @@
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] init];
   ScreenWrapper *sw = [[ScreenWrapper alloc] init];
   BOOL success = NO;
-  if ([aw inited]) success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
+  if (![aw inited]) aw = nil;
+  success = [self doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
   SlateLogger(@"-----------------  End JS Operation  -----------------");
   return success;
 }
