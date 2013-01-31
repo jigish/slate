@@ -99,6 +99,14 @@ static NSDictionary *jswwJsMethods;
   return [aw isMinimizedOrHidden];
 }
 
+- (BOOL)isMovable {
+  return [aw isMovable];
+}
+
+- (BOOL)isResizable {
+  return [aw isResizable];
+}
+
 - (BOOL)isMain {
   return [AccessibilityWrapper isMainWindow:[aw window]];
 }
@@ -142,6 +150,8 @@ static NSDictionary *jswwJsMethods;
       NSStringFromSelector(@selector(pid)): @"pid",
       NSStringFromSelector(@selector(focus)): @"focus",
       NSStringFromSelector(@selector(isMinimizedOrHidden)): @"isMinimizedOrHidden",
+      NSStringFromSelector(@selector(isMovable)): @"isMovable",
+      NSStringFromSelector(@selector(isResizable)): @"isResizable",
       NSStringFromSelector(@selector(isMain)): @"isMain",
       NSStringFromSelector(@selector(move:)): @"move",
       NSStringFromSelector(@selector(resize:)): @"resize",

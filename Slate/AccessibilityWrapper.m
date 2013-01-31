@@ -137,6 +137,14 @@ static NSDictionary *unselectableApps = nil;
   return [AccessibilityWrapper isWindowMinimizedOrHidden:[self window] inApp:[self app]];
 }
 
+- (BOOL)isMovable {
+  return [self moveWindow:[self getCurrentTopLeft]];
+}
+
+- (BOOL)isResizable {
+  return [self resizeWindow:[self getCurrentSize]];
+}
+
 - (NSString *)getTitle {
   return [AccessibilityWrapper getTitle:[self window]];
 }
