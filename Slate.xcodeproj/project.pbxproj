@@ -9,12 +9,10 @@
 /* Begin PBXBuildFile section */
 		3AA7D09116A6ED1200C81A67 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA7D09016A6ED1200C81A67 /* WebKit.framework */; };
 		3AA7D09516A6EE0200C81A67 /* JSController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7D09416A6EE0200C81A67 /* JSController.m */; };
-		3AA7D09B16A6FAE100C81A67 /* initialize.js in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7D09A16A6FAE100C81A67 /* initialize.js */; };
 		3AA7D09D16A6FC9B00C81A67 /* initialize.js in Resources */ = {isa = PBXBuildFile; fileRef = 3AA7D09A16A6FAE100C81A67 /* initialize.js */; };
 		3B1E86EE16B3627A001B9090 /* JSOperationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1E86ED16B3627A001B9090 /* JSOperationWrapper.m */; };
 		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
 		3B34F39115462323004090BB /* NSFileManager+ApplicationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */; };
-		3B38E04716AB8B3500603901 /* underscore.js in Sources */ = {isa = PBXBuildFile; fileRef = 3B38E04616AB8B3500603901 /* underscore.js */; };
 		3B38E04816AB8BBF00603901 /* underscore.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B38E04616AB8B3500603901 /* underscore.js */; };
 		3B3C41A01501ADC600C1E927 /* HintOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C419F1501ADC600C1E927 /* HintOperation.m */; };
 		3B3C41A31501BE8600C1E927 /* HintWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C41A21501BE8600C1E927 /* HintWindow.m */; };
@@ -65,7 +63,6 @@
 		3BDDA17D14FDA50C00829D2A /* Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17C14FDA50C00829D2A /* Snapshot.m */; };
 		3BDDA18014FDA55600829D2A /* WindowSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA17F14FDA55600829D2A /* WindowSnapshot.m */; };
 		3BDDA18314FDAA6600829D2A /* SnapshotList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDA18214FDAA6600829D2A /* SnapshotList.m */; };
-		3BE0736616AF3C3F00D33DB0 /* utils.js in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0736516AF3C3F00D33DB0 /* utils.js */; };
 		3BE0736816AF3C9B00D33DB0 /* utils.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BE0736516AF3C3F00D33DB0 /* utils.js */; };
 		3BE0736B16AF735A00D33DB0 /* JSWrapperUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0736A16AF735A00D33DB0 /* JSWrapperUtils.m */; };
 		3BE0736E16AFB5CA00D33DB0 /* JSOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0736D16AFB5CA00D33DB0 /* JSOperation.m */; };
@@ -804,8 +801,6 @@
 				3BA1BA6B162F4CFF0026774E /* ShellUtils.m in Sources */,
 				3B5B1B7C1665871E00D5B1B5 /* UndoOperation.m in Sources */,
 				3AA7D09516A6EE0200C81A67 /* JSController.m in Sources */,
-				3AA7D09B16A6FAE100C81A67 /* initialize.js in Sources */,
-				3B38E04716AB8B3500603901 /* underscore.js in Sources */,
 				3BFF7D7116AC784B00A8CB0E /* PushOperation.m in Sources */,
 				3BFF7D7516AC7B3D00A8CB0E /* NudgeOperation.m in Sources */,
 				3BFF7D7816AC7E2900A8CB0E /* ThrowOperation.m in Sources */,
@@ -814,7 +809,6 @@
 				3B7DDCE416AE301D0087CD12 /* JSWindowWrapper.m in Sources */,
 				3B7DDCE716AE35840087CD12 /* JSApplicationWrapper.m in Sources */,
 				3B7DDCEA16AE90FF0087CD12 /* JSScreenWrapper.m in Sources */,
-				3BE0736616AF3C3F00D33DB0 /* utils.js in Sources */,
 				3BE0736B16AF735A00D33DB0 /* JSWrapperUtils.m in Sources */,
 				3BE0736E16AFB5CA00D33DB0 /* JSOperation.m in Sources */,
 				3B1E86EE16B3627A001B9090 /* JSOperationWrapper.m in Sources */,
