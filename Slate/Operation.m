@@ -167,6 +167,16 @@
   return [Operation operationWithName:[self opName] options:newOptions];
 }
 
++ (BOOL)doOperation:(NSString *)op options:(NSDictionary *)options aw:(AccessibilityWrapper *)aw sw:(ScreenWrapper *)sw {
+  Operation *operation = [Operation operationWithName:op options:options];
+  BOOL success = NO;
+  if (operation != nil) {
+    [operation doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
+    operation = nil; // force release of operation object
+  }
+  return success;
+}
+
 + (id)operationFromString:(NSString *)opString {
   NSMutableArray *tokens = [[NSMutableArray alloc] initWithCapacity:10];
   [StringTokenizer tokenize:opString into:tokens maxTokens:2];

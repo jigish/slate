@@ -266,7 +266,7 @@ static NSDictionary *jscJsMethods;
   return [ShellUtils run:commandAndArgs wait:[wait boolValue] path:path];
 }
 
-- (JSOperationWrapper *)operation:(NSString*)name options:(WebScriptObject *)opts {
+- (JSOperationWrapper *)operation:(NSString *)name options:(WebScriptObject *)opts {
   @try {
     return [JSOperationWrapper operation:name options:opts];
   } @catch (NSException *ex) {
@@ -280,6 +280,25 @@ static NSDictionary *jscJsMethods;
     }
   }
   return nil;
+}
+
+- (BOOL)doOperation:(NSString *)op options:(id)opts {
+  @try {
+    id options = [self unmarshall:opts];
+    if ([options isKindOfClass:[NSDictionary class]]) {
+      return [Operation doOperation:op options:options aw:[[AccessibilityWrapper alloc] init] sw:[[ScreenWrapper alloc] init]];
+    }
+  } @catch (NSException *ex) {
+    SlateLogger(@"   ERROR %@",[ex name]);
+    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
+    [alert setMessageText:[ex name]];
+    [alert setInformativeText:[ex reason]];
+    if ([alert runModal] == NSAlertFirstButtonReturn) {
+      SlateLogger(@"User selected exit");
+      [NSApp terminate:nil];
+    }
+  }
+  return NO;
 }
 
 - (JSOperationWrapper *)operationFromString:(NSString *)opString {
@@ -427,7 +446,7 @@ static NSDictionary *jscJsMethods;
     NSStringFromSelector(@selector(bindNative:callback:repeat:)): @"bindNative",
     NSStringFromSelector(@selector(configFunction:callback:)): @"configFunction",
     NSStringFromSelector(@selector(configNative:callback:)): @"configNative",
-    NSStringFromSelector(@selector(doOperation:)): @"doOperation",
+    NSStringFromSelector(@selector(doOperation:options:)): @"doOperation",
     NSStringFromSelector(@selector(operation:options:)): @"operation",
     NSStringFromSelector(@selector(operationFromString:)): @"operationFromString",
     NSStringFromSelector(@selector(source:)): @"source",

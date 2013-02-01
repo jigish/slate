@@ -50,5 +50,6 @@
 + (id)operationFromString:(NSString *)opString;
 + (id)operationWithName:(NSString *)op options:(NSDictionary *)options;
 + (BOOL)isRepeatOnHoldOp:(NSString *)op;
++ (BOOL)doOperation:(NSString *)op options:(NSDictionary *)options aw:(AccessibilityWrapper *)aw sw:(ScreenWrapper *)sw;
 
 @end

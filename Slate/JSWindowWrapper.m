@@ -26,6 +26,7 @@
 #import "JSScreenWrapper.h"
 #import "JSWrapperUtils.h"
 #import "JSApplicationWrapper.h"
+#import "JSOperationWrapper.h"
 
 @implementation JSWindowWrapper
 
@@ -136,8 +137,16 @@ static NSDictionary *jswwJsMethods;
   return [[JSApplicationWrapper alloc] initWithAccessibilityWrapper:aw screenWrapper:sw];
 }
 
-- (BOOL)doOperation:(id)op {
-  return [op doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
+- (BOOL)doOperation:(id)op options:(id)opts {
+  if ([op isKindOfClass:[JSOperationWrapper class]]) {
+    return [op doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
+  } else if ([op isKindOfClass:[NSString class]]) {
+    id options = [[JSController getInstance] unmarshall:opts];
+    if ([options isKindOfClass:[NSDictionary class]]) {
+      return [Operation doOperation:op options:options aw:[self aw] sw:[self sw]];
+    }
+  }
+  return NO;
 }
 
 + (void)setJsMethods {
@@ -156,7 +165,7 @@ static NSDictionary *jswwJsMethods;
       NSStringFromSelector(@selector(move:)): @"move",
       NSStringFromSelector(@selector(resize:)): @"resize",
       NSStringFromSelector(@selector(screen)): @"screen",
-      NSStringFromSelector(@selector(doOperation:)): @"doOperation",
+      NSStringFromSelector(@selector(doOperation:options:)): @"doOperation",
       NSStringFromSelector(@selector(app)): @"app",
     };
   }

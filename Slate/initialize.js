@@ -60,6 +60,16 @@
       return _controller.operation(name, opts);
     },
 
+    doOperation : function(name, opts) {
+      if (!_.isString(name)) {
+        throw "Operation name must be a string. Was: "+name;
+      }
+      if (opts !== undefined && !_.isObject(opts)) {
+        throw "Operation options must be undefined or a hash. Was: "+opts;
+      }
+      return _controller.doOperation(name, opts);
+    },
+
     source : function(path) {
       if (!_.isString(path)) {
         throw "Source path must be a string. Was: "+path;
@@ -110,6 +120,7 @@
   window.S.bnd = window.S.bind;
   window.S.bnda = window.S.bindAll;
   window.S.op = window.S.operation;
+  window.S.doop = window.S.doOperation;
   window.S.opstr = window.S.operationFromString;
   window.S.src = window.S.source;
   window.S.lay = window.S.layout;
