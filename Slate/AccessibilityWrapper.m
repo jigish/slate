@@ -80,6 +80,7 @@ static NSDictionary *unselectableApps = nil;
     SlateLogger(@"ERROR: Could not fetch position");
     cTopLeft = NSMakePoint(0, 0);
   }
+  if (_cPosition != NULL) CFRelease(_cPosition);
 
   return cTopLeft;
 }
@@ -101,6 +102,7 @@ static NSDictionary *unselectableApps = nil;
     SlateLogger(@"ERROR: Could not fetch size");
     cSize = NSMakeSize(0, 0);
   }
+  if (_cSize != NULL) CFRelease(_cSize);
 
   return cSize;
 }
@@ -114,8 +116,10 @@ static NSDictionary *unselectableApps = nil;
   _position = (CFTypeRef)(AXValueCreate(kAXValueCGPointType, (const void *)&thePoint));
   if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilityPositionAttribute, (CFTypeRef *)_position) != kAXErrorSuccess) {
     SlateLogger(@"ERROR: Could not change position");
+    if (_position != NULL) CFRelease(_position);
     return NO;
   }
+  if (_position != NULL) CFRelease(_position);
   return YES;
 }
 
@@ -124,8 +128,10 @@ static NSDictionary *unselectableApps = nil;
   _size = (CFTypeRef)(AXValueCreate(kAXValueCGSizeType, (const void *)&theSize));
   if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilitySizeAttribute, (CFTypeRef *)_size) != kAXErrorSuccess) {
     SlateLogger(@"ERROR: Could not change size");
+    if (_size != NULL) CFRelease(_size);
     return NO;
   }
+  if (_size != NULL) CFRelease(_size);
   return YES;
 }
 
@@ -158,8 +164,10 @@ static NSDictionary *unselectableApps = nil;
   AXUIElementRef appRef = AXUIElementCreateApplication([app processIdentifier]);
   if (AXUIElementSetAttributeValue(appRef, (CFStringRef)NSAccessibilityFrontmostAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
     SlateLogger(@"ERROR: Could not change focus to app");
+    if (appRef != NULL) CFRelease(appRef);
     return NO;
   }
+  if (appRef != NULL) CFRelease(appRef);
   return YES;
 }
 
@@ -176,6 +184,7 @@ static NSDictionary *unselectableApps = nil;
   ProcessSerialNumber psn;
   GetProcessForPID(focusPID, &psn);
   SetFrontProcessWithOptions(&psn, kSetFrontProcessFrontWindowOnly);
+  if (_window != NULL) CFRelease(_window);
   return couldFocus;
 }
 
@@ -236,8 +245,10 @@ static NSDictionary *unselectableApps = nil;
   CFTypeRef _title;
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityTitleAttribute, (CFTypeRef *)&_title) == kAXErrorSuccess) {
     NSString *title = (__bridge NSString *) _title;
+    if (_title != NULL) CFRelease(_title);
     return title;
   }
+  if (_title != NULL) CFRelease(_title);
   return @"";
 }
 
@@ -264,12 +275,17 @@ static NSDictionary *unselectableApps = nil;
   if ((AXUIElementCopyElementAtPosition(systemWideElement, point.x, point.y, &_element) == kAXErrorSuccess) && _element) {
     CFTypeRef _role;
     if (AXUIElementCopyAttributeValue(_element, (CFStringRef)NSAccessibilityRoleAttribute, (CFTypeRef *)&_role) == kAXErrorSuccess) {
-      if ([(__bridge NSString *)_role isEqualToString:NSAccessibilityWindowRole])
+      if ([(__bridge NSString *)_role isEqualToString:NSAccessibilityWindowRole]) {
+        if (_role != NULL) CFRelease(_role);
         return _element;
+      }
+      if (_role != NULL) CFRelease(_role);
     }
     CFTypeRef _window;
-    if (AXUIElementCopyAttributeValue(_element, (CFStringRef)NSAccessibilityWindowAttribute, (CFTypeRef *)&_window) == kAXErrorSuccess)
+    if (AXUIElementCopyAttributeValue(_element, (CFStringRef)NSAccessibilityWindowAttribute, (CFTypeRef *)&_window) == kAXErrorSuccess) {
+      if (_element != NULL) CFRelease(_element);
       return (AXUIElementRef)_window;
+    }
   }
   SlateLogger(@"Returning null");
   return NULL;
@@ -292,14 +308,18 @@ static NSDictionary *unselectableApps = nil;
 + (BOOL)isWindow:(AXUIElementRef)element {
   CFTypeRef _role;
   AXUIElementCopyAttributeValue(element, (CFStringRef)NSAccessibilityRoleAttribute, &_role);
-  return [NSAccessibilityWindowRole isEqualToString:(__bridge NSString *)_role];
+  BOOL isWindow = [NSAccessibilityWindowRole isEqualToString:(__bridge NSString *)_role];
+  if (_role != NULL) CFRelease(_role);
+  return isWindow;
 }
 
 + (NSString *)getRole:(AXUIElementRef)element {
   if (element == NULL || element == nil) return nil;
   CFTypeRef _role;
   if (AXUIElementCopyAttributeValue(element, (CFStringRef)NSAccessibilityRoleAttribute, &_role) == kAXErrorSuccess) {
-    return (__bridge NSString *)_role;
+    NSString *role =  (__bridge NSString *)_role;
+    if (_role != NULL) CFRelease(_role);
+    return role;
   }
   return nil;
 }
