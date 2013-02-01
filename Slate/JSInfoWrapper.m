@@ -194,7 +194,7 @@ static NSDictionary *jsiwJsMethods;
       NSStringFromSelector(@selector(screenForRef:)): @"screenForRef",
       NSStringFromSelector(@selector(screenr:)): @"screenr",
       NSStringFromSelector(@selector(screenCount)): @"screenCount",
-      NSStringFromSelector(@selector(screenc:)): @"screenc",
+      NSStringFromSelector(@selector(screenc)): @"screenc",
       NSStringFromSelector(@selector(screenUnderPoint:)): @"screenUnderPoint",
       NSStringFromSelector(@selector(sup:)): @"sup",
       NSStringFromSelector(@selector(eachScreen:)): @"eachScreen",
