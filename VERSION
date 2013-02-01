@@ -1,4 +1,16 @@
-Current Version: 1.0.22
+Current Version: 1.0.23
+
+----------------- 1.0.23 ----------------
+
+Updates to javascript configs
+- Issue #220 - one-off operations
+- Issue #222 - don't auto-fail js operations if there is no window focused
+- Issue #218 - add isMovable and isResizable to windows
+- Issue #221 - add aliases for more functions
+- Issue #219 - add visibleRect to screen
+Issue #206 - fix a crash
+Issue #217 - better error when a key is unrecognized
+Fix some minor memory leaks
 
 ----------------- 1.0.22 ----------------
 
