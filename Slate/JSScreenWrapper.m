@@ -61,6 +61,8 @@ static NSDictionary *jsswJsMethods = nil;
                                                                                          @"y", nil]];
 }
 
+- (id)vrect { return [self visibleRect]; }
+
 - (id)visibleRect {
   NSRect rect = [sw getScreenVisibleRectForRef:[self screenId]];
   return [[JSController getInstance] marshall:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:rect.size.width],
@@ -77,6 +79,8 @@ static NSDictionary *jsswJsMethods = nil;
   return [NSString stringWithFormat:@"%ld", [self screenId]];
 }
 
+- (BOOL)main { return [self isMain]; }
+
 - (BOOL)isMain {
   return [sw isMainScreenRef:[self screenId]];
 }
@@ -87,7 +91,9 @@ static NSDictionary *jsswJsMethods = nil;
       NSStringFromSelector(@selector(screenId)): @"id",
       NSStringFromSelector(@selector(rect)): @"rect",
       NSStringFromSelector(@selector(visibleRect)): @"visibleRect",
+      NSStringFromSelector(@selector(vrect)): @"vrect",
       NSStringFromSelector(@selector(isMain)): @"isMain",
+      NSStringFromSelector(@selector(main)): @"main",
     };
   }
 }

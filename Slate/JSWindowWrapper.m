@@ -72,6 +72,8 @@ static NSDictionary *jswwJsMethods;
                                                                                          @"height", nil]];
 }
 
+- (id)tl { return [self topLeft]; }
+
 - (id)topLeft {
   NSPoint tl = [aw getCurrentTopLeft];
   return [[JSController getInstance] marshall:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:tl.x],
@@ -96,17 +98,25 @@ static NSDictionary *jswwJsMethods;
   return [aw focus];
 }
 
+- (BOOL)hidden { return [self isMinimizedOrHidden]; }
+
 - (BOOL)isMinimizedOrHidden {
   return [aw isMinimizedOrHidden];
 }
+
+- (BOOL)movable { return [self isMovable]; }
 
 - (BOOL)isMovable {
   return [aw isMovable];
 }
 
+- (BOOL)resizable { return [self isResizable]; }
+
 - (BOOL)isResizable {
   return [aw isResizable];
 }
+
+- (BOOL)main { return [self isMain]; }
 
 - (BOOL)isMain {
   return [AccessibilityWrapper isMainWindow:[aw window]];
@@ -137,6 +147,8 @@ static NSDictionary *jswwJsMethods;
   return [[JSApplicationWrapper alloc] initWithAccessibilityWrapper:aw screenWrapper:sw];
 }
 
+- (BOOL)doop:(id)op options:(id)opts { return [self doOperation:op options:opts]; }
+
 - (BOOL)doOperation:(id)op options:(id)opts {
   if ([op isKindOfClass:[JSOperationWrapper class]]) {
     return [op doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
@@ -154,18 +166,24 @@ static NSDictionary *jswwJsMethods;
     jswwJsMethods = @{
       NSStringFromSelector(@selector(title)): @"title",
       NSStringFromSelector(@selector(topLeft)): @"topLeft",
+      NSStringFromSelector(@selector(tl)): @"tl",
       NSStringFromSelector(@selector(size)): @"size",
       NSStringFromSelector(@selector(rect)): @"rect",
       NSStringFromSelector(@selector(pid)): @"pid",
       NSStringFromSelector(@selector(focus)): @"focus",
       NSStringFromSelector(@selector(isMinimizedOrHidden)): @"isMinimizedOrHidden",
+      NSStringFromSelector(@selector(hidden)): @"hidden",
       NSStringFromSelector(@selector(isMovable)): @"isMovable",
+      NSStringFromSelector(@selector(movable)): @"movable",
       NSStringFromSelector(@selector(isResizable)): @"isResizable",
+      NSStringFromSelector(@selector(resizable)): @"resizable",
       NSStringFromSelector(@selector(isMain)): @"isMain",
+      NSStringFromSelector(@selector(main)): @"main",
       NSStringFromSelector(@selector(move:)): @"move",
       NSStringFromSelector(@selector(resize:)): @"resize",
       NSStringFromSelector(@selector(screen)): @"screen",
       NSStringFromSelector(@selector(doOperation:options:)): @"doOperation",
+      NSStringFromSelector(@selector(doop:opts:)): @"doop",
       NSStringFromSelector(@selector(app)): @"app",
     };
   }

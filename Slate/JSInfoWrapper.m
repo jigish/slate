@@ -73,6 +73,10 @@ static NSDictionary *jsiwJsMethods;
   return [[JSApplicationWrapper alloc] initWithAccessibilityWrapper:aw screenWrapper:sw];
 }
 
+- (JSWindowWrapper *)wup:(id)point {
+  return [self windowUnderPoint:point];
+}
+
 - (JSWindowWrapper *)windowUnderPoint:(id)point {
   id pointDict = [[JSController getInstance] unmarshall:point];
   NSValue *p = [JSWrapperUtils pointFromDict:pointDict aw:aw sw:sw];
@@ -84,11 +88,19 @@ static NSDictionary *jsiwJsMethods;
   return [[JSWindowWrapper alloc] initWithAccessibilityWrapper:_aw screenWrapper:sw];
 }
 
+- (JSScreenWrapper *)sup:(id)point {
+  return [self screenUnderPoint:point];
+}
+
 - (JSScreenWrapper *)screenUnderPoint:(id)point {
   id pointDict = [[JSController getInstance] unmarshall:point];
   NSValue *p = [JSWrapperUtils pointFromDict:pointDict aw:aw sw:sw];
   if (p == nil) { return nil; }
   return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenRefIdForPoint:[p pointValue]] screenWrapper:sw];
+}
+
+- (void)eapp:(id)func {
+  [self eachApp:func];
 }
 
 - (void)eachApp:(id)func {
@@ -105,12 +117,20 @@ static NSDictionary *jsiwJsMethods;
   return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenRefIdForRect:wRect] screenWrapper:sw];
 }
 
+- (BOOL)rectoff:(id)rect {
+  return [self isRectOffScreen:rect];
+}
+
 - (BOOL)isRectOffScreen:(id)rect {
   id rectDict = [[JSController getInstance] unmarshall:rect];
   NSValue *r = [JSWrapperUtils rectFromDict:rectDict aw:aw sw:sw];
   if (r == nil) { return NO; }
 
   return [sw isRectOffScreen:[r rectValue]];
+}
+
+- (BOOL)pntoff:(id)point {
+  return [self isPointOffScreen:point];
 }
 
 - (BOOL)isPointOffScreen:(id)point {
@@ -121,6 +141,10 @@ static NSDictionary *jsiwJsMethods;
   return [sw isRectOffScreen:NSMakeRect(_point.x, _point.y, 0, 0)];
 }
 
+- (JSScreenWrapper *)screenr:(NSString *)ref {
+  return [self screenForRef:ref];
+}
+
 - (JSScreenWrapper *)screenForRef:(NSString *)ref {
   NSPoint tl = [aw getCurrentTopLeft];
   NSSize size = [aw getCurrentSize];
@@ -128,8 +152,16 @@ static NSDictionary *jsiwJsMethods;
   return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenRefId:ref windowRect:wRect] screenWrapper:sw];
 }
 
+- (NSInteger)screenc {
+  return [self screenCount];
+}
+
 - (NSInteger)screenCount {
   return [sw getScreenCount];
+}
+
+- (void)escreen:(id)func {
+  [self eachScreen:func];
 }
 
 - (void)eachScreen:(id)func {
@@ -152,13 +184,21 @@ static NSDictionary *jsiwJsMethods;
       NSStringFromSelector(@selector(app)): @"app",
       NSStringFromSelector(@selector(screen)): @"screen",
       NSStringFromSelector(@selector(eachApp:)): @"eachApp",
+      NSStringFromSelector(@selector(eapp:)): @"eapp",
       NSStringFromSelector(@selector(windowUnderPoint:)): @"windowUnderPoint",
+      NSStringFromSelector(@selector(wup:)): @"wup",
       NSStringFromSelector(@selector(isRectOffScreen:)): @"isRectOffScreen",
+      NSStringFromSelector(@selector(rectoff:)): @"rectoff",
       NSStringFromSelector(@selector(isPointOffScreen:)): @"isPointOffScreen",
+      NSStringFromSelector(@selector(pntoff:)): @"pntoff",
       NSStringFromSelector(@selector(screenForRef:)): @"screenForRef",
+      NSStringFromSelector(@selector(screenr:)): @"screenr",
       NSStringFromSelector(@selector(screenCount)): @"screenCount",
+      NSStringFromSelector(@selector(screenc:)): @"screenc",
       NSStringFromSelector(@selector(screenUnderPoint:)): @"screenUnderPoint",
+      NSStringFromSelector(@selector(sup:)): @"sup",
       NSStringFromSelector(@selector(eachScreen:)): @"eachScreen",
+      NSStringFromSelector(@selector(escreen:)): @"escreen",
       NSStringFromSelector(@selector(jsMethods)): @"jsMethods",
     };
   }
