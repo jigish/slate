@@ -175,7 +175,9 @@ static SlateConfig *_instance = nil;
   NSString *fileString;
   struct stat _stat;
   if ([file rangeOfString:SLASH].location != 0 && [file rangeOfString:TILDA].location != 0)
-    configFile = [[NSString stringWithFormat:@"~/%@", file] stringByExpandingTildeInPath];
+    configFile = [NSString stringWithFormat:@"~/%@", file];
+  if ([file rangeOfString:TILDA].location == 0)
+    configFile = [configFile stringByExpandingTildeInPath];
 
   int ret = stat([configFile cStringUsingEncoding:NSASCIIStringEncoding] , &_stat);
 
