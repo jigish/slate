@@ -79,6 +79,7 @@
 		47C4A2D11384F3E10066B6DE /* Operation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D01384F3E10066B6DE /* Operation.m */; };
 		47C4A2D41384F4A60066B6DE /* MoveOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D31384F4A60066B6DE /* MoveOperation.m */; };
 		47C4A2D71384F5DE0066B6DE /* ExpressionPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2D61384F5DE0066B6DE /* ExpressionPoint.m */; };
+		7B2A679C16BF8A7F0046D695 /* SlateConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2CA1384EA510066B6DE /* SlateConfig.m */; };
 		B3D087D0160577FB008A7FC6 /* status.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B3D087CF160577FB008A7FC6 /* status.pdf */; };
 /* End PBXBuildFile section */
 
@@ -716,6 +717,7 @@
 				3BA1BA62162DDFEF0026774E /* TestExpressionPoint.m in Sources */,
 				3BA1BA65162E01A30026774E /* TestStringTokenizer.m in Sources */,
 				3BA1BA6E162F51760026774E /* TestShellUtils.m in Sources */,
+				7B2A679C16BF8A7F0046D695 /* SlateConfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
