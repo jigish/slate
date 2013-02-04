@@ -182,10 +182,12 @@ static SlateConfig *_instance = nil;
   int ret = stat([configFile cStringUsingEncoding:NSASCIIStringEncoding] , &_stat);
 
   if (_stat.st_mode & S_IXUSR) {
+      NSLog(@"Trying to use executable config");
       NSTask *task = [ShellUtils run:configFile  args:[NSArray arrayWithObjects:nil] wait:YES path:nil];
       NSData *data = [[[task standardOutput] fileHandleForReading] readDataToEndOfFile];
       fileString = [[NSString alloc] initWithData: data encoding:NSUTF8StringEncoding];
   } else {
+      NSLog(@"Trying to use literal config");
       fileString = [NSString stringWithContentsOfFile:configFile encoding:NSUTF8StringEncoding error:nil];
   }
   return [self append:fileString];
