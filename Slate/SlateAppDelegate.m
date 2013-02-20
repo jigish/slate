@@ -232,7 +232,7 @@ static EventHandlerRef modifiersEvent;
         EventHotKeyRef myHotKeyRef;
         myHotKeyID.signature = *[[NSString stringWithFormat:@"hotkey%li",i] cStringUsingEncoding:NSASCIIStringEncoding];
         myHotKeyID.id = (UInt32)i;
-        RegisterEventHotKey([binding keyCode], 0, myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
+        RegisterEventHotKey([binding keyCode], [binding modifiers], myHotKeyID, GetEventMonitorTarget(), 0, &myHotKeyRef);
         [binding setHotKeyRef:myHotKeyRef];
         [[self currentModalHotKeyRefs] addObject:[NSValue valueWithPointer:myHotKeyRef]];
         i++;
