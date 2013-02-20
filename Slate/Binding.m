@@ -136,6 +136,9 @@ static NSDictionary *dictionary = nil;
           if (_theModalKey != nil) {
             if(theModalKey == nil) {
               theModalKey = _theModalKey;
+            } else {
+              SlateLogger(@"Fatal: Two modal keys (codes %@ and %@) found in binding \"%@\"", theModalKey, _theModalKey, keystroke);
+              @throw([NSException exceptionWithName:@"Two Modal Keys" reason:[NSString stringWithFormat:@"Duplicate modal keys (%@ and %@) found in binding \"%@\"", theModalKey, _theModalKey, keystroke] userInfo:nil]);
             }
           } else if(theModalKey != nil) {
             //Assume every modifier defined after a modal key to be a modifier for the modal key (to be pressed when entering modal mode) as opposed to the actual key
