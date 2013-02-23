@@ -147,13 +147,19 @@
   return [NSArray arrayWithObjects:OPT_X, OPT_Y, OPT_WIDTH, OPT_HEIGHT, nil];
 }
 
-- (void)parseOption:(NSString *)name value:(id)value {
+- (void)parseOption:(NSString *)name value:(id)val {
   // all options should be strings
-  if (value == nil) { return; }
-  if (![value isKindOfClass:[NSString class]]) {
-    @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, value] userInfo:nil]);
+  if (val == nil) { return; }
+  NSString *value = nil;
+  if ([val isKindOfClass:[NSString class]]) {
+    value = val;
+  } else if ([val isKindOfClass:[NSNumber class]]) {
+    value = [val stringValue];
+  } else {
+    @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, val] userInfo:nil]);
     return;
   }
+  [[self options] setValue:value forKey:name];
   if ([name isEqualToString:OPT_X]) {
     [[self topLeft] setX:value];
   } else if ([name isEqualToString:OPT_Y]) {
