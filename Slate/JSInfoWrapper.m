@@ -141,15 +141,23 @@ static NSDictionary *jsiwJsMethods;
   return [sw isRectOffScreen:NSMakeRect(_point.x, _point.y, 0, 0)];
 }
 
-- (JSScreenWrapper *)screenr:(NSString *)ref {
+- (JSScreenWrapper *)screenr:(id)ref {
   return [self screenForRef:ref];
 }
 
-- (JSScreenWrapper *)screenForRef:(NSString *)ref {
+- (JSScreenWrapper *)screenForRef:(id)ref {
+  NSString *stringRef = nil;
+  if ([ref isKindOfClass:[NSString class]]) {
+    stringRef = ref;
+  } else if ([ref isKindOfClass:[NSNumber class]]) {
+    stringRef = [ref stringValue];
+  } else {
+    return nil;
+  }
   NSPoint tl = [aw getCurrentTopLeft];
   NSSize size = [aw getCurrentSize];
   NSRect wRect = NSMakeRect(tl.x, tl.y, size.width, size.height);
-  return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenRefId:ref windowRect:wRect] screenWrapper:sw];
+  return [[JSScreenWrapper alloc] initWithScreenId:[sw getScreenRefId:stringRef windowRect:wRect] screenWrapper:sw];
 }
 
 - (NSInteger)screenc {
