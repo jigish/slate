@@ -42,11 +42,11 @@
   if ([direction isEqualToString:TOP_LEFT]) {
     [self setTopLeft:[[ExpressionPoint alloc] initWithX:@"screenOriginX" y:@"screenOriginY"]];
   } else if ([direction isEqualToString:TOP_RIGHT]) {
-    [self setTopLeft:[[ExpressionPoint alloc] initWithX:[@"screenOriginX+screenSizeX-" stringByAppendingString:[[self dimensions] x]] y:@"screenOriginY"]];
+    [self setTopLeft:[[ExpressionPoint alloc] initWithX:[NSString stringWithFormat:@"screenOriginX+screenSizeX-(%@)", [[self dimensions] x]] y:@"screenOriginY"]];
   } else if ([direction isEqualToString:BOTTOM_LEFT]) {
-    [self setTopLeft:[[ExpressionPoint alloc] initWithX:@"screenOriginX" y:[@"screenOriginY+screenSizeY-" stringByAppendingString:[[self dimensions] y]]]];
+    [self setTopLeft:[[ExpressionPoint alloc] initWithX:@"screenOriginX" y:[NSString stringWithFormat:@"screenOriginY+screenSizeY-(%@)", [[self dimensions] y]]]];
   } else if ([direction isEqualToString:BOTTOM_RIGHT]) {
-    [self setTopLeft:[[ExpressionPoint alloc] initWithX:[@"screenOriginX+screenSizeX-" stringByAppendingString:[[self dimensions] x]] y:[@"screenOriginY+screenSizeY-" stringByAppendingString:[[self dimensions] y]]]];
+    [self setTopLeft:[[ExpressionPoint alloc] initWithX:[NSString stringWithFormat:@"screenOriginX+screenSizeX-(%@)", [[self dimensions] x]] y:[NSString stringWithFormat:@"screenOriginY+screenSizeY-(%@)", [[self dimensions] y]]]];
   } else {
     SlateLogger(@"ERROR: Unrecognized corner '%@'", direction);
     @throw([NSException exceptionWithName:@"Unrecognized Corner" reason:[NSString stringWithFormat:@"Unrecognized corner '%@'", direction] userInfo:nil]);

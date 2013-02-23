@@ -61,7 +61,7 @@
       [self setDimensions:[[ExpressionPoint alloc] initWithX:@"screenSizeX" y:@"windowSizeY"]];
     } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
       NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      [self setTopLeft:[[ExpressionPoint alloc] initWithX:@"screenOriginX" y:[@"screenOriginY+screenSizeY-" stringByAppendingString:resizeExpression]]];
+      [self setTopLeft:[[ExpressionPoint alloc] initWithX:@"screenOriginX" y:[NSString stringWithFormat:@"screenOriginY+screenSizeY-(%@)", resizeExpression]]];
       [self setDimensions:[[ExpressionPoint alloc] initWithX:@"screenSizeX" y:resizeExpression]];
     } else if ([style isEqualToString:NONE]) {
       [self setTopLeft:[[ExpressionPoint alloc] initWithX:@"windowTopLeftX" y:@"screenOriginY+screenSizeY-windowSizeY"]];
@@ -93,7 +93,7 @@
       [self setDimensions:[[ExpressionPoint alloc] initWithX:@"windowSizeX" y:@"screenSizeY"]];
     } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
       NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      [self setTopLeft:[[ExpressionPoint alloc] initWithX:[@"screenOriginX+screenSizeX-" stringByAppendingString:resizeExpression] y:@"screenOriginY"]];
+      [self setTopLeft:[[ExpressionPoint alloc] initWithX:[NSString stringWithFormat:@"screenOriginX+screenSizeX-(%@)", resizeExpression] y:@"screenOriginY"]];
       [self setDimensions:[[ExpressionPoint alloc] initWithX:resizeExpression y:@"screenSizeY"]];
     } else if ([style isEqualToString:NONE]) {
       [self setTopLeft:[[ExpressionPoint alloc] initWithX:@"screenOriginX+screenSizeX-windowSizeX" y:@"windowTopLeftY"]];
