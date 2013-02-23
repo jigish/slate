@@ -185,8 +185,10 @@ static SlateConfig *_instance = nil;
   if ([configFile hasSuffix:EXT_JS]) {
     return [[JSController getInstance] loadConfigFileWithPath:configFile];
   }
-  NSString *fileString = [NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:nil];
-  return [self append:fileString];
+  NSError *err;
+  NSString *fileString = [NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:&err];
+  if (err == nil && fileString != nil && fileString != NULL) { return [self append:fileString]; }
+  return NO;
 }
 
 - (NSString *)stripComments:(NSString *)line {

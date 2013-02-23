@@ -86,11 +86,14 @@ static NSDictionary *jscJsMethods;
   return [self run:@"window._slate_callback(window._slate_callback_arg);"];
 }
 
-- (void)runFile:(NSString*)path {
-  NSString *fileString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-  if(fileString != NULL) {
+- (BOOL)runFile:(NSString*)path {
+  NSError *err;
+  NSString *fileString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&err];
+  if(err == nil && fileString != nil && fileString != NULL) {
     [self run:fileString];
+    return YES;
   }
+  return NO;
 }
 
 - (void)setInfo {
@@ -123,7 +126,7 @@ static NSDictionary *jscJsMethods;
 - (BOOL)loadConfigFileWithPath:(NSString *)path {
   [self initializeWebView];
   @try {
-    [self runFile:[path stringByExpandingTildeInPath]];
+    return [self runFile:[path stringByExpandingTildeInPath]];
   } @catch (NSException *ex) {
     SlateLogger(@"   ERROR %@",[ex name]);
     NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
@@ -133,9 +136,8 @@ static NSDictionary *jscJsMethods;
       SlateLogger(@"User selected exit");
       [NSApp terminate:nil];
     }
-    return NO;
   }
-  return YES;
+  return NO;
 }
 
 - (void)configFunction:(NSString *)key callback:(WebScriptObject *)callback {
