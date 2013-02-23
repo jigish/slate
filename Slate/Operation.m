@@ -146,7 +146,7 @@
   } else {
     [[JSInfoWrapper getInstance] setAw:aw];
   }
-  if (aw == nil) {
+  if (sw == nil) {
     [[JSInfoWrapper getInstance] setSw:[[ScreenWrapper alloc] init]];
   } else {
     [[JSInfoWrapper getInstance] setSw:sw];

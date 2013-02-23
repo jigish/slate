@@ -24,6 +24,7 @@
 #import "ScreenWrapper.h"
 #import "SlateLogger.h"
 #import "JSWindowWrapper.h"
+#import "JSInfoWrapper.h"
 
 @implementation JSOperation
 
@@ -49,6 +50,8 @@
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = YES;
   [self evalOptionsWithAccessibilityWrapper:aw screenWrapper:sw];
+  [[JSInfoWrapper getInstance] setSw:sw];
+  [[JSInfoWrapper getInstance] setAw:aw];
   JSWindowWrapper *window = nil;
   if (aw != nil && [aw inited]) window = [[JSWindowWrapper alloc] initWithAccessibilityWrapper:aw screenWrapper:sw];
   [[JSController getInstance] runFunction:[self function] withArg:window];
