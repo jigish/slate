@@ -118,6 +118,8 @@ Example:
 
     config defaultToCurrentScreen true
 
+**Note:** the `.slate` file is read top-down directives that come before `config` directives may not have the `config` applied. As such, it is best to put `config` directives at the top of your `.slate` file.
+
 ### The `alias` Directive ###
 
 The `alias` directive follows the following format:
