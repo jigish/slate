@@ -87,7 +87,7 @@
 
 + (NSString *)run:(NSString *)commandAndArgs wait:(BOOL)wait path:(NSString *)path {
   NSMutableArray *commandAndArgsTokens = [NSMutableArray array];
-  [StringTokenizer tokenize:commandAndArgs into:commandAndArgsTokens];
+  [StringTokenizer tokenize:commandAndArgs into:commandAndArgsTokens quoteChars:[NSCharacterSet characterSetWithCharactersInString:@"'\""]];
   if ([commandAndArgsTokens count] < 1) {
     SlateLogger(@"ERROR: Invalid Shell Parameter '%@'", commandAndArgs);
     @throw([NSException exceptionWithName:@"Invalid Shell Parameter" reason:[NSString stringWithFormat:@"Invalid Shell Parameter '%@'.", commandAndArgs] userInfo:nil]);
