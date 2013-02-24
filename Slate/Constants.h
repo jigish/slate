@@ -373,8 +373,3 @@ extern NSString *const OPT_TITLE_ORDER;
 extern NSString *const OPT_TITLE_ORDER_REGEX;
 extern NSString *const OPT_BEFORE;
 extern NSString *const OPT_AFTER;
-
-// Javascript Events
-extern NSString *const EVENT_SCREEN;
-extern NSString *const EVENT_APP;
-extern NSString *const EVENT_WINDOW;

@@ -325,7 +325,11 @@ static NSDictionary *jscJsMethods;
 }
 
 - (BOOL)isValidEvent:(NSString *)what {
-  return [EVENT_SCREEN isEqualToString:what] || [EVENT_APP isEqualToString:what] || [EVENT_WINDOW isEqualToString:what];
+  return [what isEqualToString:@"windowClosed"] || [what isEqualToString:@"windowMoved"] || [what isEqualToString:@"windowResized"] ||
+         [what isEqualToString:@"windowOpened"] || [what isEqualToString:@"windowFocused"] || [what isEqualToString:@"windowTitleChanged"] ||
+         [what isEqualToString:@"appClosed"] || [what isEqualToString:@"appOpened"] || [what isEqualToString:@"appHidden"] ||
+         [what isEqualToString:@"appUnhidden"] || [what isEqualToString:@"appDeactivated"] || [what isEqualToString:@"appActivated"] ||
+         [what isEqualToString:@"screenConfigurationChanged"];
 }
 
 - (void)on:(NSString *)what do:(WebScriptObject *)callback {
@@ -339,6 +343,11 @@ static NSDictionary *jscJsMethods;
       [NSApp terminate:nil];
     }
   }
+  if ([what isEqualToString:@"windowMoved"]) {
+    [[SlateConfig getInstance] setConfig:JS_RECEIVE_MOVE_EVENT to:@"true"];
+  } else if ([what isEqualToString:@"windowResized"]) {
+    [[SlateConfig getInstance] setConfig:JS_RECEIVE_RESIZE_EVENT to:@"true"];
+  }
   NSMutableArray *callbacks = [[self eventCallbacks] objectForKey:what];
   if (callbacks == nil) {
     callbacks = [NSMutableArray array];
@@ -347,11 +356,11 @@ static NSDictionary *jscJsMethods;
   [callbacks addObject:callback];
 }
 
-- (void)runCallbacks:(NSString *)what event:(NSString *)event payload:(id)payload {
+- (void)runCallbacks:(NSString *)what payload:(id)payload {
   NSArray *callbacks = [[self eventCallbacks] objectForKey:what];
   if (callbacks == nil || [callbacks count] == 0) { return; }
   for (WebScriptObject *callback in callbacks) {
-    [self runFunction:callback withArg:event secondArg:payload];
+    [self runFunction:callback withArg:what secondArg:payload];
   }
 }
 

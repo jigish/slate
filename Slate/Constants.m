@@ -373,8 +373,3 @@ NSString *const OPT_TITLE_ORDER = @"title-order";
 NSString *const OPT_TITLE_ORDER_REGEX = @"title-order-regex";
 NSString *const OPT_BEFORE = @"_before_";
 NSString *const OPT_AFTER = @"_after_";
-
-// Javascript Events
-NSString *const EVENT_SCREEN = @"screen";
-NSString *const EVENT_APP = @"app";
-NSString *const EVENT_WINDOW = @"window";

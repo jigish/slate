@@ -55,6 +55,7 @@
 - (BOOL)append:(NSString *)configString;
 - (BOOL)loadSnapshots;
 - (BOOL)getBoolConfig:(NSString *)key;
+- (void)setConfig:(NSString *)key to:(NSString *)value;
 - (NSInteger)getIntegerConfig:(NSString *)key;
 - (double)getDoubleConfig:(NSString *)key;
 - (float)getFloatConfig:(NSString *)key;

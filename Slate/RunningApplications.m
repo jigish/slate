@@ -45,41 +45,31 @@ static RunningApplications *_instance = nil;
   return [app activationPolicy] == NSApplicationActivationPolicyRegular;
 }
 
-static NSString *prettyifyEventName(NSString *event) {
-  if ([event isEqualToString:[NSString stringWithFormat:@"%@", kAXUIElementDestroyedNotification]]) {
-    return @"killed";
-  } else if ([event isEqualToString:[NSString stringWithFormat:@"%@", kAXMovedNotification]]) {
-    return @"moved";
-  } else if ([event isEqualToString:[NSString stringWithFormat:@"%@", kAXResizedNotification]]) {
-    return @"resized";
-  } else if ([event isEqualToString:[NSString stringWithFormat:@"%@", kAXWindowCreatedNotification]]) {
-    return @"created";
-  } else if ([event isEqualToString:[NSString stringWithFormat:@"%@", kAXFocusedWindowChangedNotification]]) {
-    return @"focused";
-  } else if ([event isEqualToString:[NSString stringWithFormat:@"%@", kAXTitleChangedNotification]]) {
-    return @"title";
-  } else if ([event isEqualToString:NSWorkspaceDidTerminateApplicationNotification]) {
-    return @"killed";
-  } else if ([event isEqualToString:NSWorkspaceDidLaunchApplicationNotification]) {
-    return @"launched";
-  } else if ([event isEqualToString:NSWorkspaceDidHideApplicationNotification]) {
-    return @"hidden";
-  } else if ([event isEqualToString:NSWorkspaceDidUnhideApplicationNotification]) {
-    return @"unhidden";
-  } else if ([event isEqualToString:NSWorkspaceDidDeactivateApplicationNotification]) {
-    return @"deactivated";
-  } else if ([event isEqualToString:NSWorkspaceDidActivateApplicationNotification]) {
-    return @"activated";
-  }
+static NSDictionary *eventNameDict = nil;
 
-  return @"";
+static NSString *prettyifyEventName(NSString *event) {
+  if (eventNameDict == nil) {
+    eventNameDict = [NSDictionary dictionaryWithObjectsAndKeys:@"windowClosed", [NSString stringWithFormat:@"%@", kAXUIElementDestroyedNotification],
+                                                               @"windowMoved", [NSString stringWithFormat:@"%@", kAXMovedNotification],
+                                                               @"windowResized", [NSString stringWithFormat:@"%@", kAXResizedNotification],
+                                                               @"windowOpened", [NSString stringWithFormat:@"%@", kAXWindowCreatedNotification],
+                                                               @"windowFocused", [NSString stringWithFormat:@"%@", kAXFocusedWindowChangedNotification],
+                                                               @"windowTitleChanged", [NSString stringWithFormat:@"%@", kAXTitleChangedNotification],
+                                                               @"appClosed", NSWorkspaceDidTerminateApplicationNotification,
+                                                               @"appOpened", NSWorkspaceDidLaunchApplicationNotification,
+                                                               @"appHidden", NSWorkspaceDidHideApplicationNotification,
+                                                               @"appUnhidden", NSWorkspaceDidUnhideApplicationNotification,
+                                                               @"appActivated", NSWorkspaceDidActivateApplicationNotification,
+                                                               @"appDeactivated", NSWorkspaceDidDeactivateApplicationNotification, nil];
+  }
+  return [eventNameDict objectForKey:event];
 }
 
 static void runWindowJSCallbacks(AXUIElementRef element, CFStringRef notification) {
   // Run any js callbacks
   AccessibilityWrapper *openedWindow = [[AccessibilityWrapper alloc] initWithApp:[AccessibilityWrapper applicationForElement:element] window:element];
-  [[JSController getInstance] runCallbacks:EVENT_WINDOW
-                                     event:prettyifyEventName([NSString stringWithFormat:@"%@", notification])
+  NSString *eventName = prettyifyEventName([NSString stringWithFormat:@"%@", notification]);
+  [[JSController getInstance] runCallbacks:eventName
                                    payload:[[JSWindowWrapper alloc] initWithAccessibilityWrapper:openedWindow screenWrapper:[[ScreenWrapper alloc] init]]];
 }
 
@@ -93,8 +83,8 @@ static void windowChanged(AXObserverRef observer, AXUIElementRef element, CFStri
     AXObserverRemoveNotification(observer, element, kAXResizedNotification);
     [ref pruneWindows];
   }
-  [[JSController getInstance] runCallbacks:EVENT_WINDOW
-                                     event:prettyifyEventName([NSString stringWithFormat:@"%@", notification])
+  NSString *eventName = prettyifyEventName([NSString stringWithFormat:@"%@", notification]);
+  [[JSController getInstance] runCallbacks:eventName
                                    payload:[[JSApplicationWrapper alloc] initWithRunningApplication:[NSRunningApplication runningApplicationWithProcessIdentifier:[AccessibilityWrapper processIdentifierOfUIElement:element]] screenWrapper:[[ScreenWrapper alloc] init]]];
 }
 
@@ -433,17 +423,17 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   if ([[activatedApp localizedName] isEqualToString:@"Slate"]) return;
   [self bringAppToFront:activatedApp];
   [self pruneWindows];
-  [[JSController getInstance] runCallbacks:EVENT_APP
-                                     event:prettyifyEventName([notification name])
+  NSString *eventName = prettyifyEventName([notification name]);
+  [[JSController getInstance] runCallbacks:eventName
                                    payload:[[JSApplicationWrapper alloc] initWithRunningApplication:activatedApp screenWrapper:[[ScreenWrapper alloc] init]]];
 }
 
 - (void)applicationDeactivated:(id)notification {
   SlateLogger(@"Deactivated: %@", [notification name]);
-  NSRunningApplication *activatedApp = [[notification userInfo] objectForKey:NSWorkspaceApplicationKey];
-  [[JSController getInstance] runCallbacks:EVENT_APP
-                                     event:prettyifyEventName([notification name])
-                                   payload:[[JSApplicationWrapper alloc] initWithRunningApplication:activatedApp screenWrapper:[[ScreenWrapper alloc] init]]];
+  NSRunningApplication *deactivatedApp = [[notification userInfo] objectForKey:NSWorkspaceApplicationKey];
+  NSString *eventName = prettyifyEventName([notification name]);
+  [[JSController getInstance] runCallbacks:eventName
+                                   payload:[[JSApplicationWrapper alloc] initWithRunningApplication:deactivatedApp screenWrapper:[[ScreenWrapper alloc] init]]];
 }
 
 - (void)applicationLaunched:(id)notification {
@@ -498,8 +488,8 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   }
   [self bringAppToFront:launchedApp];
   [self pruneWindows];
-  [[JSController getInstance] runCallbacks:EVENT_APP
-                                     event:prettyifyEventName([notification name])
+  NSString *eventName = prettyifyEventName([notification name]);
+  [[JSController getInstance] runCallbacks:eventName
                                    payload:[[JSApplicationWrapper alloc] initWithRunningApplication:launchedApp screenWrapper:[[ScreenWrapper alloc] init]]];
 }
 
@@ -516,8 +506,8 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   [pidToObserver removeObjectForKey:[NSNumber numberWithInteger:[app processIdentifier]]];
   [self pruneWindows];
   [self bringAppToFront:[self currentApplication]];
-  [[JSController getInstance] runCallbacks:EVENT_APP
-                                     event:prettyifyEventName([notification name])
+  NSString *eventName = prettyifyEventName([notification name]);
+  [[JSController getInstance] runCallbacks:eventName
                                    payload:[[JSApplicationWrapper alloc] initWithRunningApplication:app screenWrapper:[[ScreenWrapper alloc] init]]];
 }
 

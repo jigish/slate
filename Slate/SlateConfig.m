@@ -109,6 +109,10 @@ static SlateConfig *_instance = nil;
   return c;
 }
 
+- (void)setConfig:(NSString *)key to:(NSString *)value {
+  [configs setObject:value forKey:key];
+}
+
 - (NSString *)getConfigDefault:(NSString *)key {
   return [configDefaults objectForKey:key];
 }
@@ -469,7 +473,7 @@ static SlateConfig *_instance = nil;
   SlateLogger(@"onScreenChange");
   if (![ScreenWrapper hasScreenConfigChanged]) return;
   [self checkDefaults];
-  [[JSController getInstance] runCallbacks:EVENT_SCREEN event:@"screenConfigurationChanged" payload:nil];
+  [[JSController getInstance] runCallbacks:@"screenConfigurationChanged" payload:nil];
 }
 
 - (NSDictionary *)snapshotsToDictionary {

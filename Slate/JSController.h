@@ -32,7 +32,7 @@
 @property NSMutableDictionary *eventCallbacks;
 
 - (BOOL)loadConfigFileWithPath:(NSString *)path;
-- (void)runCallbacks:(NSString *)what event:(NSString *)event payload:(id)payload;
+- (void)runCallbacks:(NSString *)what payload:(id)payload;
 - (NSString *)addCallableFunction:(WebScriptObject *)function;
 - (id)runCallableFunction:(NSString *)key;
 - (id)runFunction:(WebScriptObject*)function;
