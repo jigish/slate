@@ -32,6 +32,7 @@
 @implementation JSController
 
 @synthesize functions;
+@synthesize eventCallbacks;
 
 static JSController *_instance = nil;
 static NSDictionary *jscJsMethods;
@@ -41,6 +42,7 @@ static NSDictionary *jscJsMethods;
   if (self) {
     inited = NO;
     self.functions = [NSMutableDictionary dictionary];
+    self.eventCallbacks = [NSMutableDictionary dictionary];
     webView = [[WebView alloc] init];
     [JSController setJsMethods];
   }
@@ -84,6 +86,13 @@ static NSDictionary *jscJsMethods;
   [scriptObject setValue:function forKey:@"_slate_callback"];
   [scriptObject setValue:arg forKey:@"_slate_callback_arg"];
   return [self run:@"window._slate_callback(window._slate_callback_arg);"];
+}
+
+- (id)runFunction:(WebScriptObject *)function withArg:(id)arg secondArg:(id)arg2 {
+  [scriptObject setValue:function forKey:@"_slate_callback"];
+  [scriptObject setValue:arg forKey:@"_slate_callback_arg"];
+  [scriptObject setValue:arg2 forKey:@"_slate_callback_arg2"];
+  return [self run:@"window._slate_callback(window._slate_callback_arg, window._slate_callback_arg2);"];
 }
 
 - (BOOL)runFile:(NSString*)path {
@@ -311,8 +320,39 @@ static NSDictionary *jscJsMethods;
   return [[SlateConfig getInstance] loadConfigFileWithPath:path];
 }
 
-- (void)log:(NSString *)msg {
+- (void)log:(id)msg {
   NSLog(@"%@", msg);
+}
+
+- (BOOL)isValidEvent:(NSString *)what {
+  return [EVENT_SCREEN isEqualToString:what] || [EVENT_APP isEqualToString:what] || [EVENT_WINDOW isEqualToString:what];
+}
+
+- (void)on:(NSString *)what do:(WebScriptObject *)callback {
+  if (![self isValidEvent:what]) {
+    SlateLogger(@"   ERROR: Invalid Event %@",what);
+    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];
+    [alert setMessageText:@"ERROR: Invalid Event"];
+    [alert setInformativeText:what];
+    if ([alert runModal] == NSAlertFirstButtonReturn) {
+      SlateLogger(@"User selected exit");
+      [NSApp terminate:nil];
+    }
+  }
+  NSMutableArray *callbacks = [[self eventCallbacks] objectForKey:what];
+  if (callbacks == nil) {
+    callbacks = [NSMutableArray array];
+    [[self eventCallbacks] setObject:callbacks forKey:what];
+  }
+  [callbacks addObject:callback];
+}
+
+- (void)runCallbacks:(NSString *)what event:(NSString *)event payload:(id)payload {
+  NSArray *callbacks = [[self eventCallbacks] objectForKey:what];
+  if (callbacks == nil || [callbacks count] == 0) { return; }
+  for (WebScriptObject *callback in callbacks) {
+    [self runFunction:callback withArg:event secondArg:payload];
+  }
 }
 
 - (WebScriptObject *)getJsArray:(NSArray *)arr {
@@ -455,6 +495,7 @@ static NSDictionary *jscJsMethods;
     NSStringFromSelector(@selector(layout:hash:)): @"layout",
     NSStringFromSelector(@selector(default:toAction:)): @"default",
     NSStringFromSelector(@selector(shell:wait:path:)): @"shell",
+    NSStringFromSelector(@selector(on:do:)): @"on",
   };
 }
 

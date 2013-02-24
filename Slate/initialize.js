@@ -111,6 +111,16 @@
         throw "wait should be a boolean, was: "+wait;
       }
       return _controller.shell(commandAndArgs, wait, path);
+    },
+
+    on : function(what, callback) {
+      if (!_.isString(what)) {
+        throw "on failed, first parameter must be a string. was: "+what;
+      }
+      if (!_.isFunction(callback)) {
+        throw "on failed, second parameter must be a function. was: "+callback;
+      }
+      return _controller.on(what, callback);
     }
   };
 

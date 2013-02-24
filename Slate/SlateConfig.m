@@ -35,6 +35,7 @@
 #import "ActivateSnapshotOperation.h"
 #import "JSController.h"
 #import "Operation.h"
+#import "JSScreenWrapper.h"
 
 @implementation SlateConfig
 
@@ -468,6 +469,7 @@ static SlateConfig *_instance = nil;
   SlateLogger(@"onScreenChange");
   if (![ScreenWrapper hasScreenConfigChanged]) return;
   [self checkDefaults];
+  [[JSController getInstance] runCallbacks:EVENT_SCREEN event:@"screenConfigurationChanged" payload:nil];
 }
 
 - (NSDictionary *)snapshotsToDictionary {
@@ -591,6 +593,8 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:UNDO_MAX_STACK_SIZE_DEFAULT forKey:UNDO_MAX_STACK_SIZE];
   [configDefaults setObject:UNDO_OPS_DEFAULT forKey:UNDO_OPS];
   [configDefaults setObject:MODAL_ESCAPE_KEY_DEFAULT forKey:MODAL_ESCAPE_KEY];
+  [configDefaults setObject:JS_RECEIVE_MOVE_EVENT_DEFAULT forKey:JS_RECEIVE_MOVE_EVENT];
+  [configDefaults setObject:JS_RECEIVE_RESIZE_EVENT_DEFAULT forKey:JS_RECEIVE_RESIZE_EVENT];
   [self setConfigs:[NSMutableDictionary dictionary]];
   [self setAppConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];

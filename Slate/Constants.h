@@ -156,6 +156,10 @@ extern NSString *const LAYOUT_FOCUS_ON_ACTIVATE;
 extern NSString *const LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT;
 extern NSString *const MODAL_ESCAPE_KEY;
 extern NSString *const MODAL_ESCAPE_KEY_DEFAULT;
+extern NSString *const JS_RECEIVE_MOVE_EVENT;
+extern NSString *const JS_RECEIVE_MOVE_EVENT_DEFAULT;
+extern NSString *const JS_RECEIVE_RESIZE_EVENT;
+extern NSString *const JS_RECEIVE_RESIZE_EVENT_DEFAULT;
 
 // Application Option Keys
 extern NSString *const IGNORE_FAIL;
@@ -369,3 +373,8 @@ extern NSString *const OPT_TITLE_ORDER;
 extern NSString *const OPT_TITLE_ORDER_REGEX;
 extern NSString *const OPT_BEFORE;
 extern NSString *const OPT_AFTER;
+
+// Javascript Events
+extern NSString *const EVENT_SCREEN;
+extern NSString *const EVENT_APP;
+extern NSString *const EVENT_WINDOW;

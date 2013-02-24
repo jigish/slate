@@ -26,10 +26,13 @@
   WebScriptObject *scriptObject;
   NSMutableDictionary *functions;
   BOOL inited;
+  NSMutableDictionary *eventCallbacks;
 }
 @property NSMutableDictionary *functions;
+@property NSMutableDictionary *eventCallbacks;
 
 - (BOOL)loadConfigFileWithPath:(NSString *)path;
+- (void)runCallbacks:(NSString *)what event:(NSString *)event payload:(id)payload;
 - (NSString *)addCallableFunction:(WebScriptObject *)function;
 - (id)runCallableFunction:(NSString *)key;
 - (id)runFunction:(WebScriptObject*)function;

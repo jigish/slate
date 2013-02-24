@@ -156,6 +156,10 @@ NSString *const LAYOUT_FOCUS_ON_ACTIVATE = @"layoutFocusOnActivate";
 NSString *const LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT = @"false";
 NSString *const MODAL_ESCAPE_KEY = @"modalEscapeKey";
 NSString *const MODAL_ESCAPE_KEY_DEFAULT = @"";
+NSString *const JS_RECEIVE_MOVE_EVENT = @"jsReceiveMoveEvent";
+NSString *const JS_RECEIVE_MOVE_EVENT_DEFAULT = @"false";
+NSString *const JS_RECEIVE_RESIZE_EVENT = @"jsReceiveResizeEvent";
+NSString *const JS_RECEIVE_RESIZE_EVENT_DEFAULT = @"false";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";
@@ -369,3 +373,8 @@ NSString *const OPT_TITLE_ORDER = @"title-order";
 NSString *const OPT_TITLE_ORDER_REGEX = @"title-order-regex";
 NSString *const OPT_BEFORE = @"_before_";
 NSString *const OPT_AFTER = @"_after_";
+
+// Javascript Events
+NSString *const EVENT_SCREEN = @"screen";
+NSString *const EVENT_APP = @"app";
+NSString *const EVENT_WINDOW = @"window";
