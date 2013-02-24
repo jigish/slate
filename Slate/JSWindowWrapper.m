@@ -183,7 +183,7 @@ static NSDictionary *jswwJsMethods;
       NSStringFromSelector(@selector(resize:)): @"resize",
       NSStringFromSelector(@selector(screen)): @"screen",
       NSStringFromSelector(@selector(doOperation:options:)): @"doOperation",
-      NSStringFromSelector(@selector(doop:opts:)): @"doop",
+      NSStringFromSelector(@selector(doop:options:)): @"doop",
       NSStringFromSelector(@selector(app)): @"app",
     };
   }
