@@ -1,4 +1,18 @@
-Current Version: 1.0.24
+Current Version: 1.0.25
+
+----------------- 1.0.25 ----------------
+
+Updates to javascript configs
+- Issue #239 - add events and event listeners
+- Issue #252 - allow for integers in screenForRef
+- Issue #241 - fix order of operations related issues in corner operation
+- Issue #233 - allow numbers in options for move based operations
+- fix doop on window object
+- fix screenCount
+Issue #240 - add link to about page
+Issue #250 - load default config file properly
+Merge Pull Request #248 - fix undo for move based operations
+Merge Pull Request #253 - allow quoted arguments in shell operation
 
 ----------------- 1.0.24 ----------------
 
