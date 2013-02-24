@@ -45,4 +45,12 @@
   STAssertEquals([task terminationStatus], 15, @"Status should be 15");
 }
 
+- (void)testRunWithQuotedArgs {
+  NSString *result = [ShellUtils run:@"/bin/echo 'with single' \"and double quotes\"" wait:YES path:@"/"];
+  NSError *err = nil;
+  NSRegularExpression *testRegex = [NSRegularExpression regularExpressionWithPattern:@"with single and double quotes" options:0 error:&err];
+  int found = [testRegex numberOfMatchesInString:result options:0 range:NSMakeRange(0, [result length])];
+  STAssertEquals(found, 1, @"Result should include all strings");
+}
+
 @end
