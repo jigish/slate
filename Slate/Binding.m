@@ -34,6 +34,7 @@
 @synthesize keyCode;
 @synthesize modifiers;
 @synthesize modalKey;
+@synthesize modalModifiers;
 @synthesize hotKeyRef;
 @synthesize repeat;
 @synthesize toggle;
@@ -113,6 +114,7 @@ static NSDictionary *dictionary = nil;
 + (NSArray *)getKeystrokeFromString:(NSString *)keystroke {
   NSNumber *theKeyCode = [NSNumber numberWithUnsignedInt:0];
   UInt32 theModifiers = 0;
+  UInt32 theModalModifiers = 0;
   NSNumber *theModalKey = nil;
   NSArray *keyAndModifiers = [keystroke componentsSeparatedByString:COLON];
   if ([keyAndModifiers count] >= 1) {
@@ -132,7 +134,15 @@ static NSDictionary *dictionary = nil;
         while (mod) {
           NSNumber *_theModalKey = [[Binding asciiToCodeDict] objectForKey:mod];
           if (_theModalKey != nil) {
-            theModalKey = _theModalKey;
+            if(theModalKey == nil) {
+              theModalKey = _theModalKey;
+            } else {
+              SlateLogger(@"Fatal: Two modal keys (codes %@ and %@) found in binding \"%@\"", theModalKey, _theModalKey, keystroke);
+              @throw([NSException exceptionWithName:@"Two Modal Keys" reason:[NSString stringWithFormat:@"Duplicate modal keys (%@ and %@) found in binding \"%@\"", theModalKey, _theModalKey, keystroke] userInfo:nil]);
+            }
+          } else if(theModalKey != nil) {
+            //Assume every modifier defined after a modal key to be a modifier for the modal key (to be pressed when entering modal mode) as opposed to the actual key
+            theModalModifiers = [Binding modifierFromString:mod];
           } else {
             theModifiers += [Binding modifierFromString:mod];
           }
@@ -141,7 +151,7 @@ static NSDictionary *dictionary = nil;
       }
     }
   }
-  return [NSArray arrayWithObjects:theKeyCode, [NSNumber numberWithInteger:theModifiers], theModalKey, nil];
+  return [NSArray arrayWithObjects:theKeyCode, [NSNumber numberWithInteger:theModifiers], theModalKey, [NSNumber numberWithInteger:theModalModifiers], nil];
 }
 
 - (void)setKeystrokeFromString:(NSString*)keystroke {
@@ -151,7 +161,8 @@ static NSDictionary *dictionary = nil;
     keyCode = [[keyarr objectAtIndex:0] unsignedIntValue];
     modifiers = [[keyarr objectAtIndex:1] unsignedIntValue];
     if ([keyarr count] >= 3 ) {
-      [self setModalKey:[keyarr objectAtIndex:2]];
+      self.modalKey = [keyarr objectAtIndex:2];
+      modalModifiers = [[keyarr objectAtIndex:3] unsignedIntValue];
     }
   }
   if ([modalAndKey count] >= 3){ // modal toggle
@@ -211,7 +222,7 @@ static NSDictionary *dictionary = nil;
   if ([self modalKey] == nil) {
     return nil;
   }
-  return [NSString stringWithFormat:@"%@%@%u", [self modalKey], PLUS, [self modifiers]];
+  return [NSString stringWithFormat:@"%@%@%u", [self modalKey], PLUS, [self modalModifiers]];
 }
 
 + (NSArray *)modalHashKeyToKeyAndModifiers:(NSString *)modalHashKey {

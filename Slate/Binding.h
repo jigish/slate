@@ -29,6 +29,7 @@
   UInt32 keyCode;
   UInt32 modifiers;
   NSNumber *modalKey;
+  UInt32 modalModifiers;
   EventHotKeyRef hotKeyRef;
   BOOL repeat;
   BOOL toggle;
@@ -38,6 +39,7 @@
 @property (assign) UInt32 keyCode;
 @property (assign) UInt32 modifiers;
 @property NSNumber *modalKey;
+@property (assign) UInt32 modalModifiers;
 @property (assign) EventHotKeyRef hotKeyRef;
 @property (assign) BOOL repeat;
 @property (assign) BOOL toggle;

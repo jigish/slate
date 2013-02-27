@@ -220,11 +220,17 @@ The `bind` directive follows one of the following formats (tokens may be separat
 
 #### Modal Key ####
 
-`modal-key` is any one of the Allowed Keys. If using a `modal-key`, pressing that key will cause the Slate menu bar icon to change indicating modal mode is activated. then clicking `key` will activate the binding. Modal mode will remain active until `key` has been pressed or `modal-key` is pressed again. You may specify multiple bindings with the same `modal-key` as long as `key` is different. Also, `modal-key` can accompany a comma or semicolon separated list of modifier keys listed above. This will cause that entire keystroke to be considered the modal activation binding. For example: `bind 1:f4,ctrl,alt` will result in the modal keystroke being `ctrl+alt+f4`. After pressing that keystroke, modal mode will be activated and pressing `1` after that will activate the binding.
+`modal-key` is any one of the Allowed Keys. If using a `modal-key`, pressing that key will cause the Slate menu bar icon to change indicating modal mode is activated. then clicking `key` will activate the binding. Modal mode will remain active until `key` has been pressed or `modal-key` is pressed again.
+
+You may specify multiple bindings with the same `modal-key` as long as `key` is different.
+
+Also, `modal-key` can accompany a comma or semicolon separated list of modifier keys (listed above). These modifier keys can either precede the `modal-key` (in which case they will apply to the `key` itself, in modal mode) or they can follow the `modal-key` (which will cause the entire keystroke, including modifiers, to be the modal activation binding).
+
+For example: `bind 1:f4,ctrl,alt` will result in the modal keystroke being `ctrl+alt+f4`. After pressing that keystroke, modal mode will be activated and pressing `1` after that will activate the binding, whereas `bind 1:ctrl,f4,alt` will result in the modal mode being activated with `alt+f4` and the action being triggered with `ctrl+1` (while modal mode is active).
 
 ##### Modal Toggle Behavior #####
 
-If you add `:toggle` to the end of a modal binding it will cause that binding to not end the modal mode. For example with the binding `1:ctrl,f4`, you press `ctrl+f4` and then press `1` to activate the binding. Once that binding is activated, modal mode will end and you have to press `ctrl+f4` again to activate it. However, with the binding `1:ctrl,f4:toggle` pressing `ctrl+f4` will toggle modal mode. pressing `1` will activate the binding but not end modal mode. To end modal mode, press `ctrl+f4` again or use the config `modalEscapeKey`.
+If you add `:toggle` to the end of a modal binding it will cause that binding to not end the modal mode. For example with the binding `1:ctrl,f4`, you press `f4` and then press `ctrl+1` to activate the binding. Once that binding is activated, modal mode will end and you have to press `f4` again to activate it. However, with the binding `1:ctrl,f4:toggle` pressing `f4` will toggle modal mode. pressing `ctrl+1` will activate the binding but not end modal mode. To end modal mode, press `f4` again or use the config `modalEscapeKey`.
 
 #### Operation ####
 
