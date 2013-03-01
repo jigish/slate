@@ -80,7 +80,7 @@
       @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", name, value] userInfo:nil]);
     }
     NSMutableArray *commandAndArgsTokens = [NSMutableArray array];
-    [StringTokenizer tokenize:value into:commandAndArgsTokens];
+    [StringTokenizer tokenize:value into:commandAndArgsTokens quoteChars:[NSCharacterSet characterSetWithCharactersInString:QUOTES]];
     if ([commandAndArgsTokens count] < 1) {
       SlateLogger(@"ERROR: Invalid Shell Parameter '%@'", value);
       @throw([NSException exceptionWithName:@"Invalid Shell Parameter" reason:[NSString stringWithFormat:@"Invalid Shell Parameter '%@'.", value] userInfo:nil]);
