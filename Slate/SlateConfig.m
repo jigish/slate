@@ -109,6 +109,24 @@ static SlateConfig *_instance = nil;
   return c;
 }
 
+- (NSString *)getConfig:(NSString * const)key forWindow:(id)window {
+	// Look up the setting from the config dictionary
+	NSString* setting = [configs objectForKey:key];
+
+	// If this setting is a javascript setting, then allow special javascript calculations
+	if([setting hasPrefix:@"_javascript_::"]) {
+		// Get the name of the function by stripping the leading _javascript_:: tag from it
+		NSString *functionKey = [setting substringFromIndex:14];
+		// At this point we're assuming the string is a function, so run it (passing the window as a parameter)
+		id result = [[JSController getInstance] runCallableFunction:functionKey withArgument:window];
+		// Convert the return value to a string for returning
+		setting = [NSString stringWithFormat:@"%@", result];
+	}
+
+	// Return the value as it currently exists
+	return setting;
+}
+
 - (void)setConfig:(NSString *)key to:(NSString *)value {
   [configs setObject:value forKey:key];
 }

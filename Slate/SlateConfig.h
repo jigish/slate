@@ -60,6 +60,19 @@
 - (double)getDoubleConfig:(NSString *)key;
 - (float)getFloatConfig:(NSString *)key;
 - (NSString *)getConfig:(NSString *)key;
+/*!
+ * Allows for window-specific configurations
+ *
+ * This method will load a configuration value just like getConfig. However, it will inject window into the JavaScript
+ * context prior to evaluating configuration properties. This allows you to make a configuration property a function
+ * that returns different values depending on the window that is active at the time.
+ *
+ * @param getConfig The name of the configuration value to look up
+ * @param forWindow The window for which to return configuration values
+ *
+ * @return          The value of the configuration parameter as a string
+ */
+- (NSString *)getConfig:(NSString * const)key forWindow:(id)window;
 - (NSString *)getConfigDefault:(NSString *)key;
 - (NSString *)getConfig:(NSString *)key app:(NSString *)app;
 - (NSArray *)getArrayConfig:(NSString *)key;
