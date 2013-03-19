@@ -31,6 +31,7 @@
 #import "SlateLogger.h"
 #import "ExpressionPoint.h"
 #import "RunningApplications.h"
+#import "JSWindowWrapper.h"
 
 @implementation HintOperation
 
@@ -117,8 +118,11 @@ static const UInt32 ESC_HINT_ID = 10001;
   // now need to flip y coord
   tl.y = [screen frame].size.height - ([sw isMainScreen:screenId] ? MAIN_MENU_HEIGHT : 0) - tl.y;
   NSMutableDictionary *values = [[sw getScreenAndWindowValues:screenId window:NSMakeRect(tl.x, tl.y, wSize.width, wSize.height) newSize:wSize] mutableCopy];
-  float whHeight = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_HEIGHT] withDict:values];
-  float whWidth = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_WIDTH] withDict:values];
+  // Wrap the window in a JSWindowWrapper so that we can pass to the slate config loader so that the window settings
+  // can respond to the current window being overlayed
+  JSWindowWrapper *window = [[JSWindowWrapper alloc] initWithAccessibilityWrapper:aw screenWrapper:sw];
+  float whHeight = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_HEIGHT forWindow:window] withDict:values];
+  float whWidth = [ExpressionPoint expToFloat:[[SlateConfig getInstance] getConfig:WINDOW_HINTS_WIDTH forWindow:window] withDict:values];
   [values setObject:[NSNumber numberWithFloat:whWidth] forKey:WINDOW_HINTS_WIDTH];
   [values setObject:[NSNumber numberWithFloat:whHeight] forKey:WINDOW_HINTS_HEIGHT];
   // these two arrays are guarenteed to be the same size because of testOperation

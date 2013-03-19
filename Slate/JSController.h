@@ -35,6 +35,19 @@
 - (void)runCallbacks:(NSString *)what payload:(id)payload;
 - (NSString *)addCallableFunction:(WebScriptObject *)function;
 - (id)runCallableFunction:(NSString *)key;
+/**
+ * Run a function by name passing in an argument
+ *
+ * This method looks up a function by name, then runs it and passes argument as the first (and only) argument to the
+ * function. This method will return the value returned by the function. If the function cannot be found by name, then
+ * this function will return nil.
+ *
+ * @param runCallableFunction The name of the function to run
+ * @param withArgument        The argument to pass into the function as the first parameter
+ *
+ * @return                    The return value of the function, or nil if the function cannot be found.
+ */
+- (id)runCallableFunction:(NSString *)functionName withArgument:(id)argument;
 - (id)runFunction:(WebScriptObject*)function;
 - (id)runFunction:(WebScriptObject *)function withArg:(id)arg;
 - (id)unmarshall:(id)obj;

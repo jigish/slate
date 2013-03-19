@@ -77,6 +77,15 @@ static NSDictionary *jscJsMethods;
   return [self runFunction:func];
 }
 
+- (id)runCallableFunction:(NSString *)functionName withArgument:(id)argument {
+	// Find the function by name
+	WebScriptObject *function = [functions objectForKey:functionName];
+	// If the function wasn't found, then return nil instead of trying to call a non-existant function
+	if(function == nil) return nil;
+	// Run the function and return the result
+	return [self runFunction:function withArg:argument];
+}
+
 - (id)runFunction:(WebScriptObject *)function {
   [scriptObject setValue:function forKey:@"_slate_callback"];
   return [self run:@"window._slate_callback();"];
