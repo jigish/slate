@@ -31,7 +31,52 @@
       throw "bind failed, second parameter must be an operation or a function. was: "+callback;
     },
 
-    bindAll: function(bindMap) {
+    /*
+     * Bind all mappings.
+     *
+     * prefixMap - an optional object of key prefix mappings.
+     * bindMap   - an object of key -> operation mappings.
+     *
+     * In Slate config (non-JS), you can just "bind a:${someprefix} relaunch".
+     * In JS version of config, however, you cannot, because you can't use
+     * expressions in the key part of object literal in JS, it becomes rather
+     * cumbersome to repeat same prefix in every mapping. To address these
+     * issues, you can pass an object of prefix mappings to `bindAll` along
+     * with the bind mappings. In bind mappings then, you can use hash symbol
+     * and name of your prefix as a placeholder.
+     *
+     * Examples
+     *
+     *   // simple mapping
+     *   slate.bindAll({ "esc:ctrl;alt" : S.op("relaunch") });
+     *
+     *   // with prefixes
+     *   slate.bindAll({ layoutKeys: "ctrl;cmd" }, {
+     *     "l:#layoutKeys": laptop,
+     *     "t:#layoutKeys": thunderbolt,
+     *     "b:#layoutKeys": twoMonitor
+     *   });
+     */
+    bindAll: function(prefixMap, bindMap) {
+      if (prefixMap && bindMap === undefined) {
+        bindMap = prefixMap;
+        prefixMap = null;
+      } else {
+        _bindMap = bindMap;
+        bindMap = {};
+
+        for(key in _bindMap) {
+          var match, newKey = key;
+
+          if (match = key.match(/.*:\s*#(.*)/)) {
+            val = prefixMap[match[1]];
+            newKey = key.replace("#" + match[1], val).replace(/\s+/, '');
+          }
+
+          bindMap[newKey] = _bindMap[key];
+        }
+      }
+
       for(key in bindMap) {
         if (_.isArray(bindMap[key]) && _.size(bindMap[key]) >= 2) {
           slate.bind(key, bindMap[key][0], bindMap[key][1]);
