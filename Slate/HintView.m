@@ -30,6 +30,7 @@ static NSColor *hintBackgroundColor = nil;
 static NSColor *hintFontColor = nil;
 static NSFont *hintFont = nil;
 static float hintIconAlpha = -1.0;
+static NSShadow *hintShadow = nil;
 
 - (id)initWithFrame:(NSRect)frame {
   self = [super initWithFrame:frame];
@@ -58,6 +59,24 @@ static float hintIconAlpha = -1.0;
     }
     if (hintIconAlpha < 0.0) {
       hintIconAlpha = [[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_ICON_ALPHA];
+    }
+    if (hintShadow == nil) {
+      NSColor *hintShadowColor = nil;
+      NSArray *fColorArr = [[SlateConfig getInstance] getArrayConfig:WINDOW_HINTS_SHADOW_COLOR];
+      if ([fColorArr count] < 4) {
+        fColorArr = [WINDOW_HINTS_SHADOW_COLOR_DEFUALT componentsSeparatedByString:SEMICOLON];
+      }
+      hintShadowColor = [NSColor colorWithDeviceRed:[[fColorArr objectAtIndex:0] floatValue]/255.0
+                                            green:[[fColorArr objectAtIndex:1] floatValue]/255.0
+                                             blue:[[fColorArr objectAtIndex:2] floatValue]/255.0
+                                            alpha:[[fColorArr objectAtIndex:3] floatValue]];
+
+      
+      CGFloat hintShadowBlurRadius = [[SlateConfig getInstance] getFloatConfig:WINDOW_HINTS_SHADOW_BLUR_RADIUS];
+      
+      hintShadow = [[NSShadow alloc] init];
+      [hintShadow setShadowColor:hintShadowColor];
+      [hintShadow setShadowBlurRadius:hintShadowBlurRadius];
     }
   }
   return self;
@@ -93,14 +112,19 @@ static float hintIconAlpha = -1.0;
   if (icon != nil) {
     [icon drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:hintIconAlpha];
   }
-
+  
   // draw hint letter
   [self drawCenteredText:text
                   bounds:self.bounds
               attributes:[NSDictionary dictionaryWithObjectsAndKeys:hintFont,
                                                                     NSFontAttributeName,
                                                                     hintFontColor,
-                                                                    NSForegroundColorAttributeName, nil]];
+                                                                    NSForegroundColorAttributeName,
+                                                                    hintShadow,
+                                                                    NSShadowAttributeName,
+                                                                    nil]];
+  
+    
   [[NSGraphicsContext currentContext] restoreGraphicsState];
 }
 
