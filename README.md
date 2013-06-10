@@ -315,7 +315,7 @@ Throw the window to any screen's origin: `throw screen style`
     Will bind the keystroke alt-ctrl-numpad1 to throw the window to the 2nd screen and resize it to fit that screen
 
 ##### corner #####
-Move/Resize the window into a corner: `corner direction style`
+Move/Resize the window into a corner: `corner direction style screen`
 
         direction = top-left|top-right|bottom-left|bottom-right
         style = (optional) resize:x-expression;y-expression (default will not resize)
