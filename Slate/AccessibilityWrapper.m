@@ -266,7 +266,7 @@ bool CGSEventIsAppUnresponsive(CGSConnectionID cid, const ProcessSerialNumber *p
 
 + (NSString *)getTitle:(AXUIElementRef)window {
   [AccessibilityWrapper createSystemWideElement];
-  CFTypeRef _title;
+  CFTypeRef _title = NULL;
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityTitleAttribute, (CFTypeRef *)&_title) == kAXErrorSuccess) {
     NSString *title = (__bridge NSString *) _title;
     if (_title != NULL) CFRelease(_title);
