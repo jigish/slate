@@ -683,6 +683,7 @@ Please send all questions, bug reports, suggestions, or general commentary to [J
     pageUp
     q
     r
+    rdelete
     return
     right
     s
