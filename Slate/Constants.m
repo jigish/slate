@@ -36,6 +36,8 @@ NSString *const SOURCE = @"source";
 NSString *const IF_EXISTS = @"if_exists";
 
 // Config Keys
+NSString *const MENU_BAR_ICON_HIDDEN = @"menuBarIconHidden";
+NSString *const MENU_BAR_ICON_HIDDEN_DEFAULT = @"false";
 NSString *const DEFAULT_TO_CURRENT_SCREEN = @"defaultToCurrentScreen";
 NSString *const DEFAULT_TO_CURRENT_SCREEN_DEFAULT = @"false";
 NSString *const NUDGE_PERCENT_OF = @"nudgePercentOf";

@@ -538,6 +538,7 @@ static SlateConfig *_instance = nil;
 
 - (void)setupDefaultConfigs {
   [self setConfigDefaults:[NSMutableDictionary dictionaryWithCapacity:10]];
+  [configDefaults setObject:MENU_BAR_ICON_HIDDEN_DEFAULT forKey:MENU_BAR_ICON_HIDDEN];
   [configDefaults setObject:DEFAULT_TO_CURRENT_SCREEN_DEFAULT forKey:DEFAULT_TO_CURRENT_SCREEN];
   [configDefaults setObject:NUDGE_PERCENT_OF_DEFAULT forKey:NUDGE_PERCENT_OF];
   [configDefaults setObject:RESIZE_PERCENT_OF_DEFAULT forKey:RESIZE_PERCENT_OF];
