@@ -53,6 +53,7 @@
 + (AXUIElementRef)focusedWindowInRunningApp:(NSRunningApplication *)app;
 + (BOOL)isMainWindow:(AXUIElementRef)window;
 + (NSString *)getTitle:(AXUIElementRef)window;
++ (uint32_t)getWindowId:(AXUIElementRef)window;
 - (BOOL)isMovable;
 - (BOOL)isResizable;
 + (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window inApp:(AXUIElementRef)app;

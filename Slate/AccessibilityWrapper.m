@@ -25,6 +25,8 @@
 static AXUIElementRef systemWideElement = NULL;
 static NSDictionary *unselectableApps = nil;
 
+extern AXError _AXUIElementGetWindow(AXUIElementRef, CGWindowID* out);
+
 @implementation AccessibilityWrapper
 
 @synthesize app;
@@ -250,6 +252,15 @@ static NSDictionary *unselectableApps = nil;
   }
   if (_title != NULL) CFRelease(_title);
   return @"";
+}
+
++ (uint32_t)getWindowId:(AXUIElementRef)window {
+    CGWindowID _windowId;
+    if (_AXUIElementGetWindow(window, &_windowId) == kAXErrorSuccess) {
+      SlateLogger(@" got window id: %i", _windowId);
+      return _windowId;
+    }
+    return -1;
 }
 
 + (BOOL)isWindowMinimizedOrHidden:(AXUIElementRef)window inApp:(AXUIElementRef)app {

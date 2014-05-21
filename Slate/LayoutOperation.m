@@ -224,8 +224,25 @@
         CFArrayRemoveValueAtIndex(windowsArr, index);
       }
     } else {
-      SlateLogger(@"No Sort");
-      CFArrayAppendArray(windows, windowsArr, CFRangeMake(0, CFArrayGetCount(windowsArr)));
+      SlateLogger(@"Default: Sort By Window ID");
+      while (CFArrayGetCount(windowsArr) > 0) {
+        uint32_t winId = -1;
+        NSInteger index = 0;
+        for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
+          uint32_t currWinId = [AccessibilityWrapper getWindowId:CFArrayGetValueAtIndex(windowsArr, i)];
+          if (winId == -1) {
+            winId = currWinId;
+            index = i;
+            continue;
+          }
+          if (winId > currWinId) {
+            winId = currWinId;
+            index = i;
+          }
+        }
+        CFArrayAppendValue(windows, CFArrayGetValueAtIndex(windowsArr, index));
+        CFArrayRemoveValueAtIndex(windowsArr, index);
+      }
     }
     CFArrayAppendArray(windows, windowsAppend, CFRangeMake(0, CFArrayGetCount(windowsAppend)));
 
