@@ -234,7 +234,10 @@
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] repeat]) {
       for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
-        appSuccess = [[operations objectAtIndex:((i-failedWindows) % [operations count])] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
+        if ([operations count] > 0) {
+          appSuccess = [[operations objectAtIndex:((i-failedWindows) % [operations count])]
+                        doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
+        }
         if ([[SlateConfig getInstance] getBoolConfig:LAYOUT_FOCUS_ON_ACTIVATE]) { [aw focus]; }
         if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
           failedWindows++;
