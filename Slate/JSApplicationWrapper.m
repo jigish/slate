@@ -68,6 +68,10 @@ static NSDictionary *jsawJsMethods;
   return [app processIdentifier];
 }
 
+- (NSString *)bundleIdentifier {
+  return [app bundleIdentifier];
+}
+
 - (NSString *)name {
   return [app localizedName];
 }
@@ -114,6 +118,7 @@ static NSDictionary *jsawJsMethods;
   if (jsawJsMethods == nil) {
     jsawJsMethods = @{
       NSStringFromSelector(@selector(pid)): @"pid",
+      NSStringFromSelector(@selector(bundleIdentifier)): @"bundleIdentifier",
       NSStringFromSelector(@selector(name)): @"name",
       NSStringFromSelector(@selector(eachWindow:)): @"eachWindow",
       NSStringFromSelector(@selector(ewindow:)): @"ewindow",

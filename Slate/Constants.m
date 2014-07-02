@@ -36,6 +36,8 @@ NSString *const SOURCE = @"source";
 NSString *const IF_EXISTS = @"if_exists";
 
 // Config Keys
+NSString *const MENU_BAR_ICON_HIDDEN = @"menuBarIconHidden";
+NSString *const MENU_BAR_ICON_HIDDEN_DEFAULT = @"false";
 NSString *const DEFAULT_TO_CURRENT_SCREEN = @"defaultToCurrentScreen";
 NSString *const DEFAULT_TO_CURRENT_SCREEN_DEFAULT = @"false";
 NSString *const NUDGE_PERCENT_OF = @"nudgePercentOf";
@@ -69,7 +71,7 @@ NSString *const WINDOW_HINTS_WIDTH_DEFAULT = @"100";
 NSString *const WINDOW_HINTS_HEIGHT = @"windowHintsHeight";
 NSString *const WINDOW_HINTS_HEIGHT_DEFAULT = @"100";
 NSString *const WINDOW_HINTS_BACKGROUND_COLOR = @"windowHintsBackgroundColor";
-NSString *const WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT = @"50;53;58;0.9";
+NSString *const WINDOW_HINTS_BACKGROUND_COLOR_DEFAULT = @"50;53;58;0.6";
 NSString *const WINDOW_HINTS_DURATION = @"windowHintsDuration";
 NSString *const WINDOW_HINTS_DURATION_DEFAULT = @"3";
 NSString *const WINDOW_HINTS_ROUNDED_CORNER_SIZE = @"windowHintsRoundedCornerSize";

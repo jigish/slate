@@ -10,6 +10,7 @@ Slate.xcodeproj/jigish.mode1v3
 Slate.xcodeproj/jigish.pbxuser
 Slate.xcodeproj/project.xcworkspace/xcuserdata/jigish.xcuserdatad/
 Slate.xcodeproj/xcuserdata/jigish.xcuserdatad/
+Slate.xcodeproj/project.xcworkspace/xcshareddata/
 # don't version xcode artifacts
 *.xcuserdatad
 tmp

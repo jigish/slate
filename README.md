@@ -26,7 +26,9 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 **NEW Installation Instructions**
 
-**Note:** You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices
+**Note:** You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices. If
+you are on Mavericks, you must turn it on by checking *Slate* in System Preferences > Security & Privacy > Privacy.
+
 
 ### Direct Download ###
 
@@ -683,6 +685,7 @@ Please send all questions, bug reports, suggestions, or general commentary to [J
     pageUp
     q
     r
+    rdelete
     return
     right
     s
