@@ -1,4 +1,15 @@
-Current Version: 1.0.25
+Current Version: 1.1
+
+------------------ 1.1 ------------------
+
+- Expose the bundle identifier in the Javascript API app object (jigish/slate #387)
+- Add a missing period in the README (jigish/slate #395)
+- Prevent Slate hanging due to unresponsive apps (jigish/slate #414)
+- Fixed snapshot operations to properly get the name from the config (jigish/slate #393)
+- Updated the README with info for Mavericks (jigish/slate #362)
+- Add the ability to use the delete from larger keyboards (jigish/slate #351)
+- Fix crash due to uninitialized variable (jigish/slate #344)
+
 
 ----------------- 1.0.25 ----------------
 
