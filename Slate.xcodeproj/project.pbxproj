@@ -943,7 +943,7 @@
 				GCC_PREFIX_HEADER = "Slate/Slate-Prefix.pch";
 				INFOPLIST_FILE = "Slate/Slate-Info.plist";
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -969,7 +969,7 @@
 				GCC_PREFIX_HEADER = "Slate/Slate-Prefix.pch";
 				INFOPLIST_FILE = "Slate/Slate-Info.plist";
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
