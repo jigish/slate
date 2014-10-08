@@ -20,6 +20,7 @@
 
 #import "TestShellUtils.h"
 #import "ShellUtils.h"
+#import "ShellOperation.h"
 
 @implementation TestShellUtils
 
@@ -51,6 +52,13 @@
   NSRegularExpression *testRegex = [NSRegularExpression regularExpressionWithPattern:@"with single and double quotes" options:0 error:&err];
   int found = [testRegex numberOfMatchesInString:result options:0 range:NSMakeRange(0, [result length])];
   STAssertEquals(found, 1, @"Result should include all strings");
+}
+
+-(void)testShellOperationFromStringWithQuotesAndSpaces {
+    id operation = [ShellOperation shellOperationFromString:@"shell '/usr/bin/open -a \"Sublime Text\"'"];
+    int argumentCount = [[operation args] count];
+    
+    STAssertEquals(argumentCount, 2, @"The shell operation must only contain two arguments");
 }
 
 @end
