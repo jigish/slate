@@ -35,17 +35,8 @@
     url = [url URLByAppendingPathComponent:appendComponent];
   }
   NSError *error;
-  SInt32 major, minor, bugfix;
-  Gestalt(gestaltSystemVersionMajor, &major);
-  Gestalt(gestaltSystemVersionMinor, &minor);
-  Gestalt(gestaltSystemVersionBugFix, &bugfix);
-  BOOL success = NO;
   // need to use AtPath if < 10.7 because AtURL is 10.7 only
-  if (major >= 10 && minor >= 7) {
-    success = [self createDirectoryAtURL:url withIntermediateDirectories:YES attributes:nil error:&error];
-  } else {
-    success = [self createDirectoryAtPath:[url path] withIntermediateDirectories:YES attributes:nil error:&error];
-  }
+  BOOL success = [self createDirectoryAtURL:url withIntermediateDirectories:YES attributes:nil error:&error];
   if (!success) {
     if (errorOut) *errorOut = error;
     return nil;
