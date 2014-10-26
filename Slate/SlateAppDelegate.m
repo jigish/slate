@@ -602,9 +602,8 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
     if (item){
       CFRelease(item);
     }
+    CFRelease(loginItems);
   }
-
-  CFRelease(loginItems);
 }
 
 - (void)deleteFromLoginItems {
