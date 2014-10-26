@@ -92,7 +92,7 @@ static void registerForWindowDeath(AXUIElementRef element, RunningApplications *
   // register for death event
   AXError err;
   AXObserverRef observer;
-  err = AXObserverCreate([AccessibilityWrapper processIdentifierOfUIElement:element], windowChanged, &observer);
+  AXObserverCreate([AccessibilityWrapper processIdentifierOfUIElement:element], windowChanged, &observer);
   err = AXObserverAddNotification(observer, element, kAXUIElementDestroyedNotification, (__bridge void *)ref);
   if (err != kAXErrorSuccess) {
     AXObserverRemoveNotification(observer, element, kAXUIElementDestroyedNotification);
@@ -311,9 +311,9 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
         AXError err;
         AXUIElementRef sendingApp = AXUIElementCreateApplication([app processIdentifier]);
         AXObserverRef observer;
-        err = AXObserverCreate([app processIdentifier], windowCallback, &observer);
-        err = AXObserverAddNotification(observer, sendingApp, kAXWindowCreatedNotification, (__bridge void *)self);
-        err = AXObserverAddNotification(observer, sendingApp, kAXFocusedWindowChangedNotification, (__bridge void *)self);
+        AXObserverCreate([app processIdentifier], windowCallback, &observer);
+        AXObserverAddNotification(observer, sendingApp, kAXWindowCreatedNotification, (__bridge void *)self);
+        AXObserverAddNotification(observer, sendingApp, kAXFocusedWindowChangedNotification, (__bridge void *)self);
         err = AXObserverAddNotification(observer, sendingApp, kAXTitleChangedNotification, (__bridge void *)self);
         if (err != kAXErrorSuccess) {
           AXObserverRemoveNotification(observer, sendingApp, kAXWindowCreatedNotification);
@@ -447,8 +447,8 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
   AXObserverRef observer;
   err = AXObserverCreate([launchedApp processIdentifier], windowCallback, &observer);
   if (err != kAXErrorSuccess) return;
-  err = AXObserverAddNotification(observer, sendingApp, kAXWindowCreatedNotification, (__bridge void *)self);
-  err = AXObserverAddNotification(observer, sendingApp, kAXFocusedWindowChangedNotification, (__bridge void *)self);
+  AXObserverAddNotification(observer, sendingApp, kAXWindowCreatedNotification, (__bridge void *)self);
+  AXObserverAddNotification(observer, sendingApp, kAXFocusedWindowChangedNotification, (__bridge void *)self);
   err = AXObserverAddNotification(observer, sendingApp, kAXTitleChangedNotification, (__bridge void *)self);
   if (err != kAXErrorSuccess) {
     AXObserverRemoveNotification(observer, AXUIElementCreateApplication([launchedApp processIdentifier]), kAXWindowCreatedNotification);
