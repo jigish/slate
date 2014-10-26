@@ -93,7 +93,6 @@ static float switchFontHeight = -1;
     iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(iconPadding, iconPadding, iconSize, iconSize)];
   }
   NSImage *icon = [app icon];
-  [icon setScalesWhenResized:YES];
   [icon setSize:NSMakeSize(iconSize, iconSize)];
   [iconView setImage:icon];
   [iconView setAlphaValue:(hidden ? HIDDEN_ALPHA : SHOWN_ALPHA)];
