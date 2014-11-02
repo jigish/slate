@@ -310,6 +310,8 @@ bool CGSEventIsAppUnresponsive(CGSConnectionID cid, const ProcessSerialNumber *p
       if (_element != NULL) CFRelease(_element);
       return (AXUIElementRef)_window;
     }
+    SlateLogger(@"Warning, returning raw accessibility element %@", _element);
+    return _element;
   }
   SlateLogger(@"Returning null");
   return NULL;
