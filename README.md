@@ -30,14 +30,14 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 ### Direct Download ###
 
-* [`.dmg`](http://slate.ninjamonkeysoftware.com/Slate.dmg)
-* [`.tar.gz`](http://slate.ninjamonkeysoftware.com/versions/slate-latest.tar.gz)
+* [`.dmg`](https://slate.ninjamonkeysoftware.com/Slate.dmg)
+* [`.tar.gz`](https://slate.ninjamonkeysoftware.com/versions/slate-latest.tar.gz)
 
 ### Terminal ###
 
 Just run this in your terminal:
 
-    cd /Applications && curl http://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
+    cd /Applications && curl https://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
 
 ## Configuring Slate ##
 
@@ -586,8 +586,8 @@ You can check out my own config [here](https://github.com/jigish/dotfiles/blob/m
 
 ### Useful Stuff ###
 
-- [kvs](https://github.com/kvs) has created a [Sublime Text 2](http://www.sublimetext.com/2) preference for `.slate` files [here](https://github.com/kvs/ST2Slate).
-- [trishume](https://github.com/trishume) has done a really nice writeup on getting started with Slate [here](http://thume.ca/howto/2012/11/19/using-slate/)
+- [kvs](https://github.com/kvs) has created a [Sublime Text 2](https://www.sublimetext.com/2) preference for `.slate` files [here](https://github.com/kvs/ST2Slate).
+- [trishume](https://github.com/trishume) has done a really nice writeup on getting started with Slate [here](https://thume.ca/howto/2012/11/19/using-slate/)
 
 # Contact #
 
