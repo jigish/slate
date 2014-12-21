@@ -28,29 +28,23 @@
 + (BOOL)commandExists:(NSString *)command {
   if (command == nil || [EMPTY isEqualToString:command]) return NO;
   @try {
-    NSTask *task;
-    task = [[NSTask alloc] init];
+    NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/usr/bin/command"];
 
-    NSArray *arguments;
-    arguments = [NSArray arrayWithObjects:@"-v", command, nil];
+    NSArray *arguments = [NSArray arrayWithObjects:@"-v", command, nil];
     [task setArguments:arguments];
 
-    NSPipe *pipe;
-    pipe = [NSPipe pipe];
+    NSPipe *pipe = [NSPipe pipe];
     [task setStandardOutput:pipe];
     [task setStandardInput:[NSPipe pipe]];
 
-    NSFileHandle *file;
-    file = [pipe fileHandleForReading];
+    NSFileHandle *file = [pipe fileHandleForReading];
 
     [task launch];
 
-    NSData *data;
-    data = [file readDataToEndOfFile];
+    NSData *data = [file readDataToEndOfFile];
 
-    NSString *string;
-    string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if ([string isEqualToString:EMPTY]) {
       return NO;
     }
@@ -61,20 +55,17 @@
 }
 
 + (NSTask *)run:(NSString *)command args:(NSArray *)args wait:(BOOL)wait path:(NSString *)path {
-  NSTask *task;
-  task = [[NSTask alloc] init];
+  NSTask *task = [[NSTask alloc] init];
   [task setLaunchPath:command];
   [task setArguments:args];
   if (path != nil) [task setCurrentDirectoryPath:path];
 
-  NSPipe *pipe;
-  pipe = [NSPipe pipe];
+  NSPipe *pipe = [NSPipe pipe];
   [task setStandardOutput:pipe];
   [task setStandardError:pipe];
   [task setStandardInput:[NSPipe pipe]];
 
-  NSFileHandle *file;
-  file = [pipe fileHandleForReading];
+  NSFileHandle *file = [pipe fileHandleForReading];
 
   [task launch];
   if (wait){
