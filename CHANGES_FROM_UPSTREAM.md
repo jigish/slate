@@ -7,4 +7,4 @@ As this is a fork of [jigish/slate](https://github.com/jigish/slate), I want to 
 #362
 #351
 #344
-
+#371
