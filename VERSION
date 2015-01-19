@@ -1,4 +1,10 @@
-Current Version: 1.1
+Current Version: 1.2
+
+------------------ 1.2 ------------------
+
+- Remove support for OS X 10.7 and below
+- Add options to hide the menu bar icon (jigish/slate #371)
+- Converted the test suite to use XCTest
 
 ------------------ 1.1 ------------------
 
