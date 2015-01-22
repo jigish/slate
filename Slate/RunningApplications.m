@@ -259,11 +259,19 @@ static void windowCallback(AXObserverRef observer, AXUIElementRef element, CFStr
     appToWindows = [NSMutableDictionary dictionary];
     pidToObserver = [NSMutableDictionary dictionary];
     titleToWindow = [NSMutableDictionary dictionary];
+    
+    pid_t pid;
+    ProcessSerialNumber psn;
+    CGSConnectionID conn = CGSMainConnectionID();
+    
     SlateLogger(@"------------------ Checking Running Applications ------------------");
     NSArray *appsArr = [[NSWorkspace sharedWorkspace] runningApplications];
     NSRunningApplication *currentApp = [NSRunningApplication currentApplication];
     for (NSRunningApplication *app in appsArr) {
-      if ([RunningApplications isAppSelectable:app]) {
+      pid = [app processIdentifier];
+      GetProcessForPID(pid, &psn);
+      bool unresponsive = CGSEventIsAppUnresponsive(conn, &psn);
+      if ([RunningApplications isAppSelectable:app] && !unresponsive) {
         SlateLogger(@"  Selectable: %@", [app localizedName]);
         [apps addObject:app];
         [appNameToApp setObject:app forKey:[app localizedName]];
