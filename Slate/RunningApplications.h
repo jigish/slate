@@ -20,6 +20,10 @@
 
 #import <Foundation/Foundation.h>
 
+typedef int CGSConnectionID;
+CG_EXTERN CGSConnectionID CGSMainConnectionID(void);
+bool CGSEventIsAppUnresponsive(CGSConnectionID cid, const ProcessSerialNumber *psn);
+
 @interface RunningApplications : NSObject <NSFastEnumeration> {
   NSMutableArray *apps;
   NSMutableDictionary *appNameToApp;
