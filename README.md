@@ -26,9 +26,9 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 **NEW Installation Instructions**
 
-**Note:** You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices. If
-you are on Mavericks or Yosemite, you must turn it on by checking *Slate* in System Preferences > Security & Privacy > Privacy > Accessibility.
+**Note:** You must turn on the Accessibility API
 
+When *Slate* starts it asks you if it can enable "Access for assistive devices". It may fail to do so. You can manually set this by checking System Preferences > Universal Access > Enable access for assistive devices. If you are on Mavericks or Yosemite, you must turn it on by checking *Slate* in System Preferences > Security & Privacy > Privacy > Accessibility.
 
 ### Direct Download ###
 
