@@ -39,6 +39,9 @@ Just run this in your terminal:
 
     cd /Applications && curl http://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
 
+### Brew Cask
+    brew cask install slate
+
 ## Configuring Slate ##
 
 **NEW:** You may now use a ".slate.js" file to configure slate using JavaScript. This allows for much more complex and dynamic configurations than the normal slate configuration style below. You can check out the documentation for this [here](https://github.com/jigish/slate/wiki/JavaScript-Configs).
