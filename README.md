@@ -1,3 +1,7 @@
+# This repository is no longer maintained!
+
+Please, contribute to[mattr-/slate](https://github.com/mattr-/slate).
+
 # About Slate #
 
 Slate is a window management application similar to Divvy and SizeUp (except better and free!). Originally written to replace them due to some limitations in how each work, it attempts to overcome them by simply being extremely configurable. As a result, it may be a bit daunting to get configured, but once it is done, the benefit is huge.
