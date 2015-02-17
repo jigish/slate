@@ -41,6 +41,23 @@ Just run this in your terminal:
 
     cd /Applications && curl http://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
 
+### Compiling From Source ###
+
+1. Install XCode
+2. Run this in your terminal:
+   
+   ```
+   git clone https://github.com/mattr-/slate.git ~/Slate
+   ```
+   
+3. Open `~/Slate/Slate.xcodeproj` with XCode
+4. Go to `Product` > `Archive` and wait a minute
+5. Once the Archive Organizer pops up, choose the most recently created Slate export (it should be selected by default)
+6. Click `Export` (on the right)
+7. Select "Export as a Mac Application" and click `Next`
+8. Choose where you want to save Slate.app
+9. Run Slate by opening the Finder to where you saved it and double clicking `Slate.app`
+
 ## Configuring Slate ##
 
 **NEW:** You may now use a ".slate.js" file to configure slate using JavaScript. This allows for much more complex and dynamic configurations than the normal slate configuration style below. You can check out the documentation for this [here](https://github.com/jigish/slate/wiki/JavaScript-Configs).
