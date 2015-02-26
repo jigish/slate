@@ -32,22 +32,23 @@ When *Slate* starts it asks you if it can enable "Access for assistive devices".
 
 ### Direct Download ###
 
-* [`.dmg`](http://slate.ninjamonkeysoftware.com/Slate.dmg)
-* [`.tar.gz`](http://slate.ninjamonkeysoftware.com/versions/slate-latest.tar.gz)
+Get the [latest `Slate.app` as a _zip_ file](https://github.com/mattr-/slate/releases/latest)
 
 ### Terminal ###
 
-Just run this in your terminal:
+Using [homebrew cask](http://caskroom.io/) you can do install it with the following command
 
-    cd /Applications && curl http://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
+```console
+$ brew cask install mattr-slate
+```
 
 ### Compiling From Source ###
 
 1. Install XCode
 2. Run this in your terminal:
    
-   ```
-   git clone https://github.com/mattr-/slate.git ~/Slate
+   ```console
+   $ git clone https://github.com/mattr-/slate.git ~/Slate
    ```
    
 3. Open `~/Slate/Slate.xcodeproj` with XCode
