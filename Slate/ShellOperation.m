@@ -132,16 +132,19 @@
     }
   }
   NSString *commandAndArgs = [tokens lastObject];
+    NSString *c = [commandAndArgs stringByReplacingOccurrencesOfString:@"\\ " withString:@"<space>"];
   NSMutableArray *commandAndArgsTokens = [NSMutableArray array];
-  [StringTokenizer tokenize:commandAndArgs into:commandAndArgsTokens];
+  [StringTokenizer tokenize:c into:commandAndArgsTokens];
   if ([commandAndArgsTokens count] < 1) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", shellOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Shell operations require the following format: shell [wait] 'command'", shellOperation] userInfo:nil]);
   }
   NSString *command = [commandAndArgsTokens objectAtIndex:0];
+    command = [command stringByReplacingOccurrencesOfString:@"<space>" withString:@" "];
   NSMutableArray *args = [NSMutableArray array];
   for (NSInteger i = 1; i < [commandAndArgsTokens count]; i++) {
-    [args addObject:[commandAndArgsTokens objectAtIndex:i]];
+      
+    [args addObject:[[commandAndArgsTokens objectAtIndex:i] stringByReplacingOccurrencesOfString:@"<space>" withString:@" "]];
   }
 
   Operation *op = [[ShellOperation alloc] initWithCommand:command args:args waitForExit:waitForExit currentPath:currentPath];
