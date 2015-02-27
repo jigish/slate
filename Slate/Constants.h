@@ -299,6 +299,7 @@ extern NSString *const EMPTY;
 extern NSString *const PIPE_PADDED;
 extern NSString *const GREATER_THAN_PADDED;
 extern NSString *const QUOTES;
+extern NSString *const SPACE_WORD;
 extern NSString *const EQUALS;
 extern NSString *const TILDA;
 extern NSString *const SLASH;

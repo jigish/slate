@@ -299,6 +299,7 @@ NSString *const EMPTY = @"";
 NSString *const PIPE_PADDED = @" | ";
 NSString *const GREATER_THAN_PADDED = @" > ";
 NSString *const QUOTES = @"'\"";
+NSString *const SPACE_WORD= @"<space>";
 NSString *const EQUALS = @"=";
 NSString *const TILDA = @"~";
 NSString *const SLASH = @"/";

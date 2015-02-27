@@ -132,7 +132,7 @@
     }
   }
   NSString *commandAndArgs = [tokens lastObject];
-  NSString *c = [commandAndArgs stringByReplacingOccurrencesOfString:@"\\ " withString:@"<space>"];
+  NSString *c = [commandAndArgs stringByReplacingOccurrencesOfString:@"\\ " withString:SPACE_WORD];
   NSMutableArray *commandAndArgsTokens = [NSMutableArray array];
   [StringTokenizer tokenize:c into:commandAndArgsTokens];
   if ([commandAndArgsTokens count] < 1) {
@@ -140,7 +140,7 @@
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Shell operations require the following format: shell [wait] 'command'", shellOperation] userInfo:nil]);
   }
   NSString *command = [commandAndArgsTokens objectAtIndex:0];
-  command = [command stringByReplacingOccurrencesOfString:@"<space>" withString:@" "];
+    command = [command stringByReplacingOccurrencesOfString:SPACE_WORD withString:@" "];
   NSMutableArray *args = [NSMutableArray array];
   for (NSInteger i = 1; i < [commandAndArgsTokens count]; i++) {
       
