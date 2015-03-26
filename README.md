@@ -46,11 +46,11 @@ $ brew cask install mattr-slate
 
 1. Install XCode
 2. Run this in your terminal:
-   
+
    ```console
    $ git clone https://github.com/mattr-/slate.git ~/Slate
    ```
-   
+
 3. Open `~/Slate/Slate.xcodeproj` with XCode
 4. Go to `Product` > `Archive` and wait a minute
 5. Once the Archive Organizer pops up, choose the most recently created Slate export (it should be selected by default)
