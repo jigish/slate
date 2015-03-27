@@ -46,11 +46,11 @@ $ brew cask install mattr-slate
 
 1. Install XCode
 2. Run this in your terminal:
-   
+
    ```console
    $ git clone https://github.com/mattr-/slate.git ~/Slate
    ```
-   
+
 3. Open `~/Slate/Slate.xcodeproj` with XCode
 4. Go to `Product` > `Archive` and wait a minute
 5. Once the Archive Organizer pops up, choose the most recently created Slate export (it should be selected by default)
@@ -65,7 +65,7 @@ $ brew cask install mattr-slate
 
 Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon running Slate. You can also re-load the config using the "Load Config" menu option on the status menu (use this at your own risk. It is better to simply restart Slate).
 
-**Note:** If no ".slate" file exists in the current user's home directory, the [default config file](https://github.com/jigish/slate/blob/master/Slate/default.slate) will be used.
+**Note:** If no ".slate" file exists in the current user's home directory, the [default config file](Slate/default.slate) will be used.
 
 Configuration is split into the following directives:
 
@@ -602,7 +602,7 @@ Will append all of the configurations from the file `~/.slate.test` to the curre
 
 ### Example Config ###
 
-You can check out my own config [here](https://github.com/jigish/dotfiles/blob/master/slate).
+You can check out an example config [here](https://github.com/jigish/dotfiles/blob/master/slate).
 
 ### Useful Stuff ###
 
@@ -611,7 +611,7 @@ You can check out my own config [here](https://github.com/jigish/dotfiles/blob/m
 
 # Contact #
 
-Please send all questions, bug reports, suggestions, or general commentary to [Jigish Patel](mailto:slate.issues@gmail.com) or [create an issue](https://github.com/jigish/slate/issues/new) on github.
+Please [create a github issue](https://github.com/mattr-/slate/issues/new) for any questions, bug reports, suggestions, or general commentary.
 
 # Allowed Keys #
 
