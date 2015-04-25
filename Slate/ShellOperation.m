@@ -140,10 +140,9 @@
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Shell operations require the following format: shell [wait] 'command'", shellOperation] userInfo:nil]);
   }
   NSString *command = [commandAndArgsTokens objectAtIndex:0];
-    command = [command stringByReplacingOccurrencesOfString:SPACE_WORD withString:@" "];
+  command = [command stringByReplacingOccurrencesOfString:SPACE_WORD withString:@" "];
   NSMutableArray *args = [NSMutableArray array];
-  for (NSInteger i = 1; i < [commandAndArgsTokens count]; i++) {
-      
+  for (NSInteger i = 1; i < [commandAndArgsTokens count]; i++) {      
     [args addObject:[[commandAndArgsTokens objectAtIndex:i] stringByReplacingOccurrencesOfString:SPACE_WORD withString:@" "]];
   }
 
