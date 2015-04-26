@@ -67,7 +67,6 @@
 		3BE0736B16AF735A00D33DB0 /* JSWrapperUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0736A16AF735A00D33DB0 /* JSWrapperUtils.m */; };
 		3BE0736E16AFB5CA00D33DB0 /* JSOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0736D16AFB5CA00D33DB0 /* JSOperation.m */; };
 		3BE702B3161F9D5000260716 /* SequenceOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE702B2161F9D5000260716 /* SequenceOperation.m */; };
-		3BF39E1214FDB16F0083E9C4 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF39E1114FDB16F0083E9C4 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3BF57C9B1621686900C0F89B /* statusActive.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3BF57C9A1621686900C0F89B /* statusActive.pdf */; };
 		3BF57C9E16216C2200C0F89B /* VisibilityOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF57C9D16216C2200C0F89B /* VisibilityOperation.m */; };
 		3BFC8A6A15FAAD9D00B16139 /* GridOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC8A6915FAAD9D00B16139 /* GridOperation.m */; };
@@ -237,8 +236,6 @@
 		3BE0736D16AFB5CA00D33DB0 /* JSOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSOperation.m; sourceTree = "<group>"; };
 		3BE702B1161F9D5000260716 /* SequenceOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequenceOperation.h; sourceTree = "<group>"; };
 		3BE702B2161F9D5000260716 /* SequenceOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequenceOperation.m; sourceTree = "<group>"; };
-		3BF39E1014FDB16F0083E9C4 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		3BF39E1114FDB16F0083E9C4 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSONKit.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3BF57C9A1621686900C0F89B /* statusActive.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = statusActive.pdf; path = Slate/statusActive.pdf; sourceTree = "<group>"; };
 		3BF57C9C16216C2200C0F89B /* VisibilityOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibilityOperation.h; sourceTree = "<group>"; };
 		3BF57C9D16216C2200C0F89B /* VisibilityOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisibilityOperation.m; sourceTree = "<group>"; };
@@ -386,15 +383,6 @@
 				3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */,
 			);
 			name = Categories;
-			sourceTree = "<group>";
-		};
-		3BF39E0F14FDB16F0083E9C4 /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-				3BF39E1014FDB16F0083E9C4 /* JSONKit.h */,
-				3BF39E1114FDB16F0083E9C4 /* JSONKit.m */,
-			);
-			path = JSONKit;
 			sourceTree = "<group>";
 		};
 		4747E1F013877D260005180C /* icons */ = {
@@ -578,7 +566,6 @@
 			children = (
 				4747E1F013877D260005180C /* icons */,
 				3BC9E97015005F5F002FD1FA /* Categories */,
-				3BF39E0F14FDB16F0083E9C4 /* JSONKit */,
 				478293E813859C0B00452C07 /* Common */,
 				3B7DDCE116AE2FEC0087CD12 /* JavaScript */,
 				478293E513859BA000452C07 /* Config */,
@@ -774,7 +761,6 @@
 				3BDDA17D14FDA50C00829D2A /* Snapshot.m in Sources */,
 				3BDDA18014FDA55600829D2A /* WindowSnapshot.m in Sources */,
 				3BDDA18314FDAA6600829D2A /* SnapshotList.m in Sources */,
-				3BF39E1214FDB16F0083E9C4 /* JSONKit.m in Sources */,
 				3BD8191D14FDC0CE003D63BC /* DeleteSnapshotOperation.m in Sources */,
 				3BC9E96F15005925002FD1FA /* ActivateSnapshotOperation.m in Sources */,
 				3BC9E97315005F8F002FD1FA /* NSString+Levenshtein.m in Sources */,
