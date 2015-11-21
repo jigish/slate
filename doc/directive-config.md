@@ -93,14 +93,14 @@ The following descriptions are for the JavaScript configs. If you are using the 
 - The background color for Window Hints as an array in the form `"Red;Green;Blue;Alpha"` or `[Red, Green, Blue, Alpha]` where `Red`, `Green`, and `Blue` are numbers between `0.0` and `255.0` and `Alpha` is a number between `0.0` and `1.0`.
 
 #### <a name="windowHintsWidth"/>`windowHintsWidth` ####
-- **type:** [Expression](https://github.com/jigish/slate/wiki/Expressions)
+- **type:** [Expression](configuration.md#expressions)
 - **default:** `"100"`
-- The width of the Window Hints overlay in pixels. Please see [this page](https://github.com/jigish/slate/wiki/Expressions) for more information on expressions.
+- The width of the Window Hints overlay in pixels. Please see [this page](configuration.md#expressions) for more information on expressions.
 
 #### <a name="windowHintsHeight"/>`windowHintsHeight` ####
-- **type:** [Expression](https://github.com/jigish/slate/wiki/Expressions)
+- **type:** [Expression](configuration.md#expressions)
 - **default:** `"100"`
-- The height of the Window Hints overlay in pixels. Please see [this page](https://github.com/jigish/slate/wiki/Expressions) for more information on expressions.
+- The height of the Window Hints overlay in pixels. Please see [this page](configuration.md#expressions) for more information on expressions.
 
 #### <a name="windowHintsFontColor"/>`windowHintsFontColor` ####
 - **type:** String with Semicolon Separated Array of Floats **or** an Array of Floats
@@ -133,12 +133,12 @@ The following descriptions are for the JavaScript configs. If you are using the 
 - If this is set to `true`, window hints will not show for windows that are hidden. Hints will show for all windows if this is `false`. A window is hidden if the window under the point at the center of where the hint overlay would show is not the window in question.
 
 #### <a name="windowHintsTopLeftX"/>`windowHintsTopLeftX` ####
-- **type:** String with Semicolon Separated Array of [Expressions](https://github.com/jigish/slate/wiki/Expressions)
+- **type:** String with Semicolon Separated Array of [Expressions](configuration.md#expressions)
 - **default:** `"(windowSizeX/2)-(windowHintsWidth/2);0"`
 - The X offset for window hints from the window's top left point (right is positive, left is negative). If `windowHintsIgnoreHiddenWindows` is set to `true`, the `hint` operation will try each expression in this array (using the Y coordinate from the same index in `windowHintsTopLeftY`) sequentially to see if it represents a point that is visible. The `hint` operation will display a hint at the first visible point. Note that the number of elements in this array *must* equal the number of elements in `windowHintsTopLeftY` or all `hint` bindings will fail validation.
 
 #### <a name="windowHintsTopLeftY"/>`windowHintsTopLeftY` ####
-- **type:** String with Semicolon Separated Array of [Expressions](https://github.com/jigish/slate/wiki/Expressions)
+- **type:** String with Semicolon Separated Array of [Expressions](configuration.md#expressions)
 - **default:** `"(windowSizeY/2)-(windowHintsHeight/2);0"`
 - The Y offset for window hints from the window's top left point (down is positive, up is negative). If `windowHintsIgnoreHiddenWindows` is set to `true`, the `hint` operation will try each expression in this array (using the X coordinate from the same index in `windowHintsTopLeftX`) sequentially to see if it represents a point that is visible. The `hint` operation will display a hint at the first visible point. Note that the number of elements in this array *must* equal the number of elements in `windowHintsTopLeftX` or all `hint` bindings will fail validation.
 

@@ -8,7 +8,7 @@ Slate is configured using a `.slate` file in the current user's home directory. 
 
 ### JavaScript Configuration ###
 
-**NEW:** You may now use a `.slate.js` file to configure slate using JavaScript. This allows for much more complex and dynamic configurations than the normal slate configuration style below. You can check out the documentation for this [here](https://github.com/jigish/slate/wiki/JavaScript-Configs).
+**NEW:** You may now use a `.slate.js` file to configure slate using JavaScript. This allows for much more complex and dynamic configurations than the normal slate configuration style below. You can check out the documentation for this [here](js-configuration.md).
 
 ### Default Config File ###
 
