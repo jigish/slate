@@ -13,3 +13,4 @@ Slate.xcodeproj/xcuserdata/jigish.xcuserdatad/
 # don't version xcode artifacts
 *.xcuserdatad
 tmp
+doc/*.html
