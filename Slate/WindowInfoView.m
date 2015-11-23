@@ -67,7 +67,6 @@
     for (NSInteger i = 0; i < CFArrayGetCount(windowsArr); i++) {
       SlateLogger(@" Printing Window: %@", [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)]);
       NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(windowsArr, i)];
-      if ([title isEqualToString:@""]) continue;
       AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windowsArr, i)];
       NSSize size = [aw getCurrentSize];
       NSPoint badTL = [aw getCurrentTopLeft];
