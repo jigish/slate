@@ -12,7 +12,7 @@ Slate is configured using a `.slate` file in the current user's home directory. 
 
 ### Default Config File ###
 
-**Note:** If no `.slate` or `.slate.js` file exists in the current user's home directory, the [default config file](Slate/default.slate) will be used.
+**Note:** If no `.slate` or `.slate.js` file exists in the current user's home directory, the [default config file](../Slate/default.slate) will be used.
 
 ## Traditional Configuration Format ##
 
