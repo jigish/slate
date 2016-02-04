@@ -319,11 +319,13 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
       CFArraySortValues(allWindows, CFRangeMake(0, CFArrayGetCount(allWindows)), rightToLeftWindows, NULL);
     }
     for (NSInteger i = 0; i < CFArrayGetCount(allWindows); i++) {
-      NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(allWindows, i)];
-      if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
-      SlateLogger(@"  Hinting Window: %@", title);
       CFTypeRef _window = CFArrayGetValueAtIndex(allWindows, i);
-      [self createHintWindowFor:(AXUIElementRef)_window inApp:[AccessibilityWrapper applicationForElement:(AXUIElementRef)_window] screenWrapper:sw];
+      NSString *title = [AccessibilityWrapper getTitle:_window];
+      AXUIElementRef appRef = [AccessibilityWrapper applicationForElement:(AXUIElementRef)_window];
+      BOOL isWindowMinimizedOrHidden = [AccessibilityWrapper isWindowMinimizedOrHidden:_window inApp:appRef];
+      if (title == nil || isWindowMinimizedOrHidden) continue; // skip nil title and minimized/hidden windows because they are invisible
+      SlateLogger(@"  Hinting Window: %@", title);
+      [self createHintWindowFor:(AXUIElementRef)_window inApp:appRef screenWrapper:sw];
     }
   }
 
