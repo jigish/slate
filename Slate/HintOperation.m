@@ -101,6 +101,10 @@ static const UInt32 ESC_HINT_ID = 10001;
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:windowRef];
   NSPoint wTL = [aw getCurrentTopLeft];
   NSSize wSize = [aw getCurrentSize];
+  if (wSize.height == 1 && wSize.width == 1) {
+      SlateLogger(@"    Window is too small, not creating hint.");
+      return;
+  }
   // check corners and center to see which screen window is on
   NSInteger screenId = [sw getScreenIdForPoint:wTL];
   if (screenId < 0) screenId = [sw getScreenIdForPoint:NSMakePoint(wTL.x+wSize.width/2, wTL.y+wSize.height/2)];
