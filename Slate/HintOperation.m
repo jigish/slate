@@ -189,8 +189,10 @@ static const UInt32 ESC_HINT_ID = 10001;
     SlateLogger(@"        Existing Window!");
     NSWindowController *wc = [hints objectForKey:currentHintNumber];
     [[wc window] setFrame:NSMakeRect(frame.origin.x+screen.frame.origin.x, frame.origin.y+screen.frame.origin.y, frame.size.width, frame.size.height) display:NO];
-    HintView *label = (HintView*)[[wc window] contentView];
+    HintView *label = [[HintView alloc] initWithFrame:frame];
+    [label setText:hintCode];
     [label setIconFromAppRef:appRef];
+    [[wc window] setContentView:label];
     [wc showWindow:[wc window]];
   }
   [windows setObject:[NSValue valueWithPointer:windowRef] forKey:currentHintNumber];
