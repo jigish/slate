@@ -32,7 +32,7 @@
   XCTAssertFalse([ShellUtils commandExists:@""], @"empty string should not exist");
 }
 
-- (void)testRun {
+- (void)testRunCommand {
   NSTask *task = [ShellUtils run:@"/bin/ls" args:[NSArray arrayWithObject:@"-al"] wait:YES path:nil];
   XCTAssertFalse([task isRunning], @"Task should no longer be running");
   XCTAssertEqual([task terminationStatus], 0, @"Status should be 0");
@@ -49,7 +49,7 @@
   NSString *result = [ShellUtils run:@"/bin/echo 'with single' \"and double quotes\"" wait:YES path:@"/"];
   NSError *err = nil;
   NSRegularExpression *testRegex = [NSRegularExpression regularExpressionWithPattern:@"with single and double quotes" options:0 error:&err];
-  int found = [testRegex numberOfMatchesInString:result options:0 range:NSMakeRange(0, [result length])];
+  NSUInteger found = [testRegex numberOfMatchesInString:result options:0 range:NSMakeRange(0, [result length])];
   XCTAssertEqual(found, 1, @"Result should include all strings");
 }
 
