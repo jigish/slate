@@ -14,3 +14,4 @@ Slate.xcodeproj/xcuserdata/jigish.xcuserdatad/
 *.xcuserdatad
 tmp
 doc/*.html
+.DS_Store
