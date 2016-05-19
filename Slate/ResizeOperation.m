@@ -72,8 +72,7 @@
   NSSize nSize = [self getDimensionsWithCurrentWindow:cWindowRect screenWrapper:sw];
   if (!NSEqualSizes(cSize, nSize)) {
       NSPoint nTopLeft = [self getTopLeftWithCurrentWindow:cWindowRect newSize:nSize];
-      success = [aw moveWindow:nTopLeft] && success;
-      success = [aw resizeWindow:nSize] && success;
+      success = [aw moveWindow:nTopLeft] && [aw resizeWindow:nSize];
   }
   return success;
 }
