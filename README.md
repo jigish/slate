@@ -26,7 +26,7 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 **NEW Installation Instructions**
 
-**Note:** You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices
+**Note:** You must turn on the Accessibility API by checking System Preferences > Security & Privacy > Accessibility > (Unlock to enable changes) > Check the box next to Slate.  You will be prompted to make this change upon install. 
 
 ### Direct Download ###
 
