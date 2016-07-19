@@ -29,10 +29,10 @@
   NSString *c = @"hallo";
   NSString *d = @"helllo";
   NSString *e = @"hldla";
-  STAssertEquals([a levenshteinDistance:b], (float)1, @"Levenshtein Distance between hello and helo should be 1");
-  STAssertEquals([a levenshteinDistance:c], (float)1, @"Levenshtein Distance between hello and hallo should be 1");
-  STAssertEquals([a levenshteinDistance:d], (float)1, @"Levenshtein Distance between hello and helllo should be 1");
-  STAssertEquals([a levenshteinDistance:e], (float)3, @"Levenshtein Distance between hello and hldlo should be 3");
+  XCTAssertEqual([a levenshteinDistance:b], (float)1, @"Levenshtein Distance between hello and helo should be 1");
+  XCTAssertEqual([a levenshteinDistance:c], (float)1, @"Levenshtein Distance between hello and hallo should be 1");
+  XCTAssertEqual([a levenshteinDistance:d], (float)1, @"Levenshtein Distance between hello and helllo should be 1");
+  XCTAssertEqual([a levenshteinDistance:e], (float)3, @"Levenshtein Distance between hello and hldlo should be 3");
 }
 
 - (void)testSequentialDistance {
@@ -42,11 +42,11 @@
   NSString *d = @"ello";
   NSString *e = @"helllo";
   NSString *f = @"heldlo";
-  STAssertEquals([a sequentialDistance:b], (float)4, @"Sequential Distance between hello and hell should be 4");
-  STAssertEquals([a sequentialDistance:c], (float)1, @"Sequential Distance between hello and hallo should be 1");
-  STAssertEquals([a sequentialDistance:d], (float)0, @"Sequential Distance between hello and hallo should be 0");
-  STAssertEquals([a sequentialDistance:e], (float)4, @"Sequential Distance between hello and ello should be 4");
-  STAssertEquals([a sequentialDistance:f], (float)3, @"Sequential Distance between hello and heldlo should be 3");
+  XCTAssertEqual([a sequentialDistance:b], (float)4, @"Sequential Distance between hello and hell should be 4");
+  XCTAssertEqual([a sequentialDistance:c], (float)1, @"Sequential Distance between hello and hallo should be 1");
+  XCTAssertEqual([a sequentialDistance:d], (float)0, @"Sequential Distance between hello and hallo should be 0");
+  XCTAssertEqual([a sequentialDistance:e], (float)4, @"Sequential Distance between hello and ello should be 4");
+  XCTAssertEqual([a sequentialDistance:f], (float)3, @"Sequential Distance between hello and heldlo should be 3");
 }
 
 @end

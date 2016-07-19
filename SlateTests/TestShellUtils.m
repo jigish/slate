@@ -20,29 +20,30 @@
 
 #import "TestShellUtils.h"
 #import "ShellUtils.h"
+#import "ShellOperation.h"
 
 @implementation TestShellUtils
 
 - (void)testCommandExists {
-  STAssertTrue([ShellUtils commandExists:@"command"], @"command should exist");
-  STAssertTrue([ShellUtils commandExists:@"/usr/bin/command"], @"/usr/bin/command should exist");
-  STAssertFalse([ShellUtils commandExists:@"/usr/command"], @"/usr/command should not exist");
-  STAssertFalse([ShellUtils commandExists:@"oogabooga"], @"oogabooga should not exist");
-  STAssertFalse([ShellUtils commandExists:nil], @"nil should not exist");
-  STAssertFalse([ShellUtils commandExists:@""], @"empty string should not exist");
+  XCTAssertTrue([ShellUtils commandExists:@"command"], @"command should exist");
+  XCTAssertTrue([ShellUtils commandExists:@"/usr/bin/command"], @"/usr/bin/command should exist");
+  XCTAssertFalse([ShellUtils commandExists:@"/usr/command"], @"/usr/command should not exist");
+  XCTAssertFalse([ShellUtils commandExists:@"oogabooga"], @"oogabooga should not exist");
+  XCTAssertFalse([ShellUtils commandExists:nil], @"nil should not exist");
+  XCTAssertFalse([ShellUtils commandExists:@""], @"empty string should not exist");
 }
 
 - (void)testRun {
   NSTask *task = [ShellUtils run:@"/bin/ls" args:[NSArray arrayWithObject:@"-al"] wait:YES path:nil];
-  STAssertFalse([task isRunning], @"Task should no longer be running");
-  STAssertEquals([task terminationStatus], 0, @"Status should be 0");
+  XCTAssertFalse([task isRunning], @"Task should no longer be running");
+  XCTAssertEqual([task terminationStatus], 0, @"Status should be 0");
   task = [ShellUtils run:@"/usr/bin/find" args:[NSArray arrayWithObjects:@"/", @"-name", @"\"hello\"", nil] wait:NO path:@"/usr"];
-  STAssertTrue([task isRunning], @"Task should still be running");
-  STAssertTrue([[task currentDirectoryPath] isEqualToString:@"/usr"], @"current path should be /usr");
+  XCTAssertTrue([task isRunning], @"Task should still be running");
+  XCTAssertTrue([[task currentDirectoryPath] isEqualToString:@"/usr"], @"current path should be /usr");
   [task terminate];
   [task waitUntilExit];
-  STAssertFalse([task isRunning], @"Task should no longer be running");
-  STAssertEquals([task terminationStatus], 15, @"Status should be 15");
+  XCTAssertFalse([task isRunning], @"Task should no longer be running");
+  XCTAssertEqual([task terminationStatus], 15, @"Status should be 15");
 }
 
 - (void)testRunWithQuotedArgs {
@@ -50,7 +51,14 @@
   NSError *err = nil;
   NSRegularExpression *testRegex = [NSRegularExpression regularExpressionWithPattern:@"with single and double quotes" options:0 error:&err];
   int found = [testRegex numberOfMatchesInString:result options:0 range:NSMakeRange(0, [result length])];
-  STAssertEquals(found, 1, @"Result should include all strings");
+  XCTAssertEqual(found, 1, @"Result should include all strings");
+}
+
+- (void)testShellOperationFromStringWithQuotesAndSpaces {
+	id operation = [ShellOperation shellOperationFromString:@"shell '/usr/bin/open -a \"/Applications/App Store.app\"'"];
+	NSUInteger argumentCount = [[operation args] count];
+	
+	XCTAssertEqual(argumentCount, 2, @"The shell operation must only contain two arguments");
 }
 
 @end
