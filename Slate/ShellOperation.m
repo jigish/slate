@@ -133,7 +133,7 @@
   }
   NSString *commandAndArgs = [tokens lastObject];
   NSMutableArray *commandAndArgsTokens = [NSMutableArray array];
-  [StringTokenizer tokenize:commandAndArgs into:commandAndArgsTokens];
+  [StringTokenizer tokenize:commandAndArgs into:commandAndArgsTokens quoteChars:[NSCharacterSet characterSetWithCharactersInString:QUOTES]];
   if ([commandAndArgsTokens count] < 1) {
     SlateLogger(@"ERROR: Invalid Parameters '%@'", shellOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Shell operations require the following format: shell [wait] 'command'", shellOperation] userInfo:nil]);

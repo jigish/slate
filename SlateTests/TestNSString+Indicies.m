@@ -25,18 +25,18 @@
 
 - (void)testIndexOfString {
   NSString *test = @"hello&i%am-a$test#string";
-  STAssertEquals([test indexOfString:@"&"], (NSInteger)5, @"index of & should be 5");
-  STAssertEquals([test indexOfString:@"0"], (NSInteger)-1, @"index of 0 should be -1");
-  STAssertEquals([test indexOfString:@"hello"], (NSInteger)0, @"index of hello should be 0");
-  STAssertEquals([test indexOfString:@"g"], (NSInteger)([test length]-1), @"index of 0 should be ld", [test length]-1);
+  XCTAssertEqual([test indexOfString:@"&"], (NSInteger)5, @"index of & should be 5");
+  XCTAssertEqual([test indexOfString:@"0"], (NSInteger)-1, @"index of 0 should be -1");
+  XCTAssertEqual([test indexOfString:@"hello"], (NSInteger)0, @"index of hello should be 0");
+  XCTAssertEqual([test indexOfString:@"g"], (NSInteger)([test length]-1), @"index of 0 should be ld", [test length]-1);
 }
 
 - (void)testIndexOfChar {
   NSString *test = @"hello&i%am-a$test#string";
-  STAssertEquals([test indexOfChar:'&'], (NSInteger)5, @"index of & should be 5");
-  STAssertEquals([test indexOfChar:'0'], (NSInteger)-1, @"index of 0 should be -1");
-  STAssertEquals([test indexOfChar:'h'], (NSInteger)0, @"index of h should be 0");
-  STAssertEquals([test indexOfChar:'g'], (NSInteger)([test length]-1), @"index of g should be %ld", [test length]-1);
+  XCTAssertEqual([test indexOfChar:'&'], (NSInteger)5, @"index of & should be 5");
+  XCTAssertEqual([test indexOfChar:'0'], (NSInteger)-1, @"index of 0 should be -1");
+  XCTAssertEqual([test indexOfChar:'h'], (NSInteger)0, @"index of h should be 0");
+  XCTAssertEqual([test indexOfChar:'g'], (NSInteger)([test length]-1), @"index of g should be %ld", [test length]-1);
 }
 
 @end
