@@ -43,7 +43,7 @@ Just run this in your terminal:
 
 **NEW:** You may now use a ".slate.js" file to configure slate using JavaScript. This allows for much more complex and dynamic configurations than the normal slate configuration style below. You can check out the documentation for this [here](https://github.com/jigish/slate/wiki/JavaScript-Configs).
 
-Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon running Slate. You can also re-load the config using the "Load Config" menu option on the status menu (use this at your own risk. It is better to simply restart Slate).
+Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon running Slate. You can also re-load the config using the "Relaunch and Load Config" menu option on the status menu.
 
 **Note:** If no ".slate" file exists in the current user's home directory, the [default config file](https://github.com/jigish/slate/blob/master/Slate/default.slate) will be used.
 
