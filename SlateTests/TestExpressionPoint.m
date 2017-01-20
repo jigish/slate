@@ -34,12 +34,12 @@
   NSString *x = @"x";
   NSString *y = @"y";
   ExpressionPoint *a = [[ExpressionPoint alloc] initWithX:x y:y];
-  STAssertEquals([a x], x, @"x should be x");
-  STAssertEquals([a y], y, @"y should be y");
+  XCTAssertEqual([a x], x, @"x should be x");
+  XCTAssertEqual([a y], y, @"y should be y");
   [a setX:y];
   [a setY:x];
-  STAssertEquals([a x], y, @"x should be y");
-  STAssertEquals([a y], x, @"y should be x");
+  XCTAssertEqual([a x], y, @"x should be y");
+  XCTAssertEqual([a y], x, @"y should be x");
 }
 
 - (void)testGetPointWithDict {
@@ -49,27 +49,27 @@
                         [NSNumber numberWithInteger:2], @"var3", nil];
   ExpressionPoint *a = [[ExpressionPoint alloc] initWithX:@"var1+var2" y:@"var1*var2"];
   NSPoint p = [a getPointWithDict:dict];
-  STAssertTrue(NSEqualPoints(p, NSMakePoint(15, 50)), @"Shit should work");
+  XCTAssertTrue(NSEqualPoints(p, NSMakePoint(15, 50)), @"Shit should work");
   [a setX:@"sqrt((var2/var3)*var1)+count({1,2,3})"]; // 5 + 3
   [a setY:@"var3**var2+sum({1,2,3})"]; // 1024 + 6
   p = [a getPointWithDict:dict];
-  STAssertTrue(NSEqualPoints(p, NSMakePoint(8, 1030)), @"Shit should work");
+  XCTAssertTrue(NSEqualPoints(p, NSMakePoint(8, 1030)), @"Shit should work");
   [a setX:@"min({1,2,3})+max({4,5,6})"]; // 1 + 6
   [a setY:@"average({1,2,3,4})+median({1,2,3,10,15})"]; // 2.5 + 3
   p = [a getPointWithDict:dict];
-  STAssertTrue(NSEqualPoints(p, NSMakePoint(7, 5.5)), @"Shit should work");
+  XCTAssertTrue(NSEqualPoints(p, NSMakePoint(7, 5.5)), @"Shit should work");
   [a setX:@"floor(3.9)+(stddev({1,2,3,4,5}))**2"]; // 3 + 2
   [a setY:@"log(1000)+ln(exp(5))"]; // 3 + 5
   p = [a getPointWithDict:dict];
-  STAssertTrue(NSEqualPoints(p, NSMakePoint(5, 8)), @"Shit should work");
+  XCTAssertTrue(NSEqualPoints(p, NSMakePoint(5, 8)), @"Shit should work");
   [a setX:@"ceiling(2.1)+abs(-2)"]; // 3 + 2
   [a setY:@"trunc(3.232472398472834723)"]; // 3
   p = [a getPointWithDict:dict];
-  STAssertTrue(NSEqualPoints(p, NSMakePoint(5, 3)), @"Shit should work");
+  XCTAssertTrue(NSEqualPoints(p, NSMakePoint(5, 3)), @"Shit should work");
   [a setX:@"random()"]; // 0 <= me < 1
   [a setY:@"randomn(10)"]; // 0 <= me < 10
   p = [a getPointWithDict:dict];
-  STAssertTrue(p.x >= 0 && p.x < 1 && p.y >= 0 && p.y < 10, @"Shit should work");
+  XCTAssertTrue(p.x >= 0 && p.x < 1 && p.y >= 0 && p.y < 10, @"Shit should work");
 }
 
 - (void)testGetSizeWithDict {
@@ -79,27 +79,27 @@
                         [NSNumber numberWithInteger:2], @"var3", nil];
   ExpressionPoint *a = [[ExpressionPoint alloc] initWithX:@"var1+var2" y:@"var1*var2"];
   NSSize p = [a getSizeWithDict:dict];
-  STAssertTrue(NSEqualSizes(p, NSMakeSize(15, 50)), @"Shit should work");
+  XCTAssertTrue(NSEqualSizes(p, NSMakeSize(15, 50)), @"Shit should work");
   [a setX:@"sqrt((var2/var3)*var1)+count({1,2,3})"]; // 5 + 3
   [a setY:@"var3**var2+sum({1,2,3})"]; // 1024 + 6
   p = [a getSizeWithDict:dict];
-  STAssertTrue(NSEqualSizes(p, NSMakeSize(8, 1030)), @"Shit should work");
+  XCTAssertTrue(NSEqualSizes(p, NSMakeSize(8, 1030)), @"Shit should work");
   [a setX:@"min({1,2,3})+max({4,5,6})"]; // 1 + 6
   [a setY:@"average({1,2,3,4})+median({1,2,3,10,15})"]; // 2.5 + 3
   p = [a getSizeWithDict:dict];
-  STAssertTrue(NSEqualSizes(p, NSMakeSize(7, 5.5)), @"Shit should work");
+  XCTAssertTrue(NSEqualSizes(p, NSMakeSize(7, 5.5)), @"Shit should work");
   [a setX:@"floor(3.9)+(stddev({1,2,3,4,5}))**2"]; // 3 + 2
   [a setY:@"log(1000)+ln(exp(5))"]; // 3 + 5
   p = [a getSizeWithDict:dict];
-  STAssertTrue(NSEqualSizes(p, NSMakeSize(5, 8)), @"Shit should work");
+  XCTAssertTrue(NSEqualSizes(p, NSMakeSize(5, 8)), @"Shit should work");
   [a setX:@"ceiling(2.1)+abs(-2)"]; // 3 + 2
   [a setY:@"trunc(3.232472398472834723)"]; // 3
   p = [a getSizeWithDict:dict];
-  STAssertTrue(NSEqualSizes(p, NSMakeSize(5, 3)), @"Shit should work");
+  XCTAssertTrue(NSEqualSizes(p, NSMakeSize(5, 3)), @"Shit should work");
   [a setX:@"random()"]; // 0 <= me < 1
   [a setY:@"randomn(10)"]; // 0 <= me < 10
   p = [a getSizeWithDict:dict];
-  STAssertTrue(p.width >= 0 && p.width < 1 && p.height >= 0 && p.height < 10, @"Shit should work");
+  XCTAssertTrue(p.width >= 0 && p.width < 1 && p.height >= 0 && p.height < 10, @"Shit should work");
 }
 
 @end

@@ -101,6 +101,10 @@ static const UInt32 ESC_HINT_ID = 10001;
   AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:windowRef];
   NSPoint wTL = [aw getCurrentTopLeft];
   NSSize wSize = [aw getCurrentSize];
+  if (wSize.height == 1 && wSize.width == 1) {
+      SlateLogger(@"    Window is too small, not creating hint.");
+      return;
+  }
   // check corners and center to see which screen window is on
   NSInteger screenId = [sw getScreenIdForPoint:wTL];
   if (screenId < 0) screenId = [sw getScreenIdForPoint:NSMakePoint(wTL.x+wSize.width/2, wTL.y+wSize.height/2)];
@@ -185,8 +189,10 @@ static const UInt32 ESC_HINT_ID = 10001;
     SlateLogger(@"        Existing Window!");
     NSWindowController *wc = [hints objectForKey:currentHintNumber];
     [[wc window] setFrame:NSMakeRect(frame.origin.x+screen.frame.origin.x, frame.origin.y+screen.frame.origin.y, frame.size.width, frame.size.height) display:NO];
-    HintView *label = (HintView*)[[wc window] contentView];
+    HintView *label = [[HintView alloc] initWithFrame:frame];
+    [label setText:hintCode];
     [label setIconFromAppRef:appRef];
+    [[wc window] setContentView:label];
     [wc showWindow:[wc window]];
   }
   [windows setObject:[NSValue valueWithPointer:windowRef] forKey:currentHintNumber];
@@ -319,11 +325,13 @@ CFComparisonResult rightToLeftWindows(const void *val1, const void *val2, void *
       CFArraySortValues(allWindows, CFRangeMake(0, CFArrayGetCount(allWindows)), rightToLeftWindows, NULL);
     }
     for (NSInteger i = 0; i < CFArrayGetCount(allWindows); i++) {
-      NSString *title = [AccessibilityWrapper getTitle:CFArrayGetValueAtIndex(allWindows, i)];
-      if (title == nil || [EMPTY isEqualToString:title]) continue; // skip empty title windows because they are invisible
-      SlateLogger(@"  Hinting Window: %@", title);
       CFTypeRef _window = CFArrayGetValueAtIndex(allWindows, i);
-      [self createHintWindowFor:(AXUIElementRef)_window inApp:[AccessibilityWrapper applicationForElement:(AXUIElementRef)_window] screenWrapper:sw];
+      NSString *title = [AccessibilityWrapper getTitle:_window];
+      AXUIElementRef appRef = [AccessibilityWrapper applicationForElement:(AXUIElementRef)_window];
+      BOOL isWindowMinimizedOrHidden = [AccessibilityWrapper isWindowMinimizedOrHidden:_window inApp:appRef];
+      if (title == nil || isWindowMinimizedOrHidden) continue; // skip nil title and minimized/hidden windows because they are invisible
+      SlateLogger(@"  Hinting Window: %@", title);
+      [self createHintWindowFor:(AXUIElementRef)_window inApp:appRef screenWrapper:sw];
     }
   }
 

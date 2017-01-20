@@ -90,6 +90,7 @@ static EventHandlerRef modifiersEvent;
 - (void)loadConfig {
   [self setHasUndoOperation:NO];
   [[SlateConfig getInstance] load];
+  [self hideMenuBarIconIfNecessary];
 }
 
 - (void)registerHotKeys {
@@ -166,6 +167,15 @@ static EventHandlerRef modifiersEvent;
   for (NSWindow *window in windows) {
     [window setLevel:(NSScreenSaverWindowLevel - 1)];
   }
+}
+
+- (IBAction)hideMenuBarIcon {
+  [[NSStatusBar systemStatusBar] removeStatusItem:statusItem];
+}
+
+- (void)hideMenuBarIconIfNecessary {
+  BOOL menuBarIconHidden = [[SlateConfig getInstance] getBoolConfig:MENU_BAR_ICON_HIDDEN];
+  if (menuBarIconHidden) [self hideMenuBarIcon];
 }
 
 - (OSStatus)timerActivateBinding:(NSTimer *)timer {
@@ -468,25 +478,32 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 
   windowInfoController = [[NSWindowController alloc] initWithWindow:windowInfo];
   configHelperController = [[NSWindowController alloc] initWithWindow:configHelper];
-
-  NSMenuItem *aboutItem = [statusMenu insertItemWithTitle:@"About Slate" action:@selector(aboutWindow) keyEquivalent:@"" atIndex:0];
-  [aboutItem setTarget:self];
-
-  NSMenuItem *takeSnapshotItem = [statusMenu insertItemWithTitle:@"Take Snapshot" action:@selector(takeSnapshot) keyEquivalent:@"" atIndex:3];
-  [takeSnapshotItem setTarget:self];
-
-  activateSnapshotItem = [statusMenu insertItemWithTitle:@"Activate Snapshot" action:@selector(activateSnapshot) keyEquivalent:@"" atIndex:4];
+  
+  activateSnapshotItem = [statusMenu insertItemWithTitle:@"Activate Snapshot" action:@selector(activateSnapshot) keyEquivalent:@"" atIndex:0];
   [activateSnapshotItem setTarget:self];
-
-  NSMenuItem *loadConfigItem = [statusMenu insertItemWithTitle:@"Relaunch and Load Config" action:@selector(relaunch) keyEquivalent:@"" atIndex:1];
-  [loadConfigItem setTarget:self];
-
-  launchOnLoginItem = [statusMenu insertItemWithTitle:@"Launch Slate on Login" action:@selector(updateLaunchState) keyEquivalent:@"" atIndex:2];
+  
+  NSMenuItem *takeSnapshotItem = [statusMenu insertItemWithTitle:@"Take Snapshot" action:@selector(takeSnapshot) keyEquivalent:@"" atIndex:0];
+  [takeSnapshotItem setTarget:self];
+  
+  [statusMenu insertItem:[NSMenuItem separatorItem] atIndex:0];
+  
+  NSMenuItem *windowInfoItem = [statusMenu insertItemWithTitle:@"Current Window Info" action:@selector(currentWindowInfo) keyEquivalent:@"" atIndex:0];
+  [windowInfoItem setTarget:self];
+  
+  [statusMenu insertItem:[NSMenuItem separatorItem] atIndex:0];
+  
+  launchOnLoginItem = [statusMenu insertItemWithTitle:@"Launch Slate on Login" action:@selector(updateLaunchState) keyEquivalent:@"" atIndex:0];
   [self setLaunchOnLoginItemStatus];
   [launchOnLoginItem setTarget:self];
-
-  NSMenuItem *windowInfoItem = [statusMenu insertItemWithTitle:@"Current Window Info" action:@selector(currentWindowInfo) keyEquivalent:@"" atIndex:4];
-  [windowInfoItem setTarget:self];
+  
+  NSMenuItem *loadConfigItem = [statusMenu insertItemWithTitle:@"Relaunch and Load Config" action:@selector(relaunch) keyEquivalent:@"" atIndex:0];
+  [loadConfigItem setTarget:self];
+  
+  NSMenuItem *hideItem = [statusMenu insertItemWithTitle:@"Hide Menu Bar Icon" action:@selector(hideMenuBarIcon) keyEquivalent:@"" atIndex:0];
+  [hideItem setTarget:self];
+  
+  NSMenuItem *aboutItem = [statusMenu insertItemWithTitle:@"About Slate" action:@selector(aboutWindow) keyEquivalent:@"" atIndex:0];
+  [aboutItem setTarget:self];
 
   //NSMenuItem *configInfoItem = [statusMenu insertItemWithTitle:@"Configuration Helper" action:@selector(configurationHelper) keyEquivalent:@"" atIndex:2];
   //[configInfoItem setTarget:self];
@@ -602,9 +619,8 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
     if (item){
       CFRelease(item);
     }
+    CFRelease(loginItems);
   }
-
-  CFRelease(loginItems);
 }
 
 - (void)deleteFromLoginItems {

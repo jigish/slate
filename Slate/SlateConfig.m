@@ -28,7 +28,6 @@
 #import "StringTokenizer.h"
 #import "Snapshot.h"
 #import "SnapshotList.h"
-#import "JSONKit.h"
 #import "SlateLogger.h"
 #import "NSFileManager+ApplicationSupport.h"
 #import "NSString+Indicies.h"
@@ -393,14 +392,16 @@ static SlateConfig *_instance = nil;
 }
 
 - (BOOL)loadSnapshots {
-  NSString *fileString = [NSString stringWithContentsOfURL:[SlateConfig snapshotsFile] encoding:NSUTF8StringEncoding error:nil];
-  if (fileString == nil || [fileString isEqualToString:EMPTY])
+
+    NSString *jsonString = [NSString stringWithContentsOfURL:[SlateConfig snapshotsFile] encoding:NSUTF8StringEncoding error:nil];
+    if (jsonString == nil || [jsonString isEqualToString:EMPTY])
+        return YES;
+
+    NSError *e = nil;
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *snapshotsDict = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&e];
+    [self snapshotsFromDictionary:snapshotsDict];
     return YES;
-  id iShouldBeADictionary = [fileString objectFromJSONString];
-  if (![iShouldBeADictionary isKindOfClass:[NSDictionary class]]) return NO;
-  NSDictionary *snapshotsDict = iShouldBeADictionary;
-  [self snapshotsFromDictionary:snapshotsDict];
-  return YES;
 }
 
 - (void)addAlias:(NSString *)line {
@@ -488,14 +489,10 @@ static SlateConfig *_instance = nil;
 }
 
 - (void)saveSnapshots {
-  // Build NSDictionary with snapshots
-  NSDictionary *snapshotDict = [self snapshotsToDictionary];
-
-  // Get NSData from NSDictionary
-  NSData *jsonData = [snapshotDict JSONData];
-
-  // Save NSData to file
-  [jsonData writeToURL:[SlateConfig snapshotsFile] atomically:YES];
+    NSError *e = nil;
+    NSDictionary *snapshotDict = [self snapshotsToDictionary];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:snapshotDict options:kNilOptions error:&e];
+    [jsonData writeToURL:[SlateConfig snapshotsFile] atomically:YES];
 }
 
 - (void)addSnapshot:(Snapshot *)snapshot name:(NSString *)name saveToDisk:(BOOL)saveToDisk isStack:(BOOL)isStack stackSize:(NSUInteger)stackSize {
@@ -538,6 +535,7 @@ static SlateConfig *_instance = nil;
 
 - (void)setupDefaultConfigs {
   [self setConfigDefaults:[NSMutableDictionary dictionaryWithCapacity:10]];
+  [configDefaults setObject:MENU_BAR_ICON_HIDDEN_DEFAULT forKey:MENU_BAR_ICON_HIDDEN];
   [configDefaults setObject:DEFAULT_TO_CURRENT_SCREEN_DEFAULT forKey:DEFAULT_TO_CURRENT_SCREEN];
   [configDefaults setObject:NUDGE_PERCENT_OF_DEFAULT forKey:NUDGE_PERCENT_OF];
   [configDefaults setObject:RESIZE_PERCENT_OF_DEFAULT forKey:RESIZE_PERCENT_OF];

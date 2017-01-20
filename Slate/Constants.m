@@ -36,6 +36,8 @@ NSString *const SOURCE = @"source";
 NSString *const IF_EXISTS = @"if_exists";
 
 // Config Keys
+NSString *const MENU_BAR_ICON_HIDDEN = @"menuBarIconHidden";
+NSString *const MENU_BAR_ICON_HIDDEN_DEFAULT = @"false";
 NSString *const DEFAULT_TO_CURRENT_SCREEN = @"defaultToCurrentScreen";
 NSString *const DEFAULT_TO_CURRENT_SCREEN_DEFAULT = @"false";
 NSString *const NUDGE_PERCENT_OF = @"nudgePercentOf";
@@ -297,6 +299,7 @@ NSString *const EMPTY = @"";
 NSString *const PIPE_PADDED = @" | ";
 NSString *const GREATER_THAN_PADDED = @" > ";
 NSString *const QUOTES = @"'\"";
+NSString *const SPACE_WORD= @"<space>";
 NSString *const EQUALS = @"=";
 NSString *const TILDA = @"~";
 NSString *const SLASH = @"/";

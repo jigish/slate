@@ -25,6 +25,12 @@
 static AXUIElementRef systemWideElement = NULL;
 static NSDictionary *unselectableApps = nil;
 
+// private Apple API; via:
+// https://github.com/sdegutis/hydra/blob/fb4ef150f827a5a78fa0b9ba7f75ac4e43d54860/Hydra/API/application.m#L154-L170
+typedef int CGSConnectionID;
+CG_EXTERN CGSConnectionID CGSMainConnectionID(void);
+bool CGSEventIsAppUnresponsive(CGSConnectionID cid, const ProcessSerialNumber *psn);
+
 @implementation AccessibilityWrapper
 
 @synthesize app;
@@ -211,8 +217,26 @@ static NSDictionary *unselectableApps = nil;
   }
 }
 
++ (BOOL)appIsUnresponsive:(AXUIElementRef)app {
+  pid_t pid = [AccessibilityWrapper processIdentifierOfUIElement:app];
+  if (!pid) {
+    return true;
+  }
+
+  ProcessSerialNumber psn;
+  GetProcessForPID(pid, &psn);
+
+  CGSConnectionID conn = CGSMainConnectionID();
+  return CGSEventIsAppUnresponsive(conn, &psn);
+}
+
 + (CFArrayRef)windowsInApp:(AXUIElementRef)app {
   [AccessibilityWrapper createSystemWideElement];
+
+  if ([AccessibilityWrapper appIsUnresponsive:app]) {
+    return nil;
+  }
+
   CFArrayRef _windows;
   if (AXUIElementCopyAttributeValues(app, kAXWindowsAttribute, 0, 100, &_windows) == kAXErrorSuccess) {
     return _windows;
@@ -242,7 +266,7 @@ static NSDictionary *unselectableApps = nil;
 
 + (NSString *)getTitle:(AXUIElementRef)window {
   [AccessibilityWrapper createSystemWideElement];
-  CFTypeRef _title;
+  CFTypeRef _title = NULL;
   if (AXUIElementCopyAttributeValue(window, (CFStringRef)NSAccessibilityTitleAttribute, (CFTypeRef *)&_title) == kAXErrorSuccess) {
     NSString *title = (__bridge NSString *) _title;
     if (_title != NULL) CFRelease(_title);
@@ -286,6 +310,8 @@ static NSDictionary *unselectableApps = nil;
       if (_element != NULL) CFRelease(_element);
       return (AXUIElementRef)_window;
     }
+    SlateLogger(@"Warning, returning raw accessibility element %@", _element);
+    return _element;
   }
   SlateLogger(@"Returning null");
   return NULL;

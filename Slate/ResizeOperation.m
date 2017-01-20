@@ -71,10 +71,8 @@
   NSRect cWindowRect = NSMakeRect(cTopLeft.x, cTopLeft.y, cSize.width, cSize.height);
   NSSize nSize = [self getDimensionsWithCurrentWindow:cWindowRect screenWrapper:sw];
   if (!NSEqualSizes(cSize, nSize)) {
-    success = [aw resizeWindow:nSize];
-    NSSize realNewSize = [aw getCurrentSize];
-    NSPoint nTopLeft = [self getTopLeftWithCurrentWindow:cWindowRect newSize:realNewSize];
-    success = [aw moveWindow:nTopLeft] && success;
+      NSPoint nTopLeft = [self getTopLeftWithCurrentWindow:cWindowRect newSize:nSize];
+      success = [aw moveWindow:nTopLeft] && [aw resizeWindow:nSize];
   }
   return success;
 }

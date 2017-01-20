@@ -93,7 +93,6 @@ static float switchFontHeight = -1;
     iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(iconPadding, iconPadding, iconSize, iconSize)];
   }
   NSImage *icon = [app icon];
-  [icon setScalesWhenResized:YES];
   [icon setSize:NSMakeSize(iconSize, iconSize)];
   [iconView setImage:icon];
   [iconView setAlphaValue:(hidden ? HIDDEN_ALPHA : SHOWN_ALPHA)];
@@ -162,7 +161,6 @@ static float switchFontHeight = -1;
                                                       blue:[[bgColorArr objectAtIndex:2] floatValue]/255.0
                                                      alpha:[[bgColorArr objectAtIndex:3] floatValue]];
     NSArray *borderColorArr = [[SlateConfig getInstance] getArrayConfig:SWITCH_SELECTED_BORDER_COLOR];
-    if ([borderColorArr count] < 4) bgColorArr = [SWITCH_SELECTED_BORDER_COLOR_DEFAULT componentsSeparatedByString:SEMICOLON];
     borderColor = [NSColor colorWithDeviceRed:[[borderColorArr objectAtIndex:0] floatValue]/255.0
                                         green:[[borderColorArr objectAtIndex:1] floatValue]/255.0
                                          blue:[[borderColorArr objectAtIndex:2] floatValue]/255.0

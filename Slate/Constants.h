@@ -36,6 +36,8 @@ extern NSString *const SOURCE;
 extern NSString *const IF_EXISTS;
 
 // Config Keys
+extern NSString *const MENU_BAR_ICON_HIDDEN;
+extern NSString *const MENU_BAR_ICON_HIDDEN_DEFAULT;
 extern NSString *const DEFAULT_TO_CURRENT_SCREEN;
 extern NSString *const DEFAULT_TO_CURRENT_SCREEN_DEFAULT;
 extern NSString *const NUDGE_PERCENT_OF;
@@ -297,6 +299,7 @@ extern NSString *const EMPTY;
 extern NSString *const PIPE_PADDED;
 extern NSString *const GREATER_THAN_PADDED;
 extern NSString *const QUOTES;
+extern NSString *const SPACE_WORD;
 extern NSString *const EQUALS;
 extern NSString *const TILDA;
 extern NSString *const SLASH;
