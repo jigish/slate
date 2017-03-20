@@ -26,7 +26,12 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 **NEW Installation Instructions**
 
-**Note:** You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices
+**Note:** You must turn on the Accessibility API.
+For OSX 10.8 (Mountain Lion) or earlier: check System Preferences > Universal
+Access > Enable access for assistive devices.
+For OSX 10.9 (Mavericks) or later: go to System Preferences > Security and
+Privacy > Privacy > Accessibility and add Slate to the list of allowed apps.
+
 
 ### Direct Download ###
 
