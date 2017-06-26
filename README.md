@@ -58,7 +58,7 @@ Configuration is split into the following directives:
 
 **Note:** `#` is the comment character. Anything after a `#` will be ignored.
 
-###Expressions###
+### Expressions ###
 
 Some directives allow parameters that can be expressions. The following strings will be replaced with the appropriate values when using expressions:
 
