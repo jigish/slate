@@ -341,7 +341,7 @@ Execute a shell command: `shell options 'command'`
 
     Example:
 
-        bind 1:ctrl wait path:~/code '/opt/local/bin/mvim'
+        bind 1:ctrl shell wait path:~/code '/opt/local/bin/mvim'
 
     Will bind the keystroke ctrl-1 to run the command `/opt/local/bin/mvim` with the current working directory of `~/code`. Slate will also block until the command is done. Note that you may **not** use the tilda home directory shortcut within the command itself, it is only allowed within the path.
 
