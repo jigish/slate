@@ -336,8 +336,8 @@ Execute a shell command: `shell options 'command'`
         options = (optional) a space separated list of:
                    wait  - block slate until the shell command exits. Useful when using shell commands in a
                            sequence binding
-                   path: - the inital working directory to use when starting the command. For example
-                           path:~/code would set the inital working directory to ~/code
+                   path: - the initial working directory to use when starting the command. For example
+                           path:~/code would set the initial working directory to ~/code
 
     Example:
 
