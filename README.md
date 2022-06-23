@@ -1,3 +1,9 @@
+# About Slate-arm64 #
+
+I forked the original repository and refactored the project so that it runs natively on Apple silicon. I refactored some deprecated function calls to allow building.
+
+Slate-arm64 currently works on Mac OS X 10.9 and above
+
 # About Slate #
 
 Slate is a window management application similar to Divvy and SizeUp (except better and free!). Originally written to replace them due to some limitations in how each work, it attempts to overcome them by simply being extremely configurable. As a result, it may be a bit daunting to get configured, but once it is done, the benefit is huge.

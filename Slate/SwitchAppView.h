@@ -34,7 +34,6 @@
 }
 
 @property (assign) BOOL selected;
-@property (assign) BOOL hidden;
 @property (assign) BOOL quitting;
 @property (assign) BOOL forceQuitting;
 @property NSRunningApplication *app;

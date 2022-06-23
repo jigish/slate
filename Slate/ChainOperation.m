@@ -133,7 +133,6 @@
 
       if (op == nil) {
         @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
-        continue;
       }
       [ops addObject:op];
     }
