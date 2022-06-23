@@ -39,7 +39,7 @@
 
 - (void)testExample
 {
-    STAssertTrue(true, @"Unit tests are not implemented yet in SlateTests");
+    XCTAssertTrue(true, @"Unit tests are not implemented yet in SlateTests");
 }
 
 @end

@@ -90,14 +90,12 @@
     for (id key in value) {
       if (![key isKindOfClass:[Operation class]] && ![key isKindOfClass:[NSArray class]] && ![key isKindOfClass:[WebScriptObject class]]) {
         @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
-        continue;
       }
       NSMutableArray *innerOps = [NSMutableArray array];
       if ([key isKindOfClass:[WebScriptObject class]]) {
         Operation *op = [JSOperation jsOperationWithFunction:key];
         if (op == nil) {
           @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
-          continue;
         }
         [innerOps addObject:op];
       } else if ([key isKindOfClass:[Operation class]]) {
@@ -112,7 +110,6 @@
           }
           if (op == nil) {
             @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
-            continue;
           }
           [innerOps addObject:op];
         }
