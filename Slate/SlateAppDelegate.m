@@ -32,7 +32,6 @@
 #import "SwitchOperation.h"
 #import "RunningApplications.h"
 #import "GridOperation.h"
-#import <Sparkle/SUUpdater.h>
 
 @implementation SlateAppDelegate
 
@@ -60,16 +59,8 @@ static EventHandlerRef modifiersEvent;
 }
 
 - (IBAction)relaunch {
-  NSString *launcherSource = [[NSBundle bundleForClass:[SUUpdater class]]  pathForResource:@"relaunch" ofType:@""];
-  NSString *launcherTarget = [NSTemporaryDirectory() stringByAppendingPathComponent:[launcherSource lastPathComponent]];
-  NSString *appPath = [[NSBundle mainBundle] bundlePath];
-  NSString *processID = [NSString stringWithFormat:@"%d", [[NSProcessInfo processInfo] processIdentifier]];
-
-  [[NSFileManager defaultManager] removeItemAtPath:launcherTarget error:NULL];
-  [[NSFileManager defaultManager] copyItemAtPath:launcherSource toPath:launcherTarget error:NULL];
-
-  [NSTask launchedTaskWithLaunchPath:launcherTarget arguments:[NSArray arrayWithObjects:appPath, processID, nil]];
-  [NSApp terminate:self];
+  // Relaunch relied on Sparkle's bundled "relaunch" helper, which has been removed.
+  NSLog(@"ERROR: relaunch is not available in this build.");
 }
 
 - (IBAction)currentWindowInfo {
@@ -543,6 +534,9 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
+  if ([menuItem action] == @selector(relaunch)) {
+    return NO;
+  }
   if (menuItem == activateSnapshotItem) {
     SnapshotList *menuSnapshots = [[[SlateConfig getInstance] snapshots] objectForKey:@"menuSnapshot"];
     if (menuSnapshots == nil || [[menuSnapshots snapshots] count] <= 0) {
