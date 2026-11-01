@@ -28,7 +28,6 @@
 #import "StringTokenizer.h"
 #import "Snapshot.h"
 #import "SnapshotList.h"
-#import "JSONKit.h"
 #import "SlateLogger.h"
 #import "NSFileManager+ApplicationSupport.h"
 #import "NSString+Indicies.h"
@@ -396,7 +395,12 @@ static SlateConfig *_instance = nil;
   NSString *fileString = [NSString stringWithContentsOfURL:[SlateConfig snapshotsFile] encoding:NSUTF8StringEncoding error:nil];
   if (fileString == nil || [fileString isEqualToString:EMPTY])
     return YES;
-  id iShouldBeADictionary = [fileString objectFromJSONString];
+  NSError *parseError = nil;
+  id iShouldBeADictionary = [NSJSONSerialization JSONObjectWithData:[fileString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&parseError];
+  if (iShouldBeADictionary == nil) {
+    NSLog(@"ERROR: Unable to parse snapshots file %@: %@", [SlateConfig snapshotsFile], parseError);
+    return NO;
+  }
   if (![iShouldBeADictionary isKindOfClass:[NSDictionary class]]) return NO;
   NSDictionary *snapshotsDict = iShouldBeADictionary;
   [self snapshotsFromDictionary:snapshotsDict];
@@ -492,10 +496,17 @@ static SlateConfig *_instance = nil;
   NSDictionary *snapshotDict = [self snapshotsToDictionary];
 
   // Get NSData from NSDictionary
-  NSData *jsonData = [snapshotDict JSONData];
+  NSError *error = nil;
+  NSData *jsonData = [NSJSONSerialization dataWithJSONObject:snapshotDict options:0 error:&error];
+  if (jsonData == nil) {
+    NSLog(@"ERROR: Unable to serialize snapshots: %@", error);
+    return;
+  }
 
   // Save NSData to file
-  [jsonData writeToURL:[SlateConfig snapshotsFile] atomically:YES];
+  if (![jsonData writeToURL:[SlateConfig snapshotsFile] options:NSDataWritingAtomic error:&error]) {
+    NSLog(@"ERROR: Unable to save snapshots to %@: %@", [SlateConfig snapshotsFile], error);
+  }
 }
 
 - (void)addSnapshot:(Snapshot *)snapshot name:(NSString *)name saveToDisk:(BOOL)saveToDisk isStack:(BOOL)isStack stackSize:(NSUInteger)stackSize {
