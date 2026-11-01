@@ -24,20 +24,16 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 ## Installing Slate ##
 
-**NEW Installation Instructions**
+Slate is built from source. Requirements: macOS 13+ and Xcode.
 
-**Note:** You must turn on the Accessibility API by checking System Preferences > Universal Access > Enable access for assistive devices
+    git clone https://github.com/jeromeopus1io/slate.git
+    cd slate
+    xcodebuild -project Slate.xcodeproj -scheme Slate -configuration Release -derivedDataPath build
+    cp -R build/Build/Products/Release/Slate.app /Applications/
 
-### Direct Download ###
+Grant Accessibility access: System Settings > Privacy & Security > Accessibility > enable Slate.
 
-* [`.dmg`](http://slate.ninjamonkeysoftware.com/Slate.dmg)
-* [`.tar.gz`](http://slate.ninjamonkeysoftware.com/versions/slate-latest.tar.gz)
-
-### Terminal ###
-
-Just run this in your terminal:
-
-    cd /Applications && curl http://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
+**Note:** Local builds are ad-hoc signed. After installing a rebuilt Slate.app, remove Slate from the Accessibility list and add it again.
 
 ## Configuring Slate ##
 
