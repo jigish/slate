@@ -45,7 +45,9 @@ To keep the Accessibility grant across rebuilds, sign with an Apple Development 
 
 ## Configuring Slate ##
 
-Slate is configured using a ".slate" file in the current user's home directory. Configuration is loaded upon running Slate. To apply config changes, use "Relaunch and Load Config" in the status menu or bind the `relaunch` operation.
+Slate is configured using a ".slate" file in the current user's home directory. Config files (`~/.slate` and any file it `source`s) must be owned by you and not writable by other users (`chmod go-w ~/.slate`); otherwise Slate refuses to load them. Symlinks are followed and the target is checked.
+
+Configuration is loaded upon running Slate. To apply config changes, use "Relaunch and Load Config" in the status menu or bind the `relaunch` operation.
 
 **Note:** If no ".slate" file exists in the current user's home directory, the [default config file](https://github.com/jigish/slate/blob/master/Slate/default.slate) will be used.
 

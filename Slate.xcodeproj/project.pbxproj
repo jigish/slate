@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A1E00000000000000A02003 /* TestConfigFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E00000000000000A02002 /* TestConfigFile.m */; };
+		5A1E00000000000000B01003 /* ConfigFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E00000000000000B01002 /* ConfigFile.m */; };
 		5A1E00000000000000A01003 /* TestShellOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E00000000000000A01002 /* TestShellOperation.m */; };
 		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
 		3B34F39115462323004090BB /* NSFileManager+ApplicationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */; };
@@ -96,6 +98,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A1E00000000000000A02001 /* TestConfigFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestConfigFile.h; sourceTree = "<group>"; };
+		5A1E00000000000000A02002 /* TestConfigFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestConfigFile.m; sourceTree = "<group>"; };
+		5A1E00000000000000B01001 /* ConfigFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFile.h; sourceTree = "<group>"; };
+		5A1E00000000000000B01002 /* ConfigFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFile.m; sourceTree = "<group>"; };
 		5A1E00000000000000A01001 /* TestShellOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestShellOperation.h; sourceTree = "<group>"; };
 		5A1E00000000000000A01002 /* TestShellOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestShellOperation.m; sourceTree = "<group>"; };
 		5A1E0000000000000000C0DE /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
@@ -297,6 +303,8 @@
 				3BA1BA61162DDFEF0026774E /* TestExpressionPoint.m */,
 				3BA1BA5A162DD7190026774E /* TestMathUtils.h */,
 				3BA1BA5B162DD7190026774E /* TestMathUtils.m */,
+				5A1E00000000000000A02001 /* TestConfigFile.h */,
+				5A1E00000000000000A02002 /* TestConfigFile.m */,
 				5A1E00000000000000A01001 /* TestShellOperation.h */,
 				5A1E00000000000000A01002 /* TestShellOperation.m */,
 				3BA1BA6C162F51760026774E /* TestShellUtils.h */,
@@ -340,6 +348,8 @@
 				3B40AC2013A73530006C9A5C /* Layout.m */,
 				47C4A2C91384EA510066B6DE /* SlateConfig.h */,
 				47C4A2CA1384EA510066B6DE /* SlateConfig.m */,
+				5A1E00000000000000B01001 /* ConfigFile.h */,
+				5A1E00000000000000B01002 /* ConfigFile.m */,
 				3B42D72D13A831E6009103A0 /* ApplicationOptions.h */,
 				3B42D72E13A831E6009103A0 /* ApplicationOptions.m */,
 				3BDDA17B14FDA50C00829D2A /* Snapshot.h */,
@@ -647,6 +657,7 @@
 				47C4A2A11384E8890066B6DE /* main.m in Sources */,
 				47C4A2A71384E8890066B6DE /* SlateAppDelegate.m in Sources */,
 				47C4A2CB1384EA510066B6DE /* SlateConfig.m in Sources */,
+				5A1E00000000000000B01003 /* ConfigFile.m in Sources */,
 				47C4A2CE1384F26A0066B6DE /* Binding.m in Sources */,
 				47C4A2D11384F3E10066B6DE /* Operation.m in Sources */,
 				47C4A2D41384F4A60066B6DE /* MoveOperation.m in Sources */,
@@ -708,6 +719,7 @@
 				3B8B5527161A1FDF00E21A6C /* TestNSString+Indicies.m in Sources */,
 				3BA1BA58162DD3630026774E /* TestNSString+Levenshtein.m in Sources */,
 				3BA1BA5C162DD7190026774E /* TestMathUtils.m in Sources */,
+				5A1E00000000000000A02003 /* TestConfigFile.m in Sources */,
 				5A1E00000000000000A01003 /* TestShellOperation.m in Sources */,
 				3BA1BA62162DDFEF0026774E /* TestExpressionPoint.m in Sources */,
 				3BA1BA65162E01A30026774E /* TestStringTokenizer.m in Sources */,

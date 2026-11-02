@@ -25,6 +25,7 @@
 #import "ScreenState.h"
 #import "ScreenWrapper.h"
 #import "SlateConfig.h"
+#import "ConfigFile.h"
 #import "StringTokenizer.h"
 #import "Snapshot.h"
 #import "SnapshotList.h"
@@ -145,7 +146,7 @@ static SlateConfig *_instance = nil;
     SlateLogger(@"  ERROR Could not load ~/.slate");
     NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Continue", @"Quit", nil]];
     [alert setMessageText:@"Could not load ~/.slate"];
-    [alert setInformativeText:@"The default configuration will be used. You can find the default .slate file at https://github.com/jigish/slate/blob/master/Slate/default.slate"];
+    [alert setInformativeText:@"~/.slate is missing, or is not trusted because it is not owned by you or is writable by other users (details in Console). The default configuration will be used."];
     if ([alert runModal] == NSAlertSecondButtonReturn) {
       SlateLogger(@"User selected exit");
       [NSApp terminate:nil];
@@ -185,10 +186,17 @@ static SlateConfig *_instance = nil;
     NSLog(@"ERROR: Cannot load %@: JavaScript configs are no longer supported.", configFile);
     return NO;
   }
-  NSError *err;
-  NSString *fileString = [NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:&err];
-  if (err == nil && fileString != nil && fileString != NULL) { return [self append:fileString]; }
-  return NO;
+  NSError *error = nil;
+  NSString *fileString = [ConfigFile contentsOfFileAtPath:[configFile stringByExpandingTildeInPath] error:&error];
+  if (fileString == nil) {
+    if ([ConfigFile isMissingFileError:error]) {
+      SlateLogger(@"Config file %@ does not exist.", configFile);
+    } else {
+      NSLog(@"ERROR: Not loading config: %@", [error localizedDescription]);
+    }
+    return NO;
+  }
+  return [self append:fileString];
 }
 
 - (NSString *)stripComments:(NSString *)line {
