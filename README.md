@@ -334,7 +334,8 @@ Move/Resize the window into a corner: `corner direction style`
 ##### shell #####
 Execute a shell command: `shell options 'command'`
 
-        command = (required) the command to run. note that it is a quoted string.
+        command = (required) the command to run. note that it is a quoted string. The command must be an
+                  absolute path (e.g. '/usr/bin/open', not 'open'); '~/' is expanded.
         options = (optional) a space separated list of:
                    wait  - block slate until the shell command exits. Useful when using shell commands in a
                            sequence binding

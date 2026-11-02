@@ -84,7 +84,7 @@
       SlateLogger(@"ERROR: Invalid Shell Parameter '%@'", value);
       @throw([NSException exceptionWithName:@"Invalid Shell Parameter" reason:[NSString stringWithFormat:@"Invalid Shell Parameter '%@'.", value] userInfo:nil]);
     }
-    NSString *cmd = [commandAndArgsTokens objectAtIndex:0];
+    NSString *cmd = [ShellOperation absoluteCommand:[commandAndArgsTokens objectAtIndex:0]];
     NSMutableArray *ars = [NSMutableArray array];
     for (NSInteger i = 1; i < [commandAndArgsTokens count]; i++) {
       [ars addObject:[commandAndArgsTokens objectAtIndex:i]];
@@ -106,6 +106,15 @@
 
 + (id)shellOperation {
   return [[ShellOperation alloc] init];
+}
+
+// Commands must be absolute paths ("~/" is expanded) so a config can't run whatever a relative name resolves to.
++ (NSString *)absoluteCommand:(NSString *)command {
+  NSString *expanded = [command stringByExpandingTildeInPath];
+  if (![expanded isAbsolutePath]) {
+    @throw([NSException exceptionWithName:@"Invalid Shell Command" reason:[NSString stringWithFormat:@"Shell command '%@' must be an absolute path, e.g. '/usr/bin/open'.", command] userInfo:nil]);
+  }
+  return expanded;
 }
 
 + (id)shellOperationFromString:(NSString *)shellOperation {
@@ -137,7 +146,7 @@
     SlateLogger(@"ERROR: Invalid Parameters '%@'", shellOperation);
     @throw([NSException exceptionWithName:@"Invalid Parameters" reason:[NSString stringWithFormat:@"Invalid Parameters in '%@'. Shell operations require the following format: shell [wait] 'command'", shellOperation] userInfo:nil]);
   }
-  NSString *command = [commandAndArgsTokens objectAtIndex:0];
+  NSString *command = [ShellOperation absoluteCommand:[commandAndArgsTokens objectAtIndex:0]];
   NSMutableArray *args = [NSMutableArray array];
   for (NSInteger i = 1; i < [commandAndArgsTokens count]; i++) {
     [args addObject:[commandAndArgsTokens objectAtIndex:i]];

@@ -35,6 +35,7 @@
 - (id)initWithCommand:(NSString *)theCommand args:(NSArray *)theArgs waitForExit:(BOOL)theWaitForExit currentPath:(NSString *)theCurrentPath;
 
 + (id)shellOperation;
++ (NSString *)absoluteCommand:(NSString *)command;
 + (id)shellOperationFromString:(NSString *)shellOperation;
 
 @end

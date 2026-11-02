@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A1E00000000000000A01003 /* TestShellOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E00000000000000A01002 /* TestShellOperation.m */; };
 		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
 		3B34F39115462323004090BB /* NSFileManager+ApplicationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B34F39015462323004090BB /* NSFileManager+ApplicationSupport.m */; };
 		3B3C41A01501ADC600C1E927 /* HintOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C419F1501ADC600C1E927 /* HintOperation.m */; };
@@ -95,6 +96,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A1E00000000000000A01001 /* TestShellOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestShellOperation.h; sourceTree = "<group>"; };
+		5A1E00000000000000A01002 /* TestShellOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestShellOperation.m; sourceTree = "<group>"; };
 		5A1E0000000000000000C0DE /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		3B3335AB14FC1EA900F72638 /* WindowInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowInfoView.h; sourceTree = "<group>"; };
 		3B3335AC14FC1EA900F72638 /* WindowInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowInfoView.m; sourceTree = "<group>"; };
@@ -294,6 +297,8 @@
 				3BA1BA61162DDFEF0026774E /* TestExpressionPoint.m */,
 				3BA1BA5A162DD7190026774E /* TestMathUtils.h */,
 				3BA1BA5B162DD7190026774E /* TestMathUtils.m */,
+				5A1E00000000000000A01001 /* TestShellOperation.h */,
+				5A1E00000000000000A01002 /* TestShellOperation.m */,
 				3BA1BA6C162F51760026774E /* TestShellUtils.h */,
 				3BA1BA6D162F51760026774E /* TestShellUtils.m */,
 				3BA1BA63162E01A20026774E /* TestStringTokenizer.h */,
@@ -703,6 +708,7 @@
 				3B8B5527161A1FDF00E21A6C /* TestNSString+Indicies.m in Sources */,
 				3BA1BA58162DD3630026774E /* TestNSString+Levenshtein.m in Sources */,
 				3BA1BA5C162DD7190026774E /* TestMathUtils.m in Sources */,
+				5A1E00000000000000A01003 /* TestShellOperation.m in Sources */,
 				3BA1BA62162DDFEF0026774E /* TestExpressionPoint.m in Sources */,
 				3BA1BA65162E01A30026774E /* TestStringTokenizer.m in Sources */,
 				3BA1BA6E162F51760026774E /* TestShellUtils.m in Sources */,
