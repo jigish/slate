@@ -69,7 +69,6 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
-  [self evalOptionsWithAccessibilityWrapper:iamnil screenWrapper:iamalsonil];
   for (NSString *appName in [self apps]) {
     NSRunningApplication *app = nil;
     if ([CURRENT isEqualToString:appName]) {

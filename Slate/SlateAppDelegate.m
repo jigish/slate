@@ -21,7 +21,6 @@
 #import "Constants.h"
 #import "SlateAppDelegate.h"
 #import "SlateConfig.h"
-#import "JSController.h"
 #import "Binding.h"
 #import "HintOperation.h"
 #import "SlateLogger.h"

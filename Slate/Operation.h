@@ -26,12 +26,10 @@
 @interface Operation : NSObject {
   NSString *opName;
   NSMutableDictionary *options;
-  NSMutableDictionary *dynamicOptions;
 }
 
 @property NSString *opName;
 @property NSMutableDictionary *options;
-@property NSMutableDictionary *dynamicOptions;
 
 - (BOOL)doOperation;
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;
@@ -43,7 +41,6 @@
 - (void)beforeInitOptions;
 - (void)initOptions:(NSDictionary *)_options;
 - (void)parseOption:(NSString *)name value:(id)value;
-- (void)evalOptionsWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw;
 - (void)afterEvalOptions;
 - (id)dup:(NSDictionary *)_options;
 

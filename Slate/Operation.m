@@ -40,25 +40,21 @@
 #import "UndoOperation.h"
 #import "SlateConfig.h"
 #import <WebKit/WebKit.h>
-#import "JSController.h"
 #import "CornerOperation.h"
 #import "ThrowOperation.h"
 #import "NudgeOperation.h"
 #import "PushOperation.h"
-#import "JSInfoWrapper.h"
 
 @implementation Operation
 
 @synthesize opName;
 @synthesize options;
-@synthesize dynamicOptions;
 
 - (id)init {
   self = [super init];
   if (self) {
     [self setOpName:nil];
     [self setOptions:[NSMutableDictionary dictionary]];
-    [self setDynamicOptions:[NSMutableDictionary dictionary]];
   }
 
   return self;
@@ -110,16 +106,12 @@
         [opt isKindOfClass:[NSDictionary class]] || [opt isKindOfClass:[NSArray class]]) {
       [self.options setObject:opt forKey:key];
       [self parseOption:key value:[[self options] objectForKey:key]];
-    } else if ([opt isKindOfClass:[WebScriptObject class]]) {
-      // assume this is a function (otherwise it would have been converted)
-      NSString *jsKey = [[JSController getInstance] addCallableFunction:opt];
-      [self.dynamicOptions setObject:jsKey forKey:key];
     } else {
       [self.options setObject:[NSString stringWithFormat:@"%@", opt] forKey:key];
       [self parseOption:key value:[[self options] objectForKey:key]];
     }
   }
-  if ([[self dynamicOptions] count] == 0) { [self afterEvalOptions]; };
+  [self afterEvalOptions];
 }
 
 - (void)beforeInitOptions {
@@ -135,34 +127,11 @@
 }
 
 - (BOOL)testOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
-  [self evalOptionsWithAccessibilityWrapper:aw screenWrapper:sw];
   return [self testOperation];
-}
-
-- (void)evalOptionsWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
-  if ([[self dynamicOptions] count] == 0) { return; }
-  if (aw == nil) {
-    [[JSInfoWrapper getInstance] setAw:[[AccessibilityWrapper alloc] init]];
-  } else {
-    [[JSInfoWrapper getInstance] setAw:aw];
-  }
-  if (sw == nil) {
-    [[JSInfoWrapper getInstance] setSw:[[ScreenWrapper alloc] init]];
-  } else {
-    [[JSInfoWrapper getInstance] setSw:sw];
-  }
-  for (NSString *key in [[self dynamicOptions] allKeys]) {
-    id result = [[JSController getInstance] runCallableFunction:[[self dynamicOptions] objectForKey:key]];
-    if (result == nil) { continue; }
-    [self.options setObject:result forKey:key];
-    [self parseOption:key value:[[self options] objectForKey:key]];
-  }
-  [self afterEvalOptions];
 }
 
 - (id)dup:(NSDictionary *)_options {
   NSMutableDictionary *newOptions = [NSMutableDictionary dictionaryWithDictionary:[self options]];
-  [newOptions addEntriesFromDictionary:[self dynamicOptions]];
   [newOptions addEntriesFromDictionary:_options];
   return [Operation operationWithName:[self opName] options:newOptions];
 }

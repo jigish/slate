@@ -74,7 +74,6 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
-  [self evalOptionsWithAccessibilityWrapper:iamnil screenWrapper:iamalsonil];
   // App case
   if ([self app] != nil) {
     for (NSRunningApplication *runningApp in [RunningApplications getInstance]) {

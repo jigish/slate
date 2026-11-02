@@ -65,7 +65,6 @@
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = NO;
-  [self evalOptionsWithAccessibilityWrapper:aw screenWrapper:sw];
   NSPoint cTopLeft = [aw getCurrentTopLeft];
   NSSize cSize = [aw getCurrentSize];
   NSRect cWindowRect = NSMakeRect(cTopLeft.x, cTopLeft.y, cSize.width, cSize.height);

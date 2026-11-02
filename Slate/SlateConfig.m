@@ -32,9 +32,7 @@
 #import "NSFileManager+ApplicationSupport.h"
 #import "NSString+Indicies.h"
 #import "ActivateSnapshotOperation.h"
-#import "JSController.h"
 #import "Operation.h"
-#import "JSScreenWrapper.h"
 
 @implementation SlateConfig
 
@@ -99,13 +97,7 @@ static SlateConfig *_instance = nil;
 }
 
 - (NSString *)getConfig:(NSString *)key {
-  NSString *c = [configs objectForKey:key];
-  if ([c hasPrefix:@"_javascript_::"]) {
-    NSString *fkey = [c stringByReplacingOccurrencesOfString:@"_javascript_::" withString:@""];
-    id ret = [[JSController getInstance] runCallableFunction:fkey];
-    return [NSString stringWithFormat:@"%@", ret];
-  }
-  return c;
+  return [configs objectForKey:key];
 }
 
 - (void)setConfig:(NSString *)key to:(NSString *)value {
@@ -143,13 +135,16 @@ static SlateConfig *_instance = nil;
   [self setDefaultLayouts:[[NSMutableArray alloc] init]];
   [self setAliases:[[NSMutableDictionary alloc] init]];
 
-  BOOL loadedDefault = [self loadConfigFileWithPath:@"~/.slate"];
-  BOOL loadedJS = [self loadConfigFileWithPath:@"~/.slate.js"];
+  if ([[NSFileManager defaultManager] fileExistsAtPath:[@"~/.slate.js" stringByExpandingTildeInPath]]) {
+    NSLog(@"WARNING: ~/.slate.js is ignored: JavaScript configs are no longer supported. Use ~/.slate.");
+  }
 
-  if (!loadedDefault && !loadedJS) {
-    SlateLogger(@"  ERROR Could not load ~/.slate or ~/.slate.js");
+  BOOL loadedDefault = [self loadConfigFileWithPath:@"~/.slate"];
+
+  if (!loadedDefault) {
+    SlateLogger(@"  ERROR Could not load ~/.slate");
     NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Continue", @"Quit", nil]];
-    [alert setMessageText:@"Could not load ~/.slate or ~/.slate.js"];
+    [alert setMessageText:@"Could not load ~/.slate"];
     [alert setInformativeText:@"The default configuration will be used. You can find the default .slate file at https://github.com/jigish/slate/blob/master/Slate/default.slate"];
     if ([alert runModal] == NSAlertSecondButtonReturn) {
       SlateLogger(@"User selected exit");
@@ -187,7 +182,8 @@ static SlateConfig *_instance = nil;
   if ([file rangeOfString:SLASH].location != 0 && [file rangeOfString:TILDA].location != 0)
     configFile = [NSString stringWithFormat:@"~/%@", file];
   if ([configFile hasSuffix:EXT_JS]) {
-    return [[JSController getInstance] loadConfigFileWithPath:configFile];
+    NSLog(@"ERROR: Cannot load %@: JavaScript configs are no longer supported.", configFile);
+    return NO;
   }
   NSError *err;
   NSString *fileString = [NSString stringWithContentsOfFile:[configFile stringByExpandingTildeInPath] encoding:NSUTF8StringEncoding error:&err];
@@ -478,7 +474,6 @@ static SlateConfig *_instance = nil;
   SlateLogger(@"onScreenChange");
   if (![ScreenWrapper hasScreenConfigChanged]) return;
   [self checkDefaults];
-  [[JSController getInstance] runCallbacks:@"screenConfigurationChanged" payload:nil];
 }
 
 - (NSDictionary *)snapshotsToDictionary {
@@ -609,8 +604,6 @@ static SlateConfig *_instance = nil;
   [configDefaults setObject:UNDO_MAX_STACK_SIZE_DEFAULT forKey:UNDO_MAX_STACK_SIZE];
   [configDefaults setObject:UNDO_OPS_DEFAULT forKey:UNDO_OPS];
   [configDefaults setObject:MODAL_ESCAPE_KEY_DEFAULT forKey:MODAL_ESCAPE_KEY];
-  [configDefaults setObject:JS_RECEIVE_MOVE_EVENT_DEFAULT forKey:JS_RECEIVE_MOVE_EVENT];
-  [configDefaults setObject:JS_RECEIVE_RESIZE_EVENT_DEFAULT forKey:JS_RECEIVE_RESIZE_EVENT];
   [self setConfigs:[NSMutableDictionary dictionary]];
   [self setAppConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];

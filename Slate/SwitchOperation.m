@@ -108,7 +108,6 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
-  [self evalOptionsWithAccessibilityWrapper:aw screenWrapper:sw];
   apps = [NSArray arrayWithArray:[[RunningApplications getInstance] apps]];
   for (__unused NSRunningApplication *app in apps) {
     [appsToQuit addObject:[NSNumber numberWithBool:NO]];

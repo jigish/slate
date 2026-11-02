@@ -22,9 +22,7 @@
 #import "SlateLogger.h"
 #import "StringTokenizer.h"
 #import "Constants.h"
-#import "JSController.h"
 #import <WebKit/WebKit.h>
-#import "JSOperation.h"
 
 @implementation SequenceOperation
 
@@ -88,26 +86,17 @@
     }
     NSMutableArray *ops = [NSMutableArray array];
     for (id key in value) {
-      if (![key isKindOfClass:[Operation class]] && ![key isKindOfClass:[NSArray class]] && ![key isKindOfClass:[WebScriptObject class]]) {
+      if (![key isKindOfClass:[Operation class]] && ![key isKindOfClass:[NSArray class]]) {
         @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
         continue;
       }
       NSMutableArray *innerOps = [NSMutableArray array];
-      if ([key isKindOfClass:[WebScriptObject class]]) {
-        Operation *op = [JSOperation jsOperationWithFunction:key];
-        if (op == nil) {
-          @throw([NSException exceptionWithName:[NSString stringWithFormat:@"Invalid %@", _name] reason:[NSString stringWithFormat:@"Invalid %@ '%@'", _name, value] userInfo:nil]);
-          continue;
-        }
-        [innerOps addObject:op];
-      } else if ([key isKindOfClass:[Operation class]]) {
+      if ([key isKindOfClass:[Operation class]]) {
         [innerOps addObject:key];
       } else if ([key isKindOfClass:[NSArray class]]) {
         for (id innerKey in key) {
           Operation *op = nil;
-          if ([innerKey isKindOfClass:[WebScriptObject class]]) {
-            op = [JSOperation jsOperationWithFunction:innerKey];
-          } else if ([innerKey isKindOfClass:[Operation class]]) {
+          if ([innerKey isKindOfClass:[Operation class]]) {
             op = innerKey;
           }
           if (op == nil) {

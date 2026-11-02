@@ -157,10 +157,6 @@ NSString *const LAYOUT_FOCUS_ON_ACTIVATE = @"layoutFocusOnActivate";
 NSString *const LAYOUT_FOCUS_ON_ACTIVATE_DEFAULT = @"false";
 NSString *const MODAL_ESCAPE_KEY = @"modalEscapeKey";
 NSString *const MODAL_ESCAPE_KEY_DEFAULT = @"";
-NSString *const JS_RECEIVE_MOVE_EVENT = @"jsReceiveMoveEvent";
-NSString *const JS_RECEIVE_MOVE_EVENT_DEFAULT = @"false";
-NSString *const JS_RECEIVE_RESIZE_EVENT = @"jsReceiveResizeEvent";
-NSString *const JS_RECEIVE_RESIZE_EVENT_DEFAULT = @"false";
 
 // Application Option Keys
 NSString *const IGNORE_FAIL = @"IGNORE_FAIL";

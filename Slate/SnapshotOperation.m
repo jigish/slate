@@ -70,7 +70,6 @@
 }
 
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)iamnil screenWrapper:(ScreenWrapper *)iamalsonil {
-  [self evalOptionsWithAccessibilityWrapper:iamnil screenWrapper:iamalsonil];
   Snapshot *snapshot = [[Snapshot alloc] init];
   for (NSRunningApplication *app in [RunningApplications getInstance]) {
     NSString *appName = [app localizedName];

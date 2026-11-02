@@ -24,9 +24,7 @@
 #import "StringTokenizer.h"
 #import "Constants.h"
 #import "SlateLogger.h"
-#import "JSController.h"
 #import <WebKit/WebKit.h>
-#import "JSOperation.h"
 
 @implementation ChainOperation
 
@@ -63,7 +61,6 @@
 
 - (BOOL) doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   BOOL success = NO;
-  [self evalOptionsWithAccessibilityWrapper:aw screenWrapper:sw];
   NSInteger opRun = 0;
   if ([aw inited]) {
     opRun = [self getNextOperation:aw];
@@ -125,9 +122,7 @@
     NSMutableArray *ops = [NSMutableArray array];
     for (id key in value) {
       Operation *op = nil;
-      if ([key isKindOfClass:[WebScriptObject class]]) {
-        op = [JSOperation jsOperationWithFunction:key];
-      } else if ([key isKindOfClass:[Operation class]]) {
+      if ([key isKindOfClass:[Operation class]]) {
         op = key;
       }
 
