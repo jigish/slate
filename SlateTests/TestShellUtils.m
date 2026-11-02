@@ -32,7 +32,7 @@
   XCTAssertFalse([ShellUtils commandExists:@""], @"empty string should not exist");
 }
 
-- (void)testRun {
+- (void)testRunWithArgs {
   NSTask *task = [ShellUtils run:@"/bin/ls" args:[NSArray arrayWithObject:@"-al"] wait:YES path:nil];
   XCTAssertFalse([task isRunning], @"Task should no longer be running");
   XCTAssertEqual([task terminationStatus], 0, @"Status should be 0");
