@@ -23,6 +23,7 @@
 NSInteger const MODAL_ESCAPE_ID = 40000;
 
 NSString *const SNAPSHOTS_FILE = @"snapshots";
+NSString *const LEGACY_BUNDLE_IDENTIFIER = @"com.slate.Slate";
 
 // Directive Keys
 NSString *const BIND = @"bind";

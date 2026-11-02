@@ -392,6 +392,7 @@ static SlateConfig *_instance = nil;
 }
 
 - (BOOL)loadSnapshots {
+  [SlateConfig migrateLegacySnapshotsFile];
   NSString *fileString = [NSString stringWithContentsOfURL:[SlateConfig snapshotsFile] encoding:NSUTF8StringEncoding error:nil];
   if (fileString == nil || [fileString isEqualToString:EMPTY])
     return YES;
@@ -613,6 +614,22 @@ static SlateConfig *_instance = nil;
   [self setConfigs:[NSMutableDictionary dictionary]];
   [self setAppConfigs:[NSMutableDictionary dictionary]];
   [configs setValuesForKeysWithDictionary:configDefaults];
+}
+
+// Snapshots were stored under the com.slate.Slate bundle identifier before the switch to io.opus1.slate.
++ (void)migrateLegacySnapshotsFile {
+  NSURL *snapshotsFile = [SlateConfig snapshotsFile];
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  if (snapshotsFile == nil || [fileManager fileExistsAtPath:[snapshotsFile path]]) return;
+  NSURL *legacyFile = [[[[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] objectAtIndex:0]
+                        URLByAppendingPathComponent:LEGACY_BUNDLE_IDENTIFIER] URLByAppendingPathComponent:SNAPSHOTS_FILE];
+  if (![fileManager fileExistsAtPath:[legacyFile path]]) return;
+  NSError *error = nil;
+  if ([fileManager copyItemAtURL:legacyFile toURL:snapshotsFile error:&error]) {
+    NSLog(@"Migrated snapshots from %@ to %@", legacyFile, snapshotsFile);
+  } else {
+    NSLog(@"ERROR: Unable to migrate snapshots from %@ to %@: %@", legacyFile, snapshotsFile, error);
+  }
 }
 
 + (NSURL *)snapshotsFile {

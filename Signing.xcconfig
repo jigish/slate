@@ -1,0 +1,12 @@
+// Code signing. Defaults to ad-hoc ("Sign to Run Locally").
+//
+// To sign with an Apple Development certificate, create Signing.local.xcconfig
+// (gitignored) next to this file:
+//
+//   DEVELOPMENT_TEAM = <your 10-character Team ID>
+//   CODE_SIGN_IDENTITY = Apple Development
+
+CODE_SIGN_STYLE = Automatic
+CODE_SIGN_IDENTITY = -
+
+#include? "Signing.local.xcconfig"

@@ -75,6 +75,7 @@
 //- (void)processNotification:(id)notification;
 
 + (NSURL *)snapshotsFile;
++ (void)migrateLegacySnapshotsFile;
 
 @end
 

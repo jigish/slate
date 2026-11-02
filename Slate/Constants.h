@@ -19,6 +19,7 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 extern NSString *const SNAPSHOTS_FILE;
+extern NSString *const LEGACY_BUNDLE_IDENTIFIER;
 
 #define MODAL_BEGIN_ID 20000;
 #define CURRENT_MODAL_BEGIN_ID 30000;

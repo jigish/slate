@@ -107,6 +107,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A1E0000000000000000C0DE /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		3AA7D09016A6ED1200C81A67 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		3AA7D09316A6EE0200C81A67 /* JSController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSController.h; sourceTree = "<group>"; };
 		3AA7D09416A6EE0200C81A67 /* JSController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSController.m; sourceTree = "<group>"; };
@@ -501,6 +502,7 @@
 		47C4A2841384E8890066B6DE = {
 			isa = PBXGroup;
 			children = (
+				5A1E0000000000000000C0DE /* Signing.xcconfig */,
 				3B4D0C3815A3721E00B39242 /* Resources */,
 				47C4A2991384E8890066B6DE /* Slate */,
 				47C4A2B41384E8890066B6DE /* SlateTests */,
@@ -819,10 +821,10 @@
 /* Begin XCBuildConfiguration section */
 		47C4A2BF1384E8890066B6DE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A1E0000000000000000C0DE /* Signing.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "-";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -841,10 +843,10 @@
 		};
 		47C4A2C01384E8890066B6DE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A1E0000000000000000C0DE /* Signing.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "-";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -861,13 +863,14 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Slate/Slate-Prefix.pch";
 				INFOPLIST_FILE = "Slate/Slate-Info.plist";
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.slate.Slate;
+				PRODUCT_BUNDLE_IDENTIFIER = io.opus1.slate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -883,7 +886,7 @@
 				GCC_PREFIX_HEADER = "Slate/Slate-Prefix.pch";
 				INFOPLIST_FILE = "Slate/Slate-Info.plist";
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.slate.Slate;
+				PRODUCT_BUNDLE_IDENTIFIER = io.opus1.slate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -899,7 +902,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SlateTests/SlateTests-Prefix.pch";
 				INFOPLIST_FILE = "SlateTests/SlateTests-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.slate.SlateTests;
+				PRODUCT_BUNDLE_IDENTIFIER = io.opus1.slate.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
@@ -915,7 +918,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SlateTests/SlateTests-Prefix.pch";
 				INFOPLIST_FILE = "SlateTests/SlateTests-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.slate.SlateTests;
+				PRODUCT_BUNDLE_IDENTIFIER = io.opus1.slate.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};

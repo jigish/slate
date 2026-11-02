@@ -28,12 +28,20 @@ Slate is built from source. Requirements: macOS 13+ and Xcode.
 
     git clone https://github.com/jeromeopus1io/slate.git
     cd slate
-    xcodebuild -project Slate.xcodeproj -scheme Slate -configuration Release -derivedDataPath build
+    xcodebuild -project Slate.xcodeproj -scheme Slate -configuration Release \
+      -destination 'generic/platform=macOS' -derivedDataPath build -allowProvisioningUpdates
     cp -R build/Build/Products/Release/Slate.app /Applications/
 
 Grant Accessibility access: System Settings > Privacy & Security > Accessibility > enable Slate.
 
-**Note:** Local builds are ad-hoc signed. After installing a rebuilt Slate.app, remove Slate from the Accessibility list and add it again.
+### Code signing ###
+
+Builds are ad-hoc signed by default. macOS then treats every rebuild as a new app: remove Slate from the Accessibility list and add it again after each install.
+
+To keep the Accessibility grant across rebuilds, sign with an Apple Development certificate: sign in to Xcode with your Apple ID (Xcode > Settings > Accounts), then create `Signing.local.xcconfig` (gitignored) at the repository root:
+
+    DEVELOPMENT_TEAM = <your 10-character Team ID>
+    CODE_SIGN_IDENTITY = Apple Development
 
 ## Configuring Slate ##
 
