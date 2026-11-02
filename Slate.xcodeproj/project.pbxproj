@@ -85,8 +85,6 @@
 		47C4A2AA1384E8890066B6DE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47C4A2A81384E8890066B6DE /* MainMenu.xib */; };
 		47C4A2B11384E8890066B6DE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C4A2931384E8890066B6DE /* Cocoa.framework */; };
 		47C4A2B91384E8890066B6DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 47C4A2B71384E8890066B6DE /* InfoPlist.strings */; };
-		47C4A2BC1384E8890066B6DE /* SlateTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 47C4A2BB1384E8890066B6DE /* SlateTests.h */; };
-		47C4A2BE1384E8890066B6DE /* SlateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2BD1384E8890066B6DE /* SlateTests.m */; };
 		47C4A2C81384E8B10066B6DE /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C4A2C71384E8B10066B6DE /* Carbon.framework */; };
 		47C4A2CB1384EA510066B6DE /* SlateConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2CA1384EA510066B6DE /* SlateConfig.m */; };
 		47C4A2CE1384F26A0066B6DE /* Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C4A2CD1384F26A0066B6DE /* Binding.m */; };
@@ -258,8 +256,6 @@
 		47C4A2B61384E8890066B6DE /* SlateTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SlateTests-Info.plist"; sourceTree = "<group>"; };
 		47C4A2B81384E8890066B6DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		47C4A2BA1384E8890066B6DE /* SlateTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SlateTests-Prefix.pch"; sourceTree = "<group>"; };
-		47C4A2BB1384E8890066B6DE /* SlateTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlateTests.h; sourceTree = "<group>"; };
-		47C4A2BD1384E8890066B6DE /* SlateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlateTests.m; sourceTree = "<group>"; };
 		47C4A2C71384E8B10066B6DE /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		47C4A2C91384EA510066B6DE /* SlateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlateConfig.h; sourceTree = "<group>"; };
 		47C4A2CA1384EA510066B6DE /* SlateConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SlateConfig.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -581,8 +577,6 @@
 			children = (
 				3B8B5524161A1FC600E21A6C /* Categories */,
 				3BA1BA59162DD6F20026774E /* Common */,
-				47C4A2BB1384E8890066B6DE /* SlateTests.h */,
-				47C4A2BD1384E8890066B6DE /* SlateTests.m */,
 				47C4A2B51384E8890066B6DE /* Supporting Files */,
 			);
 			path = SlateTests;
@@ -689,7 +683,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				47C4A2B91384E8890066B6DE /* InfoPlist.strings in Resources */,
-				47C4A2BC1384E8890066B6DE /* SlateTests.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -769,7 +762,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47C4A2BE1384E8890066B6DE /* SlateTests.m in Sources */,
 				3B8B5527161A1FDF00E21A6C /* TestNSString+Indicies.m in Sources */,
 				3BA1BA58162DD3630026774E /* TestNSString+Levenshtein.m in Sources */,
 				3BA1BA5C162DD7190026774E /* TestMathUtils.m in Sources */,
@@ -843,6 +835,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
 			};
 			name = Debug;
 		};
@@ -859,6 +852,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
 			};
 			name = Release;
 		};

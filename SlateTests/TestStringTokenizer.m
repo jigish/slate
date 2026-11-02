@@ -32,113 +32,113 @@
 */
 
 - (void)testIsSpaceChar {
-  STAssertTrue([StringTokenizer isSpaceChar:' '], @"work.");
-  STAssertTrue([StringTokenizer isSpaceChar:'\t'], @"work.");
+  XCTAssertTrue([StringTokenizer isSpaceChar:' '], @"work.");
+  XCTAssertTrue([StringTokenizer isSpaceChar:'\t'], @"work.");
 }
 
 - (void)testIsQuoteChar {
   NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString:@""];
-  STAssertFalse([StringTokenizer isQuoteChar:'"' quoteChars:cs], @"stuff");
+  XCTAssertFalse([StringTokenizer isQuoteChar:'"' quoteChars:cs], @"stuff");
   cs = [NSCharacterSet characterSetWithCharactersInString:@"\""];
-  STAssertTrue([StringTokenizer isQuoteChar:'"' quoteChars:cs], @"stuff");
+  XCTAssertTrue([StringTokenizer isQuoteChar:'"' quoteChars:cs], @"stuff");
   cs = [NSCharacterSet characterSetWithCharactersInString:@"'"];
-  STAssertFalse([StringTokenizer isQuoteChar:'"' quoteChars:cs], @"stuff");
+  XCTAssertFalse([StringTokenizer isQuoteChar:'"' quoteChars:cs], @"stuff");
   cs = [NSCharacterSet characterSetWithCharactersInString:@"\"'"];
-  STAssertTrue([StringTokenizer isQuoteChar:'"' quoteChars:cs], @"stuff");
+  XCTAssertTrue([StringTokenizer isQuoteChar:'"' quoteChars:cs], @"stuff");
   cs = [NSCharacterSet characterSetWithCharactersInString:@"\"'"];
-  STAssertTrue([StringTokenizer isQuoteChar:'\'' quoteChars:cs], @"stuff");
+  XCTAssertTrue([StringTokenizer isQuoteChar:'\'' quoteChars:cs], @"stuff");
 }
 
 - (void)testTokenizeInto {
   NSMutableArray *arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"hi tokenize\t\t  me" into:arr];
-  STAssertTrue([arr count] == 3, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
-  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize"], @"wtf");
-  STAssertTrue([[arr objectAtIndex:2] isEqualToString:@"me"], @"OMGWTFBBQ");
+  XCTAssertTrue([arr count] == 3, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  XCTAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize"], @"wtf");
+  XCTAssertTrue([[arr objectAtIndex:2] isEqualToString:@"me"], @"OMGWTFBBQ");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"hitokenizeme" into:arr];
-  STAssertTrue([arr count] == 1, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hitokenizeme"], @"work damnit");
+  XCTAssertTrue([arr count] == 1, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hitokenizeme"], @"work damnit");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"" into:arr];
-  STAssertTrue([arr count] == 0, @"shit should work");
+  XCTAssertTrue([arr count] == 0, @"shit should work");
 }
 
 - (void)testTokenizeIntoQuoteChars {
   NSMutableArray *arr = [NSMutableArray array];
   NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString:@"\"'"];
   [StringTokenizer tokenize:@"hi tokenize\t\t  me" into:arr quoteChars:cs];
-  STAssertTrue([arr count] == 3, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
-  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize"], @"wtf");
-  STAssertTrue([[arr objectAtIndex:2] isEqualToString:@"me"], @"OMGWTFBBQ");
+  XCTAssertTrue([arr count] == 3, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  XCTAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize"], @"wtf");
+  XCTAssertTrue([[arr objectAtIndex:2] isEqualToString:@"me"], @"OMGWTFBBQ");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"" into:arr quoteChars:cs];
-  STAssertTrue([arr count] == 0, @"shit should work");
+  XCTAssertTrue([arr count] == 0, @"shit should work");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"hi 'tokenize\t\t  me'" into:arr maxTokens:100 quoteChars:cs];
-  STAssertTrue([arr count] == 2, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
-  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  me"], @"wtf");
+  XCTAssertTrue([arr count] == 2, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  XCTAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  me"], @"wtf");
 }
 
 - (void)testTokenizeIntoMaxTokens {
   NSMutableArray *arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"hi tokenize\t\t  me" into:arr maxTokens:100];
-  STAssertTrue([arr count] == 3, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
-  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize"], @"wtf");
-  STAssertTrue([[arr objectAtIndex:2] isEqualToString:@"me"], @"OMGWTFBBQ");
+  XCTAssertTrue([arr count] == 3, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  XCTAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize"], @"wtf");
+  XCTAssertTrue([[arr objectAtIndex:2] isEqualToString:@"me"], @"OMGWTFBBQ");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"hi tokenize\t\t  me" into:arr maxTokens:2];
-  STAssertTrue([arr count] == 2, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
-  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  me"], @"wtf");
+  XCTAssertTrue([arr count] == 2, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  XCTAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  me"], @"wtf");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"hi tokenize me" into:arr maxTokens:1];
-  STAssertTrue([arr count] == 1, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi tokenize me"], @"work damnit");
+  XCTAssertTrue([arr count] == 1, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi tokenize me"], @"work damnit");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"" into:arr maxTokens:1000];
-  STAssertTrue([arr count] == 0, @"shit should work");
+  XCTAssertTrue([arr count] == 0, @"shit should work");
 }
 
 - (void)testTokenizeIntoMaxTokensQuoteChars {
   NSMutableArray *arr = [NSMutableArray array];
   NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString:@"\"'"];
   [StringTokenizer tokenize:@"hi tokenize\t\t  me" into:arr maxTokens:100 quoteChars:cs];
-  STAssertTrue([arr count] == 3, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
-  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize"], @"wtf");
-  STAssertTrue([[arr objectAtIndex:2] isEqualToString:@"me"], @"OMGWTFBBQ");
+  XCTAssertTrue([arr count] == 3, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  XCTAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize"], @"wtf");
+  XCTAssertTrue([[arr objectAtIndex:2] isEqualToString:@"me"], @"OMGWTFBBQ");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"hi tokenize\t\t  me" into:arr maxTokens:2 quoteChars:cs];
-  STAssertTrue([arr count] == 2, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
-  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  me"], @"wtf");
+  XCTAssertTrue([arr count] == 2, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  XCTAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  me"], @"wtf");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"hi tokenize me" into:arr maxTokens:1 quoteChars:cs];
-  STAssertTrue([arr count] == 1, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi tokenize me"], @"work damnit");
+  XCTAssertTrue([arr count] == 1, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi tokenize me"], @"work damnit");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"" into:arr maxTokens:1000 quoteChars:cs];
-  STAssertTrue([arr count] == 0, @"shit should work");
+  XCTAssertTrue([arr count] == 0, @"shit should work");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"hi 'tokenize\t\t  me'" into:arr maxTokens:100 quoteChars:cs];
-  STAssertTrue([arr count] == 2, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
-  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  me"], @"wtf");
+  XCTAssertTrue([arr count] == 2, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  XCTAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  me"], @"wtf");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"hi 'tokenize\t\t  \"me\"'" into:arr maxTokens:100 quoteChars:cs];
-  STAssertTrue([arr count] == 2, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
-  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  \"me\""], @"wtf");
+  XCTAssertTrue([arr count] == 2, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  XCTAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  \"me\""], @"wtf");
   arr = [NSMutableArray array];
   [StringTokenizer tokenize:@"hi 'tokenize\t\t  \"me\"'" into:arr quoteChars:cs];
-  STAssertTrue([arr count] == 2, @"shit should work");
-  STAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
-  STAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  \"me\""], @"wtf");
+  XCTAssertTrue([arr count] == 2, @"shit should work");
+  XCTAssertTrue([[arr objectAtIndex:0] isEqualToString:@"hi"], @"work damnit");
+  XCTAssertTrue([[arr objectAtIndex:1] isEqualToString:@"tokenize\t\t  \"me\""], @"wtf");
 }
 
 @end
