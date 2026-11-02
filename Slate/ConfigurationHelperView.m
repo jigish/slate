@@ -60,7 +60,7 @@
       [save setTitle:@"Save"];
       [save setTarget:self];
       [save setAction:@selector(saveToConfig)];
-      [save setBezelStyle:NSRoundedBezelStyle];
+      [save setBezelStyle:NSBezelStyleRounded];
       [self addSubview:directive];
       [self addSubview:save];
       [self addDirectiveSpecificUIs];

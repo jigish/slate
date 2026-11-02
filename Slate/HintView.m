@@ -91,7 +91,7 @@ static float hintIconAlpha = -1.0;
 
   // draw the icon on top of the rounded rect, if specified
   if (icon != nil) {
-    [icon drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:hintIconAlpha];
+    [icon drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:hintIconAlpha];
   }
 
   // draw hint letter

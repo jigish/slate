@@ -166,7 +166,7 @@ static const UInt32 ESC_HINT_ID = 10001;
   if ([hints objectForKey:currentHintNumber] == nil) {
     SlateLogger(@"        New Window!");
     NSWindow *window = [[HintWindow alloc] initWithContentRect:frame
-                                                     styleMask:NSBorderlessWindowMask
+                                                     styleMask:NSWindowStyleMaskBorderless
                                                        backing:NSBackingStoreBuffered
                                                          defer:NO
                                                         screen:screen];

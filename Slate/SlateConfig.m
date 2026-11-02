@@ -126,7 +126,7 @@ static SlateConfig *_instance = nil;
 
 + (NSAlert *)warningAlertWithKeyEquivalents:(NSArray *)titles {
   NSAlert *alert = [[NSAlert alloc] init];
-  [alert setAlertStyle:NSWarningAlertStyle];
+  [alert setAlertStyle:NSAlertStyleWarning];
   for (NSString *title in titles) {
     [[alert addButtonWithTitle:title] setKeyEquivalent:[[title substringToIndex: 1] lowercaseString]];
   }

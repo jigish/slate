@@ -107,7 +107,7 @@ static const UInt32 ESC_GRID_ID = 10002;
                        [screen frame].size.width/4,
                        [screen frame].size.height/4);
     NSWindow *window = [[GridWindow alloc] initWithContentRect:frame
-                                                     styleMask:NSBorderlessWindowMask
+                                                     styleMask:NSWindowStyleMaskBorderless
                                                        backing:NSBackingStoreBuffered
                                                          defer:NO
                                                         screen:screen];

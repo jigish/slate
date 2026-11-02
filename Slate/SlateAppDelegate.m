@@ -48,7 +48,7 @@ static SlateAppDelegate *selfRef = nil;
 static EventHandlerRef modifiersEvent;
 
 - (IBAction)updateLaunchState {
-  if ([launchOnLoginItem state] == NSOnState) {
+  if ([launchOnLoginItem state] == NSControlStateValueOn) {
     // currently on
     [self deleteFromLoginItems];
     [self setLaunchOnLoginItemStatus];
@@ -170,7 +170,7 @@ static EventHandlerRef modifiersEvent;
     UnregisterEventHotKey([hotKeyRef pointerValue]);
   }
   // reset status image
-  [statusItem setImage:[NSImage imageNamed:@"status"]];
+  [[statusItem button] setImage:[NSImage imageNamed:@"status"]];
   currentModalKey = nil;
 }
 
@@ -240,7 +240,7 @@ static EventHandlerRef modifiersEvent;
       }
       [self setCurrentModalKey:modalKey];
       // change status image
-      [statusItem setImage:[NSImage imageNamed:@"statusActive"]];
+      [[statusItem button] setImage:[NSImage imageNamed:@"statusActive"]];
       return noErr;
     }
   }
@@ -444,8 +444,8 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 }
 
 - (void)setLaunchOnLoginItemStatus {
-  if ([self isInLoginItems]) [launchOnLoginItem setState:NSOnState];
-  else [launchOnLoginItem setState:NSOffState];
+  if ([self isInLoginItems]) [launchOnLoginItem setState:NSControlStateValueOn];
+  else [launchOnLoginItem setState:NSControlStateValueOff];
 }
 
 - (void)awakeFromNib {
@@ -487,8 +487,7 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
   [statusItem setMenu:statusMenu];
   NSImage *statusImage = [NSImage imageNamed:@"status"];
   [statusImage setTemplate:YES];
-  [statusItem setImage:statusImage];
-  [statusItem setHighlightMode:YES];
+  [[statusItem button] setImage:statusImage];
 
   // Ensure no timer exists
   @synchronized(timerLock) {

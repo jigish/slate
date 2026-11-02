@@ -110,7 +110,7 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
 - (BOOL)doOperationWithAccessibilityWrapper:(AccessibilityWrapper *)aw screenWrapper:(ScreenWrapper *)sw {
   [self evalOptionsWithAccessibilityWrapper:aw screenWrapper:sw];
   apps = [NSArray arrayWithArray:[[RunningApplications getInstance] apps]];
-  for (NSRunningApplication *app in apps) {
+  for (__unused NSRunningApplication *app in apps) {
     [appsToQuit addObject:[NSNumber numberWithBool:NO]];
     [appsToForceQuit addObject:[NSNumber numberWithBool:NO]];
   }
@@ -152,7 +152,7 @@ static const NSString *DEFAULT_HIDE_KEY = @"h";
                          iconViewSize + titleHeight + selectedPadding*2);
     }
     NSWindow *window = [[SwitchWindow alloc] initWithContentRect:frame
-                                                       styleMask:NSBorderlessWindowMask
+                                                       styleMask:NSWindowStyleMaskBorderless
                                                          backing:NSBackingStoreBuffered
                                                            defer:NO
                                                           screen:screen];

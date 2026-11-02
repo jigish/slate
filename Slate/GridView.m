@@ -151,17 +151,17 @@
   NSRect activeRect;
 
   while (keepOn) {
-    theEvent = [[self window] nextEventMatchingMask: NSLeftMouseUpMask |
-                NSLeftMouseDraggedMask];
+    theEvent = [[self window] nextEventMatchingMask: NSEventMaskLeftMouseUp |
+                NSEventMaskLeftMouseDragged];
     mouseLoc = [self convertPoint:[theEvent locationInWindow] fromView:self];
     activeRect = [self rectFromBegin:initialMouseLoc end:mouseLoc];
     NSRect flippedRect = NSMakeRect(activeRect.origin.x, [self height]-1-(activeRect.origin.y+activeRect.size.height), activeRect.size.width+1, activeRect.size.height+1);
     switch ([theEvent type]) {
-      case NSLeftMouseDragged:
+      case NSEventTypeLeftMouseDragged:
         SlateLogger(@"Dragged - (%f,%f) -> (%f,%f)", initialMouseLoc.x, initialMouseLoc.y, mouseLoc.x, mouseLoc.y);
         [self activateCellsInRect:activeRect];
         break;
-      case NSLeftMouseUp:
+      case NSEventTypeLeftMouseUp:
         SlateLogger(@"Up - (%f,%f)", mouseLoc.x, mouseLoc.y);
         // activate shit
         [[self op] activateLayoutWithOrigin:[[ExpressionPoint alloc] initWithX:[NSString stringWithFormat:@"screenOriginX+(screenSizeX*%f/%ld)", flippedRect.origin.x, [self width]]
