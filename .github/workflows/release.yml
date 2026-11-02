@@ -1,0 +1,147 @@
+name: Release
+
+# Push a vX.Y.Z tag to build, sign (Developer ID), notarize and publish Slate to GitHub Releases.
+# Setup and secrets: docs/RELEASING.md
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+
+jobs:
+  release:
+    runs-on: macos-26
+    timeout-minutes: 60
+    env:
+      APP: build/Build/Products/Release/Slate.app
+      KEYCHAIN: ${{ runner.temp }}/signing.keychain-db
+      NOTARY_KEY: ${{ runner.temp }}/notary.p8
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Version from tag
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Tag '$GITHUB_REF_NAME' must be vX.Y.Z"; exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - name: Release notes from CHANGELOG.md
+        run: |
+          awk -v heading="## $VERSION" '$0 == heading {found=1; next} /^## / {found=0} found' CHANGELOG.md > "$RUNNER_TEMP/release-notes.md"
+          if ! grep -q '[^[:space:]]' "$RUNNER_TEMP/release-notes.md"; then
+            echo "::error::CHANGELOG.md has no '## $VERSION' section"; exit 1
+          fi
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Test
+        run: |
+          xcodebuild -project Slate.xcodeproj -scheme Slate -destination 'platform=macOS' \
+            -derivedDataPath build-test ENABLE_HARDENED_RUNTIME=NO test
+
+      - name: Install Developer ID certificate and provisioning profile
+        env:
+          CERT_P12_BASE64: ${{ secrets.DEVELOPER_ID_CERT_P12_BASE64 }}
+          CERT_PASSWORD: ${{ secrets.DEVELOPER_ID_CERT_PASSWORD }}
+          PROFILE_BASE64: ${{ secrets.DEVELOPER_ID_PROFILE_BASE64 }}
+        run: |
+          KEYCHAIN_PASSWORD="$(uuidgen)"
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security set-keychain-settings -lut 3600 "$KEYCHAIN"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          printf '%s' "$CERT_P12_BASE64" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security import "$RUNNER_TEMP/cert.p12" -k "$KEYCHAIN" -P "$CERT_PASSWORD" -T /usr/bin/codesign
+          rm -f "$RUNNER_TEMP/cert.p12"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN" > /dev/null
+          security list-keychains -d user -s "$KEYCHAIN" $(security list-keychains -d user | tr -d '"')
+          SIGNING_IDENTITY="$(security find-identity -v -p codesigning "$KEYCHAIN" | awk '/"Developer ID Application/ {print $2; exit}')"
+          if [ -z "$SIGNING_IDENTITY" ]; then
+            echo "::error::No Developer ID Application identity in DEVELOPER_ID_CERT_P12_BASE64"; exit 1
+          fi
+          echo "SIGNING_IDENTITY=$SIGNING_IDENTITY" >> "$GITHUB_ENV"
+
+          PROFILE="$RUNNER_TEMP/slate.provisionprofile"
+          printf '%s' "$PROFILE_BASE64" | base64 --decode > "$PROFILE"
+          security cms -D -i "$PROFILE" > "$RUNNER_TEMP/profile.plist"
+          PROFILE_UUID="$(plutil -extract UUID raw -o - "$RUNNER_TEMP/profile.plist")"
+          TEAM_ID="$(plutil -extract TeamIdentifier.0 raw -o - "$RUNNER_TEMP/profile.plist")"
+          if ! plutil -extract Entitlements.keychain-access-groups json -o - "$RUNNER_TEMP/profile.plist" > /dev/null; then
+            echo "::error::Provisioning profile does not allow keychain-access-groups"; exit 1
+          fi
+          for dir in "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles" "$HOME/Library/MobileDevice/Provisioning Profiles"; do
+            mkdir -p "$dir" && cp "$PROFILE" "$dir/$PROFILE_UUID.provisionprofile"
+          done
+          echo "PROFILE_UUID=$PROFILE_UUID" >> "$GITHUB_ENV"
+          echo "TEAM_ID=$TEAM_ID" >> "$GITHUB_ENV"
+
+      - name: Build and sign Universal app
+        run: |
+          xcodebuild -project Slate.xcodeproj -scheme Slate -configuration Release \
+            -destination 'generic/platform=macOS' -derivedDataPath build \
+            MARKETING_VERSION="$VERSION" CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER" \
+            CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="$TEAM_ID" CODE_SIGN_IDENTITY="$SIGNING_IDENTITY" \
+            PROVISIONING_PROFILE_SPECIFIER="$PROFILE_UUID" CODE_SIGN_ENTITLEMENTS=Slate/Slate.entitlements \
+            CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO OTHER_CODE_SIGN_FLAGS=--timestamp \
+            build
+
+      - name: Verify app
+        run: |
+          lipo "$APP/Contents/MacOS/Slate" -verify_arch arm64 x86_64
+          codesign --verify --strict --verbose=2 "$APP"
+          codesign -dv "$APP" 2>&1 | grep -q 'flags=.*runtime' || { echo "::error::Hardened Runtime not enabled"; exit 1; }
+          if codesign -d --entitlements - --xml "$APP" | grep -q 'get-task-allow'; then
+            echo "::error::get-task-allow entitlement present (notarization would fail)"; exit 1
+          fi
+          test "$(plutil -extract CFBundleShortVersionString raw -o - "$APP/Contents/Info.plist")" = "$VERSION"
+
+      - name: Notarize and staple app
+        env:
+          NOTARY_KEY_P8_BASE64: ${{ secrets.NOTARY_API_KEY_P8_BASE64 }}
+          NOTARY_KEY_ID: ${{ secrets.NOTARY_API_KEY_ID }}
+          NOTARY_ISSUER_ID: ${{ secrets.NOTARY_API_ISSUER_ID }}
+        run: |
+          printf '%s' "$NOTARY_KEY_P8_BASE64" | base64 --decode > "$NOTARY_KEY"
+          echo "NOTARY_KEY_ID=$NOTARY_KEY_ID" >> "$GITHUB_ENV"
+          echo "NOTARY_ISSUER_ID=$NOTARY_ISSUER_ID" >> "$GITHUB_ENV"
+          ditto -c -k --keepParent "$APP" "$RUNNER_TEMP/Slate-notarize.zip"
+          .github/scripts/notarize.sh "$RUNNER_TEMP/Slate-notarize.zip"
+          xcrun stapler staple "$APP"
+          spctl --assess --type execute --verbose=2 "$APP"
+
+      - name: Package zip and DMG
+        run: |
+          mkdir -p dist "$RUNNER_TEMP/dmg"
+          ditto -c -k --keepParent "$APP" "dist/Slate-$VERSION.zip"
+          ditto "$APP" "$RUNNER_TEMP/dmg/Slate.app"
+          ln -s /Applications "$RUNNER_TEMP/dmg/Applications"
+          # hdiutil occasionally fails with "Resource busy" on hosted runners.
+          for attempt in 1 2 3; do
+            hdiutil create -volname Slate -srcfolder "$RUNNER_TEMP/dmg" -format UDZO -ov "dist/Slate-$VERSION.dmg" && break
+            [ "$attempt" = 3 ] && exit 1
+            sleep 5
+          done
+          codesign --sign "$SIGNING_IDENTITY" --keychain "$KEYCHAIN" --timestamp "dist/Slate-$VERSION.dmg"
+          .github/scripts/notarize.sh "dist/Slate-$VERSION.dmg"
+          xcrun stapler staple "dist/Slate-$VERSION.dmg"
+          spctl --assess --type open --context context:primary-signature --verbose=2 "dist/Slate-$VERSION.dmg"
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" "dist/Slate-$VERSION.zip" "dist/Slate-$VERSION.dmg" \
+            --verify-tag --title "Slate $VERSION" --notes-file "$RUNNER_TEMP/release-notes.md"
+
+      - name: Remove signing material
+        if: always()
+        run: |
+          if [ -f "$KEYCHAIN" ]; then security delete-keychain "$KEYCHAIN"; fi
+          rm -f "$NOTARY_KEY"

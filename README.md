@@ -24,7 +24,15 @@ Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and i
 
 ## Installing Slate ##
 
-Slate is built from source. Requirements: macOS 13+ and Xcode.
+Requirements: macOS 13+.
+
+### Download ###
+
+Download `Slate-X.Y.Z.dmg` or `Slate-X.Y.Z.zip` from [GitHub Releases](https://github.com/jeromeopus1io/slate/releases) and move Slate.app to /Applications. Releases are signed with Developer ID and notarized by Apple.
+
+### Build from source ###
+
+Requires Xcode.
 
     git clone https://github.com/jeromeopus1io/slate.git
     cd slate
@@ -32,11 +40,15 @@ Slate is built from source. Requirements: macOS 13+ and Xcode.
       -destination 'generic/platform=macOS' -derivedDataPath build -allowProvisioningUpdates
     cp -R build/Build/Products/Release/Slate.app /Applications/
 
+### Accessibility ###
+
 Grant Accessibility access: System Settings > Privacy & Security > Accessibility > enable Slate.
 
 ### Code signing ###
 
-Builds are ad-hoc signed by default. macOS then treats every rebuild as a new app: remove Slate from the Accessibility list and add it again after each install.
+Releases: see [docs/RELEASING.md](docs/RELEASING.md).
+
+Local builds are ad-hoc signed by default. macOS then treats every rebuild as a new app: remove Slate from the Accessibility list and add it again after each install.
 
 To keep the Accessibility grant across rebuilds, sign with an Apple Development certificate: sign in to Xcode with your Apple ID (Xcode > Settings > Accounts), then create `Signing.local.xcconfig` (gitignored) at the repository root:
 

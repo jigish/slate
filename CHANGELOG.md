@@ -12,6 +12,7 @@ macOS Tahoe refresh (macOS 13+, Universal arm64/x86_64).
 - `shell` commands must be absolute paths.
 - Config files must be owned by the user and not writable by others.
 - Config changes require user approval, remembered in the keychain.
+- Signed (Developer ID), notarized releases built by GitHub Actions and published to GitHub Releases (zip and DMG).
 
 ## 1.0.25
 
