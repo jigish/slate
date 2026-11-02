@@ -60,8 +60,20 @@ static EventHandlerRef modifiersEvent;
 }
 
 - (IBAction)relaunch {
-  // Relaunch relied on Sparkle's bundled "relaunch" helper, which has been removed.
-  NSLog(@"ERROR: relaunch is not available in this build.");
+  // A detached shell waits for this process to exit, then reopens the app bundle. The PID and bundle path are
+  // passed as positional arguments ($1, $2), never interpolated into the script.
+  NSString *script = @"while /bin/kill -0 \"$1\" 2>/dev/null; do /bin/sleep 0.1; done; exec /usr/bin/open \"$2\"";
+  NSString *pid = [NSString stringWithFormat:@"%d", [[NSProcessInfo processInfo] processIdentifier]];
+  NSTask *task = [[NSTask alloc] init];
+  [task setExecutableURL:[NSURL fileURLWithPath:@"/bin/sh"]];
+  [task setArguments:@[@"-c", script, @"slate-relaunch", pid, [[NSBundle mainBundle] bundlePath]]];
+  NSError *error = nil;
+  if (![task launchAndReturnError:&error]) {
+    NSLog(@"ERROR: Unable to relaunch Slate: %@", error);
+    return;
+  }
+  NSLog(@"Relaunching Slate.");
+  [NSApp terminate:self];
 }
 
 - (IBAction)currentWindowInfo {
@@ -543,9 +555,6 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
-  if ([menuItem action] == @selector(relaunch)) {
-    return NO;
-  }
   if (menuItem == activateSnapshotItem) {
     SnapshotList *menuSnapshots = [[[SlateConfig getInstance] snapshots] objectForKey:@"menuSnapshot"];
     if (menuSnapshots == nil || [[menuSnapshots snapshots] count] <= 0) {
