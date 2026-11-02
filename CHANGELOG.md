@@ -1,6 +1,19 @@
-Current Version: 1.0.25
+# Changelog
 
------------------ 1.0.25 ----------------
+## Unreleased
+
+macOS Tahoe refresh (macOS 13+, Universal arm64/x86_64).
+- Removed Sparkle auto-updates and the ninjamonkeysoftware.com release pipeline; Slate is built from source.
+- Built with Xcode 26; signed with an Apple Development certificate via `Signing.local.xcconfig` (ad-hoc by default).
+- Bundle identifier is now `io.opus1.slate`; existing snapshots are migrated.
+- Launch at login uses `SMAppService`; Accessibility permission is requested via the system prompt.
+- Relaunch restored using a system shell helper.
+- Removed JavaScript (`.slate.js`) configs.
+- `shell` commands must be absolute paths.
+- Config files must be owned by the user and not writable by others.
+- Config changes require user approval, remembered in the keychain.
+
+## 1.0.25
 
 Updates to javascript configs
 - Issue #239 - add events and event listeners
@@ -14,11 +27,11 @@ Issue #250 - load default config file properly
 Merge Pull Request #248 - fix undo for move based operations
 Merge Pull Request #253 - allow quoted arguments in shell operation
 
------------------ 1.0.24 ----------------
+## 1.0.24
 
 fix stupid bug.
 
------------------ 1.0.23 ----------------
+## 1.0.23
 
 Updates to javascript configs
 - Issue #220 - one-off operations
@@ -30,13 +43,13 @@ Issue #206 - fix a crash
 Issue #217 - better error when a key is unrecognized
 Fix some minor memory leaks
 
------------------ 1.0.22 ----------------
+## 1.0.22
 
 Updates to javascript configs
 - add dup function to operations
 - slate.log now will show the message on the OS X Console for easier debugging
 
------------------ 1.0.21 ----------------
+## 1.0.21
 
 Random fixes to javascript configs
 - Sequence and Chain can now take functions as well as objects
@@ -44,76 +57,76 @@ Random fixes to javascript configs
 Fixed a bug with grid operation that did not take orderScreensLeftToRight into account
 Removed all logging in Slate. if you want to see the logs, use the debug version of Slate from the repo.
 
------------------ 1.0.20 ----------------
+## 1.0.20
 
 Random fixes to javascript configs
 nudgePercentOf and resizePercentOf now default to screenSize because that just makes more sense.
 Added some documentation for javascript configs on the Wiki. more incoming.
 
------------------ 1.0.19 ----------------
+## 1.0.19
 
 Implement Issue #91 - [BETA] javascript config file (no documentation yet)
 Implement Issue #172 - modal mode toggle
 
------------------ 1.0.18 ----------------
+## 1.0.18
 
 Fix Issue #209 - fix modal bindings
 WIP Issue #91 - javascript config file (no documentation yet)
 
------------------ 1.0.17 ----------------
+## 1.0.17
 
 Merge Pull Request #191 - (Fix Issue #190)
 Merge Pull Request #166 - (Fix Issue #130)
 Merge Pull Request #204
 Merge Pull Request #185
 
------------------ 1.0.16 ----------------
+## 1.0.16
 
 Add REPEAT_LAST and TITLE_ORDER_REGEX to layouts
 
------------------ 1.0.15 ----------------
+## 1.0.15
 
 Fix Issue #177 - slate now will detect the first screen change properly when checkDefaultsOnLoad is false.
                  also, the following quoted string is now allowed: 'hello, I am a string with "nested" quotes'
 
------------------ 1.0.14 ----------------
+## 1.0.14
 
 Implement Issue #171 - undoOps config
 Implement Issue #179 - allow BEFORE and AFTER operations for layout
 Implement Issue #176 - allow WindowInfo to be selectable
 
------------------ 1.0.13 ----------------
+## 1.0.13
 
 Implement Issue #165 - undo operation
 Merge Pull Request #146
 Merge Pull Request #143 (windowHintsIconAlpha)
 Merge Pull request #161 (Colemak Support)
 
------------------ 1.0.12 ----------------
+## 1.0.12
 
 Implement Issue #121 - enable fn as modifier
 Partially implement issue #85 - added shell operation
 
------------------ 1.0.11 ----------------
+## 1.0.11
 
 Implement Issue #131 - better load config
 Implement Issue #125 - modal key with modifiers
 "Load Config" is now "Relaunch and Load Config" to maintain a clean Slate (get it!?)
 Update Sparkle
 
------------------ 1.0.10 ----------------
+## 1.0.10
 
 Merge Pull Request #111 (hint icons and associated configs)
 
------------------ 1.0.9 -----------------
+## 1.0.9
 
 Add ability to hide, show, and toggle all apps or all except one single app
 
------------------ 1.0.8 -----------------
+## 1.0.8
 
 Add ability to hide, show and toggle the current app
 
------------------ 1.0.7 -----------------
+## 1.0.7
 
 Implement Issue #118 (hide, show, and toggle operations)
 Implement Issue #117 (focus an application)
@@ -123,21 +136,21 @@ Merged Pull Request #119
 Merged Pull Request #115
 Merged Pull Request #93
 
------------------ 1.0.6 -----------------
+## 1.0.6
 
 Fixed Issue #109
 Implement Issue #114 (sequence operation)
 
------------------ 1.0.5 -----------------
+## 1.0.5
 
 Properly Fix Issue #92
 
------------------ 1.0.4 -----------------
+## 1.0.4
 
 Fixed Issue #92
 DMG Installation
 
------------------ 1.0.3 -----------------
+## 1.0.3
 
 Upgrade Xcode project
 Add Grid Operation! Bind a key to open a grid that you can use to one-off resize a window
@@ -148,70 +161,70 @@ Added the following configs for grid:
   gridCellSelectedColor
   gridCellRoundedCornerSize
 
------------------ 1.0.2 -----------------
+## 1.0.2
 
 Fixed Issue #76 - Added config snapshotTitleMatch
 
------------------ 1.0.1 -----------------
+## 1.0.1
 
 Fixed sparkle.
 
------------------ 1.0.0 -----------------
+## 1.0.0
 
 bump version cause I feel like it. From now on users who had a symlink from the git to /Applications should
   remove the symlink and just download the latest version from the downloads page on github. Sparkle will
   update you when you need it.
 
------------------ 0.6.0 -----------------
+## 0.6.0
 
 Let there be SPARKLE! Slate now has automatic updates through Sparkle!
 
------------------ 0.5.12 ----------------
+## 0.5.12
 
 Defaults can now trigger snapshots!
 
------------------ 0.5.11 ----------------
+## 0.5.11
 
 Update Snapshot menu items to persist and not delete
 Added "Launch Slate on Login" menu item
 
------------------ 0.5.10 ----------------
+## 0.5.10
 
 Fix Issue #72, #74
 Add a default config if no .slate file exists in ~/ to appease the App Store testers.
 
------------------ 0.5.9 -----------------
+## 0.5.9
 
 Fix Issue #70 (Dvorak Support)
 
------------------ 0.5.8 -----------------
+## 0.5.8
 
 Fix Issue #69
 
------------------ 0.5.7 -----------------
+## 0.5.7
 
 Fix Issue #63
 
------------------ 0.5.6 -----------------
+## 0.5.6
 
 Fix Issue #66
 Snapshots are now stored in the Application Support directory
 
------------------ 0.5.5 -----------------
+## 0.5.5
 
 New Icon
 
------------------ 0.5.4 -----------------
+## 0.5.4
 
 Fix bad access error
 
------------------ 0.5.3 -----------------
+## 0.5.3
 
 Fix Issue #58, #60, #61, #62
 Fixed exception on cmd+shift+tab with default switch operation
 Fixed switch op to properly switch to hidden apps
 
------------------ 0.5.2 -----------------
+## 0.5.2
 
 Add Configs:
   secondsBeforeRepeat
@@ -220,11 +233,11 @@ Changed Configs:
   secondsBetweenRepeat (Default 0.1 - was 0.2)
   switchSecondsBetweenRepeat (Default 0.05 - was 0.1)
 
------------------ 0.5.1 -----------------
+## 0.5.1
 
 Fix Issue #56 (unrecognized selector on startup for Mac OS X 10.6)
 
------------------ 0.5.0 -----------------
+## 0.5.0
 
 Fix Issue #32
 Release version of Switch operation
@@ -246,7 +259,7 @@ Add/Update configs:
   switchRoundedCornerSize
   windowHintOrder "persist" mode
 
------------------ 0.4.19 ----------------
+## 0.4.19
 
 Fix Issue #50, #51, #52
 Beta version of Switch operation (Issue #32 WIP)
@@ -259,7 +272,7 @@ Change array config format to use semi-colon as a separator instead of colon. Th
   switchBackgroundColor
   switchSelectedColor
 
------------------ 0.4.18 ----------------
+## 0.4.18
 
 Fix Issue #45, #47, #48
 Pressing ESC will dismiss window hints
@@ -267,7 +280,7 @@ Apps will now be ordered by last use for all operations that loop through apps
 Minor UI related performance enhancements for window hints (faster rounded rectangle drawing)
 Pre-release version of Switch operation (use at your own risk!)
 
------------------ 0.4.17 ----------------
+## 0.4.17
 
 Fix Issue #36, #37, #38, #42
 Add windowHintsIgnoreHiddenWindows config
@@ -275,37 +288,37 @@ Add ability to use expressions for windowHintsHeight and windowHintsWidth config
 Add windowHintsTopLeftX and windowHintsTopLeftY configs
 Add menu options to Take/Activate Snapshots
 
------------------ 0.4.16 ----------------
+## 0.4.16
 
 Performance improvements for Window Hints and other minor bug fixes
 
------------------ 0.4.15 ----------------
+## 0.4.15
 
 Fix Issues #34, #35, #40
 Added windowHintsRoundedCornerSize config
 Fixed Current Window Info menu option to allow scroll
 
------------------ 0.4.14 ----------------
+## 0.4.14
 
 Added Window Hints
 
------------------ 0.4.13 ----------------
+## 0.4.13
 
 Switch to ARC (no new feature or bug fixes, but should have better memory management and performance)
 
------------------ 0.4.12 ----------------
+## 0.4.12
 
 Added Snapshot operations
 
------------------ 0.4.11 ----------------
+## 0.4.11
 
 Added Current Window Info menu option (Issue #20)
 
------------------ 0.4.10 ----------------
+## 0.4.10
 
 Fixed Issue #25 - Binding parse error when starting up Slate when referencing unconnected screens
 
------------------ 0.4.9 -----------------
+## 0.4.9
 
 Added "orderScreensLeftToRight" config (default is true)
 Added new monitor identifier "ordered"
@@ -313,39 +326,39 @@ Added new monitor identifier "ordered"
 NOTE: This version changes the way screenIDs are ordered by default! If you want the old style ordering, set
       "orderScreensLeftToRight" to false.
 
------------------ 0.4.8 -----------------
+## 0.4.8
 
 Fixed some memory leaks
 
------------------ 0.4.7 -----------------
+## 0.4.7
 
 Added whitelist checking to SlateConfig
 
------------------ 0.4.6 -----------------
+## 0.4.6
 
 Added the "focusCheckWidthMax" config
 
------------------ 0.4.5 -----------------
+## 0.4.5
 
 Fixed bug in "focus" operation that caused some apps to be skipped
 Fixed bug in "focus" operation that caused same-app switching to be weird
 
------------------ 0.4.4 -----------------
+## 0.4.4
 
 Added the "focus" directive
 Added the "focusCheckWidth" config
 Added the "focusPreferSameApp" config
 Fixed all MoveOperation variants to default to semicolon separators
 
------------------ 0.4.3 -----------------
+## 0.4.3
 
 Fixed bug in StringTokenizer that caused leading spaces in aliases
 
------------------ 0.4.2 -----------------
+## 0.4.2
 
 Added the "if_exists" option for the source directive
 
------------------ 0.4.1 -----------------
+## 0.4.1
 
 Added the "source" directive
 
@@ -354,7 +367,7 @@ Added the "source" directive
 Added the "default" directive
 Added the "checkDefaultsOnLoad" config
 
------------------ 0.3.4 -----------------
+## 0.3.4
 
 Added the ability to specify resolutions for screens
 Added the ability to specify relative locations for screens
