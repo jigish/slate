@@ -5,6 +5,10 @@
 //
 //   DEVELOPMENT_TEAM = <your 10-character Team ID>
 //   CODE_SIGN_IDENTITY = Apple Development
+//   CODE_SIGN_ENTITLEMENTS = Slate/Slate.entitlements
+//
+// The entitlement lets Slate remember config approvals in the data protection keychain. It needs a
+// provisioning profile, so it is only set for team-signed builds (ad-hoc builds ask on every launch).
 
 CODE_SIGN_STYLE = Automatic
 CODE_SIGN_IDENTITY = -

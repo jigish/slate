@@ -26,6 +26,7 @@
 #import "ScreenWrapper.h"
 #import "SlateConfig.h"
 #import "ConfigFile.h"
+#import "ConfigApproval.h"
 #import "StringTokenizer.h"
 #import "Snapshot.h"
 #import "SnapshotList.h"
@@ -126,21 +127,30 @@ static SlateConfig *_instance = nil;
   return alert;
 }
 
-- (BOOL)load {
-  SlateLogger(@"Loading config...");
-
-  // Reset configs and bindings in case we are calling from menu
+- (void)resetConfig {
   [self setupDefaultConfigs];
   [self setBindings:[[NSMutableArray alloc] initWithCapacity:10]];
   [self setLayouts:[[NSMutableDictionary alloc] init]];
   [self setDefaultLayouts:[[NSMutableArray alloc] init]];
   [self setAliases:[[NSMutableDictionary alloc] init]];
+}
+
+- (BOOL)load {
+  return [self loadUserConfigAtPath:@"~/.slate"];
+}
+
+- (BOOL)loadUserConfigAtPath:(NSString *)userConfigPath {
+  SlateLogger(@"Loading config...");
+
+  // Reset configs and bindings in case we are calling from menu
+  [self resetConfig];
+  [self setReview:[[ConfigReview alloc] init]];
 
   if ([[NSFileManager defaultManager] fileExistsAtPath:[@"~/.slate.js" stringByExpandingTildeInPath]]) {
     NSLog(@"WARNING: ~/.slate.js is ignored: JavaScript configs are no longer supported. Use ~/.slate.");
   }
 
-  BOOL loadedDefault = [self loadConfigFileWithPath:@"~/.slate"];
+  BOOL loadedDefault = [self loadConfigFileWithPath:userConfigPath];
 
   if (!loadedDefault) {
     SlateLogger(@"  ERROR Could not load ~/.slate");
@@ -152,6 +162,13 @@ static SlateConfig *_instance = nil;
       [NSApp terminate:nil];
     }
     return [self loadConfigFileWithPath:[[NSBundle mainBundle] pathForResource:@"default" ofType:@"slate"]];
+  }
+
+  // Nothing from the user's config may run (including default layouts below) until it is approved.
+  if ([self approval] == nil) [self setApproval:[ConfigApproval defaultApproval]];
+  if (![[self approval] isApproved:[self review]]) {
+    [self resetConfig];
+    return YES;
   }
 
   if (![self loadSnapshots]) {
@@ -196,6 +213,7 @@ static SlateConfig *_instance = nil;
     }
     return NO;
   }
+  [[self review] addFile:[configFile stringByExpandingTildeInPath] contents:fileString];
   return [self append:fileString];
 }
 
@@ -240,6 +258,7 @@ static SlateConfig *_instance = nil;
     if (line == nil || [line length] == 0) { line = [e nextObject]; continue; }
     @try {
       line = [self replaceAliases:line];
+      [[self review] addLine:line];
     } @catch (NSException *ex) {
       SlateLogger(@"   ERROR %@",[ex name]);
       NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Quit", @"Skip", nil]];

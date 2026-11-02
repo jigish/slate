@@ -19,6 +19,8 @@
 //  along with this program.  If not, see http://www.gnu.org/licenses
 
 #import <Foundation/Foundation.h>
+#import "ConfigApproval.h"
+#import "ConfigReview.h"
 #import "Snapshot.h"
 
 @class Binding;
@@ -44,10 +46,15 @@
 @property NSMutableArray *defaultLayouts;
 @property NSMutableDictionary *aliases;
 @property NSMutableDictionary *snapshots;
+// Decides whether the loaded user config may be used. Defaults to Keychain-backed approval with an alert.
+@property ConfigApproval *approval;
+// What the last load read (files and shell lines), as presented for approval.
+@property ConfigReview *review;
 
 + (SlateConfig *)getInstance;
 + (NSAlert *)warningAlertWithKeyEquivalents:(NSArray *)titles;
 - (BOOL)load;
+- (BOOL)loadUserConfigAtPath:(NSString *)userConfigPath;
 - (BOOL)loadConfigFileWithPath:(NSString *)file;
 - (BOOL)addLayout:(NSString *)name dict:(NSDictionary *)dict;
 - (void)addDefault:(id)screenConfig layout:(NSString *)layout;

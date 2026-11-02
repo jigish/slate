@@ -42,10 +42,15 @@ To keep the Accessibility grant across rebuilds, sign with an Apple Development 
 
     DEVELOPMENT_TEAM = <your 10-character Team ID>
     CODE_SIGN_IDENTITY = Apple Development
+    CODE_SIGN_ENTITLEMENTS = Slate/Slate.entitlements
+
+The entitlement needs a development provisioning profile; on first build add `-allowProvisioningDeviceRegistration` and `-destination 'platform=macOS'` so Xcode registers your Mac with your team.
 
 ## Configuring Slate ##
 
-Slate is configured using a ".slate" file in the current user's home directory. Config files (`~/.slate` and any file it `source`s) must be owned by you and not writable by other users (`chmod go-w ~/.slate`); otherwise Slate refuses to load them. Symlinks are followed and the target is checked.
+Slate is configured using a ".slate" file in the current user's home directory. Slate asks you to approve your config whenever `~/.slate` or a file it `source`s changes. The dialog lists the files and every line that runs a `shell` command; approve only changes you made. If you don't approve, Slate runs without bindings or layouts until the next relaunch. Approvals are remembered in the keychain for team-signed builds; ad-hoc builds ask on every launch.
+
+Config files (`~/.slate` and any file it `source`s) must be owned by you and not writable by other users (`chmod go-w ~/.slate`); otherwise Slate refuses to load them. Symlinks are followed and the target is checked.
 
 Configuration is loaded upon running Slate. To apply config changes, use "Relaunch and Load Config" in the status menu or bind the `relaunch` operation.
 
