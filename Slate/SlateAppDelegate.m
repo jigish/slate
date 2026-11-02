@@ -65,6 +65,20 @@ static EventHandlerRef modifiersEvent;
 }
 
 - (IBAction)currentWindowInfo {
+  // Center on the screen under the mouse and bring Slate (a menu bar app) to the front.
+  NSPoint mouse = [NSEvent mouseLocation];
+  NSScreen *screen = [NSScreen mainScreen];
+  for (NSScreen *candidate in [NSScreen screens]) {
+    if (NSMouseInRect(mouse, [candidate frame], NO)) { screen = candidate; break; }
+  }
+  NSRect visible = [screen visibleFrame];
+  NSSize size = [windowInfo frame].size;
+  [windowInfo setFrameOrigin:NSMakePoint(NSMidX(visible) - size.width / 2, NSMidY(visible) - size.height / 2)];
+  if (@available(macOS 14.0, *)) {
+    [NSApp activate];
+  } else {
+    [NSApp activateIgnoringOtherApps:YES];
+  }
   [windowInfoController showWindow:windowInfo];
   [windowInfo makeKeyAndOrderFront:NSApp];
   [windowInfo setLevel:(NSScreenSaverWindowLevel - 1)];
