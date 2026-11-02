@@ -449,6 +449,13 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 }
 
 - (void)awakeFromNib {
+  // Unit tests run inside Slate.app (TEST_HOST). Skip startup so tests don't prompt for Accessibility,
+  // load the user's config or register global hot keys.
+  if ([[[NSProcessInfo processInfo] environment] objectForKey:@"XCTestConfigurationFilePath"] != nil) {
+    NSLog(@"Running as unit test host: skipping Slate startup.");
+    return;
+  }
+
   cmdTabBinding = -1;
   cmdShiftTabBinding = -1;
   currentHintOperation = nil;
