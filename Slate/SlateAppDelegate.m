@@ -32,6 +32,7 @@
 #import "SwitchOperation.h"
 #import "RunningApplications.h"
 #import "GridOperation.h"
+#import <ServiceManagement/ServiceManagement.h>
 
 @implementation SlateAppDelegate
 
@@ -499,23 +500,11 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
     keyUpLock = [[NSObject alloc] init];
   }
 
-  // Check if Accessibility API is enabled
-  if (!AXAPIEnabled()) {
-    NSAlert *alert = [SlateConfig warningAlertWithKeyEquivalents: [NSArray arrayWithObjects:@"Enable", @"Quit", nil]];
-    [alert setMessageText:[NSString stringWithFormat:@"Slate cannot run without \"Access for assistive devices\". Would you like to enable it?"]];
-    [alert setInformativeText:[NSString stringWithFormat:@"You may be prompted for your administrator password."]];
-    [alert setAlertStyle:NSCriticalAlertStyle];
-    NSInteger alertIndex = [alert runModal];
-    if (alertIndex == NSAlertFirstButtonReturn) {
-      SlateLogger(@"User wants to enable Access for assistive devices");
-      NSDictionary* errorDictionary;
-      NSAppleScript* applescript = [[NSAppleScript alloc] initWithSource:@"tell application \"System Events\" to set UI elements enabled to true"];
-      [applescript executeAndReturnError:&errorDictionary];
-    }
-    else if (alertIndex == NSAlertSecondButtonReturn) {
-      SlateLogger(@"User selected quit");
-      [NSApp terminate:nil];
-    }
+  // Check if Accessibility API is enabled. If not, macOS prompts the user to grant access in
+  // System Settings > Privacy & Security > Accessibility.
+  NSDictionary *axOptions = @{(__bridge NSString *)kAXTrustedCheckOptionPrompt: @YES};
+  if (!AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)axOptions)) {
+    NSLog(@"WARNING: Slate is not trusted for Accessibility. Window operations will fail until access is granted.");
   }
 
   // Read Config
@@ -547,85 +536,20 @@ OSStatus OnModifiersChangedEvent(EventHandlerCallRef nextHandler, EventRef theEv
 }
 
 - (BOOL)isInLoginItems {
-  NSString * appPath = [[NSBundle mainBundle] bundlePath];
-
-  // This will retrieve the path for the application
-  // For example, /Applications/test.app
-  CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
-
-  // Create a reference to the shared file list.
-  LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-
-  if (loginItems) {
-    UInt32 seedValue;
-    // Retrieve the list of Login Items and cast them to
-    // a NSArray so that it will be easier to iterate.
-    NSArray  *loginItemsArray = (__bridge NSArray *)LSSharedFileListCopySnapshot(loginItems, &seedValue);
-    for(NSInteger i = 0; i < [loginItemsArray count]; i++){
-      LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)[loginItemsArray objectAtIndex:i];
-      //Resolve the item with URL
-      if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &url, NULL) == noErr) {
-        NSString * urlPath = [(__bridge NSURL*)url path];
-        if ([urlPath compare:appPath] == NSOrderedSame) {
-          return YES;
-        }
-      }
-    }
-  }
-  return NO;
+  return [[SMAppService mainAppService] status] == SMAppServiceStatusEnabled;
 }
 
 - (void)addToLoginItems {
-  NSString * appPath = [[NSBundle mainBundle] bundlePath];
-
-  // This will retrieve the path for the application
-  // For example, /Applications/test.app
-  CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
-
-  // Create a reference to the shared file list.
-  // We are adding it to the current user only.
-  // If we want to add it all users, use
-  // kLSSharedFileListGlobalLoginItems instead of
-  // kLSSharedFileListSessionLoginItems
-  LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-  if (loginItems) {
-    //Insert an item to the list.
-    LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
-                                                                 kLSSharedFileListItemLast, NULL, NULL,
-                                                                 url, NULL, NULL);
-    if (item){
-      CFRelease(item);
-    }
+  NSError *error = nil;
+  if (![[SMAppService mainAppService] registerAndReturnError:&error]) {
+    NSLog(@"ERROR: Unable to add Slate to login items: %@", error);
   }
-
-  CFRelease(loginItems);
 }
 
 - (void)deleteFromLoginItems {
-  NSString * appPath = [[NSBundle mainBundle] bundlePath];
-
-  // This will retrieve the path for the application
-  // For example, /Applications/test.app
-  CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
-
-  // Create a reference to the shared file list.
-  LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-
-  if (loginItems) {
-    UInt32 seedValue;
-    // Retrieve the list of Login Items and cast them to
-    // a NSArray so that it will be easier to iterate.
-    NSArray  *loginItemsArray = (__bridge NSArray *)LSSharedFileListCopySnapshot(loginItems, &seedValue);
-    for(NSInteger i = 0; i < [loginItemsArray count]; i++){
-      LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)[loginItemsArray objectAtIndex:i];
-      //Resolve the item with URL
-      if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &url, NULL) == noErr) {
-        NSString * urlPath = [(__bridge NSURL*)url path];
-        if ([urlPath compare:appPath] == NSOrderedSame) {
-          LSSharedFileListItemRemove(loginItems,itemRef);
-        }
-      }
-    }
+  NSError *error = nil;
+  if (![[SMAppService mainAppService] unregisterAndReturnError:&error]) {
+    NSLog(@"ERROR: Unable to remove Slate from login items: %@", error);
   }
 }
 
