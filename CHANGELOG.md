@@ -13,6 +13,7 @@ macOS Tahoe refresh (macOS 13+, Universal arm64/x86_64).
 - Config files must be owned by the user and not writable by others.
 - Config changes require user approval, remembered in the keychain.
 - Signed (Developer ID), notarized releases built by GitHub Actions and published to GitHub Releases (zip and DMG).
+- About panel: Home Page links to the `jeromeopus1io/slate` fork; adds 2026 modifications copyright (GPLv3 notice kept).
 
 ## 1.0.25
 
