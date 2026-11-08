@@ -204,7 +204,7 @@ static NSString *resolutions = nil;
     NSArray *tokens = [screenRef componentsSeparatedByString:COLON];
     if ([tokens count] < 2) return ID_IGNORE_SCREEN;
     NSInteger leftToRightId = [[tokens objectAtIndex:1] integerValue];
-    screenId = (leftToRightId < ID_MAIN_SCREEN || leftToRightId > [screens count]) ? leftToRightId : [[leftToRightToDefault objectAtIndex:leftToRightId] integerValue];
+    screenId = (leftToRightId < ID_MAIN_SCREEN || leftToRightId >= [screens count]) ? leftToRightId : [[leftToRightToDefault objectAtIndex:leftToRightId] integerValue];
   } else {
     NSInteger screenRefInt = [screenRef integerValue];
     if (screenRefInt < ID_MAIN_SCREEN || screenRefInt >= [screens count]) {

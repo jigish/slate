@@ -63,4 +63,9 @@
   XCTAssertEqual([sw getScreenId:@"below" windowRect:windowOnMainScreen], 1);
 }
 
+- (void)testOrderedEqualToScreenCountIsIgnored {
+  XCTAssertNoThrow([sw getScreenId:@"ordered:2" windowRect:windowOnMainScreen]);
+  XCTAssertEqual([sw getScreenId:@"ordered:2" windowRect:windowOnMainScreen], ID_IGNORE_SCREEN);
+}
+
 @end
