@@ -81,11 +81,11 @@
   if ([direction isEqualToString:TOP_LEFT]) {
     tl = @"screenOriginX;screenOriginY";
   } else if ([direction isEqualToString:TOP_RIGHT]) {
-    tl = [[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:0]] stringByAppendingString:@";screenOriginY"];
+    tl = [NSString stringWithFormat:@"screenOriginX+screenSizeX-(%@);screenOriginY", [[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:0]];
   } else if ([direction isEqualToString:BOTTOM_LEFT]) {
-    tl = [@"screenOriginX;screenOriginY+screenSizeY-" stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:1]];
+    tl = [NSString stringWithFormat:@"screenOriginX;screenOriginY+screenSizeY-(%@)", [[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:1]];
   } else if ([direction isEqualToString:BOTTOM_RIGHT]) {
-    tl = [[[@"screenOriginX+screenSizeX-" stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:0]] stringByAppendingString:@";screenOriginY+screenSizeY-"] stringByAppendingString:[[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:1]];
+    tl = [NSString stringWithFormat:@"screenOriginX+screenSizeX-(%@);screenOriginY+screenSizeY-(%@)", [[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:0], [[dim componentsSeparatedByString:SEMICOLON] objectAtIndex:1]];
   } else {
     SlateLogger(@"ERROR: Unrecognized corner '%@'", direction);
     @throw([NSException exceptionWithName:@"Unrecognized Corner" reason:[NSString stringWithFormat:@"Unrecognized corner '%@' in '%@'", direction, cornerOperation] userInfo:nil]);

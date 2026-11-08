@@ -152,7 +152,7 @@
       dimensions = @"screenSizeX;windowSizeY";
     } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
       NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      topLeft = [@"screenOriginX;screenOriginY+screenSizeY-" stringByAppendingString:resizeExpression];
+      topLeft = [NSString stringWithFormat:@"screenOriginX;screenOriginY+screenSizeY-(%@)", resizeExpression];
       dimensions = [@"screenSizeX;" stringByAppendingString:resizeExpression];
     } else if ([style isEqualToString:NONE]) {
       topLeft = @"windowTopLeftX;screenOriginY+screenSizeY-windowSizeY";
@@ -184,7 +184,7 @@
       dimensions = @"windowSizeX;screenSizeY";
     } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
       NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
-      topLeft = [[@"screenOriginX+screenSizeX-" stringByAppendingString:resizeExpression] stringByAppendingString:@";screenOriginY"];
+      topLeft = [NSString stringWithFormat:@"screenOriginX+screenSizeX-(%@);screenOriginY", resizeExpression];
       dimensions = [resizeExpression stringByAppendingString:@";screenSizeY"];
     } else if ([style isEqualToString:NONE]) {
       topLeft = @"screenOriginX+screenSizeX-windowSizeX;windowTopLeftY";

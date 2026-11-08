@@ -13,6 +13,8 @@
 		5A1E00000000000000A02003 /* TestConfigFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E00000000000000A02002 /* TestConfigFile.m */; };
 		5A1E00000000000000B00002 /* TestScreenWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E00000000000000B00001 /* TestScreenWrapper.m */; };
 		5A1E00000000000000B00102 /* TestSlateConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E00000000000000B00101 /* TestSlateConfig.m */; };
+		5A1E00000000000000B00202 /* TestPushOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E00000000000000B00201 /* TestPushOperation.m */; };
+		5A1E00000000000000B00302 /* TestCornerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E00000000000000B00301 /* TestCornerOperation.m */; };
 		5A1E00000000000000B01003 /* ConfigFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E00000000000000B01002 /* ConfigFile.m */; };
 		5A1E00000000000000A01003 /* TestShellOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E00000000000000A01002 /* TestShellOperation.m */; };
 		3B3335AD14FC1EA900F72638 /* WindowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3335AC14FC1EA900F72638 /* WindowInfoView.m */; };
@@ -113,6 +115,8 @@
 		5A1E00000000000000A02002 /* TestConfigFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestConfigFile.m; sourceTree = "<group>"; };
 		5A1E00000000000000B00001 /* TestScreenWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestScreenWrapper.m; sourceTree = "<group>"; };
 		5A1E00000000000000B00101 /* TestSlateConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestSlateConfig.m; sourceTree = "<group>"; };
+		5A1E00000000000000B00201 /* TestPushOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestPushOperation.m; sourceTree = "<group>"; };
+		5A1E00000000000000B00301 /* TestCornerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestCornerOperation.m; sourceTree = "<group>"; };
 		5A1E00000000000000B01001 /* ConfigFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFile.h; sourceTree = "<group>"; };
 		5A1E00000000000000B01002 /* ConfigFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFile.m; sourceTree = "<group>"; };
 		5A1E00000000000000A01001 /* TestShellOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestShellOperation.h; sourceTree = "<group>"; };
@@ -322,6 +326,8 @@
 				5A1E00000000000000A02002 /* TestConfigFile.m */,
 				5A1E00000000000000B00001 /* TestScreenWrapper.m */,
 				5A1E00000000000000B00101 /* TestSlateConfig.m */,
+				5A1E00000000000000B00201 /* TestPushOperation.m */,
+				5A1E00000000000000B00301 /* TestCornerOperation.m */,
 				5A1E00000000000000A01001 /* TestShellOperation.h */,
 				5A1E00000000000000A01002 /* TestShellOperation.m */,
 				3BA1BA6C162F51760026774E /* TestShellUtils.h */,
@@ -746,6 +752,8 @@
 				5A1E00000000000000A02003 /* TestConfigFile.m in Sources */,
 				5A1E00000000000000B00002 /* TestScreenWrapper.m in Sources */,
 				5A1E00000000000000B00102 /* TestSlateConfig.m in Sources */,
+				5A1E00000000000000B00202 /* TestPushOperation.m in Sources */,
+				5A1E00000000000000B00302 /* TestCornerOperation.m in Sources */,
 				5A1E00000000000000A01003 /* TestShellOperation.m in Sources */,
 				3BA1BA62162DDFEF0026774E /* TestExpressionPoint.m in Sources */,
 				3BA1BA65162E01A30026774E /* TestStringTokenizer.m in Sources */,
