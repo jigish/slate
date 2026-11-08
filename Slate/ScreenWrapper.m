@@ -177,7 +177,7 @@ static NSString *resolutions = nil;
   } else if ([screenRef rangeOfString:ABOVE].length > 0 || [screenRef rangeOfString:UP].length > 0) {
     NSRect testRect = NSMakeRect(screenRect.origin.x, screenRect.origin.y - 1, screenRect.size.width, 1);
     screenId = [self getScreenIdForRect:testRect];
-  } else if ([screenRef rangeOfString:BELOW].length > 0 || [screenRef rangeOfString:UP].length > 0) {
+  } else if ([screenRef rangeOfString:BELOW].length > 0 || [screenRef rangeOfString:DOWN].length > 0) {
     NSRect testRect = NSMakeRect(screenRect.origin.x, screenRect.origin.y + screenRect.size.height, screenRect.size.width, 1);
     screenId = [self getScreenIdForRect:testRect];
   } else if ([screenRef rangeOfString:NEXT].length > 0) {

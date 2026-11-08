@@ -15,6 +15,9 @@ macOS Tahoe refresh (macOS 13+, Universal arm64/x86_64).
 - Signed (Developer ID), notarized releases built by GitHub Actions and published to GitHub Releases (zip and DMG).
 - About panel: Home Page links to the `jeromeopus1io/slate` fork; adds 2026 modifications copyright (GPLv3 notice kept).
 
+Fixed:
+- `down` screen reference targets the screen below instead of screen 0.
+
 ## 1.0.25
 
 Updates to javascript configs
