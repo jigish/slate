@@ -39,4 +39,10 @@
   XCTAssertEqual([[op topLeft] getPointWithDict:[self screen]].x, 480);
 }
 
+- (void)testPushLeftBarResizeAcceptsExpressionWithComma {
+  MoveOperation *op = [PushOperation pushOperationFromString:@"push left bar-resize:min({screenSizeX/2,800})"];
+  XCTAssertNotNil(op);
+  XCTAssertEqual([[op dimensions] getSizeWithDict:[self screen]].width, 500);
+}
+
 @end
