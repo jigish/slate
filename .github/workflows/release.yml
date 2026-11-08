@@ -19,10 +19,14 @@ jobs:
     timeout-minutes: 60
     env:
       APP: build/Build/Products/Release/Slate.app
-      KEYCHAIN: ${{ runner.temp }}/signing.keychain-db
-      NOTARY_KEY: ${{ runner.temp }}/notary.p8
     steps:
       - uses: actions/checkout@v5
+
+      # The runner context is not available in job-level env, so derive temp paths here.
+      - name: Temp paths
+        run: |
+          echo "KEYCHAIN=$RUNNER_TEMP/signing.keychain-db" >> "$GITHUB_ENV"
+          echo "NOTARY_KEY=$RUNNER_TEMP/notary.p8" >> "$GITHUB_ENV"
 
       - name: Version from tag
         run: |
