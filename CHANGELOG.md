@@ -18,6 +18,7 @@ macOS Tahoe refresh (macOS 13+, Universal arm64/x86_64).
 Fixed:
 - `down` screen reference targets the screen below instead of screen 0.
 - `ordered:N` with N equal to the screen count is treated as a missing screen instead of raising `NSRangeException`.
+- Layouts: a window that fails its operation no longer makes every later window of the app reuse the same operation.
 
 ## 1.0.25
 

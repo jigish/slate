@@ -233,9 +233,10 @@
     if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] repeat]) {
       for (NSInteger i = 0; i < CFArrayGetCount(windows); i++) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
-        appSuccess = [[operations objectAtIndex:((i-failedWindows) % [operations count])] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
+        BOOL windowSuccess = [[operations objectAtIndex:((i-failedWindows) % [operations count])] doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
+        appSuccess = windowSuccess && appSuccess;
         if ([[SlateConfig getInstance] getBoolConfig:LAYOUT_FOCUS_ON_ACTIVATE]) { [aw focus]; }
-        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
+        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !windowSuccess)
           failedWindows++;
       }
     } else if ([(ApplicationOptions *)[[layout appOptions] objectForKey:appName] repeatLast]) {
@@ -245,17 +246,19 @@
         if (i-failedWindows >= [operations count]) {
           opIndex = [operations count] - 1;
         }
-        appSuccess = [[operations objectAtIndex:opIndex] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
+        BOOL windowSuccess = [[operations objectAtIndex:opIndex] doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
+        appSuccess = windowSuccess && appSuccess;
         if ([[SlateConfig getInstance] getBoolConfig:LAYOUT_FOCUS_ON_ACTIVATE]) { [aw focus]; }
-        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
+        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !windowSuccess)
           failedWindows++;
       }
     } else {
       for (NSInteger i = 0; i < CFArrayGetCount(windows) && i-failedWindows < [operations count]; i++) {
         AccessibilityWrapper *aw = [[AccessibilityWrapper alloc] initWithApp:appRef window:CFArrayGetValueAtIndex(windows, i)];
-        appSuccess = [[operations objectAtIndex:(i-failedWindows)] doOperationWithAccessibilityWrapper:aw screenWrapper:sw] && appSuccess;
+        BOOL windowSuccess = [[operations objectAtIndex:(i-failedWindows)] doOperationWithAccessibilityWrapper:aw screenWrapper:sw];
+        appSuccess = windowSuccess && appSuccess;
         if ([[SlateConfig getInstance] getBoolConfig:LAYOUT_FOCUS_ON_ACTIVATE]) { [aw focus]; }
-        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !appSuccess)
+        if (![(ApplicationOptions *)[[layout appOptions] objectForKey:appName] ignoreFail] && !windowSuccess)
           failedWindows++;
       }
     }
