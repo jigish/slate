@@ -281,7 +281,7 @@ static NSString *resolutions = nil;
 }
 
 - (BOOL)screenExists:(NSInteger)screenId {
-  NSInteger count = ((NSInteger)[[NSScreen screens] count]);
+  NSInteger count = ((NSInteger)[screens count]);
   return (ID_MAIN_SCREEN <= screenId && screenId < count) ? YES : NO;
 }
 
