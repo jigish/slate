@@ -18,6 +18,8 @@ Slate currently works on Mac OS X 10.6 and above
 
 ## Credits ##
 
+Slate was originally written by [Jigish Patel](https://github.com/jigish) ([jigish/slate](https://github.com/jigish/slate)).
+
 Big thanks to [philc](https://github.com/philc) for the Window Hints idea (and initial implementation) as well as plenty of other suggestions and improvement ideas.
 
 # Using Slate #
