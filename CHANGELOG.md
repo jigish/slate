@@ -1,6 +1,16 @@
 # Changelog
 
-## Unreleased
+## 2.0.1
+
+Fixed:
+- `down` screen reference targets the screen below instead of screen 0.
+- `ordered:N` with N equal to the screen count is treated as a missing screen instead of raising `NSRangeException`.
+- Layouts: a window that fails its operation no longer makes every later window of the app reuse the same operation.
+- Global `snapshotTitleMatch` applies to `activate-snapshot` when no app-specific value is set.
+- `push down|right bar-resize:EXPR` and `corner … resize:EXPR` subtract the whole expression (e.g. `screenSizeY/2-20`).
+- `push left bar-resize:EXPR` works when EXPR contains a comma (e.g. `min({screenSizeX/2,800})`).
+
+## 2.0.0
 
 macOS Tahoe refresh (macOS 13+, Universal arm64/x86_64).
 - Removed Sparkle auto-updates and the ninjamonkeysoftware.com release pipeline; Slate is built from source.
@@ -14,14 +24,6 @@ macOS Tahoe refresh (macOS 13+, Universal arm64/x86_64).
 - Config changes require user approval, remembered in the keychain.
 - Signed (Developer ID), notarized releases built by GitHub Actions and published to GitHub Releases (zip and DMG).
 - About panel: Home Page links to the `jeromeopus1io/slate` fork; adds 2026 modifications copyright (GPLv3 notice kept).
-
-Fixed:
-- `down` screen reference targets the screen below instead of screen 0.
-- `ordered:N` with N equal to the screen count is treated as a missing screen instead of raising `NSRangeException`.
-- Layouts: a window that fails its operation no longer makes every later window of the app reuse the same operation.
-- Global `snapshotTitleMatch` applies to `activate-snapshot` when no app-specific value is set.
-- `push down|right bar-resize:EXPR` and `corner … resize:EXPR` subtract the whole expression (e.g. `screenSizeY/2-20`).
-- `push left bar-resize:EXPR` works when EXPR contains a comma (e.g. `min({screenSizeX/2,800})`).
 
 ## 1.0.25
 

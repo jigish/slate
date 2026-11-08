@@ -613,7 +613,7 @@ You can check out my own config [here](https://github.com/jigish/dotfiles/blob/m
 
 # Contact #
 
-Please send all questions, bug reports, suggestions, or general commentary to [Jigish Patel](mailto:slate.issues@gmail.com) or [create an issue](https://github.com/jigish/slate/issues/new) on github.
+Report bugs, questions, and suggestions as [GitHub issues](https://github.com/Kalisen/slate/issues/new).
 
 # Allowed Keys #
 
