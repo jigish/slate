@@ -21,6 +21,7 @@ Fixed:
 - Layouts: a window that fails its operation no longer makes every later window of the app reuse the same operation.
 - Global `snapshotTitleMatch` applies to `activate-snapshot` when no app-specific value is set.
 - `push down|right bar-resize:EXPR` and `corner … resize:EXPR` subtract the whole expression (e.g. `screenSizeY/2-20`).
+- `push left bar-resize:EXPR` works when EXPR contains a comma (e.g. `min({screenSizeX/2,800})`).
 
 ## 1.0.25
 

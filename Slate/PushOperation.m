@@ -169,7 +169,7 @@
     } else if ([style hasPrefix:BAR_RESIZE_WITH_VALUE]) {
       NSString *resizeExpression = [[style componentsSeparatedByString:COLON] objectAtIndex:1];
       topLeft = @"screenOriginX;screenOriginY";
-      dimensions = [resizeExpression stringByAppendingString:@",screenSizeY"];
+      dimensions = [resizeExpression stringByAppendingString:@";screenSizeY"];
     } else if ([style isEqualToString:NONE]) {
       topLeft = @"screenOriginX;windowTopLeftY";
     } else {
