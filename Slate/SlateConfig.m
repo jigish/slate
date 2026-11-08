@@ -112,9 +112,9 @@ static SlateConfig *_instance = nil;
 
 - (NSString *)getConfig:(NSString *)key app:(NSString *)app {
   NSMutableDictionary *configsForApp = [appConfigs objectForKey:app];
-  if (configsForApp == nil) return [self getConfigDefault:key];
+  if (configsForApp == nil) return [self getConfig:key];
   NSString *config = [configsForApp objectForKey:key];
-  if (config == nil) return [self getConfigDefault:key];
+  if (config == nil) return [self getConfig:key];
   return config;
 }
 
